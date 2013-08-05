@@ -29,3 +29,5 @@ Liferay.Service.registerClass(
 		test4: true
 	}
 );
+
+Liferay.Service.register("Liferay.Service.S", "com.jenginetest.builder.service", "jengine-test-portlet");

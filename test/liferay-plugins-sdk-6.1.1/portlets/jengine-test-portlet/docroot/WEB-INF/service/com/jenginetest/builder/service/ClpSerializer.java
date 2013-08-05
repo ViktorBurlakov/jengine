@@ -1,31 +1,18 @@
-/*
- * This file is part of JEngine.
+/**
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
- * Copyright (C) 2013 Victor Burlakov
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * JEngine is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * JEngine is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 
 package com.jenginetest.builder.service;
-
-import com.jenginetest.builder.model.WLEntryClp;
-import com.jenginetest.builder.model.WLEventLogClp;
-import com.jenginetest.builder.model.WLProjectClp;
-import com.jenginetest.builder.model.WLProjectUserClp;
-import com.jenginetest.builder.model.WLProjectUserRoleClp;
-import com.jenginetest.builder.model.WLTaskClp;
-import com.jenginetest.builder.model.WLTaskOptionClp;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -109,38 +96,6 @@ public class ClpSerializer {
 	}
 
 	public static Object translateInput(BaseModel<?> oldModel) {
-		Class<?> oldModelClass = oldModel.getClass();
-
-		String oldModelClassName = oldModelClass.getName();
-
-		if (oldModelClassName.equals(WLEntryClp.class.getName())) {
-			return translateInputWLEntry(oldModel);
-		}
-
-		if (oldModelClassName.equals(WLEventLogClp.class.getName())) {
-			return translateInputWLEventLog(oldModel);
-		}
-
-		if (oldModelClassName.equals(WLProjectClp.class.getName())) {
-			return translateInputWLProject(oldModel);
-		}
-
-		if (oldModelClassName.equals(WLProjectUserClp.class.getName())) {
-			return translateInputWLProjectUser(oldModel);
-		}
-
-		if (oldModelClassName.equals(WLProjectUserRoleClp.class.getName())) {
-			return translateInputWLProjectUserRole(oldModel);
-		}
-
-		if (oldModelClassName.equals(WLTaskClp.class.getName())) {
-			return translateInputWLTask(oldModel);
-		}
-
-		if (oldModelClassName.equals(WLTaskOptionClp.class.getName())) {
-			return translateInputWLTaskOption(oldModel);
-		}
-
 		return oldModel;
 	}
 
@@ -156,76 +111,6 @@ public class ClpSerializer {
 		return newList;
 	}
 
-	public static Object translateInputWLEntry(BaseModel<?> oldModel) {
-		WLEntryClp oldClpModel = (WLEntryClp)oldModel;
-
-		BaseModel<?> newModel = oldClpModel.getWLEntryRemoteModel();
-
-		newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-		return newModel;
-	}
-
-	public static Object translateInputWLEventLog(BaseModel<?> oldModel) {
-		WLEventLogClp oldClpModel = (WLEventLogClp)oldModel;
-
-		BaseModel<?> newModel = oldClpModel.getWLEventLogRemoteModel();
-
-		newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-		return newModel;
-	}
-
-	public static Object translateInputWLProject(BaseModel<?> oldModel) {
-		WLProjectClp oldClpModel = (WLProjectClp)oldModel;
-
-		BaseModel<?> newModel = oldClpModel.getWLProjectRemoteModel();
-
-		newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-		return newModel;
-	}
-
-	public static Object translateInputWLProjectUser(BaseModel<?> oldModel) {
-		WLProjectUserClp oldClpModel = (WLProjectUserClp)oldModel;
-
-		BaseModel<?> newModel = oldClpModel.getWLProjectUserRemoteModel();
-
-		newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-		return newModel;
-	}
-
-	public static Object translateInputWLProjectUserRole(BaseModel<?> oldModel) {
-		WLProjectUserRoleClp oldClpModel = (WLProjectUserRoleClp)oldModel;
-
-		BaseModel<?> newModel = oldClpModel.getWLProjectUserRoleRemoteModel();
-
-		newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-		return newModel;
-	}
-
-	public static Object translateInputWLTask(BaseModel<?> oldModel) {
-		WLTaskClp oldClpModel = (WLTaskClp)oldModel;
-
-		BaseModel<?> newModel = oldClpModel.getWLTaskRemoteModel();
-
-		newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-		return newModel;
-	}
-
-	public static Object translateInputWLTaskOption(BaseModel<?> oldModel) {
-		WLTaskOptionClp oldClpModel = (WLTaskOptionClp)oldModel;
-
-		BaseModel<?> newModel = oldClpModel.getWLTaskOptionRemoteModel();
-
-		newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-		return newModel;
-	}
-
 	public static Object translateInput(Object obj) {
 		if (obj instanceof BaseModel<?>) {
 			return translateInput((BaseModel<?>)obj);
@@ -239,45 +124,6 @@ public class ClpSerializer {
 	}
 
 	public static Object translateOutput(BaseModel<?> oldModel) {
-		Class<?> oldModelClass = oldModel.getClass();
-
-		String oldModelClassName = oldModelClass.getName();
-
-		if (oldModelClassName.equals(
-					"com.jenginetest.builder.model.impl.WLEntryImpl")) {
-			return translateOutputWLEntry(oldModel);
-		}
-
-		if (oldModelClassName.equals(
-					"com.jenginetest.builder.model.impl.WLEventLogImpl")) {
-			return translateOutputWLEventLog(oldModel);
-		}
-
-		if (oldModelClassName.equals(
-					"com.jenginetest.builder.model.impl.WLProjectImpl")) {
-			return translateOutputWLProject(oldModel);
-		}
-
-		if (oldModelClassName.equals(
-					"com.jenginetest.builder.model.impl.WLProjectUserImpl")) {
-			return translateOutputWLProjectUser(oldModel);
-		}
-
-		if (oldModelClassName.equals(
-					"com.jenginetest.builder.model.impl.WLProjectUserRoleImpl")) {
-			return translateOutputWLProjectUserRole(oldModel);
-		}
-
-		if (oldModelClassName.equals(
-					"com.jenginetest.builder.model.impl.WLTaskImpl")) {
-			return translateOutputWLTask(oldModel);
-		}
-
-		if (oldModelClassName.equals(
-					"com.jenginetest.builder.model.impl.WLTaskOptionImpl")) {
-			return translateOutputWLTaskOption(oldModel);
-		}
-
 		return oldModel;
 	}
 
@@ -358,108 +204,7 @@ public class ClpSerializer {
 			return new SystemException();
 		}
 
-		if (className.equals("com.jenginetest.builder.NoSuchEntryException")) {
-			return new com.jenginetest.builder.NoSuchEntryException();
-		}
-
-		if (className.equals("com.jenginetest.builder.NoSuchEventLogException")) {
-			return new com.jenginetest.builder.NoSuchEventLogException();
-		}
-
-		if (className.equals("com.jenginetest.builder.NoSuchProjectException")) {
-			return new com.jenginetest.builder.NoSuchProjectException();
-		}
-
-		if (className.equals(
-					"com.jenginetest.builder.NoSuchProjectUserException")) {
-			return new com.jenginetest.builder.NoSuchProjectUserException();
-		}
-
-		if (className.equals(
-					"com.jenginetest.builder.NoSuchProjectUserRoleException")) {
-			return new com.jenginetest.builder.NoSuchProjectUserRoleException();
-		}
-
-		if (className.equals("com.jenginetest.builder.NoSuchTaskException")) {
-			return new com.jenginetest.builder.NoSuchTaskException();
-		}
-
-		if (className.equals(
-					"com.jenginetest.builder.NoSuchTaskOptionException")) {
-			return new com.jenginetest.builder.NoSuchTaskOptionException();
-		}
-
 		return throwable;
-	}
-
-	public static Object translateOutputWLEntry(BaseModel<?> oldModel) {
-		WLEntryClp newModel = new WLEntryClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setWLEntryRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	public static Object translateOutputWLEventLog(BaseModel<?> oldModel) {
-		WLEventLogClp newModel = new WLEventLogClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setWLEventLogRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	public static Object translateOutputWLProject(BaseModel<?> oldModel) {
-		WLProjectClp newModel = new WLProjectClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setWLProjectRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	public static Object translateOutputWLProjectUser(BaseModel<?> oldModel) {
-		WLProjectUserClp newModel = new WLProjectUserClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setWLProjectUserRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	public static Object translateOutputWLProjectUserRole(BaseModel<?> oldModel) {
-		WLProjectUserRoleClp newModel = new WLProjectUserRoleClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setWLProjectUserRoleRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	public static Object translateOutputWLTask(BaseModel<?> oldModel) {
-		WLTaskClp newModel = new WLTaskClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setWLTaskRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	public static Object translateOutputWLTaskOption(BaseModel<?> oldModel) {
-		WLTaskOptionClp newModel = new WLTaskOptionClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setWLTaskOptionRemoteModel(oldModel);
-
-		return newModel;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ClpSerializer.class);

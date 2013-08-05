@@ -5,11 +5,235 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ae150e8e-51d1-4f53-930c-7a5f84a66dc9" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/NoSuchEntryException.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/NoSuchEventLogException.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/NoSuchProjectException.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/NoSuchProjectUserException.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/NoSuchProjectUserRoleException.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/NoSuchTaskException.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/NoSuchTaskOptionException.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLEntry.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLEntryClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLEntryModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLEntrySoap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLEntryWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLEventLog.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLEventLogClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLEventLogModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLEventLogSoap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLEventLogWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLProject.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLProjectClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLProjectModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLProjectSoap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLProjectUser.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLProjectUserClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLProjectUserModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLProjectUserRole.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLProjectUserRoleClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLProjectUserRoleModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLProjectUserRoleSoap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLProjectUserRoleWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLProjectUserSoap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLProjectUserWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLProjectWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLTask.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLTaskClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLTaskModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLTaskOption.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLTaskOptionClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLTaskOptionModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLTaskOptionSoap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLTaskOptionWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLTaskSoap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLTaskWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/LoggingActivityLocalService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/LoggingActivityLocalServiceClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/LoggingActivityLocalServiceUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/LoggingActivityLocalServiceWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/LoggingActivityService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/LoggingActivityServiceClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/LoggingActivityServiceUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/LoggingActivityServiceWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLEntryLocalService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLEntryLocalServiceClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLEntryLocalServiceUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLEntryLocalServiceWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLEntryService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLEntryServiceClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLEntryServiceUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLEntryServiceWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLEventLogLocalService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLEventLogLocalServiceClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLEventLogLocalServiceUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLEventLogLocalServiceWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLEventLogService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLEventLogServiceClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLEventLogServiceUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLEventLogServiceWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectLocalService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectLocalServiceClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectLocalServiceUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectLocalServiceWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectServiceClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectServiceUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectServiceWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectUserLocalService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectUserLocalServiceClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectUserLocalServiceUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectUserLocalServiceWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectUserRoleLocalService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectUserRoleLocalServiceClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectUserRoleLocalServiceUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectUserRoleLocalServiceWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectUserRoleService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectUserRoleServiceClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectUserRoleServiceUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectUserRoleServiceWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectUserService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectUserServiceClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectUserServiceUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLProjectUserServiceWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLTaskLocalService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLTaskLocalServiceClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLTaskLocalServiceUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLTaskLocalServiceWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLTaskOptionLocalService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLTaskOptionLocalServiceClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLTaskOptionLocalServiceUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLTaskOptionLocalServiceWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLTaskOptionService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLTaskOptionServiceClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLTaskOptionServiceUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLTaskOptionServiceWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLTaskService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLTaskServiceClp.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLTaskServiceUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/WLTaskServiceWrapper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/messaging/ClpMessageListener.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/persistence/WLEntryPersistence.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/persistence/WLEntryUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/persistence/WLEventLogPersistence.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/persistence/WLEventLogUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/persistence/WLProjectPersistence.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/persistence/WLProjectUserPersistence.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/persistence/WLProjectUserRolePersistence.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/persistence/WLProjectUserRoleUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/persistence/WLProjectUserUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/persistence/WLProjectUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/persistence/WLTaskOptionPersistence.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/persistence/WLTaskOptionUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/persistence/WLTaskPersistence.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/persistence/WLTaskUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/sql/indexes.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/sql/sequences.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/sql/tables.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLEntryBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLEntryCacheModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLEntryImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLEntryModelImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLEventLogBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLEventLogCacheModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLEventLogImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLEventLogModelImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLProjectBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLProjectCacheModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLProjectImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLProjectModelImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLProjectUserBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLProjectUserCacheModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLProjectUserImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLProjectUserModelImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLProjectUserRoleBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLProjectUserRoleCacheModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLProjectUserRoleImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLProjectUserRoleModelImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLTaskBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLTaskCacheModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLTaskImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLTaskModelImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLTaskOptionBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLTaskOptionCacheModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLTaskOptionImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl/WLTaskOptionModelImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/LoggingActivityLocalServiceBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/LoggingActivityLocalServiceClpInvoker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/LoggingActivityServiceBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/LoggingActivityServiceClpInvoker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLEntryLocalServiceBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLEntryLocalServiceClpInvoker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLEntryServiceBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLEntryServiceClpInvoker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLEventLogLocalServiceBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLEventLogLocalServiceClpInvoker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLEventLogServiceBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLEventLogServiceClpInvoker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLProjectLocalServiceBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLProjectLocalServiceClpInvoker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLProjectServiceBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLProjectServiceClpInvoker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLProjectUserLocalServiceBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLProjectUserLocalServiceClpInvoker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLProjectUserRoleLocalServiceBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLProjectUserRoleLocalServiceClpInvoker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLProjectUserRoleServiceBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLProjectUserRoleServiceClpInvoker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLProjectUserServiceBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLProjectUserServiceClpInvoker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLTaskLocalServiceBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLTaskLocalServiceClpInvoker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLTaskOptionLocalServiceBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLTaskOptionLocalServiceClpInvoker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLTaskOptionServiceBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLTaskOptionServiceClpInvoker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLTaskServiceBaseImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/WLTaskServiceClpInvoker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/http/LoggingActivityServiceSoap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/http/WLEntryServiceSoap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/http/WLEventLogServiceSoap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/http/WLProjectServiceSoap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/http/WLProjectUserRoleServiceSoap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/http/WLProjectUserServiceSoap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/http/WLTaskOptionServiceSoap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/http/WLTaskServiceSoap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/LoggingActivityLocalServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/LoggingActivityServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/WLEntryLocalServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/WLEntryServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/WLEventLogLocalServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/WLEventLogServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/WLProjectLocalServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/WLProjectServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/WLProjectUserLocalServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/WLProjectUserRoleLocalServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/WLProjectUserRoleServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/WLProjectUserServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/WLTaskLocalServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/WLTaskOptionLocalServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/WLTaskOptionServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/WLTaskServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/persistence/WLEntryPersistenceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/persistence/WLEventLogPersistenceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/persistence/WLProjectPersistenceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/persistence/WLProjectUserPersistenceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/persistence/WLProjectUserRolePersistenceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/persistence/WLTaskOptionPersistenceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/persistence/WLTaskPersistenceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/model/impl" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/http" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/persistence" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/lib/jengine-test-portlet-service.jar" afterPath="$PROJECT_DIR$/docroot/WEB-INF/lib/jengine-test-portlet-service.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service.xml" afterPath="$PROJECT_DIR$/docroot/WEB-INF/service.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/ClpSerializer.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/ClpSerializer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/portlet-hbm.xml" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/portlet-hbm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/portlet-model-hints.xml" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/portlet-model-hints.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/portlet-orm.xml" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/portlet-orm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/portlet-spring.xml" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/portlet-spring.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/js/service.js" afterPath="$PROJECT_DIR$/docroot/js/service.js" />
     </list>
     <ignored path="jengine-test-portlet.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -84,33 +308,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ModelManager.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/css/.sass-cache/main.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/js/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="714" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="main.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docroot/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
@@ -123,17 +320,39 @@
       <file leaf-file-name="service.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docroot/js/service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="18" selection-start="842" selection-end="842" vertical-scroll-proportion="0.0">
+            <state line="29" column="29" selection-start="967" selection-end="967" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WLEntry.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLEntry.java">
+      <file leaf-file-name="TestServiceImpl.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="17" selection-start="1188" selection-end="1188" vertical-scroll-proportion="0.0">
+            <state line="64" column="5" selection-start="2403" selection-end="2403" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="indexes.sql" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/sql/indexes.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestLocalServiceImpl.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestLocalServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="170" column="5" selection-start="6980" selection-end="6980" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -156,10 +375,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="service.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="service.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/service.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="20" selection-start="994" selection-end="994" vertical-scroll-proportion="0.60096157">
+            <state line="26" column="22" selection-start="1017" selection-end="1017" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -184,8 +403,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/lifedb/CustomBaseModel.java" />
-        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/lifedb/ModelQuery.java" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/ModelField.java" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelQuery.java" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/PrimaryKey.java" />
@@ -200,6 +417,8 @@
         <option value="$PROJECT_DIR$/docroot/js/main.js" />
         <option value="$PROJECT_DIR$/docroot/css/main.css" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/service.xml" />
+        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestLocalServiceImpl.java" />
+        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestServiceImpl.java" />
       </list>
     </option>
   </component>
@@ -346,6 +565,128 @@
               <option name="myItemId" value="com" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jenginetest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="custom" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jengine-test-portlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jengine-test-portlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docroot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jenginetest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="builder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jengine-test-portlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jengine-test-portlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docroot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jenginetest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="builder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="impl" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jengine-test-portlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jengine-test-portlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docroot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jenginetest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="builder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -374,6 +715,84 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="jengine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jengine-test-portlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jengine-test-portlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docroot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sql" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jengine-test-portlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jengine-test-portlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docroot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="builder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jengine-test-portlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jengine-test-portlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docroot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="builder" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -687,6 +1106,11 @@
       <created>1375088342629</created>
       <updated>1375088342629</updated>
     </task>
+    <task id="LOCAL-00001" summary="service.xml was cleared">
+      <created>1375710187128</created>
+      <updated>1375710187128</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -730,7 +1154,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294347" sideWeight="0.60047" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18978979" sideWeight="0.6703297" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3927928" sideWeight="0.6703297" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -776,7 +1200,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" />
+    <option name="LAST_COMMIT_MESSAGE" value="service.xml was cleared" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -789,6 +1213,7 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
+    <MESSAGE value="service.xml was cleared" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -850,21 +1275,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/sql/indexes.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="7" selection-start="695" selection-end="695" vertical-scroll-proportion="0.38990825" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/sql/indexes.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/tld/aui.tld">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/liferay-plugin-package.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
@@ -885,11 +1295,6 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/css/.sass-cache/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docroot/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="714" vertical-scroll-proportion="0.0" />
@@ -898,16 +1303,6 @@
     <entry file="file://$PROJECT_DIR$/docroot/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="21" selection-start="168" selection-end="168" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/js/service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="18" selection-start="842" selection-end="842" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/WLEntry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="17" selection-start="1188" selection-end="1188" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
@@ -927,9 +1322,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/js/service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="29" selection-start="967" selection-end="967" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/service.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="20" selection-start="994" selection-end="994" vertical-scroll-proportion="0.60096157">
+        <state line="26" column="22" selection-start="1017" selection-end="1017" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestLocalServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="170" column="5" selection-start="6980" selection-end="6980" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="5" selection-start="2403" selection-end="2403" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/sql/indexes.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
