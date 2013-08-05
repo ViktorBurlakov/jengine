@@ -24,5 +24,6 @@
 <service-builder package-path="com.jenginetest.builder">
     <namespace>S</namespace>
 
+    <entity name="Test" local-service="true" remote-service="true"/>
 
 </service-builder>

@@ -18,29 +18,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-	<bean id="com.jenginetest.builder.service.LoggingActivityLocalService" class="com.jenginetest.builder.service.impl.LoggingActivityLocalServiceImpl" />
-	<bean id="com.jenginetest.builder.service.LoggingActivityService" class="com.jenginetest.builder.service.impl.LoggingActivityServiceImpl" />
-	<bean id="com.jenginetest.builder.service.WLEntryLocalService" class="com.jenginetest.builder.service.impl.WLEntryLocalServiceImpl" />
-	<bean id="com.jenginetest.builder.service.WLEntryService" class="com.jenginetest.builder.service.impl.WLEntryServiceImpl" />
-	<bean id="com.jenginetest.builder.service.persistence.WLEntryPersistence" class="com.jenginetest.builder.service.persistence.WLEntryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.jenginetest.builder.service.WLEventLogLocalService" class="com.jenginetest.builder.service.impl.WLEventLogLocalServiceImpl" />
-	<bean id="com.jenginetest.builder.service.WLEventLogService" class="com.jenginetest.builder.service.impl.WLEventLogServiceImpl" />
-	<bean id="com.jenginetest.builder.service.persistence.WLEventLogPersistence" class="com.jenginetest.builder.service.persistence.WLEventLogPersistenceImpl" parent="basePersistence" />
-	<bean id="com.jenginetest.builder.service.WLProjectLocalService" class="com.jenginetest.builder.service.impl.WLProjectLocalServiceImpl" />
-	<bean id="com.jenginetest.builder.service.WLProjectService" class="com.jenginetest.builder.service.impl.WLProjectServiceImpl" />
-	<bean id="com.jenginetest.builder.service.persistence.WLProjectPersistence" class="com.jenginetest.builder.service.persistence.WLProjectPersistenceImpl" parent="basePersistence" />
-	<bean id="com.jenginetest.builder.service.WLProjectUserLocalService" class="com.jenginetest.builder.service.impl.WLProjectUserLocalServiceImpl" />
-	<bean id="com.jenginetest.builder.service.WLProjectUserService" class="com.jenginetest.builder.service.impl.WLProjectUserServiceImpl" />
-	<bean id="com.jenginetest.builder.service.persistence.WLProjectUserPersistence" class="com.jenginetest.builder.service.persistence.WLProjectUserPersistenceImpl" parent="basePersistence" />
-	<bean id="com.jenginetest.builder.service.WLProjectUserRoleLocalService" class="com.jenginetest.builder.service.impl.WLProjectUserRoleLocalServiceImpl" />
-	<bean id="com.jenginetest.builder.service.WLProjectUserRoleService" class="com.jenginetest.builder.service.impl.WLProjectUserRoleServiceImpl" />
-	<bean id="com.jenginetest.builder.service.persistence.WLProjectUserRolePersistence" class="com.jenginetest.builder.service.persistence.WLProjectUserRolePersistenceImpl" parent="basePersistence" />
-	<bean id="com.jenginetest.builder.service.WLTaskLocalService" class="com.jenginetest.builder.service.impl.WLTaskLocalServiceImpl" />
-	<bean id="com.jenginetest.builder.service.WLTaskService" class="com.jenginetest.builder.service.impl.WLTaskServiceImpl" />
-	<bean id="com.jenginetest.builder.service.persistence.WLTaskPersistence" class="com.jenginetest.builder.service.persistence.WLTaskPersistenceImpl" parent="basePersistence" />
-	<bean id="com.jenginetest.builder.service.WLTaskOptionLocalService" class="com.jenginetest.builder.service.impl.WLTaskOptionLocalServiceImpl" />
-	<bean id="com.jenginetest.builder.service.WLTaskOptionService" class="com.jenginetest.builder.service.impl.WLTaskOptionServiceImpl" />
-	<bean id="com.jenginetest.builder.service.persistence.WLTaskOptionPersistence" class="com.jenginetest.builder.service.persistence.WLTaskOptionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.jenginetest.builder.service.TestLocalService" class="com.jenginetest.builder.service.impl.TestLocalServiceImpl" />
+	<bean id="com.jenginetest.builder.service.TestService" class="com.jenginetest.builder.service.impl.TestServiceImpl" />
 </beans>
