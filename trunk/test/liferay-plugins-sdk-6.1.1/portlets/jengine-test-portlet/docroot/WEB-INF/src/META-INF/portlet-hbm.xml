@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<!--
+  ~ This file is part of JEngine.
+  ~
+  ~ Copyright (C) 2013 Victor Burlakov
+  ~
+  ~ JEngine is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ JEngine is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="com.jenginetest.builder.model.LoggingActivity" />
+	<import class="com.jenginetest.builder.model.WLEntry" />
+	<import class="com.jenginetest.builder.model.WLEventLog" />
+	<import class="com.jenginetest.builder.model.WLProject" />
+	<import class="com.jenginetest.builder.model.WLProjectUser" />
+	<import class="com.jenginetest.builder.model.WLProjectUserRole" />
+	<import class="com.jenginetest.builder.model.WLTask" />
+	<import class="com.jenginetest.builder.model.WLTaskOption" />
+	<class name="com.jenginetest.builder.model.impl.WLEntryImpl" table="WL_WLEntry">
+		<cache usage="read-write" />
+		<id name="entryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="createUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="modifiedUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="start" type="org.hibernate.type.TimestampType" column="start_" />
+		<property name="startTime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="finishTime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="entryDate" type="org.hibernate.type.TimestampType" />
+		<property name="entryTime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="timezone" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="length" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="taskId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.jenginetest.builder.model.impl.WLEventLogImpl" table="WL_WLEventLog">
+		<cache usage="read-write" />
+		<id name="eventLogId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="logDate" type="org.hibernate.type.TimestampType" />
+		<property name="event" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="modelName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="modelPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.jenginetest.builder.model.impl.WLProjectImpl" table="WL_WLProject">
+		<cache usage="read-write" />
+		<id name="projectId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="modifiedUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="startDate" type="org.hibernate.type.TimestampType" />
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="color" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lockEnable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="lockPeriodType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lockDeferment" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="automaticallyAssign" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="defaultProject" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="externalUrl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="externalMandatory" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="com.jenginetest.builder.model.impl.WLProjectUserImpl" table="WL_WLProjectUser">
+		<cache usage="read-write" />
+		<id name="projectUserId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="projectId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.jenginetest.builder.model.impl.WLProjectUserRoleImpl" table="WL_WLProjectUserRole">
+		<cache usage="read-write" />
+		<id name="projectUserRoleId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="projectUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="roleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.jenginetest.builder.model.impl.WLTaskImpl" table="WL_WLTask">
+		<cache usage="read-write" />
+		<id name="taskId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="modifiedUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="subject" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="projectId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="ownerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="workerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="externalId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.jenginetest.builder.model.impl.WLTaskOptionImpl" table="WL_WLTaskOption">
+		<cache usage="read-write" />
+		<id name="optionId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="modifiedUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="taskId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="data" type="com.liferay.portal.dao.orm.hibernate.StringType" column="data_" />
+	</class>
+</hibernate-mapping>

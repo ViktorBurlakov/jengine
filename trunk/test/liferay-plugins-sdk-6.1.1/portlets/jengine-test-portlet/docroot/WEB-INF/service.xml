@@ -1,0 +1,381 @@
+<?xml version="1.0"?>
+<!--
+  ~ This file is part of JEngine.
+  ~
+  ~ Copyright (C) 2013 Victor Burlakov
+  ~
+  ~ JEngine is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ JEngine is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.0.0//EN"
+        "http://www.liferay.com/dtd/liferay-service-builder_6_0_0.dtd">
+
+<service-builder package-path="com.jenginetest.builder">
+    <namespace>WL</namespace>
+
+    <entity name="LoggingActivity" local-service="true" remote-service="true"/>
+
+    <entity name="WLTask" local-service="true" remote-service="true">
+
+        <!-- PK fields -->
+
+        <column name="taskId" type="long" primary="true"/>
+
+        <!-- Group instance -->
+
+        <column name="groupId" type="long"/>
+
+        <!-- Audit fields -->
+
+        <column name="companyId" type="long"/>
+        <column name="createUserId" type="long"/>
+        <column name="createUserName" type="String"/>
+        <column name="createDate" type="Date"/>
+        <column name="modifiedUserId" type="long"/>
+        <column name="modifiedUserName" type="String"/>
+        <column name="modifiedDate" type="Date"/>
+
+        <!-- Other fields -->
+
+        <column name="subject" type="String"/>
+        <column name="projectId" type="long"/>
+        <!-- Who worked by task-->
+        <column name="ownerId" type="long"/>
+        <column name="workerId" type="long"/>
+        <column name="externalId" type="String"/>
+
+        <!-- Reference fields -->
+
+        <column name="taskOptions" type="Collection" entity="WLTaskOption" mapping-key="taskId"/>
+        <column name="taskEntries" type="Collection" entity="WLEntry" mapping-key="taskId"/>
+
+        <!--Ordering-->
+        <order by="asc">
+            <order-column name="taskId"/>
+        </order>
+
+        <!-- Finder methods -->
+
+        <finder return-type="Collection" name="S_W_P">
+            <finder-column name="subject" case-sensitive="false"/>
+            <finder-column name="workerId"/>
+            <finder-column name="projectId"/>
+        </finder>
+        
+        <finder return-type="Collection" name="O_G_C_S_P_W">
+        	<finder-column name="ownerId"/>
+        	<finder-column name="groupId"/>
+        	<finder-column name="companyId"/>
+        	<finder-column name="subject" case-sensitive="false"/>
+        	<finder-column name="projectId"/>
+        	<finder-column name="workerId"/>
+        </finder>
+
+        <finder return-type="Collection" name="O_G_C_S_E_P_W">
+        	<finder-column name="ownerId"/>
+        	<finder-column name="groupId"/>
+        	<finder-column name="companyId"/>
+        	<finder-column name="subject" case-sensitive="false"/>
+        	<finder-column name="externalId" case-sensitive="false"/>
+        	<finder-column name="projectId"/>
+        	<finder-column name="workerId"/>
+        </finder>
+
+        <finder return-type="Collection" name="O_G_C">
+            <finder-column name="ownerId"/>
+            <finder-column name="groupId"/>
+            <finder-column name="companyId"/>
+        </finder>
+
+        <finder return-type="Collection" name="O_G_C_SP">
+        	<finder-column name="ownerId"/>
+        	<finder-column name="groupId"/>
+        	<finder-column name="companyId"/>
+        	<finder-column name="subject" case-sensitive="false" comparator="like"/>
+        </finder>
+        <finder return-type="Collection" name="O_G_C_SP_P">
+            <finder-column name="ownerId"/>
+            <finder-column name="groupId"/>
+            <finder-column name="companyId"/>
+            <finder-column name="subject" case-sensitive="false" comparator="like"/>
+            <finder-column name="projectId"/>
+        </finder>
+        <finder return-type="Collection" name="O_G_C_SP_W">
+            <finder-column name="ownerId"/>
+            <finder-column name="groupId"/>
+            <finder-column name="companyId"/>
+            <finder-column name="subject" case-sensitive="false" comparator="like"/>
+            <finder-column name="workerId"/>
+        </finder>
+        <finder return-type="Collection" name="O_G_C_SP_P_W">
+            <finder-column name="ownerId"/>
+            <finder-column name="groupId"/>
+            <finder-column name="companyId"/>
+            <finder-column name="subject" case-sensitive="false" comparator="like"/>
+            <finder-column name="projectId"/>
+            <finder-column name="workerId"/>
+        </finder>
+
+        <!-- References -->
+
+        <reference package-path="com.liferay.portal" entity="Group"/>
+        <reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+
+    </entity>
+    <entity name="WLTaskOption" local-service="true" remote-service="true">
+
+        <!-- PK fields -->
+
+        <column name="optionId" type="long" primary="true"/>
+
+        <!-- Group instance -->
+
+        <column name="groupId" type="long"/>
+
+        <!-- Audit fields -->
+
+        <column name="companyId" type="long"/>
+        <column name="createUserId" type="long"/>
+        <column name="createUserName" type="String"/>
+        <column name="createDate" type="Date"/>
+        <column name="modifiedUserId" type="long"/>
+        <column name="modifiedUserName" type="String"/>
+        <column name="modifiedDate" type="Date"/>
+
+        <!-- Other fields -->
+
+        <column name="taskId" type="long"/>
+        <column name="name" type="String"/>
+        <column name="data" type="String"/>
+
+        <!-- References -->
+
+        <reference package-path="com.liferay.portal" entity="Group"/>
+    </entity>
+    <entity name="WLEntry" local-service="true" remote-service="true">
+
+        <!-- PK fields -->
+
+        <column name="entryId" type="long" primary="true"/>
+
+        <column name="createUserId" type="long"/>
+        <column name="createUserName" type="String"/>
+        <column name="createDate" type="Date"/>
+        <column name="modifiedUserId" type="long"/>
+        <column name="modifiedUserName" type="String"/>
+        <column name="modifiedDate" type="Date"/>
+
+        <!-- Other fields -->
+
+        <column name="start" type="Date"/>
+        <column name="startTime" type="long"/>
+        <column name="finishTime" type="long"/>
+        <column name="entryDate" type="Date"/>
+        <column name="entryTime" type="long"/>
+        <column name="timezone" type="int"/>
+        <column name="length" type="long"/>
+        <column name="taskId" type="long"/>
+
+        <!-- Order -->
+
+        <order by="asc">
+            <order-column name="entryId"/>
+        </order>
+
+        <!-- Finder methods -->
+
+        <finder return-type="Collection" name="TaskId">
+            <finder-column name="taskId"></finder-column>
+        </finder>
+
+        <finder return-type="Collection" name="T_ED">
+            <finder-column name="taskId"></finder-column>
+            <finder-column name="entryDate"></finder-column>
+        </finder>
+        <finder return-type="Collection" name="LessDate">
+            <finder-column name="entryDate" comparator="&lt;"></finder-column>
+        </finder>
+
+        <reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+        <reference package-path="com.liferay.portlet.asset" entity="AssetCategory" />
+    </entity>
+    <entity name="WLProject" local-service="true" remote-service="true">
+
+        <!-- PK fields -->
+
+        <column name="projectId" type="long" primary="true"/>
+
+        <!-- Group instance -->
+
+        <column name="groupId" type="long"/>
+
+        <!-- Audit fields -->
+
+        <column name="companyId" type="long"/>
+        <column name="createUserId" type="long"/>
+        <column name="createUserName" type="String"/>
+        <column name="createDate" type="Date"/>
+        <column name="modifiedUserId" type="long"/>
+        <column name="modifiedUserName" type="String"/>
+        <column name="modifiedDate" type="Date"/>
+
+        <!-- Other fields -->
+
+        <column name="startDate" type="Date"/>
+        <column name="title" type="String"/>
+        <column name="status" type="int"/>
+        <column name="description" type="String"/>
+        <column name="color" type="String"/>
+        <column name="lockEnable" type="boolean"/>
+        <column name="lockPeriodType" type="String" />
+        <column name="lockDeferment" type="int"/>
+        <column name="automaticallyAssign" type="boolean"/>
+        <column name="defaultProject" type="boolean"/>
+        <column name="externalUrl" type="String"/>
+        <column name="externalMandatory" type="boolean"/>
+
+        <!-- Reference fields -->
+
+        <column name="projectTasks" type="Collection" entity="WLTask" mapping-key="projectId"/>
+
+        <!-- Order -->
+
+        <order by="desc">
+            <order-column name="createDate"/>
+        </order>
+
+        <!-- Finder methods -->
+
+        <finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId"/>
+        </finder>
+
+        <finder name="GroupCompany" return-type="Collection">
+            <finder-column name="groupId"/>
+            <finder-column name="companyId"/>
+        </finder>
+
+        <finder name="GroupCompanyAutomaticallyAssign" return-type="Collection">
+            <finder-column name="groupId"/>
+            <finder-column name="companyId"/>
+            <finder-column name="automaticallyAssign"/>
+        </finder>
+
+        <finder name="DefaultGroupCompany" return-type="WLProject">
+            <finder-column name="groupId"/>
+            <finder-column name="companyId"/>
+            <finder-column name="defaultProject"/>
+        </finder>
+
+        <finder name="Title" return-type="Collection">
+            <finder-column name="title"/>
+        </finder>
+
+        <!-- References -->
+
+        <reference package-path="com.liferay.portal" entity="Group"/>
+        <reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+    </entity>
+
+
+    <entity name="WLProjectUser" local-service="true"
+            remote-service="true">
+        <!-- Group instance -->
+        <column name="groupId" type="long"/>
+
+        <column name="companyId" type="long"/>
+
+        <column name="projectUserId" type="long" primary="true"/>
+        <column name="userId" type="long"/>
+        <column name="projectId" type="long"/>
+        <!-- finders -->
+        <finder return-type="Collection" name="Project">
+            <finder-column name="projectId"/>
+        </finder>
+        <finder return-type="Collection" name="User">
+            <finder-column name="userId"/>
+        </finder>
+        <finder return-type="Collection" name="G_C_User">
+            <finder-column name="groupId"/>
+            <finder-column name="companyId"/>
+            <finder-column name="userId"/>
+        </finder>
+        <finder return-type="WLProjectUser" name="G_C_UserProject">
+            <finder-column name="groupId"/>
+            <finder-column name="companyId"/>
+            <finder-column name="userId"/>
+            <finder-column name="projectId"/>
+        </finder>
+        <finder return-type="Collection" name="G_C_Project">
+            <finder-column name="groupId"/>
+            <finder-column name="companyId"/>
+            <finder-column name="projectId"/>
+        </finder>
+        <finder return-type="WLProjectUser" name="ProjectAndUser">
+            <finder-column name="projectId"/>
+            <finder-column name="userId"/>
+        </finder>
+    </entity>
+
+    <entity name="WLProjectUserRole" local-service="true" remote-service="true">
+        <!-- Group instance -->
+        <column name="groupId" type="long"/>
+        <column name="companyId" type="long"/>
+
+        <column name="projectUserRoleId" type="long" primary="true"/>
+        <column name="projectUserId" type="long"/>
+        <column name="roleId" type="long"/>
+        <!-- finders -->
+        <finder return-type="Collection" name="PU">
+            <finder-column name="projectUserId"/>
+        </finder>
+        <finder return-type="Collection" name="R">
+            <finder-column name="roleId"/>
+        </finder>
+        <finder return-type="Collection" name="G_C_Role">
+            <finder-column name="groupId"/>
+            <finder-column name="companyId"/>
+            <finder-column name="roleId"/>
+        </finder>
+<!--
+        <finder return-type="Collection" name="G_C_Project">
+            <finder-column name="groupId"/>
+            <finder-column name="companyId"/>
+            <finder-column name="projectId"/>
+        </finder>
+-->
+        <finder return-type="WLProjectUser" name="ProjectUserAndRole">
+            <finder-column name="projectUserId"/>
+            <finder-column name="roleId"/>
+        </finder>
+        <reference package-path="com.liferay.portal" entity="Role" />
+    </entity>
+
+    <entity name="WLEventLog" local-service="true"
+            remote-service="true">
+
+        <column name="groupId" type="long"/>
+        <column name="companyId" type="long"/>
+
+        <column name="eventLogId" type="long" primary="true"/>
+        <column name="userId" type="long"/>
+        <column name="logDate" type="Date"/>
+        <column name="event" type="String"/>
+        <column name="title" type="String"/>
+        <column name="modelName" type="String"/>
+        <column name="modelPK" type="Long"/>
+        <column name="description" type="String"/>
+        <!-- finders -->
+    </entity>
+</service-builder>
