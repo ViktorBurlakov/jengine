@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.Map;
 
+import static com.jengine.utils.CollectionUtil.concat;
 import static com.jengine.utils.CollectionUtil.map;
 
 /**
@@ -47,38 +48,53 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         // remove all db
         Map context = getServiceContext();
 
-        CWork.manager.remove(context);
-        CTask.manager.remove(context);
-        CProject.manager.remove(context);
-        CProjectMember.manager.remove(context);
-        CProjectMemberRole.manager.remove(context);
+        Author.manager.remove(context);
+        Library.manager.remove(context);
+        Book.manager.remove(context);
+        Member.manager.remove(context);
+        Transaction.manager.remove(context);
     }
 
     public void loadData() throws SystemException, PortalException {
         Map context = getServiceContext();
 
         // adding new objects
-        CProject project1 = new CProject(1, context);
-        CProject project2 = new CProject(2, context);
-        CProject project3 = new CProject(3, context);
-        project1.setValues(map("title", "Project 1", "groupId", 1, "companyId", 1, "startDate", "2013-04-05", "status", 1));
-        project2.setValues(map("title", "Project 2", "groupId", 1, "companyId", 1, "startDate", "2013-04-03", "status", 2));
-        project3.setValues(map("title", "Project 3", "groupId", 1, "companyId", 1, "startDate", "2013-04-04", "status", 1));
-        project1.save();
-        project2.save();
-        project3.save();
+        Author author1 = new Author(1, context);
+        Author author2 = new Author(2, context);
+        Author author3 = new Author(3, context);
+        author1.setValues(map("firstName", "Jules", "lastName", "Verne"));
+        author2.setValues(map("firstName", "Isaac", "lastName", "Asimov"));
+        author3.setValues(map("firstName", "Stephen", "lastName", "King"));
+        author1.save();
+        author2.save();
+        author3.save();
 
-        CUser user = CUser.cls.get(10196, context);
-        CTask task1 = new CTask(1, context);
-        CTask task2 = new CTask(2, context);
-        CTask task3 = new CTask(3, context);
-        task1.setValues(map("subject", "Design", "groupId", 1, "companyId", 1, "project", project1, "worker", user, "owner", user));
-        task2.setValues(map("subject", "Design", "groupId", 1, "companyId", 1, "project", project2, "worker", user, "owner", user));
-        task3.setValues(map("subject", "Testing", "groupId", 1, "companyId", 1, "project", project1, "worker", user, "owner", user));
-        task1.save();
-        task2.save();
-        task3.save();
+        Library library = new Library(1, context);
+        library.setValues(map("name", "Globe", "address", "Springfield, 742 Evergreen Terrace"));
+        library.save();
 
+        Book book1 = new Book(1, context);
+        Book book2 = new Book(2, context);
+        Book book3 = new Book(3, context);
+        book1.setValues(map("title", "The Dark Tower", "library", library));
+        book2.setValues(map("title", "The Shining ", "library", library));
+        book3.setValues(map("title", "The Dark Tower", "library", library));
+        book1.save();
+        book2.save();
+        book3.save();
+
+        Member member1 = new Member(1, context);
+        Member member2 = new Member(2, context);
+        Member member3 = new Member(3, context);
+        Member member4 = new Member(4, context);
+        member1.setValues(map("firstName", "Mark", "lastName", "Adamson", "library", library));
+        member2.setValues(map("firstName", "Peter", "lastName", "Douglas", "library", library));
+        member3.setValues(map("firstName", "Gary", "lastName", "Miller", "library", library));
+        member4.setValues(map("firstName", "Homer", "lastName", "Simpson", "library", library));
+        member1.save();
+        member2.save();
+        member3.save();
+        member4.save();
     }
 
     /**
@@ -91,11 +107,11 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
 
         clearData();
         // checking
-        check(CWork.cls.count(context) == 0);
-        check(CTask.cls.count(context) == 0);
-        check(CProject.cls.count(context) == 0);
-        check(CProjectMember.cls.count(context) == 0);
-        check(CProjectMemberRole.cls.count(context) == 0);
+        check(Author.cls.count(context) == 0);
+        check(Library.cls.count(context) == 0);
+        check(Book.cls.count(context) == 0);
+        check(Member.cls.count(context) == 0);
+        check(Transaction.cls.count(context) == 0);
     }
 
     /**
@@ -103,9 +119,12 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
      */
     public void test2() throws SystemException, PortalException {
         System.out.println("** Test2: Object creation test");
+        Map context = getServiceContext();
 
         clearData();
         loadData();
+
+        check(Author.cls.count(context) == 3);
     }
 
     /**
@@ -119,8 +138,8 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         loadData();
 
         // get testing
-        CProject.cls.get(1, context).getTitle().equals("Project 1");
-        CTask.cls.get(1, context).getProject().getTitle().equals("Project 1");
+        Author.cls.get(1, context).getLastName().equals("Verne");
+        Book.cls.get(1, context).getTitle().equals("The Dark Tower");
 
         // filter
         check(CProject.cls.select(map("status", 1)).list(context).size() == 2);
@@ -155,13 +174,11 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
 
     private Map getServiceContext() {
         return map(
-                "WLTask", map("persistence", wlTaskPersistence, "service", wlTaskLocalService, "finder", null),
-                "WLEntry", map("persistence", wlEntryPersistence, "service", wlEntryLocalService, "finder", null),
-                "WLProject", map("persistence", wlProjectPersistence, "service", wlProjectLocalService, "finder", null),
-                "WLProjectUser", map("persistence", wlProjectUserPersistence, "service", wlProjectUserLocalService, "finder", null),
-                "WLProjectUserRole", map("persistence", wlProjectUserRolePersistence, "service", wlProjectUserRoleLocalService, "finder", null),
-                "WLEventLog", map("persistence", wlEventLogPersistence, "service", wlEventLogLocalService, "finder", null),
-                "User", map("persistence", userPersistence, "service", userLocalService, "finder", null)
+                "SAuthor", map("persistence", sAuthorPersistence, "service", sAuthorLocalService, "finder", null),
+                "SLibrary", map("persistence", sLibraryPersistence, "service", sLibraryLocalService, "finder", null),
+                "SBook", map("persistence", sBookPersistence, "service", sBookLocalService, "finder", null),
+                "SMember", map("persistence", sMemberPersistence, "service", sMemberLocalService, "finder", null),
+                "STransaction", map("persistence", sTransactionPersistence, "service", sTransactionLocalService, "finder", null)
         );
     }
 }
