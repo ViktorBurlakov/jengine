@@ -1,0 +1,241 @@
+/**
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.jenginetest.builder.model;
+
+import com.jenginetest.builder.service.AuthorLocalServiceUtil;
+
+import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.impl.BaseModelImpl;
+
+import java.io.Serializable;
+
+import java.lang.reflect.Proxy;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author Brian Wing Shun Chan
+ */
+public class AuthorClp extends BaseModelImpl<Author> implements Author {
+	public AuthorClp() {
+	}
+
+	public Class<?> getModelClass() {
+		return Author.class;
+	}
+
+	public String getModelClassName() {
+		return Author.class.getName();
+	}
+
+	public long getPrimaryKey() {
+		return _authorId;
+	}
+
+	public void setPrimaryKey(long primaryKey) {
+		setAuthorId(primaryKey);
+	}
+
+	public Serializable getPrimaryKeyObj() {
+		return new Long(_authorId);
+	}
+
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	@Override
+	public Map<String, Object> getModelAttributes() {
+		Map<String, Object> attributes = new HashMap<String, Object>();
+
+		attributes.put("authorId", getAuthorId());
+		attributes.put("firstName", getFirstName());
+		attributes.put("lastName", getLastName());
+
+		return attributes;
+	}
+
+	@Override
+	public void setModelAttributes(Map<String, Object> attributes) {
+		Long authorId = (Long)attributes.get("authorId");
+
+		if (authorId != null) {
+			setAuthorId(authorId);
+		}
+
+		String firstName = (String)attributes.get("firstName");
+
+		if (firstName != null) {
+			setFirstName(firstName);
+		}
+
+		String lastName = (String)attributes.get("lastName");
+
+		if (lastName != null) {
+			setLastName(lastName);
+		}
+	}
+
+	public long getAuthorId() {
+		return _authorId;
+	}
+
+	public void setAuthorId(long authorId) {
+		_authorId = authorId;
+	}
+
+	public String getFirstName() {
+		return _firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		_firstName = firstName;
+	}
+
+	public String getLastName() {
+		return _lastName;
+	}
+
+	public void setLastName(String lastName) {
+		_lastName = lastName;
+	}
+
+	public BaseModel<?> getAuthorRemoteModel() {
+		return _authorRemoteModel;
+	}
+
+	public void setAuthorRemoteModel(BaseModel<?> authorRemoteModel) {
+		_authorRemoteModel = authorRemoteModel;
+	}
+
+	public void persist() throws SystemException {
+		if (this.isNew()) {
+			AuthorLocalServiceUtil.addAuthor(this);
+		}
+		else {
+			AuthorLocalServiceUtil.updateAuthor(this);
+		}
+	}
+
+	@Override
+	public Author toEscapedModel() {
+		return (Author)Proxy.newProxyInstance(Author.class.getClassLoader(),
+			new Class[] { Author.class }, new AutoEscapeBeanHandler(this));
+	}
+
+	@Override
+	public Object clone() {
+		AuthorClp clone = new AuthorClp();
+
+		clone.setAuthorId(getAuthorId());
+		clone.setFirstName(getFirstName());
+		clone.setLastName(getLastName());
+
+		return clone;
+	}
+
+	public int compareTo(Author author) {
+		long primaryKey = author.getPrimaryKey();
+
+		if (getPrimaryKey() < primaryKey) {
+			return -1;
+		}
+		else if (getPrimaryKey() > primaryKey) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+
+		AuthorClp author = null;
+
+		try {
+			author = (AuthorClp)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
+
+		long primaryKey = author.getPrimaryKey();
+
+		if (getPrimaryKey() == primaryKey) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("{authorId=");
+		sb.append(getAuthorId());
+		sb.append(", firstName=");
+		sb.append(getFirstName());
+		sb.append(", lastName=");
+		sb.append(getLastName());
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	public String toXmlString() {
+		StringBundler sb = new StringBundler(13);
+
+		sb.append("<model><model-name>");
+		sb.append("com.jenginetest.builder.model.Author");
+		sb.append("</model-name>");
+
+		sb.append(
+			"<column><column-name>authorId</column-name><column-value><![CDATA[");
+		sb.append(getAuthorId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>firstName</column-name><column-value><![CDATA[");
+		sb.append(getFirstName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastName</column-name><column-value><![CDATA[");
+		sb.append(getLastName());
+		sb.append("]]></column-value></column>");
+
+		sb.append("</model>");
+
+		return sb.toString();
+	}
+
+	private long _authorId;
+	private String _firstName;
+	private String _lastName;
+	private BaseModel<?> _authorRemoteModel;
+}

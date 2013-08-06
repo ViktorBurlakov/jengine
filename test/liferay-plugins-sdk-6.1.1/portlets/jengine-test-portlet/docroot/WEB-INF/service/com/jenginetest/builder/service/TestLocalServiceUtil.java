@@ -62,6 +62,53 @@ public class TestLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static void clearData()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().clearData();
+	}
+
+	public static void loadData()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().loadData();
+	}
+
+	/**
+	* Clearing data test
+	*/
+	public static void test1()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().test1();
+	}
+
+	/**
+	* Object creation test
+	*/
+	public static void test2()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().test2();
+	}
+
+	/**
+	* Selection test
+	*/
+	public static void test3()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().test3();
+	}
+
+	/**
+	* Sub query test
+	*/
+	public static void test4()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().test4();
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

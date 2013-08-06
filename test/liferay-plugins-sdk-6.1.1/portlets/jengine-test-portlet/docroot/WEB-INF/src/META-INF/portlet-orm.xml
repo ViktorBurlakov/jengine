@@ -25,4 +25,78 @@
 			<access>PROPERTY</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
+	<mapped-superclass class="com.jenginetest.builder.model.impl.AuthorModelImpl">
+		<attributes>
+			<id name="authorId" />
+			<basic name="firstName" />
+			<basic name="lastName" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.jenginetest.builder.model.impl.BookModelImpl">
+		<attributes>
+			<id name="bookId" />
+			<basic name="libraryId" />
+			<basic name="title" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.jenginetest.builder.model.impl.LibraryModelImpl">
+		<attributes>
+			<id name="libraryId" />
+			<basic name="name" />
+			<basic name="address" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.jenginetest.builder.model.impl.MemberModelImpl">
+		<attributes>
+			<id name="memberId" />
+			<basic name="libraryId" />
+			<basic name="firstName" />
+			<basic name="lastName" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.jenginetest.builder.model.impl.TransactionModelImpl">
+		<attributes>
+			<id name="transactionId" />
+			<basic name="bookId" />
+			<basic name="memberId" />
+			<basic name="tdate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="com.jenginetest.builder.model.impl.AuthorImpl" name="Author">
+		<table name="SB_Author" />
+		<attributes />
+	</entity>
+	<entity class="com.jenginetest.builder.model.impl.BookImpl" name="Book">
+		<table name="SB_Book" />
+		<attributes />
+	</entity>
+	<entity class="com.jenginetest.builder.model.impl.LibraryImpl" name="Library">
+		<table name="SB_Library" />
+		<attributes />
+	</entity>
+	<entity class="com.jenginetest.builder.model.impl.MemberImpl" name="Member">
+		<table name="SB_Member" />
+		<attributes />
+	</entity>
+	<entity class="com.jenginetest.builder.model.impl.TransactionImpl" name="Transaction">
+		<table name="SB_Transaction" />
+		<attributes />
+	</entity>
 </entity-mappings>

@@ -22,8 +22,40 @@
         "http://www.liferay.com/dtd/liferay-service-builder_6_0_0.dtd">
 
 <service-builder package-path="com.jenginetest.builder">
-    <namespace>S</namespace>
+    <namespace>SB</namespace>
 
     <entity name="Test" local-service="true" remote-service="true"/>
+
+    <entity name="Author" local-service="true" remote-service="true">
+        <column name="authorId" type="long" primary="true"/>
+        <column name="firstName" type="String"/>
+        <column name="lastName" type="String"/>
+    </entity>
+
+    <entity name="Library" local-service="true" remote-service="true">
+        <column name="libraryId" type="long" primary="true"/>
+        <column name="name" type="String"/>
+        <column name="address" type="String"/>
+    </entity>
+
+    <entity name="Book" local-service="true" remote-service="true">
+        <column name="bookId" type="long" primary="true"/>
+        <column name="libraryId" type="long"/>
+        <column name="title" type="String"/>
+    </entity>
+
+    <entity name="Member" local-service="true" remote-service="true">
+        <column name="memberId" type="long" primary="true"/>
+        <column name="libraryId" type="long"/>
+        <column name="firstName" type="String"/>
+        <column name="lastName" type="String"/>
+    </entity>
+
+    <entity name="Transaction" local-service="true" remote-service="true">
+        <column name="transactionId" type="long" primary="true"/>
+        <column name="bookId" type="long"/>
+        <column name="memberId" type="long"/>
+        <column name="tdate" type="Date"/>
+    </entity>
 
 </service-builder>
