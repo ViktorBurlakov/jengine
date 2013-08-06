@@ -1,0 +1,1 @@
+Liferay.Service.register("Liferay.Service.SB", "com.jenginetest.builder.service", "jengine-test-portlet");

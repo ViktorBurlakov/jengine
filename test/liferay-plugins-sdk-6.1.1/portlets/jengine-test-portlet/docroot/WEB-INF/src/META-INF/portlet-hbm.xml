@@ -20,13 +20,13 @@
   ~ along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <hibernate-mapping default-lazy="false" auto-import="false">
-	<import class="com.jenginetest.builder.model.Author" />
-	<import class="com.jenginetest.builder.model.Book" />
-	<import class="com.jenginetest.builder.model.Library" />
-	<import class="com.jenginetest.builder.model.Member" />
+	<import class="com.jenginetest.builder.model.SAuthor" />
+	<import class="com.jenginetest.builder.model.SBook" />
+	<import class="com.jenginetest.builder.model.SLibrary" />
+	<import class="com.jenginetest.builder.model.SMember" />
+	<import class="com.jenginetest.builder.model.STransaction" />
 	<import class="com.jenginetest.builder.model.Test" />
-	<import class="com.jenginetest.builder.model.Transaction" />
-	<class name="com.jenginetest.builder.model.impl.AuthorImpl" table="SB_Author">
+	<class name="com.jenginetest.builder.model.impl.SAuthorImpl" table="SB_SAuthor">
 		<cache usage="read-write" />
 		<id name="authorId" type="long">
 			<generator class="assigned" />
@@ -34,7 +34,7 @@
 		<property name="firstName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.jenginetest.builder.model.impl.BookImpl" table="SB_Book">
+	<class name="com.jenginetest.builder.model.impl.SBookImpl" table="SB_SBook">
 		<cache usage="read-write" />
 		<id name="bookId" type="long">
 			<generator class="assigned" />
@@ -42,7 +42,7 @@
 		<property name="libraryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.jenginetest.builder.model.impl.LibraryImpl" table="SB_Library">
+	<class name="com.jenginetest.builder.model.impl.SLibraryImpl" table="SB_SLibrary">
 		<cache usage="read-write" />
 		<id name="libraryId" type="long">
 			<generator class="assigned" />
@@ -50,7 +50,7 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="address" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.jenginetest.builder.model.impl.MemberImpl" table="SB_Member">
+	<class name="com.jenginetest.builder.model.impl.SMemberImpl" table="SB_SMember">
 		<cache usage="read-write" />
 		<id name="memberId" type="long">
 			<generator class="assigned" />
@@ -59,7 +59,7 @@
 		<property name="firstName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.jenginetest.builder.model.impl.TransactionImpl" table="SB_Transaction">
+	<class name="com.jenginetest.builder.model.impl.STransactionImpl" table="SB_STransaction">
 		<cache usage="read-write" />
 		<id name="transactionId" type="long">
 			<generator class="assigned" />

@@ -19,21 +19,21 @@
   ~ along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-	<bean id="com.jenginetest.builder.service.AuthorLocalService" class="com.jenginetest.builder.service.impl.AuthorLocalServiceImpl" />
-	<bean id="com.jenginetest.builder.service.AuthorService" class="com.jenginetest.builder.service.impl.AuthorServiceImpl" />
-	<bean id="com.jenginetest.builder.service.persistence.AuthorPersistence" class="com.jenginetest.builder.service.persistence.AuthorPersistenceImpl" parent="basePersistence" />
-	<bean id="com.jenginetest.builder.service.BookLocalService" class="com.jenginetest.builder.service.impl.BookLocalServiceImpl" />
-	<bean id="com.jenginetest.builder.service.BookService" class="com.jenginetest.builder.service.impl.BookServiceImpl" />
-	<bean id="com.jenginetest.builder.service.persistence.BookPersistence" class="com.jenginetest.builder.service.persistence.BookPersistenceImpl" parent="basePersistence" />
-	<bean id="com.jenginetest.builder.service.LibraryLocalService" class="com.jenginetest.builder.service.impl.LibraryLocalServiceImpl" />
-	<bean id="com.jenginetest.builder.service.LibraryService" class="com.jenginetest.builder.service.impl.LibraryServiceImpl" />
-	<bean id="com.jenginetest.builder.service.persistence.LibraryPersistence" class="com.jenginetest.builder.service.persistence.LibraryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.jenginetest.builder.service.MemberLocalService" class="com.jenginetest.builder.service.impl.MemberLocalServiceImpl" />
-	<bean id="com.jenginetest.builder.service.MemberService" class="com.jenginetest.builder.service.impl.MemberServiceImpl" />
-	<bean id="com.jenginetest.builder.service.persistence.MemberPersistence" class="com.jenginetest.builder.service.persistence.MemberPersistenceImpl" parent="basePersistence" />
+	<bean id="com.jenginetest.builder.service.SAuthorLocalService" class="com.jenginetest.builder.service.impl.SAuthorLocalServiceImpl" />
+	<bean id="com.jenginetest.builder.service.SAuthorService" class="com.jenginetest.builder.service.impl.SAuthorServiceImpl" />
+	<bean id="com.jenginetest.builder.service.persistence.SAuthorPersistence" class="com.jenginetest.builder.service.persistence.SAuthorPersistenceImpl" parent="basePersistence" />
+	<bean id="com.jenginetest.builder.service.SBookLocalService" class="com.jenginetest.builder.service.impl.SBookLocalServiceImpl" />
+	<bean id="com.jenginetest.builder.service.SBookService" class="com.jenginetest.builder.service.impl.SBookServiceImpl" />
+	<bean id="com.jenginetest.builder.service.persistence.SBookPersistence" class="com.jenginetest.builder.service.persistence.SBookPersistenceImpl" parent="basePersistence" />
+	<bean id="com.jenginetest.builder.service.SLibraryLocalService" class="com.jenginetest.builder.service.impl.SLibraryLocalServiceImpl" />
+	<bean id="com.jenginetest.builder.service.SLibraryService" class="com.jenginetest.builder.service.impl.SLibraryServiceImpl" />
+	<bean id="com.jenginetest.builder.service.persistence.SLibraryPersistence" class="com.jenginetest.builder.service.persistence.SLibraryPersistenceImpl" parent="basePersistence" />
+	<bean id="com.jenginetest.builder.service.SMemberLocalService" class="com.jenginetest.builder.service.impl.SMemberLocalServiceImpl" />
+	<bean id="com.jenginetest.builder.service.SMemberService" class="com.jenginetest.builder.service.impl.SMemberServiceImpl" />
+	<bean id="com.jenginetest.builder.service.persistence.SMemberPersistence" class="com.jenginetest.builder.service.persistence.SMemberPersistenceImpl" parent="basePersistence" />
+	<bean id="com.jenginetest.builder.service.STransactionLocalService" class="com.jenginetest.builder.service.impl.STransactionLocalServiceImpl" />
+	<bean id="com.jenginetest.builder.service.STransactionService" class="com.jenginetest.builder.service.impl.STransactionServiceImpl" />
+	<bean id="com.jenginetest.builder.service.persistence.STransactionPersistence" class="com.jenginetest.builder.service.persistence.STransactionPersistenceImpl" parent="basePersistence" />
 	<bean id="com.jenginetest.builder.service.TestLocalService" class="com.jenginetest.builder.service.impl.TestLocalServiceImpl" />
 	<bean id="com.jenginetest.builder.service.TestService" class="com.jenginetest.builder.service.impl.TestServiceImpl" />
-	<bean id="com.jenginetest.builder.service.TransactionLocalService" class="com.jenginetest.builder.service.impl.TransactionLocalServiceImpl" />
-	<bean id="com.jenginetest.builder.service.TransactionService" class="com.jenginetest.builder.service.impl.TransactionServiceImpl" />
-	<bean id="com.jenginetest.builder.service.persistence.TransactionPersistence" class="com.jenginetest.builder.service.persistence.TransactionPersistenceImpl" parent="basePersistence" />
 </beans>
