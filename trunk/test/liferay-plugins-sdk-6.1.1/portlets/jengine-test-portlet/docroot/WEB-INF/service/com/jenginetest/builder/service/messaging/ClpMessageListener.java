@@ -14,9 +14,19 @@
 
 package com.jenginetest.builder.service.messaging;
 
+import com.jenginetest.builder.service.AuthorLocalServiceUtil;
+import com.jenginetest.builder.service.AuthorServiceUtil;
+import com.jenginetest.builder.service.BookLocalServiceUtil;
+import com.jenginetest.builder.service.BookServiceUtil;
 import com.jenginetest.builder.service.ClpSerializer;
+import com.jenginetest.builder.service.LibraryLocalServiceUtil;
+import com.jenginetest.builder.service.LibraryServiceUtil;
+import com.jenginetest.builder.service.MemberLocalServiceUtil;
+import com.jenginetest.builder.service.MemberServiceUtil;
 import com.jenginetest.builder.service.TestLocalServiceUtil;
 import com.jenginetest.builder.service.TestServiceUtil;
+import com.jenginetest.builder.service.TransactionLocalServiceUtil;
+import com.jenginetest.builder.service.TransactionServiceUtil;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
@@ -36,9 +46,24 @@ public class ClpMessageListener extends BaseMessageListener {
 
 		if (command.equals("undeploy") &&
 				servletContextName.equals(getServletContextName())) {
+			AuthorLocalServiceUtil.clearService();
+
+			AuthorServiceUtil.clearService();
+			BookLocalServiceUtil.clearService();
+
+			BookServiceUtil.clearService();
+			LibraryLocalServiceUtil.clearService();
+
+			LibraryServiceUtil.clearService();
+			MemberLocalServiceUtil.clearService();
+
+			MemberServiceUtil.clearService();
 			TestLocalServiceUtil.clearService();
 
 			TestServiceUtil.clearService();
+			TransactionLocalServiceUtil.clearService();
+
+			TransactionServiceUtil.clearService();
 		}
 	}
 }

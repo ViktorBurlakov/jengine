@@ -307,4 +307,31 @@
 		<field name="name" type="String" />
 		<field name="data" type="String" />
 	</model>
+	<model name="com.jenginetest.builder.model.Author">
+		<field name="authorId" type="long" />
+		<field name="firstName" type="String" />
+		<field name="lastName" type="String" />
+	</model>
+	<model name="com.jenginetest.builder.model.Book">
+		<field name="bookId" type="long" />
+		<field name="libraryId" type="long" />
+		<field name="title" type="String" />
+	</model>
+	<model name="com.jenginetest.builder.model.Library">
+		<field name="libraryId" type="long" />
+		<field name="name" type="String" />
+		<field name="address" type="String" />
+	</model>
+	<model name="com.jenginetest.builder.model.Member">
+		<field name="memberId" type="long" />
+		<field name="libraryId" type="long" />
+		<field name="firstName" type="String" />
+		<field name="lastName" type="String" />
+	</model>
+	<model name="com.jenginetest.builder.model.Transaction">
+		<field name="transactionId" type="long" />
+		<field name="bookId" type="long" />
+		<field name="memberId" type="long" />
+		<field name="tdate" type="Date" />
+	</model>
 </model-hints>

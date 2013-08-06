@@ -50,17 +50,17 @@ public class TestServiceImpl extends TestServiceBaseImpl {
         test4();
     }
     public void test1() throws SystemException, PortalException {
-        wlProjectLocalService.test1();
+        testLocalService.test1();
     }
     public void test2() throws SystemException, PortalException {
-        wlProjectLocalService.test2();
+        testLocalService.test2();
     }
 
     public void test3() throws SystemException, PortalException {
-        wlProjectLocalService.test3();
+        testLocalService.test3();
     }
 
     public void test4() throws SystemException, PortalException {
-        wlProjectLocalService.test4();
+        testLocalService.test4();
     }
 }

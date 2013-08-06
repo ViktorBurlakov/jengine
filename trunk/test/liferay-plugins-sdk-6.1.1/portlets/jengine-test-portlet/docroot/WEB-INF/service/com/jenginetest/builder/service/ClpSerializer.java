@@ -14,6 +14,12 @@
 
 package com.jenginetest.builder.service;
 
+import com.jenginetest.builder.model.AuthorClp;
+import com.jenginetest.builder.model.BookClp;
+import com.jenginetest.builder.model.LibraryClp;
+import com.jenginetest.builder.model.MemberClp;
+import com.jenginetest.builder.model.TransactionClp;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -96,6 +102,30 @@ public class ClpSerializer {
 	}
 
 	public static Object translateInput(BaseModel<?> oldModel) {
+		Class<?> oldModelClass = oldModel.getClass();
+
+		String oldModelClassName = oldModelClass.getName();
+
+		if (oldModelClassName.equals(AuthorClp.class.getName())) {
+			return translateInputAuthor(oldModel);
+		}
+
+		if (oldModelClassName.equals(BookClp.class.getName())) {
+			return translateInputBook(oldModel);
+		}
+
+		if (oldModelClassName.equals(LibraryClp.class.getName())) {
+			return translateInputLibrary(oldModel);
+		}
+
+		if (oldModelClassName.equals(MemberClp.class.getName())) {
+			return translateInputMember(oldModel);
+		}
+
+		if (oldModelClassName.equals(TransactionClp.class.getName())) {
+			return translateInputTransaction(oldModel);
+		}
+
 		return oldModel;
 	}
 
@@ -111,6 +141,56 @@ public class ClpSerializer {
 		return newList;
 	}
 
+	public static Object translateInputAuthor(BaseModel<?> oldModel) {
+		AuthorClp oldClpModel = (AuthorClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getAuthorRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputBook(BaseModel<?> oldModel) {
+		BookClp oldClpModel = (BookClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getBookRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputLibrary(BaseModel<?> oldModel) {
+		LibraryClp oldClpModel = (LibraryClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getLibraryRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputMember(BaseModel<?> oldModel) {
+		MemberClp oldClpModel = (MemberClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getMemberRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputTransaction(BaseModel<?> oldModel) {
+		TransactionClp oldClpModel = (TransactionClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getTransactionRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
 	public static Object translateInput(Object obj) {
 		if (obj instanceof BaseModel<?>) {
 			return translateInput((BaseModel<?>)obj);
@@ -124,6 +204,35 @@ public class ClpSerializer {
 	}
 
 	public static Object translateOutput(BaseModel<?> oldModel) {
+		Class<?> oldModelClass = oldModel.getClass();
+
+		String oldModelClassName = oldModelClass.getName();
+
+		if (oldModelClassName.equals(
+					"com.jenginetest.builder.model.impl.AuthorImpl")) {
+			return translateOutputAuthor(oldModel);
+		}
+
+		if (oldModelClassName.equals(
+					"com.jenginetest.builder.model.impl.BookImpl")) {
+			return translateOutputBook(oldModel);
+		}
+
+		if (oldModelClassName.equals(
+					"com.jenginetest.builder.model.impl.LibraryImpl")) {
+			return translateOutputLibrary(oldModel);
+		}
+
+		if (oldModelClassName.equals(
+					"com.jenginetest.builder.model.impl.MemberImpl")) {
+			return translateOutputMember(oldModel);
+		}
+
+		if (oldModelClassName.equals(
+					"com.jenginetest.builder.model.impl.TransactionImpl")) {
+			return translateOutputTransaction(oldModel);
+		}
+
 		return oldModel;
 	}
 
@@ -204,7 +313,78 @@ public class ClpSerializer {
 			return new SystemException();
 		}
 
+		if (className.equals("com.jenginetest.builder.NoSuchAuthorException")) {
+			return new com.jenginetest.builder.NoSuchAuthorException();
+		}
+
+		if (className.equals("com.jenginetest.builder.NoSuchBookException")) {
+			return new com.jenginetest.builder.NoSuchBookException();
+		}
+
+		if (className.equals("com.jenginetest.builder.NoSuchLibraryException")) {
+			return new com.jenginetest.builder.NoSuchLibraryException();
+		}
+
+		if (className.equals("com.jenginetest.builder.NoSuchMemberException")) {
+			return new com.jenginetest.builder.NoSuchMemberException();
+		}
+
+		if (className.equals(
+					"com.jenginetest.builder.NoSuchTransactionException")) {
+			return new com.jenginetest.builder.NoSuchTransactionException();
+		}
+
 		return throwable;
+	}
+
+	public static Object translateOutputAuthor(BaseModel<?> oldModel) {
+		AuthorClp newModel = new AuthorClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setAuthorRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputBook(BaseModel<?> oldModel) {
+		BookClp newModel = new BookClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setBookRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputLibrary(BaseModel<?> oldModel) {
+		LibraryClp newModel = new LibraryClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setLibraryRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputMember(BaseModel<?> oldModel) {
+		MemberClp newModel = new MemberClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setMemberRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputTransaction(BaseModel<?> oldModel) {
+		TransactionClp newModel = new TransactionClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setTransactionRemoteModel(oldModel);
+
+		return newModel;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ClpSerializer.class);

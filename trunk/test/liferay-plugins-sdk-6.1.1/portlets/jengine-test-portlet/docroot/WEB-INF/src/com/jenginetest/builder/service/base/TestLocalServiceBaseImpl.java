@@ -14,8 +14,23 @@
 
 package com.jenginetest.builder.service.base;
 
+import com.jenginetest.builder.service.AuthorLocalService;
+import com.jenginetest.builder.service.AuthorService;
+import com.jenginetest.builder.service.BookLocalService;
+import com.jenginetest.builder.service.BookService;
+import com.jenginetest.builder.service.LibraryLocalService;
+import com.jenginetest.builder.service.LibraryService;
+import com.jenginetest.builder.service.MemberLocalService;
+import com.jenginetest.builder.service.MemberService;
 import com.jenginetest.builder.service.TestLocalService;
 import com.jenginetest.builder.service.TestService;
+import com.jenginetest.builder.service.TransactionLocalService;
+import com.jenginetest.builder.service.TransactionService;
+import com.jenginetest.builder.service.persistence.AuthorPersistence;
+import com.jenginetest.builder.service.persistence.BookPersistence;
+import com.jenginetest.builder.service.persistence.LibraryPersistence;
+import com.jenginetest.builder.service.persistence.MemberPersistence;
+import com.jenginetest.builder.service.persistence.TransactionPersistence;
 
 import com.liferay.counter.service.CounterLocalService;
 
@@ -56,6 +71,222 @@ public abstract class TestLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 
 	/**
+	 * Returns the author local service.
+	 *
+	 * @return the author local service
+	 */
+	public AuthorLocalService getAuthorLocalService() {
+		return authorLocalService;
+	}
+
+	/**
+	 * Sets the author local service.
+	 *
+	 * @param authorLocalService the author local service
+	 */
+	public void setAuthorLocalService(AuthorLocalService authorLocalService) {
+		this.authorLocalService = authorLocalService;
+	}
+
+	/**
+	 * Returns the author remote service.
+	 *
+	 * @return the author remote service
+	 */
+	public AuthorService getAuthorService() {
+		return authorService;
+	}
+
+	/**
+	 * Sets the author remote service.
+	 *
+	 * @param authorService the author remote service
+	 */
+	public void setAuthorService(AuthorService authorService) {
+		this.authorService = authorService;
+	}
+
+	/**
+	 * Returns the author persistence.
+	 *
+	 * @return the author persistence
+	 */
+	public AuthorPersistence getAuthorPersistence() {
+		return authorPersistence;
+	}
+
+	/**
+	 * Sets the author persistence.
+	 *
+	 * @param authorPersistence the author persistence
+	 */
+	public void setAuthorPersistence(AuthorPersistence authorPersistence) {
+		this.authorPersistence = authorPersistence;
+	}
+
+	/**
+	 * Returns the book local service.
+	 *
+	 * @return the book local service
+	 */
+	public BookLocalService getBookLocalService() {
+		return bookLocalService;
+	}
+
+	/**
+	 * Sets the book local service.
+	 *
+	 * @param bookLocalService the book local service
+	 */
+	public void setBookLocalService(BookLocalService bookLocalService) {
+		this.bookLocalService = bookLocalService;
+	}
+
+	/**
+	 * Returns the book remote service.
+	 *
+	 * @return the book remote service
+	 */
+	public BookService getBookService() {
+		return bookService;
+	}
+
+	/**
+	 * Sets the book remote service.
+	 *
+	 * @param bookService the book remote service
+	 */
+	public void setBookService(BookService bookService) {
+		this.bookService = bookService;
+	}
+
+	/**
+	 * Returns the book persistence.
+	 *
+	 * @return the book persistence
+	 */
+	public BookPersistence getBookPersistence() {
+		return bookPersistence;
+	}
+
+	/**
+	 * Sets the book persistence.
+	 *
+	 * @param bookPersistence the book persistence
+	 */
+	public void setBookPersistence(BookPersistence bookPersistence) {
+		this.bookPersistence = bookPersistence;
+	}
+
+	/**
+	 * Returns the library local service.
+	 *
+	 * @return the library local service
+	 */
+	public LibraryLocalService getLibraryLocalService() {
+		return libraryLocalService;
+	}
+
+	/**
+	 * Sets the library local service.
+	 *
+	 * @param libraryLocalService the library local service
+	 */
+	public void setLibraryLocalService(LibraryLocalService libraryLocalService) {
+		this.libraryLocalService = libraryLocalService;
+	}
+
+	/**
+	 * Returns the library remote service.
+	 *
+	 * @return the library remote service
+	 */
+	public LibraryService getLibraryService() {
+		return libraryService;
+	}
+
+	/**
+	 * Sets the library remote service.
+	 *
+	 * @param libraryService the library remote service
+	 */
+	public void setLibraryService(LibraryService libraryService) {
+		this.libraryService = libraryService;
+	}
+
+	/**
+	 * Returns the library persistence.
+	 *
+	 * @return the library persistence
+	 */
+	public LibraryPersistence getLibraryPersistence() {
+		return libraryPersistence;
+	}
+
+	/**
+	 * Sets the library persistence.
+	 *
+	 * @param libraryPersistence the library persistence
+	 */
+	public void setLibraryPersistence(LibraryPersistence libraryPersistence) {
+		this.libraryPersistence = libraryPersistence;
+	}
+
+	/**
+	 * Returns the member local service.
+	 *
+	 * @return the member local service
+	 */
+	public MemberLocalService getMemberLocalService() {
+		return memberLocalService;
+	}
+
+	/**
+	 * Sets the member local service.
+	 *
+	 * @param memberLocalService the member local service
+	 */
+	public void setMemberLocalService(MemberLocalService memberLocalService) {
+		this.memberLocalService = memberLocalService;
+	}
+
+	/**
+	 * Returns the member remote service.
+	 *
+	 * @return the member remote service
+	 */
+	public MemberService getMemberService() {
+		return memberService;
+	}
+
+	/**
+	 * Sets the member remote service.
+	 *
+	 * @param memberService the member remote service
+	 */
+	public void setMemberService(MemberService memberService) {
+		this.memberService = memberService;
+	}
+
+	/**
+	 * Returns the member persistence.
+	 *
+	 * @return the member persistence
+	 */
+	public MemberPersistence getMemberPersistence() {
+		return memberPersistence;
+	}
+
+	/**
+	 * Sets the member persistence.
+	 *
+	 * @param memberPersistence the member persistence
+	 */
+	public void setMemberPersistence(MemberPersistence memberPersistence) {
+		this.memberPersistence = memberPersistence;
+	}
+
+	/**
 	 * Returns the test local service.
 	 *
 	 * @return the test local service
@@ -89,6 +320,62 @@ public abstract class TestLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setTestService(TestService testService) {
 		this.testService = testService;
+	}
+
+	/**
+	 * Returns the transaction local service.
+	 *
+	 * @return the transaction local service
+	 */
+	public TransactionLocalService getTransactionLocalService() {
+		return transactionLocalService;
+	}
+
+	/**
+	 * Sets the transaction local service.
+	 *
+	 * @param transactionLocalService the transaction local service
+	 */
+	public void setTransactionLocalService(
+		TransactionLocalService transactionLocalService) {
+		this.transactionLocalService = transactionLocalService;
+	}
+
+	/**
+	 * Returns the transaction remote service.
+	 *
+	 * @return the transaction remote service
+	 */
+	public TransactionService getTransactionService() {
+		return transactionService;
+	}
+
+	/**
+	 * Sets the transaction remote service.
+	 *
+	 * @param transactionService the transaction remote service
+	 */
+	public void setTransactionService(TransactionService transactionService) {
+		this.transactionService = transactionService;
+	}
+
+	/**
+	 * Returns the transaction persistence.
+	 *
+	 * @return the transaction persistence
+	 */
+	public TransactionPersistence getTransactionPersistence() {
+		return transactionPersistence;
+	}
+
+	/**
+	 * Sets the transaction persistence.
+	 *
+	 * @param transactionPersistence the transaction persistence
+	 */
+	public void setTransactionPersistence(
+		TransactionPersistence transactionPersistence) {
+		this.transactionPersistence = transactionPersistence;
 	}
 
 	/**
@@ -266,10 +553,40 @@ public abstract class TestLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
+	@BeanReference(type = AuthorLocalService.class)
+	protected AuthorLocalService authorLocalService;
+	@BeanReference(type = AuthorService.class)
+	protected AuthorService authorService;
+	@BeanReference(type = AuthorPersistence.class)
+	protected AuthorPersistence authorPersistence;
+	@BeanReference(type = BookLocalService.class)
+	protected BookLocalService bookLocalService;
+	@BeanReference(type = BookService.class)
+	protected BookService bookService;
+	@BeanReference(type = BookPersistence.class)
+	protected BookPersistence bookPersistence;
+	@BeanReference(type = LibraryLocalService.class)
+	protected LibraryLocalService libraryLocalService;
+	@BeanReference(type = LibraryService.class)
+	protected LibraryService libraryService;
+	@BeanReference(type = LibraryPersistence.class)
+	protected LibraryPersistence libraryPersistence;
+	@BeanReference(type = MemberLocalService.class)
+	protected MemberLocalService memberLocalService;
+	@BeanReference(type = MemberService.class)
+	protected MemberService memberService;
+	@BeanReference(type = MemberPersistence.class)
+	protected MemberPersistence memberPersistence;
 	@BeanReference(type = TestLocalService.class)
 	protected TestLocalService testLocalService;
 	@BeanReference(type = TestService.class)
 	protected TestService testService;
+	@BeanReference(type = TransactionLocalService.class)
+	protected TransactionLocalService transactionLocalService;
+	@BeanReference(type = TransactionService.class)
+	protected TransactionService transactionService;
+	@BeanReference(type = TransactionPersistence.class)
+	protected TransactionPersistence transactionPersistence;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = ResourceLocalService.class)
