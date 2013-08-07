@@ -5,17 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="ae150e8e-51d1-4f53-930c-7a5f84a66dc9" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docroot/WEB-INF/sql/sequences.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docroot/WEB-INF/sql/tables.sql" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/lib/jengine-test-portlet-service.jar" afterPath="$PROJECT_DIR$/docroot/WEB-INF/lib/jengine-test-portlet-service.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ant.xml" afterPath="$PROJECT_DIR$/.idea/ant.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service.xml" afterPath="$PROJECT_DIR$/docroot/WEB-INF/service.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/SAuthorWrapper.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/SAuthorWrapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/SBookWrapper.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/SBookWrapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/SLibraryWrapper.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/SLibraryWrapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/SMemberWrapper.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/SMemberWrapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/STransactionWrapper.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/model/STransactionWrapper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/TestLocalService.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/TestLocalService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/TestLocalServiceClp.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/TestLocalServiceClp.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/TestLocalServiceUtil.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/TestLocalServiceUtil.java" />
@@ -24,21 +15,14 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/TestServiceClp.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/TestServiceClp.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/TestServiceUtil.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/TestServiceUtil.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/TestServiceWrapper.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/TestServiceWrapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/base-spring.xml" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/base-spring.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/cluster-spring.xml" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/cluster-spring.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/dynamic-data-source-spring.xml" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/dynamic-data-source-spring.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/hibernate-spring.xml" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/hibernate-spring.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/infrastructure-spring.xml" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/infrastructure-spring.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/portlet-model-hints.xml" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/portlet-model-hints.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/shard-data-source-spring.xml" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/shard-data-source-spring.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/CustomBaseModel.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/CustomBaseModel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/TestLocalServiceClpInvoker.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/TestLocalServiceClpInvoker.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/TestServiceClpInvoker.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/TestServiceClpInvoker.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/http/TestServiceSoap.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/http/TestServiceSoap.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestLocalServiceImpl.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestLocalServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/service.properties" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/service.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestServiceImpl.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestServiceImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/css/.sass-cache/main.css" afterPath="$PROJECT_DIR$/docroot/css/.sass-cache/main.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/js/service.js" afterPath="$PROJECT_DIR$/docroot/js/service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/liferay-sdk.iml" afterPath="$PROJECT_DIR$/docroot/liferay-sdk.iml" />
     </list>
     <ignored path="jengine-test-portlet.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -56,6 +40,21 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <line_breakpoints>
+      <breakpoint url="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelManager.java" line="279" class="com.jengine.db.ModelManager" package="com.jengine.db">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -113,15 +112,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="service.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/service.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="84" selection-start="1246" selection-end="1246" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="service.properties" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/service.properties">
           <provider selected="true" editor-type-id="text-editor">
@@ -134,7 +124,7 @@
       <file leaf-file-name="TestLocalServiceImpl.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestLocalServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="159" column="90" selection-start="6317" selection-end="6317" vertical-scroll-proportion="0.31260228">
+            <state line="203" column="68" selection-start="7982" selection-end="7982" vertical-scroll-proportion="0.90180033">
               <folding>
                 <element signature="e#6556#6564#0" expanded="true" />
               </folding>
@@ -142,10 +132,59 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tables.sql" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/sql/tables.sql">
+      <file leaf-file-name="TestServiceImpl.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="63" column="30" selection-start="2372" selection-end="2372" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Author.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Author.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="34" column="31" selection-start="1205" selection-end="1205" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CModel.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/CModel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="30" column="54" selection-start="1059" selection-end="1059" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CustomBaseModel.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/CustomBaseModel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="105" column="58" selection-start="4031" selection-end="4031" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#3751#3767#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ModelManager.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="279" column="0" selection-start="12262" selection-end="12262" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PrimaryKey.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/PrimaryKey.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="49" column="0" selection-start="1532" selection-end="1532" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -169,42 +208,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sequences.sql" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/sql/sequences.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="web.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/web.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="liferay-plugin-package.properties" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/liferay-plugin-package.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="5" selection-start="702" selection-end="702" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="portlet.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/portlet.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindManager">
@@ -215,7 +218,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestServiceImpl.java" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/CAuthor.java" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Library.java" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Book.java" />
@@ -226,10 +228,11 @@
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/WLModel.java" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/BaseTestModel.java" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/CModel.java" />
-        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/CustomBaseModel.java" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/portlet-model-hints.xml" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/service.xml" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/service.properties" />
+        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestServiceImpl.java" />
+        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/CustomBaseModel.java" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestLocalServiceImpl.java" />
       </list>
     </option>
@@ -789,7 +792,11 @@
       <created>1375802401102</created>
       <updated>1375802401102</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="tests 5, 6 were added; sql tables were added">
+      <created>1375886226101</created>
+      <updated>1375886226101</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -960,59 +967,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/dynamic-data-source-spring.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="68" selection-start="27" selection-end="27" vertical-scroll-proportion="0.046511628">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/shard-data-source-spring.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/portlet-spring.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/META-INF/portlet-orm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="120" selection-start="249" selection-end="249" vertical-scroll-proportion="-0.23734178">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../liferay-portal-src-6.1.1-ce-ga2/portal-impl/src/com/liferay/portal/tools/servicebuilder/ServiceBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3371" column="24" selection-start="91877" selection-end="91877" vertical-scroll-proportion="0.4028436">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/liferay-portlet.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/portlet.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -1076,9 +1030,55 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Author.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="31" selection-start="1205" selection-end="1205" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/CModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="54" selection-start="1059" selection-end="1059" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="63" column="30" selection-start="2372" selection-end="2372" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/PrimaryKey.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="0" selection-start="1532" selection-end="1532" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="279" column="0" selection-start="12262" selection-end="12262" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/CustomBaseModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="105" column="58" selection-start="4031" selection-end="4031" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#3751#3767#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestLocalServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="159" column="90" selection-start="6317" selection-end="6317" vertical-scroll-proportion="0.31260228">
+        <state line="203" column="68" selection-start="7982" selection-end="7982" vertical-scroll-proportion="0.90180033">
           <folding>
             <element signature="e#6556#6564#0" expanded="true" />
           </folding>

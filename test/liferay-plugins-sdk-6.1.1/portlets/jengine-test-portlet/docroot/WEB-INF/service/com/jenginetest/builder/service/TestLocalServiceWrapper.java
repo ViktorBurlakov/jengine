@@ -103,6 +103,15 @@ public class TestLocalServiceWrapper implements TestLocalService,
 	}
 
 	/**
+	* Inserting and Updating test
+	*/
+	public void test5()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_testLocalService.test5();
+	}
+
+	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */
 	public TestLocalService getWrappedTestLocalService() {

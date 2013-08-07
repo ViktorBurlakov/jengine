@@ -109,5 +109,16 @@ public class TestServiceSoap {
 		}
 	}
 
+	public static void test5() throws RemoteException {
+		try {
+			TestServiceUtil.test5();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(TestServiceSoap.class);
 }

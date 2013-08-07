@@ -27,6 +27,7 @@ import com.liferay.portal.model.BaseModel;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -93,6 +94,18 @@ public class CustomBaseModel<T extends BaseModel<T>> {
 
     public String format(String field) throws SystemException, PortalException {
         return _manager.getField(field).format(this.getValue(field));
+    }
+
+    public Map<String, Object> getVOs() throws SystemException, PortalException {
+        Map<String, Object> vos = new LinkedHashMap<String, Object>();
+
+        for (ModelField field : _manager.getFieldMap().values()) {
+            if (!field.isFunction() && !field.isMultiReference() && !field.isProperty() && !field.isSelf()) {
+                vos.put(field.getName(), getValue(field));
+            }
+        }
+
+        return vos;
     }
 
     /* modify methods */

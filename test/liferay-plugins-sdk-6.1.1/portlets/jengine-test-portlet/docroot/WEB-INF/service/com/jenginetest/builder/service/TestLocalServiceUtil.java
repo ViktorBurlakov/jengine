@@ -109,6 +109,15 @@ public class TestLocalServiceUtil {
 		getService().test4();
 	}
 
+	/**
+	* Inserting and Updating test
+	*/
+	public static void test5()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().test5();
+	}
+
 	public static void clearService() {
 		_service = null;
 	}
