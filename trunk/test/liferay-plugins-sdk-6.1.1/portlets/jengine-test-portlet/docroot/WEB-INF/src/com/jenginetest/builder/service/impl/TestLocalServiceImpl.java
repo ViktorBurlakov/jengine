@@ -184,6 +184,26 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
     }
 
 
+    /**
+     * Inserting and Updating test
+     */
+    public void test5() throws SystemException, PortalException {
+        System.out.println("** Test 5: Inserting and Updating test");
+        Map context = getServiceContext();
+
+        clearData();
+        Author author1 = new Author(1, context);
+        author1.setValues(map("firstName", "Jules", "lastName", "Verne"));
+        author1.save();
+
+        check(Author.cls.get(1, context).getLastName().equals("Verne"));
+
+        author1.setValue("firstName", "Jules1");
+        author1.save();
+
+        check(Author.cls.get(1, context).getFirstName().equals("Jules1"));
+    }
+
     private void check(boolean value) throws PortalException {
         if (value) {
             return;
