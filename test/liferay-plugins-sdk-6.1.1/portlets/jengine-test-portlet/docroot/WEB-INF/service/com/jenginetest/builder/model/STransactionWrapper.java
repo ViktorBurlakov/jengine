@@ -212,7 +212,8 @@ public class STransactionWrapper implements STransaction,
 		return new STransactionWrapper((STransaction)_sTransaction.clone());
 	}
 
-	public int compareTo(STransaction sTransaction) {
+	public int compareTo(
+		com.jenginetest.builder.model.STransaction sTransaction) {
 		return _sTransaction.compareTo(sTransaction);
 	}
 
@@ -221,11 +222,11 @@ public class STransactionWrapper implements STransaction,
 		return _sTransaction.hashCode();
 	}
 
-	public com.liferay.portal.model.CacheModel<STransaction> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.jenginetest.builder.model.STransaction> toCacheModel() {
 		return _sTransaction.toCacheModel();
 	}
 
-	public STransaction toEscapedModel() {
+	public com.jenginetest.builder.model.STransaction toEscapedModel() {
 		return new STransactionWrapper(_sTransaction.toEscapedModel());
 	}
 

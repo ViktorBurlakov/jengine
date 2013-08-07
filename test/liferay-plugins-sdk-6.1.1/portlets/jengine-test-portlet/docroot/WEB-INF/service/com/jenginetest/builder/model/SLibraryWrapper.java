@@ -185,7 +185,7 @@ public class SLibraryWrapper implements SLibrary, ModelWrapper<SLibrary> {
 		return new SLibraryWrapper((SLibrary)_sLibrary.clone());
 	}
 
-	public int compareTo(SLibrary sLibrary) {
+	public int compareTo(com.jenginetest.builder.model.SLibrary sLibrary) {
 		return _sLibrary.compareTo(sLibrary);
 	}
 
@@ -194,11 +194,11 @@ public class SLibraryWrapper implements SLibrary, ModelWrapper<SLibrary> {
 		return _sLibrary.hashCode();
 	}
 
-	public com.liferay.portal.model.CacheModel<SLibrary> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.jenginetest.builder.model.SLibrary> toCacheModel() {
 		return _sLibrary.toCacheModel();
 	}
 
-	public SLibrary toEscapedModel() {
+	public com.jenginetest.builder.model.SLibrary toEscapedModel() {
 		return new SLibraryWrapper(_sLibrary.toEscapedModel());
 	}
 

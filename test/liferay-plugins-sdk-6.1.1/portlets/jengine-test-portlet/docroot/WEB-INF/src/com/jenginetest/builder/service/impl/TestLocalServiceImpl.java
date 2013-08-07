@@ -19,9 +19,10 @@ import com.jenginetest.custom.*;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-import static com.jengine.utils.CollectionUtil.concat;
 import static com.jengine.utils.CollectionUtil.map;
 
 /**
@@ -44,6 +45,12 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link com.jenginetest.builder.service.TestLocalServiceUtil} to access the test local service.
 	 */
+    private List<Author> authors = new ArrayList<Author>();
+    private List<Library> libraries = new ArrayList<Library>();
+    private List<Book> books = new ArrayList<Book>();
+    private List<Member> members = new ArrayList<Member>();
+    private List<Transaction> transactions = new ArrayList<Transaction>();
+
     public void clearData() throws SystemException {
         // remove all db
         Map context = getServiceContext();
@@ -53,6 +60,12 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         Book.manager.remove(context);
         Member.manager.remove(context);
         Transaction.manager.remove(context);
+
+        authors.clear();
+        libraries.clear();
+        books.clear();
+        members.clear();
+        transactions.clear();
     }
 
     public void loadData() throws SystemException, PortalException {
@@ -65,36 +78,42 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         author1.setValues(map("firstName", "Jules", "lastName", "Verne"));
         author2.setValues(map("firstName", "Isaac", "lastName", "Asimov"));
         author3.setValues(map("firstName", "Stephen", "lastName", "King"));
-        author1.save();
-        author2.save();
-        author3.save();
+        authors.add((Author) author1.save());
+        authors.add((Author) author2.save());
+        authors.add((Author) author3.save());
 
         Library library = new Library(1, context);
+        Library library2 = new Library(2, context);
         library.setValues(map("name", "Globe", "address", "Springfield, 742 Evergreen Terrace"));
-        library.save();
+        library2.setValues(map("name", "Local", "address", "Local"));
+        libraries.add((Library) library.save());
+        libraries.add((Library) library2.save());
 
         Book book1 = new Book(1, context);
         Book book2 = new Book(2, context);
         Book book3 = new Book(3, context);
         book1.setValues(map("title", "The Dark Tower", "library", library));
         book2.setValues(map("title", "The Shining ", "library", library));
-        book3.setValues(map("title", "The Dark Tower", "library", library));
-        book1.save();
-        book2.save();
-        book3.save();
+        book3.setValues(map("title", "Vingt mille lieues sous les mers", "library", library));
+        books.add((Book) book1.save());
+        books.add((Book) book2.save());
+        books.add((Book) book3.save());
 
         Member member1 = new Member(1, context);
         Member member2 = new Member(2, context);
         Member member3 = new Member(3, context);
         Member member4 = new Member(4, context);
+        Member member5 = new Member(5, context);
         member1.setValues(map("firstName", "Mark", "lastName", "Adamson", "library", library));
         member2.setValues(map("firstName", "Peter", "lastName", "Douglas", "library", library));
         member3.setValues(map("firstName", "Gary", "lastName", "Miller", "library", library));
         member4.setValues(map("firstName", "Homer", "lastName", "Simpson", "library", library));
-        member1.save();
-        member2.save();
-        member3.save();
-        member4.save();
+        member5.setValues(map("firstName", "Burt", "lastName", "Simpson", "library", library));
+        members.add((Member) member1.save());
+        members.add((Member) member2.save());
+        members.add((Member) member3.save());
+        members.add((Member) member4.save());
+        members.add((Member) member5.save());
     }
 
     /**
@@ -142,11 +161,11 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         Book.cls.get(1, context).getTitle().equals("The Dark Tower");
 
         // filter
-        check(CProject.cls.select(map("status", 1)).list(context).size() == 2);
-        check(CProject.cls.select(map("status", 2)).<CProject>one(context).getTitle().equals("Project 2"));
-        check(CTask.cls.select(map("project", CProject.cls.get(1, context))).<CTask>list(context).size() == 2);
-        check(CTask.cls.select(map("project.title__like", "Pro%2")).<CTask>list(context).size() == 1);
-        check(CTask.cls.select(map("project.projectId", 3)).<CTask>list(context).size() == 0);
+        check(Member.cls.select(map("lastName", "Simpson")).list(context).size() == 2);
+        check(Author.cls.select(map("firstName", "Stephen")).<Author>one(context).getLastName().equals("King"));
+        check(Book.cls.select(map("library", Library.cls.get(1, context))).<Book>list(context).size() == 3);
+        check(Book.cls.select(map("library.name__like", "%Globe")).<Book>list(context).size() == 3);
+        check(Book.cls.select(map("library.libraryId", 101)).<Book>list(context).size() == 0);
     }
 
     /**
@@ -159,8 +178,9 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         clearData();
         loadData();
 
-        check(CTask.cls.select(map("project", CProject.cls.select().field("projectId")
-                .filter(map("title__like", "%1")))).<CTask>list(context).size() == 2);
+        check(Book.cls
+                .select(map("library", Library.cls.select().field("libraryId").filter(map("name__like", "%Globe"))))
+                .<Book>list(context).size() == 3);
     }
 
 
@@ -168,7 +188,7 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         if (value) {
             return;
         } else {
-            throw new PortalException("Value is false!!!");
+            throw new PortalException("Checking failed!!!");
         }
     }
 

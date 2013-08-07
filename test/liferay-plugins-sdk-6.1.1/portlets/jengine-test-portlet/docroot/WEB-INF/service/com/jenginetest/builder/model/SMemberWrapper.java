@@ -210,7 +210,7 @@ public class SMemberWrapper implements SMember, ModelWrapper<SMember> {
 		return new SMemberWrapper((SMember)_sMember.clone());
 	}
 
-	public int compareTo(SMember sMember) {
+	public int compareTo(com.jenginetest.builder.model.SMember sMember) {
 		return _sMember.compareTo(sMember);
 	}
 
@@ -219,11 +219,11 @@ public class SMemberWrapper implements SMember, ModelWrapper<SMember> {
 		return _sMember.hashCode();
 	}
 
-	public com.liferay.portal.model.CacheModel<SMember> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.jenginetest.builder.model.SMember> toCacheModel() {
 		return _sMember.toCacheModel();
 	}
 
-	public SMember toEscapedModel() {
+	public com.jenginetest.builder.model.SMember toEscapedModel() {
 		return new SMemberWrapper(_sMember.toEscapedModel());
 	}
 
