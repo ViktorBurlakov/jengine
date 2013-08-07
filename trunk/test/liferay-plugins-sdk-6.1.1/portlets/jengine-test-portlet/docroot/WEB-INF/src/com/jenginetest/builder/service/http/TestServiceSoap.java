@@ -14,6 +14,13 @@
 
 package com.jenginetest.builder.service.http;
 
+import com.jenginetest.builder.service.TestServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * <p>
  * This class provides a SOAP utility for the
@@ -47,4 +54,60 @@ package com.jenginetest.builder.service.http;
  * @generated
  */
 public class TestServiceSoap {
+	public static void test() throws RemoteException {
+		try {
+			TestServiceUtil.test();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void test1() throws RemoteException {
+		try {
+			TestServiceUtil.test1();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void test2() throws RemoteException {
+		try {
+			TestServiceUtil.test2();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void test3() throws RemoteException {
+		try {
+			TestServiceUtil.test3();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void test4() throws RemoteException {
+		try {
+			TestServiceUtil.test4();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(TestServiceSoap.class);
 }

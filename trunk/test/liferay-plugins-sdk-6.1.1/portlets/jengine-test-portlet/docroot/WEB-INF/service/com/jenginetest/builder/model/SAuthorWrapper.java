@@ -185,7 +185,7 @@ public class SAuthorWrapper implements SAuthor, ModelWrapper<SAuthor> {
 		return new SAuthorWrapper((SAuthor)_sAuthor.clone());
 	}
 
-	public int compareTo(SAuthor sAuthor) {
+	public int compareTo(com.jenginetest.builder.model.SAuthor sAuthor) {
 		return _sAuthor.compareTo(sAuthor);
 	}
 
@@ -194,11 +194,11 @@ public class SAuthorWrapper implements SAuthor, ModelWrapper<SAuthor> {
 		return _sAuthor.hashCode();
 	}
 
-	public com.liferay.portal.model.CacheModel<SAuthor> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.jenginetest.builder.model.SAuthor> toCacheModel() {
 		return _sAuthor.toCacheModel();
 	}
 
-	public SAuthor toEscapedModel() {
+	public com.jenginetest.builder.model.SAuthor toEscapedModel() {
 		return new SAuthorWrapper(_sAuthor.toEscapedModel());
 	}
 

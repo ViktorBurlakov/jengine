@@ -185,7 +185,7 @@ public class SBookWrapper implements SBook, ModelWrapper<SBook> {
 		return new SBookWrapper((SBook)_sBook.clone());
 	}
 
-	public int compareTo(SBook sBook) {
+	public int compareTo(com.jenginetest.builder.model.SBook sBook) {
 		return _sBook.compareTo(sBook);
 	}
 
@@ -194,11 +194,11 @@ public class SBookWrapper implements SBook, ModelWrapper<SBook> {
 		return _sBook.hashCode();
 	}
 
-	public com.liferay.portal.model.CacheModel<SBook> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.jenginetest.builder.model.SBook> toCacheModel() {
 		return _sBook.toCacheModel();
 	}
 
-	public SBook toEscapedModel() {
+	public com.jenginetest.builder.model.SBook toEscapedModel() {
 		return new SBookWrapper(_sBook.toEscapedModel());
 	}
 
