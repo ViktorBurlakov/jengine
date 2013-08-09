@@ -20,25 +20,33 @@
 package com.jengine.db.field;
 
 
+import com.jengine.db.ModelManager;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static com.jengine.utils.CollectionUtil.map;
 
-
-public class FunctionField extends ModelField {
+public class FunctionField extends Field {
     private String expression = "";
     private List attributes = new ArrayList();
 
-    public FunctionField(String name, Class fieldClass, String expr, Object ... attributes) {
-        this(name, fieldClass, map(), expr, attributes);
+    public FunctionField(Class fieldClass, String expr, Object ... attributes) {
+        super(fieldClass);
+        this.expression = expr;
+        this.attributes = new ArrayList(Arrays.asList(attributes));
     }
 
-    public FunctionField(String name, Class fieldClass, Map<String, Object> options, String expr, Object ... attributes) {
+    public FunctionField(String name, Class fieldClass, Map<String, Object> options, String expression, Object ... attributes) {
         super(name, fieldClass, options);
-        this.expression = expr;
+        this.expression = expression;
+        this.attributes = new ArrayList(Arrays.asList(attributes));
+    }
+
+    public FunctionField(ModelManager manager, String name, Class fieldClass, Map<String, Object> options, String expression, Object ... attributes) {
+        super(manager, name, fieldClass, options);
+        this.expression = expression;
         this.attributes = new ArrayList(Arrays.asList(attributes));
     }
 

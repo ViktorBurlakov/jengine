@@ -41,22 +41,22 @@ package com.jenginetest.custom;
 
 import com.jengine.db.Manager;
 import com.jengine.db.ModelManager;
-import com.jengine.db.field.ModelField;
+import com.jengine.db.field.Field;
 import com.jengine.db.field.PrimaryKey;
 import com.jengine.db.field.StringField;
 import com.jenginetest.builder.model.SLibrary;
 import com.jenginetest.builder.model.impl.SLibraryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+
 import java.io.Serializable;
 import java.util.Map;
-import static com.jengine.utils.CollectionUtil.map;
 
 
 public class Library extends CModel<SLibrary> {
-    public static ModelField libraryId = new PrimaryKey("libraryId");
-    public static ModelField name = new StringField("name", map("verbose", "Name"));
-    public static ModelField address = new StringField("address", map("verbose", "Address"));
+    public static Field libraryId = new PrimaryKey();
+    public static Field name    = new StringField("verbose", "Name");
+    public static Field address = new StringField("verbose", "Address");
 
     @Manager
     public static ModelManager manager = new ModelManager(Library.class, "Library", SLibrary.class, SLibraryImpl.class,

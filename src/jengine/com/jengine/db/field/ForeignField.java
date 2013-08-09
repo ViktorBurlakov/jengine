@@ -19,26 +19,32 @@
 
 package com.jengine.db.field;
 
+import com.jengine.db.ModelManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class ForeignField extends ModelField {
+public class ForeignField extends Field {
     private ReferenceField reference = null;
-    private ModelField field = null;
+    private Field field = null;
 
-    public ForeignField(String name, ReferenceField reference, ModelField field) {
-        super(name, field.getFieldClass());
+    public ForeignField(ReferenceField reference, Field field) {
+        super(field.getFieldClass());
         this.reference = reference;
         this.field = field;
     }
 
-    public ForeignField(String name, Class fieldClass, Map<String, Object> options) {
-        super(name, fieldClass, options);
+    public ForeignField(ModelManager manager, String name, ReferenceField reference, Field field) {
+        super(manager, name, field.getFieldClass());
+        this.reference = reference;
+        this.field = field;
+    }
+
+    public ForeignField(ModelManager manager, String name, Map<String, Object> options, ReferenceField reference, Field field) {
+        super(manager, name, field.getFieldClass(), options);
+        this.reference = reference;
+        this.field = field;
     }
 
     public Object castType(Object value) throws SystemException, PortalException {
@@ -53,7 +59,7 @@ public class ForeignField extends ModelField {
         return getField().getDbName();
     }
 
-    public ModelField getLastField() {
+    public Field getLastField() {
         return this.field.isForeign() ? ((ForeignField)field).getLastField() : field;
     }
 
@@ -80,11 +86,11 @@ public class ForeignField extends ModelField {
         this.reference = reference;
     }
 
-    public ModelField getField() {
+    public Field getField() {
         return field;
     }
 
-    public void setField(ModelField field) {
+    public void setField(Field field) {
         this.field = field;
     }
 

@@ -22,20 +22,22 @@ package com.jenginetest.custom;
 
 import com.jengine.db.Manager;
 import com.jengine.db.ModelManager;
-import com.jengine.db.field.*;
+import com.jengine.db.field.Field;
+import com.jengine.db.field.PrimaryKey;
+import com.jengine.db.field.StringField;
 import com.jenginetest.builder.model.SAuthor;
 import com.jenginetest.builder.model.impl.SAuthorImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+
 import java.io.Serializable;
 import java.util.Map;
-import static com.jengine.utils.CollectionUtil.map;
 
 
 public class Author extends CModel<SAuthor> {
-    public static ModelField authorId = new PrimaryKey("authorId");
-    public static ModelField firstName = new StringField("firstName", map("verbose", "First Name"));
-    public static ModelField lastName = new StringField("lastName", map("verbose", "Last Name"));
+    public static Field authorId  = new PrimaryKey();
+    public static Field firstName = new StringField("verbose", "First Name");
+    public static Field lastName  = new StringField("verbose", "Last Name");
 
     @Manager
     public static ModelManager manager = new ModelManager(Author.class, "Author", SAuthor.class, SAuthorImpl.class,
@@ -51,11 +53,12 @@ public class Author extends CModel<SAuthor> {
         super(author, serviceContext);
     }
 
+
     public String getVerbose() throws SystemException, PortalException {
         return String.format("%s %s", getFirstName(), getLastName());
     }
 
-    /* getters and setters block  */
+    /* Getters and Setters */
 
     public String getFirstName() throws SystemException, PortalException {
         return (String) getValue(firstName);

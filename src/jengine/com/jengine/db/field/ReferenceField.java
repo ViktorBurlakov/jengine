@@ -26,17 +26,31 @@ import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.Map;
 
-public class ReferenceField extends ModelField {
-    private String referenceFieldDbName;
-    private String referenceFieldServiceName;
-    private Class FieldClassImpl;
+import static com.jengine.utils.CollectionUtil.map;
 
-    public ReferenceField(String name, Class fieldClass) {
-        super(name, fieldClass);
+public class ReferenceField extends Field {
+    protected String referenceFieldDbName;
+    protected String referenceFieldServiceName;
+    protected Class fieldClassImpl;
+
+    public ReferenceField(Class fieldClass) {
+        super(fieldClass);
+    }
+
+    public ReferenceField(Class fieldClass, Object... options) {
+        super(fieldClass, map(options));
+    }
+
+    public ReferenceField(Class fieldClass, Map<String, Object> options) {
+        super(fieldClass, options);
     }
 
     public ReferenceField(String name, Class fieldClass, Map<String, Object> options) {
         super(name, fieldClass, options);
+    }
+
+    public void init() {
+        super.init();
         if (!options.containsKey("dbName")) {
             this.dbName = String.format("%sId", name);
             this.referenceFieldDbName = this.dbName;
@@ -52,11 +66,11 @@ public class ReferenceField extends ModelField {
     }
 
     public Class getFieldClassImpl() {
-        return FieldClassImpl;
+        return fieldClassImpl;
     }
 
     public void setFieldClassImpl(Class fieldClassImpl) {
-        FieldClassImpl = fieldClassImpl;
+        this.fieldClassImpl = fieldClassImpl;
     }
 
     public Object castType(Object value) {

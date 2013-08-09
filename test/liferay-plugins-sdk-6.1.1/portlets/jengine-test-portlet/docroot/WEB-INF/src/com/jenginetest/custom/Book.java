@@ -21,7 +21,7 @@ package com.jenginetest.custom;
 
 import com.jengine.db.Manager;
 import com.jengine.db.ModelManager;
-import com.jengine.db.field.ModelField;
+import com.jengine.db.field.Field;
 import com.jengine.db.field.PrimaryKey;
 import com.jengine.db.field.ReferenceField;
 import com.jengine.db.field.StringField;
@@ -35,9 +35,9 @@ import static com.jengine.utils.CollectionUtil.map;
 
 
 public class Book extends CModel<SBook> {
-    public static ModelField bookId = new PrimaryKey("bookId");
-    public static ModelField title = new StringField("title", map("verbose", "Title"));
-    public static ModelField library = new ReferenceField("library", Library.class, map("verbose", "Library"));
+    public static Field bookId  = new PrimaryKey();
+    public static Field title   = new StringField("verbose", "Title");
+    public static Field library = new ReferenceField(Library.class, map("verbose", "Library"));
 
     @Manager
     public static ModelManager manager = new ModelManager(Book.class, "Book", SBook.class, SBookImpl.class,

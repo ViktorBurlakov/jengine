@@ -22,7 +22,7 @@ package com.jenginetest.custom;
 import com.jengine.db.Manager;
 import com.jengine.db.ModelManager;
 import com.jengine.db.field.DateField;
-import com.jengine.db.field.ModelField;
+import com.jengine.db.field.Field;
 import com.jengine.db.field.PrimaryKey;
 import com.jengine.db.field.ReferenceField;
 import com.jenginetest.builder.model.STransaction;
@@ -37,10 +37,10 @@ import java.util.Map;
 import static com.jengine.utils.CollectionUtil.map;
 
 public class Transaction extends CModel<STransaction> {
-    public static ModelField transactionId = new PrimaryKey("transactionId");
-    public static ModelField book = new ReferenceField("book", Book.class, map("verbose", "Book"));
-    public static ModelField member = new ReferenceField("member", Member.class, map("verbose", "Member"));
-    public static ModelField tdate = new DateField("tdate", map("verbose", "Date"));
+    public static Field transactionId = new PrimaryKey();
+    public static Field book   = new ReferenceField(Book.class, map("verbose", "Book"));
+    public static Field member = new ReferenceField(Member.class, map("verbose", "Member"));
+    public static Field tdate  = new DateField("verbose", "Date");
 
     @Manager
     public static ModelManager manager = new ModelManager(Transaction.class, "Transaction", STransaction.class, STransactionImpl.class,

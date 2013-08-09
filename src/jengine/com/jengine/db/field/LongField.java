@@ -19,14 +19,29 @@
 
 package com.jengine.db.field;
 
+import com.jengine.db.ModelManager;
+
 import java.util.Map;
 
-public class LongField extends ModelField {
-    public LongField(String name) {
-        super(name, Long.class);
+public class LongField extends Field {
+
+    public LongField() {
+        super(Long.class);
+    }
+
+    public LongField(Object... options) {
+        super(Long.class, options);
+    }
+
+    public LongField(Map<String, Object> options) {
+        super(Long.class, options);
     }
 
     public LongField(String name, Map<String, Object> options) {
         super(name, Long.class, options);
+    }
+
+    public LongField(ModelManager manager, String name, Map<String, Object> options) {
+        super(manager, name, Long.class, options);
     }
 }

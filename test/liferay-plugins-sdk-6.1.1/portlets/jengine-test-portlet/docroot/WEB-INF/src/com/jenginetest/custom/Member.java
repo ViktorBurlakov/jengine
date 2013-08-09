@@ -22,7 +22,7 @@ package com.jenginetest.custom;
 
 import com.jengine.db.Manager;
 import com.jengine.db.ModelManager;
-import com.jengine.db.field.ModelField;
+import com.jengine.db.field.Field;
 import com.jengine.db.field.PrimaryKey;
 import com.jengine.db.field.ReferenceField;
 import com.jengine.db.field.StringField;
@@ -37,10 +37,10 @@ import java.util.Map;
 import static com.jengine.utils.CollectionUtil.map;
 
 public class Member extends CModel<SMember> {
-    public static ModelField memberId = new PrimaryKey("memberId");
-    public static ModelField firstName = new StringField("firstName", map("verbose", "First Name"));
-    public static ModelField lastName = new StringField("lastName", map("verbose", "Last Name"));
-    public static ModelField library = new ReferenceField("library", Library.class, map("verbose", "Library"));
+    public static Field memberId  = new PrimaryKey();
+    public static Field firstName = new StringField("verbose", "First Name");
+    public static Field lastName  = new StringField("verbose", "Last Name");
+    public static Field library   = new ReferenceField(Library.class, map("verbose", "Library"));
 
     @Manager
     public static ModelManager manager = new ModelManager(Member.class, "Member", SMember.class, SMemberImpl.class,

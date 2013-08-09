@@ -35,9 +35,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
-import static com.jengine.utils.CollectionUtil.concat;
-import static com.jengine.utils.CollectionUtil.list;
-import static com.jengine.utils.CollectionUtil.map;
+import static com.jengine.utils.CollectionUtil.*;
 
 
 public class ModelManager {
@@ -47,9 +45,9 @@ public class ModelManager {
     private Class modelClass;
     private Class modelClassImpl;
     private Map<String, Integer> columns = new HashMap<String, Integer>();
-    private Map<String, ModelField> fields = new LinkedHashMap<String, ModelField>();
-    private Map<String, ModelField> serviceFields = new LinkedHashMap<String, ModelField>();
-    private ModelField primaryKey = null;
+    private Map<String, Field> fields = new LinkedHashMap<String, Field>();
+    private Map<String, Field> serviceFields = new LinkedHashMap<String, Field>();
+    private Field primaryKey = null;
     private SelfField self;
     private PersistenceManager persistenceManager;
     private DynamicQueryManager dynamicQueryManager;
@@ -70,51 +68,43 @@ public class ModelManager {
         this.modelClassImpl = serviceClsImpl;
         this.tableName = tableName;
         this.entryCacheEnabled = entryCacheEnabled;
+
         // columns
         for (int i=0; i < columns.length; i++) {
             this.columns.put((String) columns[i][0], (Integer) columns[i][1]);
         }
-        //fields
+        Map<String, Field> clsFields = new LinkedHashMap<String, Field>();
         self = new SelfField(customModel);
-        self.setFieldClassImpl(serviceClsImpl);
-        List<ModelField> clsFields = new ArrayList<ModelField>();
-        clsFields.addAll(getFields(customModel).values());
-        clsFields.add(self);
-        for (ModelField field : clsFields) {
-            addField(field);
-        }
-        // properties
-        List<ModelProperty> clsProperties = getProperties(customModel);
-        clsProperties.add(new ModelProperty("verbose", "getVerbose", BaseModel.class, map("verbose", modelName)));
-        for (ModelProperty property : clsProperties) {
-            property.setModel(serviceCls);
-            this.fields.put(property.getName(), property);
-        }
-        //persistence
-        persistenceManager = new PersistenceManager(this);
-        dynamicQueryManager = new DynamicQueryManager(this);
-        // register
-        CustomBaseModel.managers.put(customModel.getName(), this);
-    }
+        clsFields.put("self", self);
+        clsFields.putAll(getFields(customModel));
+        clsFields.putAll(getProperties(customModel));
+        clsFields.put("verbose", new ModelProperty("verbose", "getVerbose", BaseModel.class, map("verbose", modelName)));
 
-    public void addField(ModelField field) {
-        if (!field.isReference() && this.columns.containsKey(field.getDbName())) {
-            field.setDbType(this.columns.get(field.getDbName()));
-        }
-        if (field.isReference()) {
-            ReferenceField referenceField = (ReferenceField) field;
-            if (field.getFieldClass().equals(customModel)) {
-                referenceField.setFieldClassImpl(modelClassImpl);
-            } else {
-                referenceField.setFieldClassImpl(CustomBaseModel.getManager(field.getFieldClass()).getModelClassImpl());
+        for (String fldName: clsFields.keySet()) {
+            Field field = clsFields.get(fldName);
+            // init field
+            field.setName(fldName);
+            field.setManager(this);
+            field.init();
+            if (!field.isReference() && this.columns.containsKey(field.getDbName())) {
+                field.setDbType(this.columns.get(field.getDbName()));
+            }
+            if (field.isReference()) {
+                Class fieldClassImpl = field.getFieldClass().equals(customModel) ?
+                        modelClassImpl : CustomBaseModel.getManager(field.getFieldClass()).getModelClassImpl();
+                ((ReferenceField) field).setFieldClassImpl(fieldClassImpl);
+            }
+            // register field
+            this.fields.put(field.getName(), field);
+            this.serviceFields.put(field.getServiceName(), field);
+            if (field.isPrimaryKey()) {
+                this.primaryKey = field;
             }
         }
-        field.setModel(this.modelClass);
-        this.fields.put(field.getName(), field);
-        serviceFields.put(field.getServiceName(), field);
-        if (field.isPrimaryKey()) {
-            primaryKey = field;
-        }
+        persistenceManager = new PersistenceManager(this);
+        dynamicQueryManager = new DynamicQueryManager(this);
+        // register manager
+        CustomBaseModel.managers.put(customModel.getName(), this);
     }
 
     protected CustomBaseModel wrap(Class customModel, BaseModel obj, Map<String, Map> context) {
@@ -249,7 +239,7 @@ public class ModelManager {
         setValue(obj, getField(fieldName), value);
     }
 
-    public void setValue(CustomBaseModel obj, ModelField field, Object value) throws SystemException, PortalException {
+    public void setValue(CustomBaseModel obj, Field field, Object value) throws SystemException, PortalException {
         if (field.isForeign() || field.isFunction() || field.isProperty()) {
             return;
         }
@@ -268,7 +258,7 @@ public class ModelManager {
         return getValue(obj, getField(field), context);
     }
 
-    public Object getValue(CustomBaseModel obj, ModelField modelField, Map<String, Map> context) throws SystemException, PortalException {
+    public Object getValue(CustomBaseModel obj, Field modelField, Map<String, Map> context) throws SystemException, PortalException {
         if (modelField.isForeign()) {
             ForeignField foreignField = (ForeignField) modelField;
             Object referenceId = obj.getObject().getModelAttributes().get(foreignField.getReference().getServiceName());
@@ -306,67 +296,66 @@ public class ModelManager {
 
     public FunctionField getCountField(String field) {
         String name = String.format("count_%s", field.replaceAll("\\.", "__"));
-        ModelField modelField = getField(field);
-        return new FunctionField(name, modelField.getFieldClass(), map("ormType", Type.LONG), "count(%s)", modelField);
+        Field modelField = getField(field);
+        return new FunctionField(this, name, modelField.getFieldClass(), map("ormType", Type.LONG), "count(%s)", modelField);
     }
 
     public FunctionField getMaxField(String field) {
         String name = String.format("max_%s", field.replaceAll("\\.", "__"));
-        ModelField modelField = getField(field);
-        return new FunctionField(name, modelField.getFieldClass(), map("ormType", modelField.getOrmType()), "max(%s)", modelField);
+        Field modelField = getField(field);
+        return new FunctionField(this, name, modelField.getFieldClass(), map("ormType", modelField.getOrmType()), "max(%s)", modelField);
     }
 
     public FunctionField getMinField(String field) {
         String name = String.format("min_%s", field.replaceAll("\\.", "__"));
-        ModelField modelField = getField(field);
-        return new FunctionField(name, modelField.getFieldClass(), map("ormType", modelField.getOrmType()), "min(%s)", modelField);
+        Field modelField = getField(field);
+        return new FunctionField(this, name, modelField.getFieldClass(), map("ormType", modelField.getOrmType()), "min(%s)", modelField);
     }
 
     public FunctionField getAvgField(String field) {
         String name = String.format("avg_%s", field.replaceAll("\\.", "__"));
-        ModelField modelField = getField(field);
-        return new FunctionField(name, modelField.getFieldClass(), map("ormType", Type.DOUBLE), "avg(%s)", modelField);
+        Field modelField = getField(field);
+        return new FunctionField(this, name, modelField.getFieldClass(), map("ormType", Type.DOUBLE), "avg(%s)", modelField);
     }
 
     public FunctionField getSumField(String field) {
         String name = String.format("sum_%s", field.replaceAll("\\.", "__"));
-        ModelField modelField = getField(field);
-        return new FunctionField(name, modelField.getFieldClass(), map("ormType", modelField.getOrmType()), "sum(%s)", modelField);
+        Field modelField = getField(field);
+        return new FunctionField(this, name, modelField.getFieldClass(), map("ormType", modelField.getOrmType()), "sum(%s)", modelField);
     }
 
-    public ModelField getField(String fieldName) {
+    public Field getField(String fieldName) {
         if (fieldName.contains(".")) {
             List<String> parts = Arrays.asList(fieldName.split("\\."));
             ReferenceField referenceField = (ReferenceField) fields.get(parts.get(0));
             Class referenceModelClass = referenceField.getFieldClass();
             ModelManager manager = CustomBaseModel.getManager(referenceModelClass);
             String tail = concat(parts.subList(1, parts.size()), ".");
-
-            return new ForeignField(fieldName, referenceField, manager.getField(tail));
+            return new ForeignField(this, fieldName, referenceField, manager.getField(tail));
         } else {
             return fields.get(fieldName);
         }
     }
 
-    public List<ModelField> getFields(boolean visible, boolean keys) {
+    public List<Field> getFields(boolean visible, boolean keys) {
         return getFields(new ArrayList<String>(), visible, keys, new ArrayList<String>());
     }
 
-    public List<ModelField> getFields(List<String> fields) {
+    public List<Field> getFields(List<String> fields) {
         return getFields(fields, false, false, new ArrayList<String>());
     }
 
-    public List<ModelField> getFields(List<String> fields, boolean visible, boolean keys, List<String> exclude) {
-        List<ModelField> result = new ArrayList<ModelField>();
-        Map<String, ModelField> cache = new  HashMap<String, ModelField>();
+    public List<Field> getFields(List<String> fields, boolean visible, boolean keys, List<String> exclude) {
+        List<Field> result = new ArrayList<Field>();
+        Map<String, Field> cache = new  HashMap<String, Field>();
 
         for (String fieldName : fields) {
-            ModelField field = getField(fieldName);
+            Field field = getField(fieldName);
             cache.put(fieldName, field);
             result.add(field);
         }
         if (keys) {
-            for (ModelField field : this.fields.values()) {
+            for (Field field : this.fields.values()) {
                 if (field.isKey() && !cache.containsKey(field.getName())) {
                     cache.put(field.getName(), field);
                     result.add(field);
@@ -374,7 +363,7 @@ public class ModelManager {
             }
         }
         if (visible) {
-            for (ModelField field : this.fields.values()) {
+            for (Field field : this.fields.values()) {
                 if (field.isVisible() && !cache.containsKey(field.getName())) {
                     cache.put(field.getName(), field);
                     result.add(field);
@@ -384,10 +373,10 @@ public class ModelManager {
         return  result;
     }
 
-    public List<ModelField> getFields() {
-        List<ModelField> result = new ArrayList<ModelField>();
+    public List<Field> getFields() {
+        List<Field> result = new ArrayList<Field>();
 
-        for (ModelField field : this.fields.values()) {
+        for (Field field : this.fields.values()) {
             result.add(field);
         }
 
@@ -416,7 +405,7 @@ public class ModelManager {
         this.modelClass = modelClass;
     }
 
-    public Map<String, ModelField> getFieldMap() {
+    public Map<String, Field> getFieldMap() {
         return fields;
     }
 
@@ -424,19 +413,19 @@ public class ModelManager {
         return persistenceManager;
     }
 
-    public Map<String, ModelField> getServiceFields() {
+    public Map<String, Field> getServiceFields() {
         return serviceFields;
     }
 
-    public void setServiceFields(Map<String, ModelField> serviceFields) {
+    public void setServiceFields(Map<String, Field> serviceFields) {
         this.serviceFields = serviceFields;
     }
 
-    public ModelField getPrimaryKey() {
+    public Field getPrimaryKey() {
         return primaryKey;
     }
 
-    public void setPrimaryKey(ModelField primaryKey) {
+    public void setPrimaryKey(Field primaryKey) {
         this.primaryKey = primaryKey;
     }
 
@@ -478,35 +467,35 @@ public class ModelManager {
 
     /* static methods */
 
-    public static Map<String, Map<String, Object>> serialize(Map<String, ModelField> fieldMap) {
+    public static Map<String, Map<String, Object>> serialize(Map<String, Field> fieldMap) {
         Map<String, Map<String, Object>> result = new HashMap<String, Map<String, Object>>();
 
-        for (ModelField field : fieldMap.values()) {
+        for (Field field : fieldMap.values()) {
             result.put(field.getName(), field.toMap());
         }
 
         return result;
     }
 
-    public static List<Map<String, Object>> serialize(List<ModelField> fieldList) {
+    public static List<Map<String, Object>> serialize(List<Field> fieldList) {
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 
-        for (ModelField field : fieldList) {
+        for (Field field : fieldList) {
             result.add(field.toMap());
         }
 
         return result;
     }
 
-    public LinkedHashMap<String, ModelField> getFields(Class cls) {
-        LinkedHashMap<String, ModelField> modelFields = new LinkedHashMap<String, ModelField>();
+    public LinkedHashMap<String, Field> getFields(Class cls) {
+        LinkedHashMap<String, Field> modelFields = new LinkedHashMap<String, Field>();
         java.lang.reflect.Field fieldlist[] = cls.getDeclaredFields();
         for (int i = 0; i < fieldlist.length; i++) {
             java.lang.reflect.Field fld = fieldlist[i];
             if (Modifier.isStatic(fld.getModifiers()) &&
-                    fld.getType().isAssignableFrom(ModelField.class)) {
+                    fld.getType().isAssignableFrom(Field.class)) {
                 try {
-                    modelFields.put(fld.getName(), (ModelField) fld.get(null));
+                    modelFields.put(fld.getName(), (Field) fld.get(null));
                 } catch (IllegalAccessException e) {
                 }
             }
@@ -514,13 +503,13 @@ public class ModelManager {
         return modelFields;
     }
 
-    public static List<ModelProperty> getProperties(Class cls) {
-        List<ModelProperty> properties = new ArrayList<ModelProperty>();
+    public static Map<String, ModelProperty> getProperties(Class cls) {
+        Map<String, ModelProperty> properties = new LinkedHashMap<String, ModelProperty>();
 
         for (Method method : cls.getMethods()) {
             if (method.isAnnotationPresent(ModelAttribute.class)) {
                 ModelAttribute attribute = method.getAnnotation(ModelAttribute.class);
-                properties.add(new ModelProperty(attribute.name(), method.getName(), method.getReturnType(),
+                properties.put(attribute.name(), new ModelProperty(attribute.name(), method.getName(), method.getReturnType(),
                         map("verbose", attribute.verbose(), "visible", attribute.visible())));
             }
         }

@@ -20,16 +20,17 @@
 package com.jengine.db.field;
 
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class SelfField extends ReferenceField {
 
     public SelfField(Class fieldClass) {
-        super("self", fieldClass);
+        this("self", fieldClass);
     }
 
     public SelfField(String name, Class fieldClass) {
-        super(name, fieldClass);
+        this(name, fieldClass, new HashMap<String, Object>());
     }
 
     public SelfField(String name, Class fieldClass, Map<String, Object> options) {

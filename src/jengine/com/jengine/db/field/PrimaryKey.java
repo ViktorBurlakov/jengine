@@ -24,26 +24,36 @@ import com.jengine.db.CustomBaseModel;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.util.HashMap;
 import java.util.Map;
 
-public class PrimaryKey extends ModelField {
+import static com.jengine.utils.CollectionUtil.map;
 
-    public PrimaryKey(String name, Map<String, Object> options) {
-        this(name, Long.class, options);
+public class PrimaryKey extends Field {
+
+    public PrimaryKey() {
+        this(new HashMap<String, Object>());
     }
 
-    public PrimaryKey(String name) {
-        this(name, Long.class);
+    public PrimaryKey(Object ... options) {
+        this(map(options));
     }
 
-    public PrimaryKey(String name, Class fieldClass) {
-        super(name, fieldClass);
-        primaryKey = true;
+    public PrimaryKey(Map<String, Object> options) {
+        this(Long.class, options);
+    }
+
+    public PrimaryKey(Class fieldClass, Map<String, Object> options) {
+        super(fieldClass, options);
     }
 
     public PrimaryKey(String name, Class fieldClass, Map<String, Object> options) {
         super(name, fieldClass, options);
+    }
+
+    public void init() {
         primaryKey = true;
+        super.init();
     }
 
     public Object castType(Object value) throws SystemException, PortalException {
