@@ -22,12 +22,15 @@ package com.jengine.db.field;
 
 import java.util.Map;
 
-public class StringField extends ModelField {
-    public StringField(String name) {
-        super(name, String.class);
+import static com.jengine.utils.CollectionUtil.map;
+
+public class StringField extends Field {
+
+    public StringField(Object... options) {
+        super(String.class, map(options));
     }
 
-    public StringField(String name, Map<String, Object> options) {
-        super(name, String.class, options);
+    public StringField(Map<String, Object> options) {
+        super(String.class, options);
     }
 }

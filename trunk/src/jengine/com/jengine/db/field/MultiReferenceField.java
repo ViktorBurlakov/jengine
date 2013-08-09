@@ -19,8 +19,13 @@
 
 package com.jengine.db.field;
 
-public class MultiReferenceField extends ModelField {
+public class MultiReferenceField extends Field {
     private String referenceModelField;
+
+    public MultiReferenceField(Class fieldClass, String referenceModelField) {
+        super(fieldClass);
+        this.referenceModelField = referenceModelField;
+    }
 
     public MultiReferenceField(String name, Class fieldClass, String referenceModelField) {
         super(name, fieldClass);

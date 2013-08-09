@@ -22,7 +22,7 @@ package com.jengine.db.field;
 
 import java.util.Map;
 
-public class ModelProperty extends ModelField {
+public class ModelProperty extends Field {
     private String methodName;
 
     public ModelProperty(String name, String methodName, Class fieldClass) {
