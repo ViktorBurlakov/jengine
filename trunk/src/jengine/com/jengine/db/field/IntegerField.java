@@ -19,14 +19,29 @@
 
 package com.jengine.db.field;
 
+import com.jengine.db.ModelManager;
+
 import java.util.Map;
 
-public class IntegerField extends ModelField{
-    public IntegerField(String name) {
-        super(name, Integer.class);
+public class IntegerField extends Field {
+
+    public IntegerField() {
+        super(Integer.class);
+    }
+
+    public IntegerField(Object... options) {
+        super(Integer.class, options);
+    }
+
+    public IntegerField(Map<String, Object> options) {
+        super(Integer.class, options);
     }
 
     public IntegerField(String name, Map<String, Object> options) {
         super(name, Integer.class, options);
+    }
+
+    public IntegerField(ModelManager manager, String name, Map<String, Object> options) {
+        super(manager, name, Integer.class, options);
     }
 }

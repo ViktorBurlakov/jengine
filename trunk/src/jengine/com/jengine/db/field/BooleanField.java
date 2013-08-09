@@ -20,14 +20,29 @@
 package com.jengine.db.field;
 
 
+import com.jengine.db.ModelManager;
+
 import java.util.Map;
 
-public class BooleanField extends ModelField {
-    public BooleanField(String name) {
-        super(name, Boolean.class);
+public class BooleanField extends Field {
+
+    public BooleanField() {
+        super(Boolean.class);
+    }
+
+    public BooleanField(Object... options) {
+        super(Boolean.class, options);
+    }
+
+    public BooleanField(Map<String, Object> options) {
+        super(Boolean.class, options);
     }
 
     public BooleanField(String name, Map<String, Object> options) {
         super(name, Boolean.class, options);
+    }
+
+    public BooleanField(ModelManager manager, String name, Map<String, Object> options) {
+        super(manager, name, Boolean.class, options);
     }
 }

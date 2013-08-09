@@ -25,15 +25,26 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-public class TimeField extends ModelField {
+import static com.jengine.utils.CollectionUtil.map;
+
+public class TimeField extends Field {
     private String timeFormat = "HH:mm:ss"; // ISO date time format
 
-    public TimeField(String name) {
-        super(name, Long.class);
+
+    public TimeField(Object... options) {
+        super(Date.class, map(options));
+    }
+
+    public TimeField(Map<String, Object> options) {
+        super(Date.class, options);
     }
 
     public TimeField(String name, Map<String, Object> options) {
         super(name, Date.class, options);
+    }
+
+    public void init() {
+        super.init();
         if (options.containsKey("timeFormat")) {
             this.timeFormat = (String) options.get("timeFormat");
         }
