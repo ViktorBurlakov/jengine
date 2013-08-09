@@ -5,25 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="ae150e8e-51d1-4f53-930c-7a5f84a66dc9" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/ModelField.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/Field.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelManager.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/BooleanField.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/BooleanField.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/DateField.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/DateField.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/DateTimeField.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/DateTimeField.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/ForeignField.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/ForeignField.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/FunctionField.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/FunctionField.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/IntegerField.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/IntegerField.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/LongField.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/LongField.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/PrimaryKey.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/PrimaryKey.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/ReferenceField.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/ReferenceField.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/SelfField.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/SelfField.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/TimeField.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/TimeField.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Author.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Author.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Book.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Book.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Library.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Library.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Member.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Member.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Transaction.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Transaction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/ModelProperty.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/ModelProperty.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/MultiReferenceField.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/MultiReferenceField.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/StringField.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/StringField.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/css/.sass-cache/main.css" afterPath="$PROJECT_DIR$/docroot/css/.sass-cache/main.css" />
     </list>
     <ignored path="jengine-test-portlet.iws" />
@@ -176,7 +161,7 @@
       <file leaf-file-name="Transaction.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Transaction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="51" selection-start="1762" selection-end="1762" vertical-scroll-proportion="0.31914893">
+            <state line="45" column="51" selection-start="1762" selection-end="1762" vertical-scroll-proportion="0.3327645">
               <folding />
             </state>
           </provider>
@@ -949,7 +934,11 @@
       <created>1375888192110</created>
       <updated>1375888192110</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="constructors of field was changed to remove name attribute">
+      <created>1376059810126</created>
+      <updated>1376059810126</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1039,7 +1028,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="tests 5 was added;: inserting and updating object" />
+    <option name="LAST_COMMIT_MESSAGE" value="constructors of field was changed to remove name attribute" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1060,6 +1049,7 @@
     <MESSAGE value="test with numbers 1,2,3 were added" />
     <MESSAGE value="tests 5, 6 were added; sql tables were added" />
     <MESSAGE value="tests 5 was added;: inserting and updating object" />
+    <MESSAGE value="constructors of field was changed to remove name attribute" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -1230,7 +1220,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Transaction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="51" selection-start="1762" selection-end="1762" vertical-scroll-proportion="0.31914893">
+        <state line="45" column="51" selection-start="1762" selection-end="1762" vertical-scroll-proportion="0.3327645">
           <folding />
         </state>
       </provider>
