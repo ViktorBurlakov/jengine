@@ -72,43 +72,30 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         Map context = getServiceContext();
 
         // adding new objects
-        Author author1 = new Author(1, context);
-        Author author2 = new Author(2, context);
-        Author author3 = new Author(3, context);
-        author1.setValues(map("firstName", "Jules", "lastName", "Verne"));
-        author2.setValues(map("firstName", "Isaac", "lastName", "Asimov"));
-        author3.setValues(map("firstName", "Stephen", "lastName", "King"));
+        Author author1 = new Author(context, map("authorId", 1, "firstName", "Jules", "lastName", "Verne"));
+        Author author2 = new Author(context, map("authorId", 2, "firstName", "Isaac", "lastName", "Asimov"));
+        Author author3 = new Author(context, map("authorId", 3, "firstName", "Stephen", "lastName", "King"));
         authors.add((Author) author1.save());
         authors.add((Author) author2.save());
         authors.add((Author) author3.save());
 
-        Library library = new Library(1, context);
-        Library library2 = new Library(2, context);
-        library.setValues(map("name", "Globe", "address", "Springfield, 742 Evergreen Terrace"));
-        library2.setValues(map("name", "Local", "address", "Local"));
+        Library library = new Library(context, map("libraryId", 1, "name", "Globe", "address", "Springfield, 742 Evergreen Terrace"));
+        Library library2 = new Library(context, map("libraryId", 2, "name", "Local", "address", "Local"));
         libraries.add((Library) library.save());
         libraries.add((Library) library2.save());
 
-        Book book1 = new Book(1, context);
-        Book book2 = new Book(2, context);
-        Book book3 = new Book(3, context);
-        book1.setValues(map("title", "The Dark Tower", "library", library));
-        book2.setValues(map("title", "The Shining ", "library", library));
-        book3.setValues(map("title", "Vingt mille lieues sous les mers", "library", library));
+        Book book1 = new Book(context, map("bookId", 1, "title", "The Dark Tower", "library", library));
+        Book book2 = new Book(context, map("bookId", 2, "title", "The Shining ", "library", library));
+        Book book3 = new Book(context, map("bookId", 3, "title", "Vingt mille lieues sous les mers", "library", library));
         books.add((Book) book1.save());
         books.add((Book) book2.save());
         books.add((Book) book3.save());
 
-        Member member1 = new Member(1, context);
-        Member member2 = new Member(2, context);
-        Member member3 = new Member(3, context);
-        Member member4 = new Member(4, context);
-        Member member5 = new Member(5, context);
-        member1.setValues(map("firstName", "Mark", "lastName", "Adamson", "library", library));
-        member2.setValues(map("firstName", "Peter", "lastName", "Douglas", "library", library));
-        member3.setValues(map("firstName", "Gary", "lastName", "Miller", "library", library));
-        member4.setValues(map("firstName", "Homer", "lastName", "Simpson", "library", library));
-        member5.setValues(map("firstName", "Burt", "lastName", "Simpson", "library", library));
+        Member member1 = new Member(context, map("memberId", 1, "firstName", "Mark", "lastName", "Adamson", "library", library));
+        Member member2 = new Member(context, map("memberId", 2, "firstName", "Peter", "lastName", "Douglas", "library", library));
+        Member member3 = new Member(context, map("memberId", 3, "firstName", "Gary", "lastName", "Miller", "library", library));
+        Member member4 = new Member(context, map("memberId", 4, "firstName", "Homer", "lastName", "Simpson", "library", library));
+        Member member5 = new Member(context, map("memberId", 5, "firstName", "Burt", "lastName", "Simpson", "library", library));
         members.add((Member) member1.save());
         members.add((Member) member2.save());
         members.add((Member) member3.save());
@@ -191,8 +178,7 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         Map context = getServiceContext();
 
         clearData();
-        Author author1 = new Author(1, context);
-        author1.setValues(map("firstName", "Jules", "lastName", "Verne"));
+        Author author1 = new Author(context, map("authorId", 1, "firstName", "Jules", "lastName", "Verne"));
         author1.save();
 
         check(Author.cls.get(1, context).getLastName().equals("Verne"));

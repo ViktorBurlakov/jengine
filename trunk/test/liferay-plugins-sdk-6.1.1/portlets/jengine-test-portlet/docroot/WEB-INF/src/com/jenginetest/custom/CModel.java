@@ -24,17 +24,23 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 
-import java.io.Serializable;
 import java.util.Map;
 
 
 public class CModel<T extends BaseModel<T>> extends CBaseModel<T> {
 
-    public CModel(Serializable id, Map<String, Map> serviceContext) throws SystemException, PortalException {
-        super(id, serviceContext);
+    public CModel() throws SystemException, PortalException {
     }
 
-    public CModel(T object, Map<String, Map> serviceContext) {
-        super(object, serviceContext);
+    public CModel(Map<String, Map> serviceContext) throws SystemException, PortalException {
+        super(serviceContext);
+    }
+
+    public CModel(Map<String, Map> serviceContext, Map values) throws SystemException, PortalException {
+        super(serviceContext, values);
+    }
+
+    public CModel(Map<String, Map> serviceContext, T object) throws SystemException, PortalException {
+        super(serviceContext, object);
     }
 }

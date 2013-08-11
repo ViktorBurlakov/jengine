@@ -37,27 +37,40 @@ public class CBaseModel<T extends BaseModel<T>> {
     // list of managers
     public static ConcurrentHashMap<String, ModelManager> managers = new ConcurrentHashMap<String, ModelManager>();
     protected Map<String, Map> serviceContext = new HashMap<String, Map>();
-    protected T object = null;
     protected ModelManager _manager;
+    protected Map<String, Object> dbValues = new LinkedHashMap<String, Object>();
 
-    public CBaseModel(Serializable id, Map<String, Map> serviceContext) throws SystemException, PortalException {
+    public CBaseModel() throws SystemException, PortalException {
         this._manager = getManager(this.getClass());
-        this.object = (T) this._manager.createModel(id, serviceContext);
+    }
+
+    public CBaseModel(Map<String, Map> serviceContext) throws SystemException, PortalException {
+        this._manager = getManager(this.getClass());
         this.serviceContext = serviceContext;
     }
 
-    public CBaseModel(T object, Map<String, Map> serviceContext) {
-        this.object = object;
-        this.serviceContext = serviceContext;
+    public CBaseModel(Map<String, Map> serviceContext, Map values) throws SystemException, PortalException {
         this._manager = getManager(this.getClass());
+        this.serviceContext = serviceContext;
+        setValues(values);
+    }
+
+    public CBaseModel(Map<String, Map> serviceContext, T object) throws SystemException, PortalException {
+        this._manager = getManager(this.getClass());
+        this.serviceContext = serviceContext;
+        this.setValues(object);
     }
 
     public String getVerbose() throws SystemException, PortalException {
-        return this.object.toString();
+        return String.valueOf(this.getPrimaryKey());
     }
 
     public ModelManager getManager() {
         return _manager;
+    }
+
+    public boolean isNew() throws SystemException, PortalException {
+        return getValue(_manager.getPrimaryKey()) == null;
     }
 
     public Serializable getPrimaryKey() throws SystemException, PortalException {
@@ -72,6 +85,10 @@ public class CBaseModel<T extends BaseModel<T>> {
         _manager.setValue(this, field, value);
     }
 
+    public void setValues(T object) throws SystemException, PortalException {
+        _manager.setValues(this, object);
+    }
+
     public void setValues(Map<String, Object> valueMap) throws SystemException, PortalException {
         _manager.setValues(this, valueMap);
     }
@@ -80,7 +97,7 @@ public class CBaseModel<T extends BaseModel<T>> {
         return _manager.getValue(this, fieldName, getServiceContext());
     }
 
-    public ModelQuery getMuliValue(String fieldName) throws SystemException, PortalException {
+    public ModelQuery getMultiValue(String fieldName) throws SystemException, PortalException {
         return (ModelQuery) getValue(fieldName);
     }
 
@@ -124,12 +141,12 @@ public class CBaseModel<T extends BaseModel<T>> {
 
     /* getters and setters */
 
-    public T getObject() {
-        return object;
+    public T getObject() throws PortalException, SystemException {
+        return (T) this._manager.getServiceObject(this, serviceContext);
     }
 
-    public void setObject(T object) {
-        this.object = object;
+    public void setObject(T object) throws SystemException, PortalException {
+        this.setValues(object);
     }
 
     public Map<String, Map> getServiceContext() {
@@ -140,6 +157,13 @@ public class CBaseModel<T extends BaseModel<T>> {
         this.serviceContext = serviceContext;
     }
 
+    public Map<String, Object> getDbValues() {
+        return dbValues;
+    }
+
+    public void setDbValues(Map<String, Object> dbValues) {
+        this.dbValues = dbValues;
+    }
 
     /* static methods */
 
@@ -168,6 +192,26 @@ public class CBaseModel<T extends BaseModel<T>> {
             ClassUtils.forceInit(clazz);
             return managers.get(clazz.getName());
         }
+    }
+
+    public static CBaseModel newInstance(Class cls, Map<String, Map> serviceContext) throws SystemException, PortalException {
+        CBaseModel obj = getManager(cls).newInstance();
+        obj.setServiceContext(serviceContext);
+        return obj;
+    }
+
+    public static CBaseModel newInstance(Class cls, Map<String, Map> serviceContext, Map values) throws SystemException, PortalException {
+        CBaseModel obj = getManager(cls).newInstance();
+        obj.setServiceContext(serviceContext);
+        obj.setValues(values);
+        return obj;
+    }
+
+    public static CBaseModel newInstance(Class cls, Map<String, Map> serviceContext, BaseModel object) throws SystemException, PortalException {
+        CBaseModel obj = getManager(cls).newInstance();
+        obj.setServiceContext(serviceContext);
+        obj.setObject((BaseModel) object);
+        return obj;
     }
 
     public static CBaseModel get(Class cls, Object id, Map<String, Map> context) throws SystemException, PortalException {
@@ -233,6 +277,18 @@ public class CBaseModel<T extends BaseModel<T>> {
 
         public ClassUtil(Class<T> cls) {
             this.cls = cls;
+        }
+
+        public T newInstance(Map<String, Map> serviceContext, Map values) throws SystemException, PortalException {
+            return (T) CBaseModel.newInstance(cls, serviceContext, values);
+        }
+
+        public T newInstance(Map<String, Map> serviceContext) throws SystemException, PortalException {
+            return (T) CBaseModel.newInstance(cls, serviceContext);
+        }
+
+        public T newInstance(Map<String, Map> serviceContext, BaseModel object) throws SystemException, PortalException {
+            return (T) CBaseModel.newInstance(cls, serviceContext, object);
         }
 
         public T get(Object id, Map<String, Map> context) throws SystemException, PortalException {

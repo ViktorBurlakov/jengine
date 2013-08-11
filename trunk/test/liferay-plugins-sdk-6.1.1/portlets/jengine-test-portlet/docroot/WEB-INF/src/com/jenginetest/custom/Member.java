@@ -32,7 +32,6 @@ import com.jenginetest.builder.model.impl.SMemberImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
-import java.io.Serializable;
 import java.util.Map;
 
 import static com.jengine.utils.CollectionUtil.map;
@@ -49,12 +48,11 @@ public class Member extends CModel<SMember> {
     static public ClassUtil<Member> cls = new ClassUtil<Member>(Member.class);
 
 
-    public Member(Serializable id, Map<String, Map> serviceContext) throws SystemException, PortalException {
-        super(id, serviceContext);
+    public Member() throws SystemException, PortalException {
     }
 
-    public Member(SMember member, Map<String, Map> serviceContext) {
-        super(member, serviceContext);
+    public Member(Map<String, Map> serviceContext, Map values) throws SystemException, PortalException {
+        super(serviceContext, values);
     }
 
     public String getVerbose() throws SystemException, PortalException {
