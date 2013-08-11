@@ -45,18 +45,18 @@ public class CBaseModel<T extends BaseModel<T>> {
     }
 
     public CBaseModel(Map<String, Map> serviceContext) throws SystemException, PortalException {
-        this._manager = getManager(this.getClass());
+        this();
         this.serviceContext = serviceContext;
     }
 
     public CBaseModel(Map<String, Map> serviceContext, Map values) throws SystemException, PortalException {
-        this._manager = getManager(this.getClass());
+        this();
         this.serviceContext = serviceContext;
         setValues(values);
     }
 
     public CBaseModel(Map<String, Map> serviceContext, T object) throws SystemException, PortalException {
-        this._manager = getManager(this.getClass());
+        this();
         this.serviceContext = serviceContext;
         this.setValues(object);
     }
@@ -173,26 +173,12 @@ public class CBaseModel<T extends BaseModel<T>> {
         if (manager != null) {
             return manager;
         } else {
-//            try {
-//                Method method = clazz.getMethod("getManager");
-//                ModelManager2 manager = (ModelManager2) method.invoke(clazz);
-//                Field  field = clazz.getField("manager");
-//                manager = (ModelManager2) field.get(clazz);
-//                managers.putIfAbsent(clazz.getName(), manager);
-//            } catch (NoSuchMethodException e) {
-//                e.printStackTrace();
-//            } catch (InvocationTargetException e) {
-//                e.printStackTrace();
-//            } catch (IllegalAccessException e) {
-//                e.printStackTrace();
-//            } catch (NoSuchFieldException e) {
-//                e.printStackTrace();
-//            }
-            // return manager;
             ClassUtils.forceInit(clazz);
             return managers.get(clazz.getName());
         }
     }
+
+    /** static class methods **/
 
     public static CBaseModel newInstance(Class cls, Map<String, Map> serviceContext) throws SystemException, PortalException {
         CBaseModel obj = getManager(cls).newInstance();

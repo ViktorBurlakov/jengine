@@ -37,15 +37,15 @@ import java.util.Map;
 import static com.jengine.utils.CollectionUtil.map;
 
 @Meta(table = STransactionImpl.TABLE_NAME)
-public class Transaction extends CModel<STransaction> {
+public class Transaction extends CModel<STransaction, STransactionImpl> {
     public static Field transactionId = new PrimaryKey();
     public static Field book   = new ReferenceField(Book.class, map("verbose", "Book"));
     public static Field member = new ReferenceField(Member.class, map("verbose", "Member"));
     public static Field tdate  = new DateField("verbose", "Date");
 
     @Manager
-    public static ModelManager manager = new ModelManager(Transaction.class, "Transaction", STransaction.class, STransactionImpl.class);
-    static public ClassUtil<Transaction> cls = new ClassUtil<Transaction>(Transaction.class);
+    public static ModelManager manager = new ModelManager(Transaction.class);
+    public static ClassUtil<Transaction> cls = new ClassUtil<Transaction>(Transaction.class);
 
 
     public Transaction() throws SystemException, PortalException {

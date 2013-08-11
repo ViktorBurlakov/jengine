@@ -54,14 +54,14 @@ import java.util.Map;
 
 
 @Meta(table = SLibraryImpl.TABLE_NAME)
-public class Library extends CModel<SLibrary> {
+public class Library extends CModel<SLibrary, SLibraryImpl> {
     public static Field libraryId = new PrimaryKey();
     public static Field name    = new StringField("verbose", "Name");
     public static Field address = new StringField("verbose", "Address");
 
     @Manager
-    public static ModelManager manager = new ModelManager(Library.class, "Library", SLibrary.class, SLibraryImpl.class);
-    static public ClassUtil<Library> cls = new ClassUtil<Library>(Library.class);
+    public static ModelManager manager = new ModelManager(Library.class);
+    public static ClassUtil<Library> cls = new ClassUtil<Library>(Library.class);
 
 
     public Library() throws SystemException, PortalException {

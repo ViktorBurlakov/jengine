@@ -37,14 +37,14 @@ import static com.jengine.utils.CollectionUtil.map;
 
 
 @Meta(table = SBookImpl.TABLE_NAME)
-public class Book extends CModel<SBook> {
+public class Book extends CModel<SBook, SBookImpl> {
     public static Field bookId  = new PrimaryKey();
     public static Field title   = new StringField("verbose", "Title");
     public static Field library = new ReferenceField(Library.class, map("verbose", "Library"));
 
     @Manager
-    public static ModelManager manager = new ModelManager(Book.class, "Book", SBook.class, SBookImpl.class);
-    static public ClassUtil<Book> cls = new ClassUtil<Book>(Book.class);
+    public static ModelManager manager = new ModelManager(Book.class);
+    public static ClassUtil<Book> cls = new ClassUtil<Book>(Book.class);
 
 
     public Book() throws SystemException, PortalException {
