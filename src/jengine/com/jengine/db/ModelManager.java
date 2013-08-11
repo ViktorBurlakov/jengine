@@ -52,7 +52,7 @@ public class ModelManager {
     private DynamicQueryManager dynamicQueryManager;
     public Boolean entryCacheEnabled;
 
-    public ModelManager(Class<? extends CustomBaseModel> customModel, String modelName, Class serviceCls, Class serviceClsImpl) {
+    public ModelManager(Class<? extends CBaseModel> customModel, String modelName, Class serviceCls, Class serviceClsImpl) {
         this.customModel = customModel;
         this.modelName = modelName;
         this.modelClass = serviceCls;
@@ -66,7 +66,6 @@ public class ModelManager {
         clsFields.putAll(getFields(customModel));
         clsFields.putAll(getProperties(customModel));
         clsFields.put("verbose", new ModelProperty("verbose", "getVerbose", BaseModel.class, map("verbose", modelName)));
-
         for (String fldName: clsFields.keySet()) {
             Field field = clsFields.get(fldName);
             // init field
@@ -75,7 +74,7 @@ public class ModelManager {
             field.init();
             if (field.isReference()) {
                 ((ReferenceField) field).setFieldClassImpl(field.getFieldClass().equals(customModel) ?
-                        modelClassImpl : CustomBaseModel.getManager(field.getFieldClass()).getModelClassImpl());
+                        modelClassImpl : CBaseModel.getManager(field.getFieldClass()).getModelClassImpl());
             }
             // register field
             this.fields.put(field.getName(), field);
@@ -87,16 +86,16 @@ public class ModelManager {
         persistenceManager = new PersistenceManager(this);
         dynamicQueryManager = new DynamicQueryManager(this);
         // register manager
-        CustomBaseModel.managers.put(customModel.getName(), this);
+        CBaseModel.managers.put(customModel.getName(), this);
     }
 
-    protected CustomBaseModel wrap(Class customModel, BaseModel obj, Map<String, Map> context) {
-        return CustomBaseModel.getManager(customModel).wrap(obj, context);
+    protected CBaseModel wrap(Class customModel, BaseModel obj, Map<String, Map> context) {
+        return CBaseModel.getManager(customModel).wrap(obj, context);
     }
 
-    protected CustomBaseModel wrap(BaseModel obj, Map<String, Map> context) {
+    protected CBaseModel wrap(BaseModel obj, Map<String, Map> context) {
         try {
-            return (CustomBaseModel) customModel.getDeclaredConstructor(modelClass, Map.class).newInstance(obj, context);
+            return (CBaseModel) customModel.getDeclaredConstructor(modelClass, Map.class).newInstance(obj, context);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -109,7 +108,7 @@ public class ModelManager {
         return null;
     }
 
-    public CustomBaseModel get(Object id, Map<String, Map> context) throws SystemException, PortalException {
+    public CBaseModel get(Object id, Map<String, Map> context) throws SystemException, PortalException {
         BasePersistence persistence = (BasePersistence) context.get(modelClass.getSimpleName()).get("persistence");
         return wrap(persistence.fetchByPrimaryKey((Serializable) primaryKey.castType(id)), context);
     }
@@ -192,7 +191,7 @@ public class ModelManager {
         return obj;
     }
 
-    public CustomBaseModel update(CustomBaseModel obj) throws SystemException, PortalException {
+    public CBaseModel update(CBaseModel obj) throws SystemException, PortalException {
         Map<String, Map> context = obj.getServiceContext();
         BasePersistence persistence = (BasePersistence) context.get(modelClass.getSimpleName()).get("persistence");
 
@@ -201,28 +200,28 @@ public class ModelManager {
         return obj;
     }
 
-    public void remove(CustomBaseModel obj) throws SystemException, PortalException {
+    public void remove(CBaseModel obj) throws SystemException, PortalException {
         Map<String, Map> context = obj.getServiceContext();
         BasePersistence persistence = (BasePersistence) context.get(modelClass.getSimpleName()).get("persistence");
 
         persistence.remove(obj.getObject().getPrimaryKeyObj());
     }
 
-    public CustomBaseModel save(CustomBaseModel obj) throws SystemException, PortalException {
+    public CBaseModel save(CBaseModel obj) throws SystemException, PortalException {
         return update(obj);
     }
 
-    public void cache(CustomBaseModel obj) throws SystemException, PortalException {
+    public void cache(CBaseModel obj) throws SystemException, PortalException {
         EntityCacheUtil.putResult(entryCacheEnabled, modelClassImpl, obj.getPrimaryKey(), obj.getObject());
 
         obj.getObject().resetOriginalValues();
     }
 
-    public void setValue(CustomBaseModel obj, String fieldName, Object value) throws SystemException, PortalException {
+    public void setValue(CBaseModel obj, String fieldName, Object value) throws SystemException, PortalException {
         setValue(obj, getField(fieldName), value);
     }
 
-    public void setValue(CustomBaseModel obj, Field field, Object value) throws SystemException, PortalException {
+    public void setValue(CBaseModel obj, Field field, Object value) throws SystemException, PortalException {
         if (field.isForeign() || field.isFunction() || field.isProperty()) {
             return;
         }
@@ -231,30 +230,30 @@ public class ModelManager {
         obj.getObject().setModelAttributes(attributes);
     }
 
-    public void setValues(CustomBaseModel obj, Map<String, Object> valueMap) throws SystemException, PortalException {
+    public void setValues(CBaseModel obj, Map<String, Object> valueMap) throws SystemException, PortalException {
         for (String fieldName : valueMap.keySet()) {
             setValue(obj, fieldName, valueMap.get(fieldName));
         }
     }
 
-    public Object getValue(CustomBaseModel obj, String field, Map<String, Map> context) throws SystemException, PortalException {
+    public Object getValue(CBaseModel obj, String field, Map<String, Map> context) throws SystemException, PortalException {
         return getValue(obj, getField(field), context);
     }
 
-    public Object getValue(CustomBaseModel obj, Field modelField, Map<String, Map> context) throws SystemException, PortalException {
+    public Object getValue(CBaseModel obj, Field modelField, Map<String, Map> context) throws SystemException, PortalException {
         if (modelField.isForeign()) {
             ForeignField foreignField = (ForeignField) modelField;
             Object referenceId = obj.getObject().getModelAttributes().get(foreignField.getReference().getServiceName());
-            CustomBaseModel reference = CustomBaseModel.get(modelField.getFieldClass(), referenceId, context);
+            CBaseModel reference = CBaseModel.get(modelField.getFieldClass(), referenceId, context);
 
             return reference.getValue(foreignField.getField());
         } else if (modelField.isReference()) {
                 Object referenceId = obj.getObject().getModelAttributes().get(modelField.getServiceName());
-                return CustomBaseModel.get(modelField.getFieldClass(), referenceId, context);
+                return CBaseModel.get(modelField.getFieldClass(), referenceId, context);
         } else if (modelField.isMultiReference()) {
                 MultiReferenceField multiField = (MultiReferenceField) modelField;
                 Object primaryKey = getValue(obj, getPrimaryKey(), context);
-                return CustomBaseModel.select(modelField.getFieldClass()).filter(map(multiField.getReferenceModelField(), primaryKey));
+                return CBaseModel.select(modelField.getFieldClass()).filter(map(multiField.getReferenceModelField(), primaryKey));
         } else if (modelField.isProperty()) {
             try {
                 Method method = customModel.getMethod(((ModelProperty) modelField).getMethodName());
@@ -267,7 +266,7 @@ public class ModelManager {
         }
     }
 
-    public Map<String, Object> getValues(CustomBaseModel obj, List<String> fields, Map<String, Map> context) throws SystemException, PortalException {
+    public Map<String, Object> getValues(CBaseModel obj, List<String> fields, Map<String, Map> context) throws SystemException, PortalException {
         Map<String, Object> values = new LinkedHashMap<String, Object>();
 
         for (String fieldName : fields) {
@@ -312,7 +311,7 @@ public class ModelManager {
             List<String> parts = Arrays.asList(fieldName.split("\\."));
             ReferenceField referenceField = (ReferenceField) fields.get(parts.get(0));
             Class referenceModelClass = referenceField.getFieldClass();
-            ModelManager manager = CustomBaseModel.getManager(referenceModelClass);
+            ModelManager manager = CBaseModel.getManager(referenceModelClass);
             String tail = concat(parts.subList(1, parts.size()), ".");
             return new ForeignField(this, fieldName, referenceField, manager.getField(tail));
         } else {

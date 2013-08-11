@@ -33,20 +33,20 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-public class CustomBaseModel<T extends BaseModel<T>> {
+public class CBaseModel<T extends BaseModel<T>> {
     // list of managers
     public static ConcurrentHashMap<String, ModelManager> managers = new ConcurrentHashMap<String, ModelManager>();
     protected Map<String, Map> serviceContext = new HashMap<String, Map>();
     protected T object = null;
     protected ModelManager _manager;
 
-    public CustomBaseModel(Serializable id, Map<String, Map> serviceContext) throws SystemException, PortalException {
+    public CBaseModel(Serializable id, Map<String, Map> serviceContext) throws SystemException, PortalException {
         this._manager = getManager(this.getClass());
         this.object = (T) this._manager.createModel(id, serviceContext);
         this.serviceContext = serviceContext;
     }
 
-    public CustomBaseModel(T object, Map<String, Map> serviceContext) {
+    public CBaseModel(T object, Map<String, Map> serviceContext) {
         this.object = object;
         this.serviceContext = serviceContext;
         this._manager = getManager(this.getClass());
@@ -110,7 +110,7 @@ public class CustomBaseModel<T extends BaseModel<T>> {
 
     /* modify methods */
 
-    public CustomBaseModel save() throws SystemException, PortalException {
+    public CBaseModel save() throws SystemException, PortalException {
         return _manager.save(this);
     }
 
@@ -170,7 +170,7 @@ public class CustomBaseModel<T extends BaseModel<T>> {
         }
     }
 
-    public static CustomBaseModel get(Class cls, Object id, Map<String, Map> context) throws SystemException, PortalException {
+    public static CBaseModel get(Class cls, Object id, Map<String, Map> context) throws SystemException, PortalException {
         return getManager(cls).get(id, context);
     }
 
@@ -212,7 +212,7 @@ public class CustomBaseModel<T extends BaseModel<T>> {
 
     /* inner classes */
 
-    public static class ClassUtil<T extends CustomBaseModel> {
+    public static class ClassUtil<T extends CBaseModel> {
         private Class cls;
 
         public ClassUtil(Class<T> cls) {
@@ -220,43 +220,43 @@ public class CustomBaseModel<T extends BaseModel<T>> {
         }
 
         public T get(Object id, Map<String, Map> context) throws SystemException, PortalException {
-            return (T) CustomBaseModel.get(cls, id, context);
+            return (T) CBaseModel.get(cls, id, context);
         }
 
         public ModelQuery select(Map<String, Object> filter) throws SystemException {
-            return CustomBaseModel.select(cls,filter);
+            return CBaseModel.select(cls, filter);
         }
 
         public ModelQuery select(Class cls, List<Expression> filter) throws SystemException {
-            return CustomBaseModel.select(this.cls,filter);
+            return CBaseModel.select(this.cls, filter);
         }
 
         public ModelQuery select() throws SystemException {
-            return CustomBaseModel.select(cls);
+            return CBaseModel.select(cls);
         }
 
         public Object max(String field, Map<String, Map> context) throws SystemException, PortalException {
-            return CustomBaseModel.max(cls, field, context);
+            return CBaseModel.max(cls, field, context);
         }
 
         public Object min(String field, Map<String, Map> context) throws SystemException, PortalException {
-            return CustomBaseModel.min(cls, field, context);
+            return CBaseModel.min(cls, field, context);
         }
 
         public long count(Map<String, Map> context) throws SystemException, PortalException {
-            return CustomBaseModel.count(cls, context);
+            return CBaseModel.count(cls, context);
         }
 
         public long count(String field, Map<String, Map> context) throws SystemException, PortalException {
-            return CustomBaseModel.count(cls, field, context);
+            return CBaseModel.count(cls, field, context);
         }
 
         public Object avg(String field, Map<String, Map> context) throws SystemException, PortalException {
-            return CustomBaseModel.avg(cls, field, context);
+            return CBaseModel.avg(cls, field, context);
         }
 
         public Object sum(String field, Map<String, Map> context) throws SystemException, PortalException {
-            return CustomBaseModel.sum(cls, field, context);
+            return CBaseModel.sum(cls, field, context);
         }
     }
 }

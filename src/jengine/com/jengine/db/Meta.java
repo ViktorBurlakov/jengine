@@ -17,24 +17,11 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jenginetest.custom;
-
-import com.jengine.db.CBaseModel;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.BaseModel;
-
-import java.io.Serializable;
-import java.util.Map;
+package com.jengine.db;
 
 
-public class CModel<T extends BaseModel<T>> extends CBaseModel<T> {
-
-    public CModel(Serializable id, Map<String, Map> serviceContext) throws SystemException, PortalException {
-        super(id, serviceContext);
-    }
-
-    public CModel(T object, Map<String, Map> serviceContext) {
-        super(object, serviceContext);
-    }
+@java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
+public @interface Meta {
+    public String table();
+    public boolean cacheEnabled() default true;
 }

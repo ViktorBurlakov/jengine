@@ -20,7 +20,7 @@
 package com.jengine.db.field;
 
 
-import com.jengine.db.CustomBaseModel;
+import com.jengine.db.CBaseModel;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -74,16 +74,16 @@ public class ReferenceField extends Field {
     }
 
     public Object castType(Object value) {
-        return value instanceof CustomBaseModel ? value : new Long(String.valueOf(value));
+        return value instanceof CBaseModel ? value : new Long(String.valueOf(value));
     }
 
     public Object castServiceType(Object value) throws SystemException, PortalException {
         Object value2 = castType(value);
-        return Long.class.equals(value2.getClass()) ? value2 : (Long) ((CustomBaseModel) value2).getPrimaryKey();
+        return Long.class.equals(value2.getClass()) ? value2 : (Long) ((CBaseModel) value2).getPrimaryKey();
     }
 
     public String format(Object value) throws SystemException, PortalException {
-        return ((CustomBaseModel)value).getVerbose();
+        return ((CBaseModel)value).getVerbose();
     }
 
     public String getReferenceFieldDbName() {

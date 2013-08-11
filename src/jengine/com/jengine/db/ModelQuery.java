@@ -20,8 +20,8 @@
 package com.jengine.db;
 
 
+import com.jengine.db.field.Field;
 import com.jengine.db.field.FunctionField;
-import com.jengine.db.field.ModelField;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -31,11 +31,11 @@ import com.liferay.portal.service.persistence.BasePersistence;
 import java.util.*;
 
 public class ModelQuery {
-    private Map<String, ModelField> fieldMap = new LinkedHashMap<String, ModelField>();
-    private List<ModelField> fields = new ArrayList<ModelField>();
-    private List<ModelField> filterFields = new ArrayList<ModelField>();
+    private Map<String, Field> fieldMap = new LinkedHashMap<String, Field>();
+    private List<Field> fields = new ArrayList<Field>();
+    private List<Field> filterFields = new ArrayList<Field>();
     private List<Expression> filter = new ArrayList<Expression>();
-    private ModelField orderField = null;
+    private Field orderField = null;
     private String orderFieldName = null;
     private String orderType = null;
     private Map<String, Integer> page = new HashMap<String, Integer>();
@@ -47,7 +47,7 @@ public class ModelQuery {
         this.page.put("end", QueryUtil.ALL_POS);
     }
 
-    public ModelQuery field(ModelField field) {
+    public ModelQuery field(Field field) {
         this.fields.add(field);
         return this;
     }
@@ -108,12 +108,12 @@ public class ModelQuery {
         // process result
         List result = new ArrayList();
         if (fields.size() == 1) {
-            ModelField modelField = fields.get(0);
+            Field modelField = fields.get(0);
             for (Object item : values) {
                 if (modelField.isReference() || modelField.isSelf()) {
-                    CustomBaseModel customObj = manager.wrap(modelField.getFieldClass(), (BaseModel) item, context);
-                    result.add(customObj);
-                    customObj.cache();
+                    CBaseModel cObj = manager.wrap(modelField.getFieldClass(), (BaseModel) item, context);
+                    result.add(cObj);
+                    cObj.cache();
                 } else {
                     result.add(modelField.castType(item));
                 }
@@ -123,9 +123,9 @@ public class ModelQuery {
                 Object[] items = (Object[]) value;
                 Object[] resultItem = new Object[items.length];
                 for (int i=0; i < items.length; i++) {
-                    ModelField modelField = fields.get(i);
+                    Field modelField = fields.get(i);
                     if (modelField.isReference() || modelField.isSelf()) {
-                        CustomBaseModel obj = manager.wrap(modelField.getFieldClass(), (BaseModel) items[i], context);
+                        CBaseModel obj = manager.wrap(modelField.getFieldClass(), (BaseModel) items[i], context);
                         resultItem[i] = obj;
                         obj.cache();
                     } else {
@@ -157,9 +157,9 @@ public class ModelQuery {
     protected void init() {
         // init model fields
         if (this.fields.size() > 0) {
-            for (ModelField modelField : this.fields) {
+            for (Field modelField : this.fields) {
                 if (modelField.isFunction()) {
-                    for (ModelField attribute : getFields(((FunctionField) modelField).getAttributes())) {
+                    for (Field attribute : getFields(((FunctionField) modelField).getAttributes())) {
                         fieldMap.put(attribute.getName(), attribute);
                     }
                 } else {
@@ -170,12 +170,12 @@ public class ModelQuery {
             this.fields.add(manager.getSelf());
         }
         for (Expression expression : filter) {
-            ModelField modelField = fieldMap.containsKey(expression.getField()) ?
+            Field modelField = fieldMap.containsKey(expression.getField()) ?
                     fieldMap.get(expression.getField()) :
                     manager.getField(expression.getField());
 //            if(modelField.isReference() && !modelField.isSelf()) {
 //                ReferenceField referenceField = (ReferenceField) modelField;
-//                ModelManager referenceManager = CustomBaseModel.getManager(referenceField.getFieldClass());
+//                ModelManager referenceManager = CBaseModel.getManager(referenceField.getFieldClass());
 //                modelField = manager.getField(referenceField.getName() + "." +referenceManager.getPrimaryKey().getName());
 //            }
             filterFields.add(modelField);
@@ -188,14 +188,14 @@ public class ModelQuery {
 
     }
 
-    protected List<ModelField> getFields(List fields) {
-        List<ModelField> result = new ArrayList<ModelField>();
+    protected List<Field> getFields(List fields) {
+        List<Field> result = new ArrayList<Field>();
 
         for (Object field : fields) {
             if (field.getClass().equals(String.class)) {
                 result.add(manager.getField((String) field));
             } else {
-                result.add((ModelField) field);
+                result.add((Field) field);
             }
         }
 
@@ -204,15 +204,15 @@ public class ModelQuery {
 
     /* setters and getters */
 
-    public Map<String, ModelField> getFieldMap() {
+    public Map<String, Field> getFieldMap() {
         return fieldMap;
     }
 
-    public List<ModelField> getFields() {
+    public List<Field> getFields() {
         return fields;
     }
 
-    public List<ModelField> getFilterFields() {
+    public List<Field> getFilterFields() {
         return filterFields;
     }
 
@@ -220,7 +220,7 @@ public class ModelQuery {
         return filter;
     }
 
-    public ModelField getOrderField() {
+    public Field getOrderField() {
         return orderField;
     }
 

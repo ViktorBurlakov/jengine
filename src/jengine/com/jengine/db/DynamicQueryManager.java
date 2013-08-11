@@ -19,7 +19,7 @@
 
 package com.jengine.db;
 
-import com.jengine.db.field.ModelField;
+import com.jengine.db.field.Field;
 import com.liferay.portal.kernel.dao.orm.*;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -87,7 +87,7 @@ public class DynamicQueryManager {
     }
 
     protected Criterion makeCriterion(Expression expression) throws SystemException, PortalException {
-        ModelField modelField = manager.getServiceFields().get(expression.getField());
+        Field modelField = manager.getServiceFields().get(expression.getField());
         Property property = PropertyFactoryUtil.forName(expression.getField());
 
         if ("eq".equals(expression.getOperation())) {
