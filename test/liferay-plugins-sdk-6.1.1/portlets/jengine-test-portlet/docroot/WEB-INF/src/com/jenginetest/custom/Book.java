@@ -20,6 +20,7 @@
 package com.jenginetest.custom;
 
 import com.jengine.db.Manager;
+import com.jengine.db.Meta;
 import com.jengine.db.ModelManager;
 import com.jengine.db.field.Field;
 import com.jengine.db.field.PrimaryKey;
@@ -34,14 +35,14 @@ import java.util.Map;
 import static com.jengine.utils.CollectionUtil.map;
 
 
+@Meta(table = SBookImpl.TABLE_NAME)
 public class Book extends CModel<SBook> {
     public static Field bookId  = new PrimaryKey();
     public static Field title   = new StringField("verbose", "Title");
     public static Field library = new ReferenceField(Library.class, map("verbose", "Library"));
 
     @Manager
-    public static ModelManager manager = new ModelManager(Book.class, "Book", SBook.class, SBookImpl.class,
-            SBookImpl.TABLE_NAME, SBookImpl.TABLE_COLUMNS, SBookImpl.ENTITY_CACHE_ENABLED);
+    public static ModelManager manager = new ModelManager(Book.class, "Book", SBook.class, SBookImpl.class);
     static public ClassUtil<Book> cls = new ClassUtil<Book>(Book.class);
 
 

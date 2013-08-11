@@ -40,6 +40,7 @@ package com.jenginetest.custom;
 
 
 import com.jengine.db.Manager;
+import com.jengine.db.Meta;
 import com.jengine.db.ModelManager;
 import com.jengine.db.field.Field;
 import com.jengine.db.field.PrimaryKey;
@@ -53,14 +54,14 @@ import java.io.Serializable;
 import java.util.Map;
 
 
+@Meta(table = SLibraryImpl.TABLE_NAME)
 public class Library extends CModel<SLibrary> {
     public static Field libraryId = new PrimaryKey();
     public static Field name    = new StringField("verbose", "Name");
     public static Field address = new StringField("verbose", "Address");
 
     @Manager
-    public static ModelManager manager = new ModelManager(Library.class, "Library", SLibrary.class, SLibraryImpl.class,
-            SLibraryImpl.TABLE_NAME, SLibraryImpl.TABLE_COLUMNS, SLibraryImpl.ENTITY_CACHE_ENABLED);
+    public static ModelManager manager = new ModelManager(Library.class, "Library", SLibrary.class, SLibraryImpl.class);
     static public ClassUtil<Library> cls = new ClassUtil<Library>(Library.class);
 
 

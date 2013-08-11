@@ -19,7 +19,7 @@
 
 package com.jengine.db;
 
-import com.jengine.db.field.ModelField;
+import com.jengine.db.field.Field;
 import com.jengine.utils.ClassUtils;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -68,7 +68,7 @@ public class CustomBaseModel<T extends BaseModel<T>> {
         _manager.setValue(this, fieldName, value);
     }
 
-    public void setValue(ModelField field, Object value) throws SystemException, PortalException {
+    public void setValue(Field field, Object value) throws SystemException, PortalException {
         _manager.setValue(this, field, value);
     }
 
@@ -84,7 +84,7 @@ public class CustomBaseModel<T extends BaseModel<T>> {
         return (ModelQuery) getValue(fieldName);
     }
 
-    public Object getValue(ModelField field) throws SystemException, PortalException {
+    public Object getValue(Field field) throws SystemException, PortalException {
         return _manager.getValue(this, field, getServiceContext());
     }
 
@@ -99,7 +99,7 @@ public class CustomBaseModel<T extends BaseModel<T>> {
     public Map<String, Object> getVOs() throws SystemException, PortalException {
         Map<String, Object> vos = new LinkedHashMap<String, Object>();
 
-        for (ModelField field : _manager.getFieldMap().values()) {
+        for (Field field : _manager.getFieldMap().values()) {
             if (!field.isFunction() && !field.isMultiReference() && !field.isProperty() && !field.isSelf()) {
                 vos.put(field.getName(), getValue(field));
             }
@@ -213,50 +213,50 @@ public class CustomBaseModel<T extends BaseModel<T>> {
     /* inner classes */
 
     public static class ClassUtil<T extends CustomBaseModel> {
-        private Class model;
+        private Class cls;
 
-        public ClassUtil(Class model) {
-            this.model = model;
+        public ClassUtil(Class<T> cls) {
+            this.cls = cls;
         }
 
         public T get(Object id, Map<String, Map> context) throws SystemException, PortalException {
-            return (T) CustomBaseModel.get(model, id, context);
+            return (T) CustomBaseModel.get(cls, id, context);
         }
 
         public ModelQuery select(Map<String, Object> filter) throws SystemException {
-            return CustomBaseModel.select(model,filter);
+            return CustomBaseModel.select(cls,filter);
         }
 
         public ModelQuery select(Class cls, List<Expression> filter) throws SystemException {
-            return CustomBaseModel.select(model,filter);
+            return CustomBaseModel.select(this.cls,filter);
         }
 
         public ModelQuery select() throws SystemException {
-            return CustomBaseModel.select(model);
+            return CustomBaseModel.select(cls);
         }
 
         public Object max(String field, Map<String, Map> context) throws SystemException, PortalException {
-            return CustomBaseModel.max(model, field, context);
+            return CustomBaseModel.max(cls, field, context);
         }
 
         public Object min(String field, Map<String, Map> context) throws SystemException, PortalException {
-            return CustomBaseModel.min(model, field, context);
+            return CustomBaseModel.min(cls, field, context);
         }
 
         public long count(Map<String, Map> context) throws SystemException, PortalException {
-            return CustomBaseModel.count(model, context);
+            return CustomBaseModel.count(cls, context);
         }
 
         public long count(String field, Map<String, Map> context) throws SystemException, PortalException {
-            return CustomBaseModel.count(model, field, context);
+            return CustomBaseModel.count(cls, field, context);
         }
 
         public Object avg(String field, Map<String, Map> context) throws SystemException, PortalException {
-            return CustomBaseModel.avg(model, field, context);
+            return CustomBaseModel.avg(cls, field, context);
         }
 
         public Object sum(String field, Map<String, Map> context) throws SystemException, PortalException {
-            return CustomBaseModel.sum(model, field, context);
+            return CustomBaseModel.sum(cls, field, context);
         }
     }
 }

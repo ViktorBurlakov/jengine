@@ -21,6 +21,7 @@ package com.jenginetest.custom;
 
 
 import com.jengine.db.Manager;
+import com.jengine.db.Meta;
 import com.jengine.db.ModelManager;
 import com.jengine.db.field.Field;
 import com.jengine.db.field.PrimaryKey;
@@ -34,14 +35,14 @@ import java.io.Serializable;
 import java.util.Map;
 
 
+@Meta(table = SAuthorImpl.TABLE_NAME)
 public class Author extends CModel<SAuthor> {
     public static Field authorId  = new PrimaryKey();
     public static Field firstName = new StringField("verbose", "First Name");
     public static Field lastName  = new StringField("verbose", "Last Name");
 
     @Manager
-    public static ModelManager manager = new ModelManager(Author.class, "Author", SAuthor.class, SAuthorImpl.class,
-            SAuthorImpl.TABLE_NAME, SAuthorImpl.TABLE_COLUMNS, SAuthorImpl.ENTITY_CACHE_ENABLED);
+    public static ModelManager manager = new ModelManager(Author.class, "Author", SAuthor.class, SAuthorImpl.class);
     static public ClassUtil<Author> cls = new ClassUtil<Author>(Author.class);
 
 

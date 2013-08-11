@@ -20,6 +20,7 @@
 package com.jenginetest.custom;
 
 import com.jengine.db.Manager;
+import com.jengine.db.Meta;
 import com.jengine.db.ModelManager;
 import com.jengine.db.field.DateField;
 import com.jengine.db.field.Field;
@@ -36,6 +37,7 @@ import java.util.Map;
 
 import static com.jengine.utils.CollectionUtil.map;
 
+@Meta(table = STransactionImpl.TABLE_NAME)
 public class Transaction extends CModel<STransaction> {
     public static Field transactionId = new PrimaryKey();
     public static Field book   = new ReferenceField(Book.class, map("verbose", "Book"));
@@ -43,8 +45,7 @@ public class Transaction extends CModel<STransaction> {
     public static Field tdate  = new DateField("verbose", "Date");
 
     @Manager
-    public static ModelManager manager = new ModelManager(Transaction.class, "Transaction", STransaction.class, STransactionImpl.class,
-            STransactionImpl.TABLE_NAME, STransactionImpl.TABLE_COLUMNS, STransactionImpl.ENTITY_CACHE_ENABLED);
+    public static ModelManager manager = new ModelManager(Transaction.class, "Transaction", STransaction.class, STransactionImpl.class);
     static public ClassUtil<Transaction> cls = new ClassUtil<Transaction>(Transaction.class);
 
 
