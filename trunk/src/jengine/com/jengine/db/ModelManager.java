@@ -113,15 +113,27 @@ public class ModelManager {
         return wrap(persistence.fetchByPrimaryKey((Serializable) primaryKey.castType(id)), context);
     }
 
-    public ModelQuery select() throws SystemException {
-        return new ModelQuery(this);
+    public ModelQuery select(Object ... fields) throws SystemException {
+        return select(Arrays.asList(fields));
     }
 
-    public ModelQuery select(Map<String, Object> filter) throws SystemException {
-        return select(PersistenceManager.parse(filter));
+    public ModelQuery select(List fields) throws SystemException {
+        return new ModelQuery(this).fields(fields);
     }
 
-    public ModelQuery select(List<Expression> filter) throws SystemException {
+    public ModelQuery filter(Map<String, Object> filter) throws SystemException {
+        return filter(PersistenceManager.parse(filter));
+    }
+
+    public ModelQuery filterMap(Object ... filters) throws SystemException {
+        return filter(PersistenceManager.parse(map(filters)));
+    }
+
+    public ModelQuery filter(Expression ... filters) throws SystemException {
+        return filter(Arrays.asList(filters));
+    }
+
+    public ModelQuery filter(List<Expression> filter) throws SystemException {
         return new ModelQuery(this).filter(filter);
     }
 
@@ -253,7 +265,7 @@ public class ModelManager {
         } else if (modelField.isMultiReference()) {
                 MultiReferenceField multiField = (MultiReferenceField) modelField;
                 Object primaryKey = getValue(obj, getPrimaryKey(), context);
-                return CBaseModel.select(modelField.getFieldClass()).filter(map(multiField.getReferenceModelField(), primaryKey));
+                return CBaseModel.filter(modelField.getFieldClass(), map(multiField.getReferenceModelField(), primaryKey));
         } else if (modelField.isProperty()) {
             try {
                 Method method = customModel.getMethod(((ModelProperty) modelField).getMethodName());
