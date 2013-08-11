@@ -21,6 +21,7 @@ package com.jenginetest.custom;
 
 
 import com.jengine.db.Manager;
+import com.jengine.db.Meta;
 import com.jengine.db.ModelManager;
 import com.jengine.db.field.Field;
 import com.jengine.db.field.PrimaryKey;
@@ -36,6 +37,7 @@ import java.util.Map;
 
 import static com.jengine.utils.CollectionUtil.map;
 
+@Meta(table = SMemberImpl.TABLE_NAME)
 public class Member extends CModel<SMember> {
     public static Field memberId  = new PrimaryKey();
     public static Field firstName = new StringField("verbose", "First Name");
@@ -43,8 +45,7 @@ public class Member extends CModel<SMember> {
     public static Field library   = new ReferenceField(Library.class, map("verbose", "Library"));
 
     @Manager
-    public static ModelManager manager = new ModelManager(Member.class, "Member", SMember.class, SMemberImpl.class,
-            SMemberImpl.TABLE_NAME, SMemberImpl.TABLE_COLUMNS, SMemberImpl.ENTITY_CACHE_ENABLED);
+    public static ModelManager manager = new ModelManager(Member.class, "Member", SMember.class, SMemberImpl.class);
     static public ClassUtil<Member> cls = new ClassUtil<Member>(Member.class);
 
 

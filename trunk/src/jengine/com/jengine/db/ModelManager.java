@@ -21,7 +21,6 @@ package com.jengine.db;
 
 
 import com.jengine.db.field.*;
-import com.jengine.utils.ClassUtils;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -54,25 +53,13 @@ public class ModelManager {
     public Boolean entryCacheEnabled;
 
     public ModelManager(Class<? extends CustomBaseModel> customModel, String modelName, Class serviceCls, Class serviceClsImpl) {
-        this(customModel, modelName, serviceCls, serviceClsImpl,
-                (String) ClassUtils.getClassField(serviceClsImpl, "TABLE_NAME", null),
-                (Object[][]) ClassUtils.getClassField(serviceClsImpl, "TABLE_COLUMNS", new Object[][]{}),
-                (Boolean) ClassUtils.getClassField(serviceClsImpl, "ENTITY_CACHE_ENABLED", true));
-    }
-
-    public ModelManager(Class<? extends CustomBaseModel> customModel, String modelName, Class serviceCls, Class serviceClsImpl,
-                         String tableName, Object[][] columns, Boolean entryCacheEnabled) {
         this.customModel = customModel;
         this.modelName = modelName;
         this.modelClass = serviceCls;
         this.modelClassImpl = serviceClsImpl;
-        this.tableName = tableName;
-        this.entryCacheEnabled = entryCacheEnabled;
+        this.tableName = customModel.getAnnotation(Meta.class).table();
+        this.entryCacheEnabled = customModel.getAnnotation(Meta.class).cacheEnabled();
 
-        // columns
-        for (int i=0; i < columns.length; i++) {
-            this.columns.put((String) columns[i][0], (Integer) columns[i][1]);
-        }
         Map<String, Field> clsFields = new LinkedHashMap<String, Field>();
         self = new SelfField(customModel);
         clsFields.put("self", self);
@@ -86,13 +73,9 @@ public class ModelManager {
             field.setName(fldName);
             field.setManager(this);
             field.init();
-            if (!field.isReference() && this.columns.containsKey(field.getDbName())) {
-                field.setDbType(this.columns.get(field.getDbName()));
-            }
             if (field.isReference()) {
-                Class fieldClassImpl = field.getFieldClass().equals(customModel) ?
-                        modelClassImpl : CustomBaseModel.getManager(field.getFieldClass()).getModelClassImpl();
-                ((ReferenceField) field).setFieldClassImpl(fieldClassImpl);
+                ((ReferenceField) field).setFieldClassImpl(field.getFieldClass().equals(customModel) ?
+                        modelClassImpl : CustomBaseModel.getManager(field.getFieldClass()).getModelClassImpl());
             }
             // register field
             this.fields.put(field.getName(), field);
