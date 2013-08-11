@@ -21,6 +21,7 @@ package com.jengine.db;
 
 
 import com.jengine.db.field.*;
+import com.jengine.utils.ClassUtils;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,7 +38,7 @@ import static com.jengine.utils.CollectionUtil.*;
 
 
 public class ModelManager {
-    private String modelName;
+    private String name;
     private String tableName;
     private Class customModel;
     private Class modelClass;
@@ -49,22 +50,30 @@ public class ModelManager {
     private SelfField self;
     private PersistenceManager persistenceManager;
     private DynamicQueryManager dynamicQueryManager;
-    public Boolean entryCacheEnabled;
+    public Boolean cacheEnabled;
 
-    public ModelManager(Class<? extends CBaseModel> customModel, String modelName, Class serviceCls, Class serviceClsImpl) {
+    public ModelManager(Class<? extends CBaseModel> customModel) {
+        this(customModel, map());
+    }
+
+    public ModelManager(Class<? extends CBaseModel> customModel, Map<String, Object> options) {
         this.customModel = customModel;
-        this.modelName = modelName;
-        this.modelClass = serviceCls;
-        this.modelClassImpl = serviceClsImpl;
-        this.tableName = customModel.getAnnotation(Meta.class).table();
-        this.entryCacheEnabled = customModel.getAnnotation(Meta.class).cacheEnabled();
+        this.name = options.containsKey("name") ? (String) options.get("name") : customModel.getSimpleName();
+        this.modelClass = options.containsKey("modelClass") ?
+                (Class) options.get("modelClass") : ClassUtils.getGenericSuperclassType(customModel, 0);
+        this.modelClassImpl = options.containsKey("modelClassImpl") ?
+                (Class) options.get("modelClassImpl") : ClassUtils.getGenericSuperclassType(customModel, 1);
+        this.tableName = options.containsKey("table") ?
+                (String) options.get("table") : customModel.getAnnotation(Meta.class).table();
+        this.cacheEnabled = options.containsKey("cacheEnabled") ?
+                (Boolean) options.get("cacheEnabled") : customModel.getAnnotation(Meta.class).cacheEnabled();
 
         Map<String, Field> clsFields = new LinkedHashMap<String, Field>();
         self = new SelfField(customModel);
         clsFields.put("self", self);
         clsFields.putAll(getFields(customModel));
         clsFields.putAll(getProperties(customModel));
-        clsFields.put("verbose", new ModelProperty("verbose", "getVerbose", BaseModel.class, map("verbose", modelName)));
+        clsFields.put("verbose", new ModelProperty("verbose", "getVerbose", BaseModel.class, map("verbose", name)));
         for (String fldName: clsFields.keySet()) {
             Field field = clsFields.get(fldName);
             // init field
@@ -219,7 +228,7 @@ public class ModelManager {
     }
 
     public void cache(CBaseModel obj) throws SystemException, PortalException {
-        EntityCacheUtil.putResult(entryCacheEnabled, modelClassImpl, obj.getPrimaryKey(), obj.getObject());
+        EntityCacheUtil.putResult(cacheEnabled, modelClassImpl, obj.getPrimaryKey(), obj.getObject());
 
         obj.getObject().resetOriginalValues();
     }
@@ -418,12 +427,20 @@ public class ModelManager {
         return self;
     }
 
-    public String getModelName() {
-        return modelName;
+    public String getName() {
+        return name;
     }
 
-    public void setModelName(String modelName) {
-        this.modelName = modelName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Boolean getCacheEnabled() {
+        return cacheEnabled;
+    }
+
+    public void setCacheEnabled(Boolean cacheEnabled) {
+        this.cacheEnabled = cacheEnabled;
     }
 
     public Class getModelClass() {

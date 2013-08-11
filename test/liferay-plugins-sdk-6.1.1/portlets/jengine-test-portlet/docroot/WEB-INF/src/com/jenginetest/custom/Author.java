@@ -35,14 +35,14 @@ import java.util.Map;
 
 
 @Meta(table = SAuthorImpl.TABLE_NAME)
-public class Author extends CModel<SAuthor> {
+public class Author extends CModel<SAuthor, SAuthorImpl> {
     public static Field authorId  = new PrimaryKey();
     public static Field firstName = new StringField("verbose", "First Name");
     public static Field lastName  = new StringField("verbose", "Last Name");
 
     @Manager
-    public static ModelManager manager = new ModelManager(Author.class, "Author", SAuthor.class, SAuthorImpl.class);
-    static public ClassUtil<Author> cls = new ClassUtil<Author>(Author.class);
+    public static ModelManager manager = new ModelManager(Author.class);
+    public static ClassUtil<Author> cls = new ClassUtil<Author>(Author.class);
 
 
     public Author() throws SystemException, PortalException {

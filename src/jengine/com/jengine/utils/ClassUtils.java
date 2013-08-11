@@ -20,6 +20,8 @@
 package com.jengine.utils;
 
 
+import java.lang.reflect.ParameterizedType;
+
 public class ClassUtils {
 
     /**
@@ -63,4 +65,8 @@ public class ClassUtils {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    public static Class getGenericSuperclassType(Class cls, int index) {
+        return (Class) ((ParameterizedType) cls.getGenericSuperclass()).getActualTypeArguments()[index];
+    }
 }

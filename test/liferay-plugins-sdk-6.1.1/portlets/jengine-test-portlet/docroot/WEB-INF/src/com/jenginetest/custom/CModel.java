@@ -27,7 +27,7 @@ import com.liferay.portal.model.BaseModel;
 import java.util.Map;
 
 
-public class CModel<T extends BaseModel<T>> extends CBaseModel<T> {
+public class CModel<T extends BaseModel<T>, Impl> extends CBaseModel<T> {
 
     public CModel() throws SystemException, PortalException {
     }
