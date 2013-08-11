@@ -30,8 +30,9 @@ import com.jenginetest.builder.model.SBook;
 import com.jenginetest.builder.model.impl.SBookImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import java.io.Serializable;
+
 import java.util.Map;
+
 import static com.jengine.utils.CollectionUtil.map;
 
 
@@ -46,13 +47,13 @@ public class Book extends CModel<SBook> {
     static public ClassUtil<Book> cls = new ClassUtil<Book>(Book.class);
 
 
-    public Book(Serializable id, Map<String, Map> serviceContext) throws SystemException, PortalException {
-        super(id, serviceContext);
+    public Book() throws SystemException, PortalException {
     }
 
-    public Book(SBook book, Map<String, Map> serviceContext) {
-        super(book, serviceContext);
+    public Book(Map<String, Map> serviceContext, Map values) throws SystemException, PortalException {
+        super(serviceContext, values);
     }
+
 
     public String getVerbose() throws SystemException, PortalException {
         return String.format("%s", getTitle());

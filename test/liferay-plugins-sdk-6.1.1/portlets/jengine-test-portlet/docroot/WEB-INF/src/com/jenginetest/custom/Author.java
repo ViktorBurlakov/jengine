@@ -31,7 +31,6 @@ import com.jenginetest.builder.model.impl.SAuthorImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
-import java.io.Serializable;
 import java.util.Map;
 
 
@@ -46,14 +45,13 @@ public class Author extends CModel<SAuthor> {
     static public ClassUtil<Author> cls = new ClassUtil<Author>(Author.class);
 
 
-    public Author(Serializable id, Map<String, Map> serviceContext) throws SystemException, PortalException {
-        super(id, serviceContext);
+    public Author() throws SystemException, PortalException {
+        super();
     }
 
-    public Author(SAuthor author, Map<String, Map> serviceContext) {
-        super(author, serviceContext);
+    public Author(Map<String, Map> serviceContext, Map values) throws SystemException, PortalException {
+        super(serviceContext, values);
     }
-
 
     public String getVerbose() throws SystemException, PortalException {
         return String.format("%s %s", getFirstName(), getLastName());

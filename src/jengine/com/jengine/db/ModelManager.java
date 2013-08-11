@@ -29,7 +29,6 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
@@ -89,28 +88,21 @@ public class ModelManager {
         CBaseModel.managers.put(customModel.getName(), this);
     }
 
-    protected CBaseModel wrap(Class customModel, BaseModel obj, Map<String, Map> context) {
+    protected CBaseModel wrap(Class customModel, BaseModel obj, Map<String, Map> context) throws SystemException, PortalException {
         return CBaseModel.getManager(customModel).wrap(obj, context);
     }
 
-    protected CBaseModel wrap(BaseModel obj, Map<String, Map> context) {
-        try {
-            return (CBaseModel) customModel.getDeclaredConstructor(modelClass, Map.class).newInstance(obj, context);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return null;
+    protected CBaseModel wrap(BaseModel obj, Map<String, Map> context) throws SystemException, PortalException {
+        CBaseModel model = newInstance();
+        model.setServiceContext(context);
+        model.setObject(obj);
+
+        return model;
     }
 
     public CBaseModel get(Object id, Map<String, Map> context) throws SystemException, PortalException {
         BasePersistence persistence = (BasePersistence) context.get(modelClass.getSimpleName()).get("persistence");
-        return wrap(persistence.fetchByPrimaryKey((Serializable) primaryKey.castType(id)), context);
+        return wrap(persistence.fetchByPrimaryKey((Serializable) primaryKey.castServiceType(id)), context);
     }
 
     public ModelQuery select(Object ... fields) throws SystemException {
@@ -183,7 +175,7 @@ public class ModelManager {
         return new ModelQuery(this).field(getSumField(field)).one(context);
     }
 
-    public BaseModel createModel(Serializable id, Map<String, Map> context) throws SystemException, PortalException {
+    public BaseModel createServiceModel(Serializable id, Map<String, Map> context) throws SystemException, PortalException {
         BasePersistence persistence = (BasePersistence) context.get(modelClass.getSimpleName()).get("persistence");
 
         BaseModel obj = null;
@@ -220,6 +212,9 @@ public class ModelManager {
     }
 
     public CBaseModel save(CBaseModel obj) throws SystemException, PortalException {
+        if (obj.isNew()) {
+            createServiceModel((Serializable) primaryKey.castServiceType(obj.getPrimaryKey()), obj.getServiceContext());
+        }
         return update(obj);
     }
 
@@ -227,6 +222,20 @@ public class ModelManager {
         EntityCacheUtil.putResult(entryCacheEnabled, modelClassImpl, obj.getPrimaryKey(), obj.getObject());
 
         obj.getObject().resetOriginalValues();
+    }
+
+    public CBaseModel newInstance() throws SystemException, PortalException {
+        CBaseModel obj = null;
+        try {
+            obj = (CBaseModel) customModel.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            throw new SystemException(e.getMessage());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            throw new SystemException(e.getMessage());
+        }
+        return obj;
     }
 
     public void setValue(CBaseModel obj, String fieldName, Object value) throws SystemException, PortalException {
@@ -237,9 +246,16 @@ public class ModelManager {
         if (field.isForeign() || field.isFunction() || field.isProperty()) {
             return;
         }
-        Map<String, Object> attributes = obj.getObject().getModelAttributes();
-        attributes.put(field.getServiceName(), field.castServiceType(value));
-        obj.getObject().setModelAttributes(attributes);
+        obj.getDbValues().put(field.getServiceName(), field.castServiceType(value));
+    }
+
+    public void setValues(CBaseModel obj,  BaseModel serviceObj) throws SystemException, PortalException {
+        for (String fieldName : serviceFields.keySet()) {
+            Field field = serviceFields.get(fieldName);
+            if (!field.isFunction() && !field.isMultiReference() && !field.isProperty() && !field.isSelf()) {
+                setValue(obj, field, field.castServiceType(serviceObj.getModelAttributes().get(fieldName)));
+            }
+        }
     }
 
     public void setValues(CBaseModel obj, Map<String, Object> valueMap) throws SystemException, PortalException {
@@ -255,12 +271,12 @@ public class ModelManager {
     public Object getValue(CBaseModel obj, Field modelField, Map<String, Map> context) throws SystemException, PortalException {
         if (modelField.isForeign()) {
             ForeignField foreignField = (ForeignField) modelField;
-            Object referenceId = obj.getObject().getModelAttributes().get(foreignField.getReference().getServiceName());
+            Object referenceId = obj.getDbValues().get(foreignField.getReference().getName());
             CBaseModel reference = CBaseModel.get(modelField.getFieldClass(), referenceId, context);
 
             return reference.getValue(foreignField.getField());
         } else if (modelField.isReference()) {
-                Object referenceId = obj.getObject().getModelAttributes().get(modelField.getServiceName());
+                Object referenceId = obj.getDbValues().get(modelField.getServiceName());
                 return CBaseModel.get(modelField.getFieldClass(), referenceId, context);
         } else if (modelField.isMultiReference()) {
                 MultiReferenceField multiField = (MultiReferenceField) modelField;
@@ -274,7 +290,7 @@ public class ModelManager {
                 throw new SystemException(e);
             }
         } else {
-            return obj.getObject().getModelAttributes().get(modelField.getServiceName());
+            return obj.getDbValues().get(modelField.getServiceName());
         }
     }
 
@@ -286,6 +302,25 @@ public class ModelManager {
        }
 
         return values;
+    }
+
+    public BaseModel getServiceObject(CBaseModel obj, Map<String, Map> context) throws PortalException, SystemException {
+        BaseModel serviceObject = null;
+        try {
+            serviceObject = (BaseModel) modelClassImpl.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new PortalException(e.getMessage());
+        }
+        Map<String, Object> objectAttributes = serviceObject.getModelAttributes();
+        for (String fieldName : serviceFields.keySet()) {
+            Field field = serviceFields.get(fieldName);
+            if (!field.isFunction() && !field.isMultiReference() && !field.isProperty() && !field.isSelf()) {
+                objectAttributes.put(fieldName, field.castServiceType(getValue(obj, field, context)));
+            }
+        }
+        serviceObject.setModelAttributes(objectAttributes);
+        return serviceObject;
     }
 
     public FunctionField getCountField(String field) {

@@ -31,7 +31,6 @@ import com.jenginetest.builder.model.impl.STransactionImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
@@ -49,13 +48,13 @@ public class Transaction extends CModel<STransaction> {
     static public ClassUtil<Transaction> cls = new ClassUtil<Transaction>(Transaction.class);
 
 
-    public Transaction(Serializable id, Map<String, Map> serviceContext) throws SystemException, PortalException {
-        super(id, serviceContext);
+    public Transaction() throws SystemException, PortalException {
     }
 
-    public Transaction(STransaction transaction, Map<String, Map> serviceContext) {
-        super(transaction, serviceContext);
+    public Transaction(Map<String, Map> serviceContext, Map values) throws SystemException, PortalException {
+        super(serviceContext, values);
     }
+
 
     public String getVerbose() throws SystemException, PortalException {
         return String.format("%s: %s : %s", getDate(), getBook().getVerbose(), getMember().getVerbose());

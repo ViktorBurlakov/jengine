@@ -50,7 +50,6 @@ import com.jenginetest.builder.model.impl.SLibraryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
-import java.io.Serializable;
 import java.util.Map;
 
 
@@ -65,12 +64,11 @@ public class Library extends CModel<SLibrary> {
     static public ClassUtil<Library> cls = new ClassUtil<Library>(Library.class);
 
 
-    public Library(Serializable id, Map<String, Map> serviceContext) throws SystemException, PortalException {
-        super(id, serviceContext);
+    public Library() throws SystemException, PortalException {
     }
 
-    public Library(SLibrary library, Map<String, Map> serviceContext) {
-        super(library, serviceContext);
+    public Library(Map<String, Map> serviceContext, Map values) throws SystemException, PortalException {
+        super(serviceContext, values);
     }
 
     public String getVerbose() throws SystemException, PortalException {
