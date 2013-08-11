@@ -161,11 +161,11 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         Book.cls.get(1, context).getTitle().equals("The Dark Tower");
 
         // filter
-        check(Member.cls.select(map("lastName", "Simpson")).list(context).size() == 2);
-        check(Author.cls.select(map("firstName", "Stephen")).<Author>one(context).getLastName().equals("King"));
-        check(Book.cls.select(map("library", Library.cls.get(1, context))).<Book>list(context).size() == 3);
-        check(Book.cls.select(map("library.name__like", "%Globe")).<Book>list(context).size() == 3);
-        check(Book.cls.select(map("library.libraryId", 101)).<Book>list(context).size() == 0);
+        check(Member.cls.filterMap("lastName", "Simpson").list(context).size() == 2);
+        check(Author.cls.filter(map("firstName", "Stephen")).<Author>one(context).getLastName().equals("King"));
+        check(Book.cls.filter(map("library", Library.cls.get(1, context))).<Book>list(context).size() == 3);
+        check(Book.cls.filter(map("library.name__like", "%Globe")).<Book>list(context).size() == 3);
+        check(Book.cls.filter(map("library.libraryId", 101)).<Book>list(context).size() == 0);
     }
 
     /**
@@ -178,8 +178,7 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         clearData();
         loadData();
 
-        check(Book.cls
-                .select(map("library", Library.cls.select().field("libraryId").filter(map("name__like", "%Globe"))))
+        check(Book.cls.filterMap("library", Library.cls.select("libraryId").filterMap("name__like", "%Globe"))
                 .<Book>list(context).size() == 3);
     }
 

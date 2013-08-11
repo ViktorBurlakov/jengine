@@ -30,6 +30,8 @@ import com.liferay.portal.service.persistence.BasePersistence;
 
 import java.util.*;
 
+import static com.jengine.utils.CollectionUtil.map;
+
 public class ModelQuery {
     private Map<String, Field> fieldMap = new LinkedHashMap<String, Field>();
     private List<Field> fields = new ArrayList<Field>();
@@ -65,6 +67,12 @@ public class ModelQuery {
 
     public ModelQuery fields(List fields) {
         this.fields.addAll(getFields(fields));
+
+        return this;
+    }
+
+    public ModelQuery filterMap(Object ... filter) {
+        this.filter.addAll(PersistenceManager.parse(map(filter)));
 
         return this;
     }

@@ -174,16 +174,32 @@ public class CBaseModel<T extends BaseModel<T>> {
         return getManager(cls).get(id, context);
     }
 
-    public static ModelQuery select(Class cls, Map<String, Object> filter) throws SystemException {
-        return getManager(cls).select(filter);
-    }
-
-    public static ModelQuery select(Class cls, List<Expression> filter) throws SystemException {
-        return getManager(cls).select(filter);
-    }
-
     public static ModelQuery select(Class cls) throws SystemException {
         return getManager(cls).select();
+    }
+
+    public static ModelQuery select(Class cls, Object ... fields) throws SystemException {
+        return getManager(cls).select(fields);
+    }
+
+    public static ModelQuery select(Class cls, List fields) throws SystemException {
+        return getManager(cls).select(fields);
+    }
+
+    public static ModelQuery filter(Class cls, Map<String, Object> filter) throws SystemException {
+        return getManager(cls).filter(filter);
+    }
+
+    public static ModelQuery filterMap(Class cls, Object ... filter) throws SystemException {
+        return getManager(cls).filterMap(filter);
+    }
+
+    public static ModelQuery filter(Class cls, List<Expression> filter) throws SystemException {
+        return getManager(cls).filter(filter);
+    }
+
+    public static ModelQuery filter(Class cls, Expression ... filter) throws SystemException {
+        return getManager(cls).filter(filter);
     }
 
     public static Object max(Class cls, String field, Map<String, Map> context) throws SystemException, PortalException {
@@ -223,16 +239,31 @@ public class CBaseModel<T extends BaseModel<T>> {
             return (T) CBaseModel.get(cls, id, context);
         }
 
-        public ModelQuery select(Map<String, Object> filter) throws SystemException {
-            return CBaseModel.select(cls, filter);
-        }
-
-        public ModelQuery select(Class cls, List<Expression> filter) throws SystemException {
-            return CBaseModel.select(this.cls, filter);
-        }
-
         public ModelQuery select() throws SystemException {
             return CBaseModel.select(cls);
+        }
+
+        public ModelQuery select(Object ... fields) throws SystemException {
+            return CBaseModel.select(cls, fields);
+        }
+        public ModelQuery select(Class cls, List ... fields) throws SystemException {
+            return CBaseModel.select(cls, fields);
+        }
+
+        public ModelQuery filter(Map<String, Object> filter) throws SystemException {
+            return CBaseModel.filter(cls, filter);
+        }
+
+        public ModelQuery filterMap(Object ... filter) throws SystemException {
+            return CBaseModel.filterMap(cls, filter);
+        }
+
+        public ModelQuery filter(Class cls, List<Expression> filter) throws SystemException {
+            return CBaseModel.filter(cls, filter);
+        }
+
+        public ModelQuery filter(Class cls, Expression ... filter) throws SystemException {
+            return CBaseModel.filter(cls, filter);
         }
 
         public Object max(String field, Map<String, Map> context) throws SystemException, PortalException {
