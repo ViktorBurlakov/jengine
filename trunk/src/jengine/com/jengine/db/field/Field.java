@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.sql.Types;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -35,13 +36,21 @@ import static com.jengine.utils.CollectionUtil.map;
 
 
 public class Field implements IModelField {
-    public static Map<String, Type> ormTypeMap = CollectionUtil.map(
+    public static Map<String, Type> ORM_TYPE_MAP = CollectionUtil.map(
             String.class.getSimpleName(), Type.STRING,
             Long.class.getSimpleName(), Type.LONG,
             Integer.class.getSimpleName(), Type.INTEGER,
             Date.class.getSimpleName(), Type.DATE,
             Float.class.getSimpleName(), Type.DOUBLE,
             Boolean.class.getSimpleName(), Type.BOOLEAN
+    );
+    public static Map<String, Integer> DB_TYPE_MAP = CollectionUtil.map(
+                    String.class.getSimpleName(), Types.VARCHAR,
+                    Long.class.getSimpleName(), Types.BIGINT,
+                    Integer.class.getSimpleName(), Types.INTEGER,
+                    Date.class.getSimpleName(), Types.TIMESTAMP,
+                    Float.class.getSimpleName(), Types.DOUBLE,
+                    Boolean.class.getSimpleName(), Types.BOOLEAN
     );
     protected String name;
     protected String serviceName;
@@ -97,7 +106,10 @@ public class Field implements IModelField {
     public void init() {
         this.serviceName = name;
         this.dbName = name;
-        this.ormType = ormTypeMap.containsKey(fieldClass.getSimpleName()) ? ormTypeMap.get(fieldClass.getSimpleName()) : Type.LONG;
+        this.ormType = ORM_TYPE_MAP.containsKey(fieldClass.getSimpleName()) ?
+                ORM_TYPE_MAP.get(fieldClass.getSimpleName()) : Type.LONG;
+        this.dbType = DB_TYPE_MAP.containsKey(fieldClass.getSimpleName()) ?
+                DB_TYPE_MAP.get(fieldClass.getSimpleName()) : Types.BIGINT;
         if (options.containsKey("primaryKey")) {
             this.primaryKey = (Boolean) options.get("primaryKey");
         }
@@ -113,6 +125,9 @@ public class Field implements IModelField {
         }
         if (options.containsKey("ormType")) {
             this.ormType = (Type) options.get("ormType");
+        }
+        if (options.containsKey("dbType")) {
+            this.dbType =  (Integer) options.get("dbType");
         }
         if (options.containsKey("serviceName")) {
             this.serviceName = (String) options.get("serviceName");

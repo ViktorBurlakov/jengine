@@ -20,7 +20,7 @@
 package com.jengine.db.field;
 
 
-import com.jengine.db.CustomBaseModel;
+import com.jengine.db.CBaseModel;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -57,6 +57,6 @@ public class PrimaryKey extends Field {
     }
 
     public Object castType(Object value) throws SystemException, PortalException {
-        return value instanceof CustomBaseModel ? ((CustomBaseModel) value).getPrimaryKey() : new Long(String.valueOf(value));
+        return value instanceof CBaseModel ? ((CBaseModel) value).getPrimaryKey() : new Long(String.valueOf(value));
     }
 }

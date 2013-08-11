@@ -20,9 +20,9 @@
 package com.jengine.db;
 
 
+import com.jengine.db.field.Field;
 import com.jengine.db.field.ForeignField;
 import com.jengine.db.field.FunctionField;
-import com.jengine.db.field.ModelField;
 import com.jengine.db.field.ReferenceField;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -64,7 +64,7 @@ public class PersistenceManager {
                 if (whereClause.length() > 0) {
                     whereClause.append(", ");
                 }
-                ModelField modelField = manager.getField(expression.getField());
+                Field modelField = manager.getField(expression.getField());
                 whereClause.append(makeSQLExpr(expression.getField(), expression.getOperation(), expression.getValue()));
                 types.add(modelField.getDbType());
                 params.add(expression.getValue());
@@ -102,7 +102,7 @@ public class PersistenceManager {
                 if (setClause.length() > 0) {
                         setClause.append(", ");
                 }
-                ModelField modelField = manager.getField(param);
+                Field modelField = manager.getField(param);
                 setClause.append(param).append("=").append("?");
                 types.add(modelField.getDbType());
             }
@@ -118,7 +118,7 @@ public class PersistenceManager {
                 if (whereClause.length() > 0) {
                     whereClause.append(", ");
                 }
-                ModelField modelField = manager.getField(expression.getField());
+                Field modelField = manager.getField(expression.getField());
                 whereClause.append(makeSQLExpr(expression.getField(), expression.getOperation(), expression.getValue()));
                 types.add(modelField.getDbType());
                 params.add(expression.getValue());
@@ -198,7 +198,7 @@ public class PersistenceManager {
         query.setModel(manager.getModelClass());
         query.setModelAlias(manager.getSelf().getName());
 
-        for (ModelField field : modelQuery.getFieldMap().values()) {
+        for (Field field : modelQuery.getFieldMap().values()) {
             if (field.isForeign()) {
                 addRelation(query, new ArrayList<String>(), query.getModelAlias(), (ForeignField) field);
             }
@@ -206,7 +206,7 @@ public class PersistenceManager {
     }
 
     protected void addRelation(Query query, List<String> path, String alias, ForeignField foreignField) {
-        ModelManager manager = CustomBaseModel.getManager(foreignField.getReference().getFieldClass());
+        ModelManager manager = CBaseModel.getManager(foreignField.getReference().getFieldClass());
         path.add(foreignField.getReference().getName());
         String foreignAlias = concat(path, "__");
         List value = list(manager.getTableName(),String.format("%s.%s = %s.%s",
@@ -219,7 +219,7 @@ public class PersistenceManager {
     }
 
     protected void setTargets(Query query, ModelQuery modelQuery) {
-        for (ModelField field : modelQuery.getFields()) {
+        for (Field field : modelQuery.getFields()) {
             if (field.isReference()) {
                 if (field.isForeign()) {
                     ForeignField foreignField = (ForeignField) field;
@@ -232,9 +232,9 @@ public class PersistenceManager {
                 }
             } else if (field.isFunction()) {
                 FunctionField functionField = (FunctionField) field;
-                List<ModelField> attributes = functionField.getAttributes();
+                List<Field> attributes = functionField.getAttributes();
                 List<String> dbAttributes = new ArrayList<String>();
-                for (ModelField attr : attributes) {
+                for (Field attr : attributes) {
                     dbAttributes.add(getSQLName(attr));
                 }
                 query.addTarget(functionField.render(dbAttributes), functionField.getName());
@@ -251,7 +251,7 @@ public class PersistenceManager {
         if (modelQuery.getFilter().size() > 0) {
             for (int i=0; i < modelQuery.getFilter().size(); i++) {
                 Expression expression = modelQuery.getFilter().get(i);
-                ModelField field = modelQuery.getFilterFields().get(i);
+                Field field = modelQuery.getFilterFields().get(i);
                 String sqlName = getSQLName(field);
 
                 if (expression.getValue() != null && expression.getValue().getClass().equals(ModelQuery.class)) {
@@ -291,7 +291,7 @@ public class PersistenceManager {
         return String.format("%s.%s", alias, foreignField.getDbName());
     }
 
-    protected String getSQLName(ModelField field) {
+    protected String getSQLName(Field field) {
         if (field.isForeign()) {
             return normalize((ForeignField) field);
         }  else {
