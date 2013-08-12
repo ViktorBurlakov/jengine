@@ -32,6 +32,7 @@ public class ReferenceField extends Field {
     protected String referenceFieldDbName;
     protected String referenceFieldServiceName;
     protected Class fieldClassImpl;
+    protected String multiReferenceFieldName;
 
     public ReferenceField(Class fieldClass) {
         super(fieldClass);
@@ -58,6 +59,9 @@ public class ReferenceField extends Field {
         if (!options.containsKey("serviceName")) {
             this.serviceName = String.format("%sId", name);
             this.referenceFieldServiceName = this.serviceName;
+        }
+        if (options.containsKey("multiReferenceFieldName")) {
+            this.multiReferenceFieldName = (String) options.get("multiReferenceFieldName");
         }
     }
 
@@ -100,5 +104,13 @@ public class ReferenceField extends Field {
 
     public void setReferenceFieldServiceName(String referenceFieldServiceName) {
         this.referenceFieldServiceName = referenceFieldServiceName;
+    }
+
+    public String getMultiReferenceFieldName() {
+        return multiReferenceFieldName;
+    }
+
+    public void setMultiReferenceFieldName(String multiReferenceFieldName) {
+        this.multiReferenceFieldName = multiReferenceFieldName;
     }
 }

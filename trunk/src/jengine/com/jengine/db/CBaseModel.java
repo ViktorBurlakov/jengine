@@ -280,6 +280,18 @@ public class CBaseModel<T extends BaseModel<T>> {
         return getManager(cls).calc(context, name, type, expr, fields);
     }
 
+
+    public boolean equals(Object obj) {
+        try {
+            return getPrimaryKey().equals(((CBaseModel)obj).getPrimaryKey());
+        } catch (SystemException e) {
+            e.printStackTrace();
+        } catch (PortalException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     /* inner classes */
 
     public static class ClassUtil<T extends CBaseModel> {

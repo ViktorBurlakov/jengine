@@ -127,6 +127,15 @@ public class TestLocalServiceUtil {
 		getService().test6();
 	}
 
+	/**
+	* Aggregation testing
+	*/
+	public static void test7()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().test7();
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

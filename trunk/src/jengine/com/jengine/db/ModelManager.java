@@ -33,11 +33,13 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.jengine.utils.CollectionUtil.*;
 
 
 public class ModelManager {
+    public static Map<String, List<MultiReferenceField>> deferredReferences = new ConcurrentHashMap<String, List<MultiReferenceField>>();
     private String name;
     private String tableName;
     private Class customModel;
@@ -68,12 +70,19 @@ public class ModelManager {
         this.cacheEnabled = options.containsKey("cacheEnabled") ?
                 (Boolean) options.get("cacheEnabled") : customModel.getAnnotation(Meta.class).cacheEnabled();
 
+        // collect fields
         Map<String, Field> clsFields = new LinkedHashMap<String, Field>();
         self = new SelfField(customModel);
         clsFields.put("self", self);
         clsFields.putAll(getFields(customModel));
         clsFields.putAll(getProperties(customModel));
         clsFields.put("verbose", new ModelProperty("verbose", "getVerbose", BaseModel.class, map("verbose", name)));
+        if (deferredReferences.containsKey(customModel.getName())) {
+            for (MultiReferenceField multiReferenceField: deferredReferences.get(customModel.getName())){
+                clsFields.put(multiReferenceField.getName(), multiReferenceField);
+           }
+        }
+        // init and register fields
         for (String fldName: clsFields.keySet()) {
             Field field = clsFields.get(fldName);
             // init field
@@ -81,8 +90,23 @@ public class ModelManager {
             field.setManager(this);
             field.init();
             if (field.isReference()) {
-                ((ReferenceField) field).setFieldClassImpl(field.getFieldClass().equals(customModel) ?
+                ReferenceField referenceField = (ReferenceField) field;
+                referenceField.setFieldClassImpl(field.getFieldClass().equals(customModel) ?
                         modelClassImpl : CBaseModel.getManager(field.getFieldClass()).getModelClassImpl());
+                // todo : more better
+                // add multi reference field to another model
+                String multiFieldName = referenceField.getMultiReferenceFieldName() != null ?
+                        referenceField.getMultiReferenceFieldName() : String.format("%s_set", customModel.getSimpleName().toLowerCase());
+                MultiReferenceField multiReferenceField = new MultiReferenceField(multiFieldName, customModel, referenceField.getName());
+                ModelManager referenceManager = CBaseModel.getManager(field.getFieldClass());
+                if (referenceManager != null) {
+                    referenceManager.addMultiField(multiReferenceField);
+                } else {
+                    if (!deferredReferences.containsKey(field.getFieldClass().getName())) {
+                        deferredReferences.put(field.getFieldClass().getName(), new ArrayList<MultiReferenceField>());
+                    }
+                    deferredReferences.get(field.getFieldClass().getName()).add(multiReferenceField);
+                }
             }
             // register field
             this.fields.put(field.getName(), field);
@@ -95,6 +119,14 @@ public class ModelManager {
         dynamicQueryManager = new DynamicQueryManager(this);
         // register manager
         CBaseModel.managers.put(customModel.getName(), this);
+    }
+
+    public void addMultiField(MultiReferenceField field) {
+        field.setManager(this);
+        field.init();
+        // register field
+        this.fields.put(field.getName(), field);
+        this.serviceFields.put(field.getServiceName(), field);
     }
 
     protected CBaseModel wrap(Class customModel, BaseModel obj, Map<String, Map> context) throws SystemException, PortalException {

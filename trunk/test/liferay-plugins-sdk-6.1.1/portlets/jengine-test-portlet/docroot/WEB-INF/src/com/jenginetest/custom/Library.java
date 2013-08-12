@@ -42,6 +42,7 @@ package com.jenginetest.custom;
 import com.jengine.db.Manager;
 import com.jengine.db.Meta;
 import com.jengine.db.ModelManager;
+import com.jengine.db.ModelQuery;
 import com.jengine.db.field.Field;
 import com.jengine.db.field.PrimaryKey;
 import com.jengine.db.field.StringField;
@@ -50,6 +51,7 @@ import com.jenginetest.builder.model.impl.SLibraryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -83,5 +85,13 @@ public class Library extends CModel<SLibrary, SLibraryImpl> {
 
     public String getName() throws SystemException, PortalException {
         return (String) getValue(name);
+    }
+
+    public ModelQuery getMembers() throws SystemException, PortalException {
+        return getMultiValue("member_set");
+    }
+
+    public List<Member> getMemberList() throws SystemException, PortalException {
+        return getMultiValue("member_set").list(serviceContext);
     }
 }
