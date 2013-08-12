@@ -8,6 +8,7 @@ Liferay.Service.registerClass(
 		test2: true,
 		test3: true,
 		test4: true,
-		test5: true
+		test5: true,
+		test6: true
 	}
 );

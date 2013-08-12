@@ -54,6 +54,10 @@ public class TestServiceClp implements TestService {
 		_methodName8 = "test5";
 
 		_methodParameterTypes8 = new String[] {  };
+
+		_methodName9 = "test6";
+
+		_methodParameterTypes9 = new String[] {  };
 	}
 
 	public java.lang.String getBeanIdentifier() {
@@ -271,6 +275,34 @@ public class TestServiceClp implements TestService {
 		}
 	}
 
+	public void test6()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableService.invokeMethod(_methodName9,
+				_methodParameterTypes9, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
 	private InvokableService _invokableService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -288,4 +320,6 @@ public class TestServiceClp implements TestService {
 	private String[] _methodParameterTypes7;
 	private String _methodName8;
 	private String[] _methodParameterTypes8;
+	private String _methodName9;
+	private String[] _methodParameterTypes9;
 }

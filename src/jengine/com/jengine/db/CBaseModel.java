@@ -256,6 +256,30 @@ public class CBaseModel<T extends BaseModel<T>> {
         return getManager(cls).sum(field, context);
     }
 
+    public static Object max(Class cls, Field field, Map<String, Map> context) throws SystemException, PortalException {
+        return getManager(cls).max(field, context);
+    }
+
+    public static Object min(Class cls, Field field, Map<String, Map> context) throws SystemException, PortalException {
+        return getManager(cls).min(field, context);
+    }
+
+    public static long count(Class cls, Field field, Map<String, Map> context) throws SystemException, PortalException {
+        return getManager(cls).count(field, context);
+    }
+
+    public static Object avg(Class cls, Field field, Map<String, Map> context) throws SystemException, PortalException {
+        return getManager(cls).avg(field, context);
+    }
+
+    public static Object sum(Class cls, Field field, Map<String, Map> context) throws SystemException, PortalException {
+        return getManager(cls).sum(field, context);
+    }
+
+    public static Object calc(Class cls, Map<String, Map> context, String name, Class type, String expr, Field ... fields) throws SystemException, PortalException {
+        return getManager(cls).calc(context, name, type, expr, fields);
+    }
+
     /* inner classes */
 
     public static class ClassUtil<T extends CBaseModel> {
@@ -330,6 +354,30 @@ public class CBaseModel<T extends BaseModel<T>> {
 
         public Object sum(String field, Map<String, Map> context) throws SystemException, PortalException {
             return CBaseModel.sum(cls, field, context);
+        }
+
+        public <ResultType> ResultType max(Field field, Map<String, Map> context) throws SystemException, PortalException {
+            return (ResultType) CBaseModel.max(cls, field, context);
+        }
+
+        public <ResultType> ResultType min(Field field, Map<String, Map> context) throws SystemException, PortalException {
+            return (ResultType) CBaseModel.min(cls, field, context);
+        }
+
+        public long count(Field field, Map<String, Map> context) throws SystemException, PortalException {
+            return CBaseModel.count(cls, field, context);
+        }
+
+        public <ResultType> ResultType avg(Field field, Map<String, Map> context) throws SystemException, PortalException {
+            return (ResultType) CBaseModel.avg(cls, field, context);
+        }
+
+        public <ResultType> ResultType sum(Field field, Map<String, Map> context) throws SystemException, PortalException {
+            return (ResultType) CBaseModel.sum(cls, field, context);
+        }
+
+        public <ResultType> ResultType calc(Map<String, Map> context, String name, Class type, String expr, Field ... fields) throws SystemException, PortalException {
+            return (ResultType) CBaseModel.calc(cls, context, name, type, expr, fields);
         }
     }
 }

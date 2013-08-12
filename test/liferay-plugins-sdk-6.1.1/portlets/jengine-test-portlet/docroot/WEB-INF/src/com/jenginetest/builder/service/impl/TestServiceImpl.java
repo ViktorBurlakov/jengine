@@ -44,6 +44,7 @@ public class TestServiceImpl extends TestServiceBaseImpl {
         test3();
         test4();
         test5();
+        test6();
     }
     public void test1() throws SystemException, PortalException {
         testLocalService.test1();
@@ -62,5 +63,9 @@ public class TestServiceImpl extends TestServiceBaseImpl {
 
     public void test5() throws SystemException, PortalException {
         testLocalService.test5();
+    }
+
+    public void test6() throws SystemException, PortalException {
+        testLocalService.test6();
     }
 }

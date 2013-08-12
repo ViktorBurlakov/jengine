@@ -184,6 +184,31 @@ public class ModelManager {
         return new ModelQuery(this).field(getSumField(field)).one(context);
     }
 
+    public Long count(Field field, Map<String, Map> context) throws SystemException, PortalException {
+        return (Long) new ModelQuery(this).field(getCountField(field)).one(context);
+    }
+
+    public Object max(Field field, Map<String, Map> context) throws SystemException, PortalException {
+        return new ModelQuery(this).field(getMaxField(field)).one(context);
+    }
+
+    public Object min(Field field, Map<String, Map> context) throws SystemException, PortalException {
+        return new ModelQuery(this).field(getMinField(field)).one(context);
+    }
+
+    public Object avg(Field field, Map<String, Map> context) throws SystemException, PortalException {
+        return new ModelQuery(this).field(getAvgField(field)).one(context);
+    }
+
+    public Object sum(Field field, Map<String, Map> context) throws SystemException, PortalException {
+        return new ModelQuery(this).field(getSumField(field)).one(context);
+    }
+
+    public Object calc(Map<String, Map> context, String name, Class type, String expr, Field ... fields) throws SystemException, PortalException {
+        FunctionField functionField = new FunctionField(this, name, type, map(), expr, (Field[]) fields);
+        return new ModelQuery(this).field(functionField).one(context);
+    }
+
     public BaseModel createServiceModel(Serializable id, Map<String, Map> context) throws SystemException, PortalException {
         BasePersistence persistence = (BasePersistence) context.get(modelClass.getSimpleName()).get("persistence");
 
@@ -333,32 +358,47 @@ public class ModelManager {
     }
 
     public FunctionField getCountField(String field) {
-        String name = String.format("count_%s", field.replaceAll("\\.", "__"));
-        Field modelField = getField(field);
+        return getCountField(getField(field));
+    }
+
+    public FunctionField getCountField(Field modelField) {
+        String name = String.format("count_%s", modelField.getName().replaceAll("\\.", "__"));
         return new FunctionField(this, name, modelField.getFieldClass(), map("ormType", Type.LONG), "count(%s)", modelField);
     }
 
     public FunctionField getMaxField(String field) {
-        String name = String.format("max_%s", field.replaceAll("\\.", "__"));
-        Field modelField = getField(field);
+        return getMaxField(getField(field));
+    }
+
+    public FunctionField getMaxField(Field modelField) {
+        String name = String.format("max_%s", modelField.getName().replaceAll("\\.", "__"));
         return new FunctionField(this, name, modelField.getFieldClass(), map("ormType", modelField.getOrmType()), "max(%s)", modelField);
     }
 
     public FunctionField getMinField(String field) {
-        String name = String.format("min_%s", field.replaceAll("\\.", "__"));
-        Field modelField = getField(field);
+        return  getMinField(getField(field));
+    }
+
+    public FunctionField getMinField(Field modelField) {
+        String name = String.format("min_%s", modelField.getName().replaceAll("\\.", "__"));
         return new FunctionField(this, name, modelField.getFieldClass(), map("ormType", modelField.getOrmType()), "min(%s)", modelField);
     }
 
     public FunctionField getAvgField(String field) {
-        String name = String.format("avg_%s", field.replaceAll("\\.", "__"));
-        Field modelField = getField(field);
+        return getAvgField(getField(field));
+    }
+
+    public FunctionField getAvgField(Field modelField) {
+        String name = String.format("avg_%s", modelField.getName().replaceAll("\\.", "__"));
         return new FunctionField(this, name, modelField.getFieldClass(), map("ormType", Type.DOUBLE), "avg(%s)", modelField);
     }
 
     public FunctionField getSumField(String field) {
-        String name = String.format("sum_%s", field.replaceAll("\\.", "__"));
-        Field modelField = getField(field);
+        return getSumField(getField(field));
+    }
+
+    public FunctionField getSumField(Field modelField) {
+        String name = String.format("sum_%s", modelField.getName().replaceAll("\\.", "__"));
         return new FunctionField(this, name, modelField.getFieldClass(), map("ormType", modelField.getOrmType()), "sum(%s)", modelField);
     }
 

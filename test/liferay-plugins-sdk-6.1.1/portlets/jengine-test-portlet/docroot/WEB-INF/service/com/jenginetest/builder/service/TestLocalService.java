@@ -104,4 +104,11 @@ public interface TestLocalService extends BaseLocalService, InvokableLocalServic
 	public void test5()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Aggregation testing
+	*/
+	public void test6()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

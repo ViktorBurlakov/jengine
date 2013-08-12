@@ -38,6 +38,12 @@ public class FunctionField extends Field {
         this.attributes = new ArrayList(Arrays.asList(attributes));
     }
 
+    public FunctionField(String name, Class fieldClass, String expression, Object ... attributes) {
+        super(name, fieldClass);
+        this.expression = expression;
+        this.attributes = new ArrayList(Arrays.asList(attributes));
+    }
+
     public FunctionField(String name, Class fieldClass, Map<String, Object> options, String expression, Object ... attributes) {
         super(name, fieldClass, options);
         this.expression = expression;

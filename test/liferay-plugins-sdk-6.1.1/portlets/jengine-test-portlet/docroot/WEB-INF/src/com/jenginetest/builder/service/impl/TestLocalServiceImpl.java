@@ -14,6 +14,7 @@
 
 package com.jenginetest.builder.service.impl;
 
+import com.jengine.db.field.FunctionField;
 import com.jenginetest.builder.service.base.TestLocalServiceBaseImpl;
 import com.jenginetest.custom.*;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -187,6 +188,27 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         author1.save();
 
         check(Author.cls.get(1, context).getFirstName().equals("Jules1"));
+    }
+
+   /**
+     * Aggregation testing
+     */
+    public void test6() throws SystemException, PortalException {
+        System.out.println("** Test 5: Inserting and Updating test");
+        Map context = getServiceContext();
+
+        clearData();
+        loadData();
+
+        check(Author.cls.<Long>max(Author.authorId, context) == 3l);
+        check(Author.cls.<Long>sum(Author.authorId, context) == 6l);
+        check(Author.cls.<Long>min(Author.authorId, context) == 1l);
+        check(Book.cls.count(context) == 3l);
+        check(Book.cls
+                .select(new FunctionField("function1", Long.class, "%s + 1", Book.bookId))
+                .filter(map("bookId", 1l))
+                .<Long>one(context) == 2l);
+        check(Book.cls.<Long>calc(context, "sum", Long.class, "max(%s) + 2", Book.bookId) == 5l);
     }
 
     private void check(boolean value) throws PortalException {
