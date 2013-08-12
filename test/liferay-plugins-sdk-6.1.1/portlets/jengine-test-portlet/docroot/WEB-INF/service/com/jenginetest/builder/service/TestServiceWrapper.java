@@ -97,6 +97,12 @@ public class TestServiceWrapper implements TestService,
 		_testService.test6();
 	}
 
+	public void test7()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_testService.test7();
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

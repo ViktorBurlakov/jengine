@@ -58,6 +58,10 @@ public class TestServiceClpInvoker {
 		_methodName60 = "test6";
 
 		_methodParameterTypes60 = new String[] {  };
+
+		_methodName61 = "test7";
+
+		_methodParameterTypes61 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -107,6 +111,11 @@ public class TestServiceClpInvoker {
 			TestServiceUtil.test6();
 		}
 
+		if (_methodName61.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
+			TestServiceUtil.test7();
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -128,4 +137,6 @@ public class TestServiceClpInvoker {
 	private String[] _methodParameterTypes59;
 	private String _methodName60;
 	private String[] _methodParameterTypes60;
+	private String _methodName61;
+	private String[] _methodParameterTypes61;
 }

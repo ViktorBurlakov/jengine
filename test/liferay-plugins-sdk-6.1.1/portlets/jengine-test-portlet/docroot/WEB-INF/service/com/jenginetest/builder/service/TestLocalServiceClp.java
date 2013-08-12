@@ -62,6 +62,10 @@ public class TestLocalServiceClp implements TestLocalService {
 		_methodName10 = "test6";
 
 		_methodParameterTypes10 = new String[] {  };
+
+		_methodName11 = "test7";
+
+		_methodParameterTypes11 = new String[] {  };
 	}
 
 	public java.lang.String getBeanIdentifier() {
@@ -330,6 +334,34 @@ public class TestLocalServiceClp implements TestLocalService {
 		}
 	}
 
+	public void test7()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName11,
+				_methodParameterTypes11, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -351,4 +383,6 @@ public class TestLocalServiceClp implements TestLocalService {
 	private String[] _methodParameterTypes9;
 	private String _methodName10;
 	private String[] _methodParameterTypes10;
+	private String _methodName11;
+	private String[] _methodParameterTypes11;
 }

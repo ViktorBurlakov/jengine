@@ -121,6 +121,15 @@ public class TestLocalServiceWrapper implements TestLocalService,
 	}
 
 	/**
+	* Aggregation testing
+	*/
+	public void test7()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_testLocalService.test7();
+	}
+
+	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */
 	public TestLocalService getWrappedTestLocalService() {

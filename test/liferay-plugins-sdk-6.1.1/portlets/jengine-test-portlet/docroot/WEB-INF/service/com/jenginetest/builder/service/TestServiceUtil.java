@@ -104,6 +104,12 @@ public class TestServiceUtil {
 		getService().test6();
 	}
 
+	public static void test7()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().test7();
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

@@ -194,7 +194,7 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
      * Aggregation testing
      */
     public void test6() throws SystemException, PortalException {
-        System.out.println("** Test 5: Inserting and Updating test");
+        System.out.println("** Test 6:  Aggregation testing");
         Map context = getServiceContext();
 
         clearData();
@@ -209,6 +209,23 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
                 .filter(map("bookId", 1l))
                 .<Long>one(context) == 2l);
         check(Book.cls.<Long>calc(context, "sum", Long.class, "max(%s) + 2", Book.bookId) == 5l);
+    }
+
+   /**
+     * Model relation testing
+     */
+    public void test7() throws SystemException, PortalException {
+        System.out.println("** Test 7: Model relation testing");
+        Map context = getServiceContext();
+
+        clearData();
+        loadData();
+
+        check(Book.cls.get(1, context).getLibrary().equals(Library.cls.get(1, context)));
+
+        Library globe = Library.cls.filterMap("name", "Globe").one(context);
+        check(globe.getMemberList().size() == 5);
+        check(globe.getMembers().list(context).size() == 5);
     }
 
     private void check(boolean value) throws PortalException {
