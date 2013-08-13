@@ -42,11 +42,17 @@ public class ModelQuery {
     private String orderType = null;
     private Map<String, Integer> page = new HashMap<String, Integer>();
     private ModelManager manager = null;
+    private Map<String, Map> context = null;
 
     public ModelQuery(ModelManager manager) {
         this.manager = manager;
         this.page.put("start", QueryUtil.ALL_POS);
         this.page.put("end", QueryUtil.ALL_POS);
+    }
+
+    public ModelQuery context(Map<String, Map> context) {
+        this.context = context;
+        return this;
     }
 
     public ModelQuery field(Field field) {
@@ -104,8 +110,16 @@ public class ModelQuery {
         return values.size() > 0 ? (T) values.get(0) : null;
     }
 
+    public long count() throws SystemException, PortalException {
+        return count(this.context);
+    }
+
     public long count(Map<String, Map> context) throws SystemException, PortalException {
         return this.field(manager.getCountAllField()).<Long>one(context);
+    }
+
+    public <T extends Object> List<T> list() throws SystemException, PortalException {
+        return list(context);
     }
 
     public <T extends Object> List<T> list(Map<String, Map> context) throws SystemException, PortalException {
