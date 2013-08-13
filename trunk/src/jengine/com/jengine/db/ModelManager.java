@@ -345,7 +345,7 @@ public class ModelManager {
         } else if (modelField.isMultiReference()) {
                 MultiReferenceField multiField = (MultiReferenceField) modelField;
                 Object primaryKey = getValue(obj, getPrimaryKey(), context);
-                return CBaseModel.filter(modelField.getFieldClass(), map(multiField.getReferenceModelField(), primaryKey));
+                return CBaseModel.filter(modelField.getFieldClass(), map(multiField.getReferenceModelField(), primaryKey)).context(context);
         } else if (modelField.isProperty()) {
             try {
                 Method method = customModel.getMethod(((ModelProperty) modelField).getMethodName());
