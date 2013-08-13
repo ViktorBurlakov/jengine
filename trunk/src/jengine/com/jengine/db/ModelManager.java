@@ -241,9 +241,7 @@ public class ModelManager {
         return new ModelQuery(this).field(functionField).one(context);
     }
 
-    public BaseModel createServiceModel(Serializable id, Map<String, Map> context) throws SystemException, PortalException {
-        BasePersistence persistence = (BasePersistence) context.get(modelClass.getSimpleName()).get("persistence");
-
+    public BaseModel createServiceModel(Serializable id) throws SystemException, PortalException {
         BaseModel obj = null;
         try {
             obj = (BaseModel) modelClassImpl.newInstance();
@@ -279,7 +277,7 @@ public class ModelManager {
 
     public CBaseModel save(CBaseModel obj) throws SystemException, PortalException {
         if (obj.isNew()) {
-            createServiceModel((Serializable) primaryKey.castServiceType(obj.getPrimaryKey()), obj.getServiceContext());
+            createServiceModel((Serializable) primaryKey.castServiceType(obj.getPrimaryKey()));
         }
         return update(obj);
     }
@@ -393,6 +391,10 @@ public class ModelManager {
         return getCountField(getField(field));
     }
 
+    public FunctionField getCountAllField() {
+        return new FunctionField(this, "_count_", Long.class, "count(*)");
+    }
+
     public FunctionField getCountField(Field modelField) {
         String name = String.format("count_%s", modelField.getName().replaceAll("\\.", "__"));
         return new FunctionField(this, name, modelField.getFieldClass(), map("ormType", Type.LONG), "count(%s)", modelField);
@@ -408,7 +410,7 @@ public class ModelManager {
     }
 
     public FunctionField getMinField(String field) {
-        return  getMinField(getField(field));
+        return getMinField(getField(field));
     }
 
     public FunctionField getMinField(Field modelField) {

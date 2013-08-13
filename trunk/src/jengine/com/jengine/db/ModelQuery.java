@@ -104,6 +104,10 @@ public class ModelQuery {
         return values.size() > 0 ? (T) values.get(0) : null;
     }
 
+    public long count(Map<String, Map> context) throws SystemException, PortalException {
+        return this.field(manager.getCountAllField()).<Long>one(context);
+    }
+
     public <T extends Object> List<T> list(Map<String, Map> context) throws SystemException, PortalException {
         BasePersistence persistence = (BasePersistence) context.get(manager.getModelClass().getSimpleName()).get("persistence");
 

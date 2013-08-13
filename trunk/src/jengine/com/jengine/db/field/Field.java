@@ -90,16 +90,18 @@ public class Field implements IModelField {
         this.options.putAll(options);
     }
 
+    public Field(ModelManager manager, String name, Class fieldClass) {
+        this.name = name;
+        this.manager = manager;
+        this.fieldClass = fieldClass;
+        this.init();
+    }
+
     public Field(ModelManager manager, String name, Class fieldClass, Map<String, Object> options) {
         this.name = name;
         this.manager = manager;
         this.fieldClass = fieldClass;
         this.options.putAll(options);
-        this.init();
-    }
-
-    public Field(ModelManager manager, String name, Class fieldClass) {
-        this.fieldClass = fieldClass;
         this.init();
     }
 

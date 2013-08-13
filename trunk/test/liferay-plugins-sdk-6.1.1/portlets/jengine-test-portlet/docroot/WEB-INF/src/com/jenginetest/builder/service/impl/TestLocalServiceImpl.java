@@ -226,6 +226,7 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         Library globe = Library.cls.filterMap("name", "Globe").one(context);
         check(globe.getMemberList().size() == 5);
         check(globe.getMembers().list(context).size() == 5);
+        check(globe.getMembers().count(context) == 5);
     }
 
     private void check(boolean value) throws PortalException {
