@@ -66,7 +66,7 @@ public class DateField extends Field {
         this.dateFormat = dateFormat;
     }
 
-    public Object castType(Object value){
+    public Date castType(Object value){
         if (Long.class.isInstance(value)) {
             return new Date((Long)value);
         } else if (String.class.isInstance(value)){
@@ -78,7 +78,7 @@ public class DateField extends Field {
             }
         }
 
-        return value;
+        return (Date) value;
     }
 
     public String format(Object value) {
