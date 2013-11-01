@@ -50,8 +50,8 @@ public class Book extends CModel<SBook, SBookImpl> {
     public Book() throws SystemException, PortalException {
     }
 
-    public Book(Map<String, Map> serviceContext, Map values) throws SystemException, PortalException {
-        super(serviceContext, values);
+    public Book(Map<String, Map> serviceContext) throws SystemException, PortalException {
+        super(serviceContext);
     }
 
 
@@ -61,8 +61,24 @@ public class Book extends CModel<SBook, SBookImpl> {
 
     /* getters and setters block  */
 
+    public void setBookId(Long value) throws SystemException, PortalException {
+        setValue(bookId, value);
+    }
+
+    public Long getBookId() throws SystemException, PortalException {
+        return (Long) getValue(bookId);
+    }
+
+    public void setTitle(String value) throws SystemException, PortalException {
+        setValue(title, value);
+    }
+
     public String getTitle() throws SystemException, PortalException {
         return (String) getValue(title);
+    }
+
+    public void setLibrary(Library value) throws SystemException, PortalException {
+        setValue(library, value);
     }
 
     public Library getLibrary() throws SystemException, PortalException {

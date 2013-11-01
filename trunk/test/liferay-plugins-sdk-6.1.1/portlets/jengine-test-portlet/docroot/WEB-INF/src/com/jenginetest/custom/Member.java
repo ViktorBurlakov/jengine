@@ -51,8 +51,8 @@ public class Member extends CModel<SMember, SMemberImpl> {
     public Member() throws SystemException, PortalException {
     }
 
-    public Member(Map<String, Map> serviceContext, Map values) throws SystemException, PortalException {
-        super(serviceContext, values);
+    public Member(Map<String, Map> serviceContext) throws SystemException, PortalException {
+        super(serviceContext);
     }
 
     public String getVerbose() throws SystemException, PortalException {
@@ -61,12 +61,32 @@ public class Member extends CModel<SMember, SMemberImpl> {
 
     /* getters and setters block  */
 
+    public void setMemberId(Long value) throws SystemException, PortalException {
+        setValue(memberId, value);
+    }
+
+    public Long getMemberId() throws SystemException, PortalException {
+        return (Long) getValue(memberId);
+    }
+
+    public void setFirstName(String value) throws SystemException, PortalException {
+        setValue(firstName, value);
+    }
+
     public String getFirstName() throws SystemException, PortalException {
         return (String) getValue(firstName);
     }
 
+    public void setLastName(String value) throws SystemException, PortalException {
+        setValue(lastName, value);
+    }
+
     public String getLastName() throws SystemException, PortalException {
         return (String) getValue(lastName);
+    }
+
+    public void setLibrary(Library value) throws SystemException, PortalException {
+        setValue(library, value);
     }
 
     public Library getLibrary() throws SystemException, PortalException {
