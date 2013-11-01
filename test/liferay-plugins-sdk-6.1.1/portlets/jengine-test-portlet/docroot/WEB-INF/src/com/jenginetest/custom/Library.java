@@ -69,8 +69,8 @@ public class Library extends CModel<SLibrary, SLibraryImpl> {
     public Library() throws SystemException, PortalException {
     }
 
-    public Library(Map<String, Map> serviceContext, Map values) throws SystemException, PortalException {
-        super(serviceContext, values);
+    public Library(Map<String, Map> serviceContext) throws SystemException, PortalException {
+        super(serviceContext);
     }
 
     public String getVerbose() throws SystemException, PortalException {
@@ -79,12 +79,28 @@ public class Library extends CModel<SLibrary, SLibraryImpl> {
 
     /* getters and setters block  */
 
-    public String getAddress() throws SystemException, PortalException {
-        return (String) getValue(address);
+    public void setLibraryId(Long value) throws SystemException, PortalException {
+        setValue(libraryId, value);
+    }
+
+    public Long getLibraryId() throws SystemException, PortalException {
+        return (Long) getValue(libraryId);
+    }
+
+    public void setName(String value) throws SystemException, PortalException {
+        setValue(name, value);
     }
 
     public String getName() throws SystemException, PortalException {
         return (String) getValue(name);
+    }
+
+    public void setAddress(String value) throws SystemException, PortalException {
+        setValue(address, value);
+    }
+
+    public String getAddress() throws SystemException, PortalException {
+        return (String) getValue(address);
     }
 
     public ModelQuery getMembers() throws SystemException, PortalException {

@@ -48,8 +48,8 @@ public class Author extends CModel<SAuthor, SAuthorImpl> {
         super();
     }
 
-    public Author(Map<String, Map> serviceContext, Map values) throws SystemException, PortalException {
-        super(serviceContext, values);
+    public Author(Map<String, Map> serviceContext) throws SystemException, PortalException {
+        super(serviceContext);
     }
 
     public String getVerbose() throws SystemException, PortalException {
@@ -58,8 +58,24 @@ public class Author extends CModel<SAuthor, SAuthorImpl> {
 
     /* Getters and Setters */
 
+    public void setAuthorId(Long value) throws SystemException, PortalException {
+        setValue(authorId, value);
+    }
+
+    public Long getAuthorId() throws SystemException, PortalException {
+        return (Long) getValue(authorId);
+    }
+
+    public void setFirstName(String value) throws SystemException, PortalException {
+        setValue(firstName, value);
+    }
+
     public String getFirstName() throws SystemException, PortalException {
         return (String) getValue(firstName);
+    }
+
+    public void setLastName(String value) throws SystemException, PortalException {
+        setValue(lastName, value);
     }
 
     public String getLastName() throws SystemException, PortalException {

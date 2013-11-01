@@ -20,8 +20,6 @@ import com.jenginetest.custom.*;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import static com.jengine.utils.CollectionUtil.map;
@@ -46,11 +44,6 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link com.jenginetest.builder.service.TestLocalServiceUtil} to access the test local service.
 	 */
-    private List<Author> authors = new ArrayList<Author>();
-    private List<Library> libraries = new ArrayList<Library>();
-    private List<Book> books = new ArrayList<Book>();
-    private List<Member> members = new ArrayList<Member>();
-    private List<Transaction> transactions = new ArrayList<Transaction>();
 
     public void clearData() throws SystemException {
         // remove all db
@@ -62,46 +55,99 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         Member.manager.remove(context);
         Transaction.manager.remove(context);
 
-        authors.clear();
-        libraries.clear();
-        books.clear();
-        members.clear();
-        transactions.clear();
     }
 
     public void loadData() throws SystemException, PortalException {
         Map context = getServiceContext();
 
-        // adding new objects
-        Author author1 = new Author(context, map("authorId", 1, "firstName", "Jules", "lastName", "Verne"));
-        Author author2 = new Author(context, map("authorId", 2, "firstName", "Isaac", "lastName", "Asimov"));
-        Author author3 = new Author(context, map("authorId", 3, "firstName", "Stephen", "lastName", "King"));
-        authors.add((Author) author1.save());
-        authors.add((Author) author2.save());
-        authors.add((Author) author3.save());
+        /* adding new objects */
 
-        Library library = new Library(context, map("libraryId", 1, "name", "Globe", "address", "Springfield, 742 Evergreen Terrace"));
-        Library library2 = new Library(context, map("libraryId", 2, "name", "Local", "address", "Local"));
-        libraries.add((Library) library.save());
-        libraries.add((Library) library2.save());
+        // Authors
+        Author jule = new Author(context);
+        jule.setAuthorId(1l);
+        jule.setFirstName("Jules");
+        jule.setLastName("Verne");
+        jule.save();
 
-        Book book1 = new Book(context, map("bookId", 1, "title", "The Dark Tower", "library", library));
-        Book book2 = new Book(context, map("bookId", 2, "title", "The Shining ", "library", library));
-        Book book3 = new Book(context, map("bookId", 3, "title", "Vingt mille lieues sous les mers", "library", library));
-        books.add((Book) book1.save());
-        books.add((Book) book2.save());
-        books.add((Book) book3.save());
+        Author asimov = new Author(context);
+        asimov.setAuthorId(2l);
+        asimov.setFirstName("Isaac");
+        asimov.setLastName("Asimov");
+        asimov.save();
 
-        Member member1 = new Member(context, map("memberId", 1, "firstName", "Mark", "lastName", "Adamson", "library", library));
-        Member member2 = new Member(context, map("memberId", 2, "firstName", "Peter", "lastName", "Douglas", "library", library));
-        Member member3 = new Member(context, map("memberId", 3, "firstName", "Gary", "lastName", "Miller", "library", library));
-        Member member4 = new Member(context, map("memberId", 4, "firstName", "Homer", "lastName", "Simpson", "library", library));
-        Member member5 = new Member(context, map("memberId", 5, "firstName", "Burt", "lastName", "Simpson", "library", library));
-        members.add((Member) member1.save());
-        members.add((Member) member2.save());
-        members.add((Member) member3.save());
-        members.add((Member) member4.save());
-        members.add((Member) member5.save());
+        Author king = new Author(context);
+        king.setAuthorId(3l);
+        king.setFirstName("Stephen");
+        king.setLastName("King");
+        king.save();
+
+        // Libraries
+        Library globeLibrary = new Library(context);
+        globeLibrary.setLibraryId(1l);
+        globeLibrary.setName("Globe");
+        globeLibrary.setAddress("Springfield, 742 Evergreen Terrace");
+        globeLibrary.save();
+
+        Library localLibrary = new Library(context);
+        localLibrary.setLibraryId(2l);
+        localLibrary.setName("Local");
+        localLibrary.setAddress("Local");
+        localLibrary.save();
+
+        // Books
+        Book book1 = new Book(context);
+        book1.setBookId(1l);
+        book1.setTitle("The Dark Tower");
+        book1.setLibrary(globeLibrary);
+        book1.save();
+
+        Book book2 = new Book(context);
+        book2.setBookId(2l);
+        book2.setTitle("The Shining ");
+        book2.setLibrary(globeLibrary);
+        book2.save();
+
+        Book book3 = new Book(context);
+        book3.setBookId(3l);
+        book3.setTitle("Vingt mille lieues sous les mers");
+        book3.setLibrary(globeLibrary);
+        book3.save();
+
+        // Members
+        Member member1 = new Member(context);
+        member1.setMemberId(1l);
+        member1.setFirstName("Mark");
+        member1.setLastName("Adamson");
+        member1.setLibrary(globeLibrary);
+        member1.save();
+
+        Member member2 = new Member(context);
+        member2.setMemberId(2l);
+        member2.setFirstName("Peter");
+        member2.setLastName("Douglas");
+        member2.setLibrary(globeLibrary);
+        member2.save();
+
+        Member member3 = new Member(context);
+        member3.setMemberId(3l);
+        member3.setFirstName("Gary");
+        member3.setLastName("Miller");
+        member3.setLibrary(globeLibrary);
+        member3.save();
+
+        Member member4 = new Member(context);
+        member4.setMemberId(4l);
+        member4.setFirstName("Homer");
+        member4.setLastName("Simpson");
+        member4.setLibrary(globeLibrary);
+        member4.save();
+
+        Member member5 = new Member(context);
+        member5.setMemberId(5l);
+        member5.setFirstName("Burt");
+        member5.setLastName("Simpson");
+        member5.setLibrary(globeLibrary);
+        member5.save();
     }
 
     /**
@@ -179,7 +225,10 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         Map context = getServiceContext();
 
         clearData();
-        Author author1 = new Author(context, map("authorId", 1, "firstName", "Jules", "lastName", "Verne"));
+        Author author1 = new Author(context);
+        author1.setAuthorId(1l);
+        author1.setFirstName("Jules");
+        author1.setLastName("Verne");
         author1.save();
 
         check(Author.cls.get(1, context).getLastName().equals("Verne"));
@@ -204,8 +253,7 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         check(Author.cls.<Long>sum(Author.authorId, context) == 6l);
         check(Author.cls.<Long>min(Author.authorId, context) == 1l);
         check(Book.cls.count(context) == 3l);
-        check(Book.cls
-                .select(new FunctionField("function1", Long.class, "%s + 1", Book.bookId))
+        check(Book.cls.select(new FunctionField("function1", Long.class, "%s + 1", Book.bookId))
                 .filter(map("bookId", 1l))
                 .<Long>one(context) == 2l);
         check(Book.cls.<Long>calc(context, "sum", Long.class, "max(%s) + 2", Book.bookId) == 5l);
@@ -227,6 +275,7 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         check(globe.getMemberList().size() == 5);
         check(globe.getMembers().list().size() == 5);
         check(globe.getMembers().count() == 5);
+        check(globe.getMembers().filterMap("lastName", "Simpson").count() == 2);
     }
 
     private void check(boolean value) throws PortalException {
