@@ -45,7 +45,7 @@ public class Transaction extends CModel<STransaction, STransactionImpl> {
 
     @Manager
     public static ModelManager manager = new ModelManager(Transaction.class);
-    public static ClassUtil<Transaction> cls = new ClassUtil<Transaction>(Transaction.class);
+    public static ClassObject<Transaction> cls = new ClassObject<Transaction>(Transaction.class);
 
 
     public Transaction() throws SystemException, PortalException {

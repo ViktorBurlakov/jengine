@@ -44,7 +44,7 @@ public class Book extends CModel<SBook, SBookImpl> {
 
     @Manager
     public static ModelManager manager = new ModelManager(Book.class);
-    public static ClassUtil<Book> cls = new ClassUtil<Book>(Book.class);
+    public static ClassObject<Book> cls = new ClassObject<Book>(Book.class);
 
 
     public Book() throws SystemException, PortalException {

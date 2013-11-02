@@ -20,14 +20,18 @@
 package com.jengine.db;
 
 
+import antlr.RecognitionException;
+import antlr.TokenStreamException;
 import com.jengine.db.field.Field;
 import com.jengine.db.field.FunctionField;
+import com.jengine.db.ql.WhereTranslator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 import static com.jengine.utils.CollectionUtil.map;
@@ -43,6 +47,7 @@ public class ModelQuery {
     private Map<String, Integer> page = new HashMap<String, Integer>();
     private ModelManager manager = null;
     private Map<String, Map> context = null;
+    private List<StringQuery> stringQueries= new ArrayList<StringQuery>();
 
     public ModelQuery(ModelManager manager) {
         this.manager = manager;
@@ -79,6 +84,16 @@ public class ModelQuery {
 
     public ModelQuery filterMap(Object ... filter) {
         this.filter.addAll(PersistenceManager.parse(map(filter)));
+
+        return this;
+    }
+
+    public ModelQuery filter(String query, Object ... params) throws SystemException {
+        try{
+            this.stringQueries.add(new StringQuery(query, params));
+        } catch (Exception e) {
+            throw new SystemException(e);
+        }
 
         return this;
     }
@@ -195,15 +210,19 @@ public class ModelQuery {
         } else {
             this.fields.add(manager.getSelf());
         }
+        for(StringQuery stringQuery: stringQueries) {
+            for (String field : stringQuery.getFields()) {
+                Field modelField = fieldMap.containsKey(field) ?
+                        fieldMap.get(field) :
+                        manager.getField(field);
+                stringQuery.getModelFields().add(modelField);
+                fieldMap.put(modelField.getName(), modelField);
+            }
+        }
         for (Expression expression : filter) {
             Field modelField = fieldMap.containsKey(expression.getField()) ?
                     fieldMap.get(expression.getField()) :
                     manager.getField(expression.getField());
-//            if(modelField.isReference() && !modelField.isSelf()) {
-//                ReferenceField referenceField = (ReferenceField) modelField;
-//                ModelManager referenceManager = CBaseModel.getManager(referenceField.getFieldClass());
-//                modelField = manager.getField(referenceField.getName() + "." +referenceManager.getPrimaryKey().getName());
-//            }
             filterFields.add(modelField);
             fieldMap.put(modelField.getName(), modelField);
         }
@@ -256,5 +275,64 @@ public class ModelQuery {
 
     public Map<String, Integer> getPage() {
         return page;
+    }
+
+    public List<StringQuery> getStringQueries() {
+        return stringQueries;
+    }
+
+
+    /* private class */
+
+    public class StringQuery {
+        private String query;
+        private List params = new ArrayList();
+        private WhereTranslator translator;
+        private List<Field> modelFields = new ArrayList<Field>();
+
+        public StringQuery(String query, Object[] params) throws TokenStreamException, RecognitionException, UnsupportedEncodingException {
+            this.query = query;
+            Collections.addAll(this.params, params);
+            translator = WhereTranslator.parse(query);
+        }
+
+        public List<Field> getModelFields() {
+            return modelFields;
+        }
+
+        public void setModelFields(List<Field> modelFields) {
+            this.modelFields = modelFields;
+        }
+
+        public String getQuery() {
+            return query;
+        }
+
+        public String getSQL(List<String> sqlFields) {
+            for (int i=0; i < sqlFields.size(); i++) {
+                translator.getColumns().get(i).setText(sqlFields.get(i));
+            }
+            return translator.getResult().toString();
+        }
+
+        public List getParams() {
+            return params;
+        }
+
+        public void setParamSQL(int index, String sql) {
+            translator.getParams().get(index).setText(sql);
+        }
+
+        public List<String> getFields() {
+            List<String> fields = new ArrayList<String>();
+
+            for(WhereTranslator.Column column : translator.getColumns()) {
+                fields.add(column.getText());
+            }
+
+            return fields;
+        }
+
+
     }
 }

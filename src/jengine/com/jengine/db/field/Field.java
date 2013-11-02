@@ -20,6 +20,8 @@
 package com.jengine.db.field;
 
 
+import com.jengine.db.Expression;
+import com.jengine.db.ExpressionImpl;
 import com.jengine.db.ModelManager;
 import com.jengine.utils.CollectionUtil;
 import com.liferay.portal.kernel.dao.orm.Type;
@@ -301,5 +303,47 @@ public class Field implements IModelField {
         result.put("serviceName" , serviceName);
 
         return result;
+    }
+
+    /* operation method */
+
+    public Expression eq(Object value) {
+        return new ExpressionImpl(name, "eq", value);
+    }
+
+    public Expression ge(Object value) {
+        return new ExpressionImpl(name, "ge", value);
+    }
+
+    public Expression gt(Object value) {
+        return new ExpressionImpl(name, "gt", value);
+    }
+
+    public Expression le(Object value) {
+        return new ExpressionImpl(name, "le", value);
+    }
+
+    public Expression lt(Object value) {
+        return new ExpressionImpl(name, "lt", value);
+    }
+
+    public Expression like(Object value) {
+        return new ExpressionImpl(name, "like", value);
+    }
+
+    public Expression ne(Object value) {
+        return new ExpressionImpl(name, "ne", value);
+    }
+
+    public Expression isnull(Object value) {
+        return new ExpressionImpl(name, "isnull", value);
+    }
+
+    public Expression isempty(Object value) {
+        return new ExpressionImpl(name, "isempty", value);
+    }
+
+    public Expression op(String op, Object value) {
+        return new ExpressionImpl(name, op, value);
     }
 }

@@ -12,6 +12,7 @@
     <orderEntry type="module" module-name="Liferay-portal-src-6.1.1-ce-ga2" />
     <orderEntry type="library" name="jengine-sdk-lib" level="project" />
     <orderEntry type="library" name="jengine-tomcat-lib" level="project" />
+    <orderEntry type="library" name="jengine-lib" level="project" />
   </component>
 </module>
 

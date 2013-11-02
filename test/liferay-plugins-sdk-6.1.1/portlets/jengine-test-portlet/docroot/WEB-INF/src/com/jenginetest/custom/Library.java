@@ -63,7 +63,7 @@ public class Library extends CModel<SLibrary, SLibraryImpl> {
 
     @Manager
     public static ModelManager manager = new ModelManager(Library.class);
-    public static ClassUtil<Library> cls = new ClassUtil<Library>(Library.class);
+    public static ClassObject<Library> cls = new ClassObject<Library>(Library.class);
 
 
     public Library() throws SystemException, PortalException {

@@ -45,7 +45,7 @@ public class Member extends CModel<SMember, SMemberImpl> {
 
     @Manager
     public static ModelManager manager = new ModelManager(Member.class);
-    public static ClassUtil<Member> cls = new ClassUtil<Member>(Member.class);
+    public static ClassObject<Member> cls = new ClassObject<Member>(Member.class);
 
 
     public Member() throws SystemException, PortalException {

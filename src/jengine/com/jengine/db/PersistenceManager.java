@@ -187,6 +187,7 @@ public class PersistenceManager {
         setModels(query, modelQuery);
         setTargets(query, modelQuery);
         setFilters(query, modelQuery);
+        setStringQuery(query, modelQuery);
         setOrder(query, modelQuery);
         setPage(query, modelQuery);
 
@@ -265,6 +266,34 @@ public class PersistenceManager {
                     query.getFitler().put(sqlName, new ExpressionImpl(sqlName, expression.getOperation(), value));
                     query.getParams().add(value);
                 }
+            }
+        }
+    }
+
+    protected void setStringQuery(Query query, ModelQuery modelQuery) throws SystemException, PortalException {
+        if (modelQuery.getStringQueries().size() > 0) {
+            for (int i=0; i < modelQuery.getStringQueries().size(); i++) {
+                ModelQuery.StringQuery stringQuery = modelQuery.getStringQueries().get(i);
+                List<Field> modelFields = stringQuery.getModelFields();
+                List<String> sqlFields = new ArrayList<String>();
+
+                for (Field field : modelFields) {
+                    sqlFields.add(getSQLName(field));
+                }
+                for (int paramIndex = 0; paramIndex < stringQuery.getParams().size(); paramIndex++) {
+                    Object param = stringQuery.getParams().get(paramIndex);
+
+                    if (param != null && param.getClass().equals(ModelQuery.class)) {
+                        Query subSql = ((ModelQuery) param).buildSQL();
+                        for(Object subParam : subSql.getParams()) {
+                            query.getParams().add(subParam);
+                        }
+                        stringQuery.setParamSQL(paramIndex, "(" + PersistenceManager.buildSQL(subSql) + ")");
+                    } else {
+                        query.getParams().add(param);
+                    }
+                }
+                query.addStringQuery(stringQuery.getSQL(sqlFields));
             }
         }
     }
@@ -371,16 +400,27 @@ public class PersistenceManager {
             queryString.append(" LEFT JOIN ").append(relation).append(" as ").append(alias)
                     .append(" ON ").append(expr).append(" ");
         }
-        if (!query.getFitler().isEmpty()) {
+        if (!query.getFitler().isEmpty() || !query.getStringQueries().isEmpty()) {
+            queryString.append(" WHERE ");
             StringBuffer expressionClause = new StringBuffer();
-            for (String field : query.getFitler().keySet()) {
-                Expression expression = query.getFitler().get(field);
-                if (expressionClause.length() > 0) {
-                    expressionClause.append(" AND ");
+            if (!query.getFitler().isEmpty()) {
+                for (String field : query.getFitler().keySet()) {
+                    Expression expression = query.getFitler().get(field);
+                    if (expressionClause.length() > 0) {
+                        expressionClause.append(" AND ");
+                    }
+                    expressionClause.append(makeSQLExpr(field, expression.getOperation(), expression.getValue()));
                 }
-                expressionClause.append(makeSQLExpr(field, expression.getOperation(), expression.getValue()));
             }
-            queryString.append(" WHERE ").append(expressionClause).append(" ");
+            if (!query.getStringQueries().isEmpty()) {
+                for (String stringQuery : query.getStringQueries()) {
+                    if (expressionClause.length() > 0) {
+                        expressionClause.append(" AND ");
+                    }
+                    expressionClause.append(stringQuery);
+                }
+            }
+            queryString.append(expressionClause).append(" ");
         }
 
         if(!query.getOrder().isEmpty()) {

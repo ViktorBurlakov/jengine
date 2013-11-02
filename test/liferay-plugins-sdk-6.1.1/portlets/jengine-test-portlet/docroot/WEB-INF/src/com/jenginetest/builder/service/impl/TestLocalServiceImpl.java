@@ -49,11 +49,11 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         // remove all db
         Map context = getServiceContext();
 
-        Author.manager.remove(context);
-        Library.manager.remove(context);
-        Book.manager.remove(context);
-        Member.manager.remove(context);
-        Transaction.manager.remove(context);
+        Author.cls.remove(context);
+        Library.cls.remove(context);
+        Book.cls.remove(context);
+        Member.cls.remove(context);
+        Transaction.cls.remove(context);
 
     }
 
@@ -195,9 +195,9 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         Book.cls.get(1, context).getTitle().equals("The Dark Tower");
 
         // filter
-        check(Member.cls.filterMap("lastName", "Simpson").list(context).size() == 2);
-        check(Author.cls.filter(map("firstName", "Stephen")).<Author>one(context).getLastName().equals("King"));
-        check(Book.cls.filter(map("library", Library.cls.get(1, context))).<Book>list(context).size() == 3);
+        check(Member.cls.filter("lastName = ?", "Simpson").list(context).size() == 2);
+        check(Author.cls.filter(Author.firstName.eq("Stephen")).<Author>one(context).getLastName().equals("King"));
+        check(Book.cls.filter(Book.library.eq(Library.cls.get(1, context))).<Book>list(context).size() == 3);
         check(Book.cls.filter(map("library.name__like", "%Globe")).<Book>list(context).size() == 3);
         check(Book.cls.filter(map("library.libraryId", 101)).<Book>list(context).size() == 0);
     }
@@ -212,7 +212,7 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         clearData();
         loadData();
 
-        check(Book.cls.filterMap("library", Library.cls.select("libraryId").filterMap("name__like", "%Globe"))
+        check(Book.cls.filter("library = ?", Library.cls.select("libraryId").filter("name like ?", "%Globe"))
                 .<Book>list(context).size() == 3);
     }
 
@@ -254,7 +254,7 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         check(Author.cls.<Long>min(Author.authorId, context) == 1l);
         check(Book.cls.count(context) == 3l);
         check(Book.cls.select(new FunctionField("function1", Long.class, "%s + 1", Book.bookId))
-                .filter(map("bookId", 1l))
+                .filter("bookId = 1")
                 .<Long>one(context) == 2l);
         check(Book.cls.<Long>calc(context, "sum", Long.class, "max(%s) + 2", Book.bookId) == 5l);
     }
@@ -271,17 +271,15 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
 
         check(Book.cls.get(1, context).getLibrary().equals(Library.cls.get(1, context)));
 
-        Library globe = Library.cls.filterMap("name", "Globe").one(context);
+        Library globe = Library.cls.filter("name = ?", "Globe").one(context);
         check(globe.getMemberList().size() == 5);
         check(globe.getMembers().list().size() == 5);
         check(globe.getMembers().count() == 5);
-        check(globe.getMembers().filterMap("lastName", "Simpson").count() == 2);
+        check(globe.getMembers().filter("lastName = ?", "Simpson").count() == 2);
     }
 
     private void check(boolean value) throws PortalException {
-        if (value) {
-            return;
-        } else {
+        if (!value) {
             throw new PortalException("Checking failed!!!");
         }
     }
