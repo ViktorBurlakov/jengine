@@ -125,6 +125,7 @@ public class CBaseModel<T extends BaseModel<T>> {
         return vos;
     }
 
+
     /* modify methods */
 
     public CBaseModel save() throws SystemException, PortalException {
@@ -165,6 +166,7 @@ public class CBaseModel<T extends BaseModel<T>> {
         this.dbValues = dbValues;
     }
 
+
     /* static methods */
 
     public static ModelManager getManager(Class clazz) {
@@ -178,108 +180,20 @@ public class CBaseModel<T extends BaseModel<T>> {
         }
     }
 
+
     /** static class methods **/
-
-    public static CBaseModel newInstance(Class cls, Map<String, Map> serviceContext) throws SystemException, PortalException {
-        CBaseModel obj = getManager(cls).newInstance();
-        obj.setServiceContext(serviceContext);
-        return obj;
-    }
-
-    public static CBaseModel newInstance(Class cls, Map<String, Map> serviceContext, Map values) throws SystemException, PortalException {
-        CBaseModel obj = getManager(cls).newInstance();
-        obj.setServiceContext(serviceContext);
-        obj.setValues(values);
-        return obj;
-    }
-
-    public static CBaseModel newInstance(Class cls, Map<String, Map> serviceContext, BaseModel object) throws SystemException, PortalException {
-        CBaseModel obj = getManager(cls).newInstance();
-        obj.setServiceContext(serviceContext);
-        obj.setObject((BaseModel) object);
-        return obj;
-    }
 
     public static CBaseModel get(Class cls, Object id, Map<String, Map> context) throws SystemException, PortalException {
         return getManager(cls).get(id, context);
-    }
-
-    public static ModelQuery select(Class cls) throws SystemException {
-        return getManager(cls).select();
-    }
-
-    public static ModelQuery select(Class cls, Object ... fields) throws SystemException {
-        return getManager(cls).select(fields);
-    }
-
-    public static ModelQuery select(Class cls, List fields) throws SystemException {
-        return getManager(cls).select(fields);
     }
 
     public static ModelQuery filter(Class cls, Map<String, Object> filter) throws SystemException {
         return getManager(cls).filter(filter);
     }
 
-    public static ModelQuery filterMap(Class cls, Object ... filter) throws SystemException {
-        return getManager(cls).filterMap(filter);
-    }
-
     public static ModelQuery filter(Class cls, List<Expression> filter) throws SystemException {
         return getManager(cls).filter(filter);
     }
-
-    public static ModelQuery filter(Class cls, Expression ... filter) throws SystemException {
-        return getManager(cls).filter(filter);
-    }
-
-    public static Object max(Class cls, String field, Map<String, Map> context) throws SystemException, PortalException {
-        return getManager(cls).max(field, context);
-    }
-
-    public static Object min(Class cls, String field, Map<String, Map> context) throws SystemException, PortalException {
-        return getManager(cls).min(field, context);
-    }
-
-    public static long count(Class cls, Map<String, Map> context) throws SystemException, PortalException {
-        return getManager(cls).count(context);
-    }
-
-    public static long count(Class cls, String field, Map<String, Map> context) throws SystemException, PortalException {
-        return getManager(cls).count(field, context);
-    }
-
-    public static Object avg(Class cls, String field, Map<String, Map> context) throws SystemException, PortalException {
-        return getManager(cls).avg(field, context);
-    }
-
-    public static Object sum(Class cls, String field, Map<String, Map> context) throws SystemException, PortalException {
-        return getManager(cls).sum(field, context);
-    }
-
-    public static Object max(Class cls, Field field, Map<String, Map> context) throws SystemException, PortalException {
-        return getManager(cls).max(field, context);
-    }
-
-    public static Object min(Class cls, Field field, Map<String, Map> context) throws SystemException, PortalException {
-        return getManager(cls).min(field, context);
-    }
-
-    public static long count(Class cls, Field field, Map<String, Map> context) throws SystemException, PortalException {
-        return getManager(cls).count(field, context);
-    }
-
-    public static Object avg(Class cls, Field field, Map<String, Map> context) throws SystemException, PortalException {
-        return getManager(cls).avg(field, context);
-    }
-
-    public static Object sum(Class cls, Field field, Map<String, Map> context) throws SystemException, PortalException {
-        return getManager(cls).sum(field, context);
-    }
-
-    public static Object calc(Class cls, Map<String, Map> context, String name, Class type, String expr, Field ... fields) throws SystemException, PortalException {
-        return getManager(cls).calc(context, name, type, expr, fields);
-    }
-
 
     public boolean equals(Object obj) {
         try {
@@ -292,25 +206,34 @@ public class CBaseModel<T extends BaseModel<T>> {
         return false;
     }
 
+
     /* inner classes */
 
-    public static class ClassUtil<T extends CBaseModel> {
+    public static class ClassObject<T extends CBaseModel> {
         private Class cls;
 
-        public ClassUtil(Class<T> cls) {
+        public ClassObject(Class<T> cls) {
             this.cls = cls;
         }
 
         public T newInstance(Map<String, Map> serviceContext, Map values) throws SystemException, PortalException {
-            return (T) CBaseModel.newInstance(cls, serviceContext, values);
+            CBaseModel obj = getManager(cls).newInstance();
+            obj.setServiceContext(serviceContext);
+            obj.setValues(values);
+            return (T) obj;
         }
 
         public T newInstance(Map<String, Map> serviceContext) throws SystemException, PortalException {
-            return (T) CBaseModel.newInstance(cls, serviceContext);
+            CBaseModel obj = getManager(cls).newInstance();
+            obj.setServiceContext(serviceContext);
+            return (T) obj;
         }
 
         public T newInstance(Map<String, Map> serviceContext, BaseModel object) throws SystemException, PortalException {
-            return (T) CBaseModel.newInstance(cls, serviceContext, object);
+            CBaseModel obj = getManager(cls).newInstance();
+            obj.setServiceContext(serviceContext);
+            obj.setObject((BaseModel) object);
+            return (T) obj;
         }
 
         public T get(Object id, Map<String, Map> context) throws SystemException, PortalException {
@@ -318,78 +241,83 @@ public class CBaseModel<T extends BaseModel<T>> {
         }
 
         public ModelQuery select() throws SystemException {
-            return CBaseModel.select(cls);
+            return getManager(cls).select();
         }
 
         public ModelQuery select(Object ... fields) throws SystemException {
-            return CBaseModel.select(cls, fields);
+            return getManager(cls).select(fields);
         }
         public ModelQuery select(Class cls, List ... fields) throws SystemException {
-            return CBaseModel.select(cls, fields);
+            return getManager(cls).select(fields);
+        }
+
+        public ModelQuery filter(String query, Object ... params) throws SystemException {
+            return getManager(cls).filter(query, params);
         }
 
         public ModelQuery filter(Map<String, Object> filter) throws SystemException {
-            return CBaseModel.filter(cls, filter);
+            return getManager(cls).filter(filter);
         }
 
-        public ModelQuery filterMap(Object ... filter) throws SystemException {
-            return CBaseModel.filterMap(cls, filter);
+        public ModelQuery filter(List<Expression> filter) throws SystemException {
+            return getManager(cls).filter(filter);
         }
 
-        public ModelQuery filter(Class cls, List<Expression> filter) throws SystemException {
-            return CBaseModel.filter(cls, filter);
-        }
-
-        public ModelQuery filter(Class cls, Expression ... filter) throws SystemException {
-            return CBaseModel.filter(cls, filter);
+        public ModelQuery filter(Expression ... filter) throws SystemException {
+            return getManager(cls).filter(filter);
         }
 
         public Object max(String field, Map<String, Map> context) throws SystemException, PortalException {
-            return CBaseModel.max(cls, field, context);
+            return getManager(cls).max(field, context);
         }
 
         public Object min(String field, Map<String, Map> context) throws SystemException, PortalException {
-            return CBaseModel.min(cls, field, context);
+            return getManager(cls).min(field, context);
         }
 
         public long count(Map<String, Map> context) throws SystemException, PortalException {
-            return CBaseModel.count(cls, context);
+            return getManager(cls).count(context);
         }
 
         public long count(String field, Map<String, Map> context) throws SystemException, PortalException {
-            return CBaseModel.count(cls, field, context);
+            return getManager(cls).count(field, context);
         }
 
         public Object avg(String field, Map<String, Map> context) throws SystemException, PortalException {
-            return CBaseModel.avg(cls, field, context);
+            return getManager(cls).avg(field, context);
         }
 
         public Object sum(String field, Map<String, Map> context) throws SystemException, PortalException {
-            return CBaseModel.sum(cls, field, context);
+            return getManager(cls).sum(field, context);
         }
 
         public <ResultType> ResultType max(Field field, Map<String, Map> context) throws SystemException, PortalException {
-            return (ResultType) CBaseModel.max(cls, field, context);
+            return (ResultType) getManager(cls).max(field, context);
         }
 
         public <ResultType> ResultType min(Field field, Map<String, Map> context) throws SystemException, PortalException {
-            return (ResultType) CBaseModel.min(cls, field, context);
+            return (ResultType) getManager(cls).min(field, context);
         }
 
         public long count(Field field, Map<String, Map> context) throws SystemException, PortalException {
-            return CBaseModel.count(cls, field, context);
+            return getManager(cls).count(field, context);
         }
 
         public <ResultType> ResultType avg(Field field, Map<String, Map> context) throws SystemException, PortalException {
-            return (ResultType) CBaseModel.avg(cls, field, context);
+            return (ResultType) getManager(cls).avg(field, context);
         }
 
         public <ResultType> ResultType sum(Field field, Map<String, Map> context) throws SystemException, PortalException {
-            return (ResultType) CBaseModel.sum(cls, field, context);
+            return (ResultType) getManager(cls).sum(field, context);
         }
 
         public <ResultType> ResultType calc(Map<String, Map> context, String name, Class type, String expr, Field ... fields) throws SystemException, PortalException {
-            return (ResultType) CBaseModel.calc(cls, context, name, type, expr, fields);
+            return (ResultType) getManager(cls).calc(context, name, type, expr, fields);
+        }
+
+
+        public void remove(Map<String, Map> context) throws SystemException {
+            getManager(cls).remove(context);
         }
     }
 }

@@ -5,14 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="ae150e8e-51d1-4f53-930c-7a5f84a66dc9" name="Default" comment="multi reference field support was added">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ant.xml" afterPath="$PROJECT_DIR$/.idea/ant.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jengine_lib.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ql/WhereTranslator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/CBaseModel.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/CBaseModel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelQuery.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelQuery.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/PersistenceManager.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/PersistenceManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/Field.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/Field.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestLocalServiceImpl.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestLocalServiceImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Author.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Author.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Book.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Book.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Library.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Library.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Member.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Member.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Transaction.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Transaction.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/css/.sass-cache/main.css" afterPath="$PROJECT_DIR$/docroot/css/.sass-cache/main.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/liferay-sdk.iml" afterPath="$PROJECT_DIR$/docroot/liferay-sdk.iml" />
     </list>
     <ignored path="jengine-test-portlet.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -87,28 +94,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TestServiceImpl.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestServiceImpl.java">
+      <file leaf-file-name="WhereTranslator.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ql/WhereTranslator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="73" column="24" selection-start="2614" selection-end="2614" vertical-scroll-proportion="0.0">
+            <state line="57" column="65" selection-start="1946" selection-end="1946" vertical-scroll-proportion="-5.68">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1345#1357#0" expanded="true" />
+                <element signature="e#1409#1417#0" expanded="true" />
+                <element signature="e#1467#1474#0" expanded="true" />
+                <element signature="e#3454#3468#0" expanded="true" />
+                <element signature="e#6371#6379#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Field.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/Field.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="348" column="0" selection-start="9670" selection-end="9670" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#9672#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExpressionImpl.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ExpressionImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="23" selection-start="900" selection-end="900" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestServiceBaseImpl.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/TestServiceBaseImpl.java">
+      <file leaf-file-name="DynamicQueryManager.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/DynamicQueryManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="587" column="29" selection-start="15549" selection-end="15549" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestLocalService.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/TestLocalService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="0" selection-start="1621" selection-end="1621" vertical-scroll-proportion="0.0">
+            <state line="134" column="41" selection-start="5778" selection-end="5778" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -117,48 +142,18 @@
       <file leaf-file-name="TestLocalServiceImpl.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestLocalServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="276" column="71" selection-start="9272" selection-end="9272" vertical-scroll-proportion="1.9805068">
+            <state line="221" column="30" selection-start="7263" selection-end="7263" vertical-scroll-proportion="0.9369919">
               <folding>
-                <element signature="e#6449#6457#0" expanded="true" />
-                <element signature="e#6576#6582#0" expanded="true" />
-                <element signature="e#6677#6683#0" expanded="true" />
-                <element signature="e#6772#6778#0" expanded="true" />
+                <element signature="e#7171#7177#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Member.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Member.java">
+      <file leaf-file-name="TestServiceImpl.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="0" selection-start="2459" selection-end="2459" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Book.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Book.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="23" selection-start="2343" selection-end="2343" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Library.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Library.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="86" column="0" selection-start="3018" selection-end="3018" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Author.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Author.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="66" selection-start="1679" selection-end="1679" vertical-scroll-proportion="0.0">
+            <state line="61" column="0" selection-start="2269" selection-end="2269" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -167,16 +162,34 @@
       <file leaf-file-name="CBaseModel.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/CBaseModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="84" column="21" selection-start="3015" selection-end="3015" vertical-scroll-proportion="0.0">
+            <state line="266" column="33" selection-start="8966" selection-end="8966" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ModelManager.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelManager.java">
+      <file leaf-file-name="ModelQuery.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelQuery.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="308" column="16" selection-start="13874" selection-end="13874" vertical-scroll-proportion="0.0">
+            <state line="322" column="34" selection-start="10602" selection-end="10602" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PersistenceManager.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/PersistenceManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="254" column="25" selection-start="10506" selection-end="10506" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Meta.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/Meta.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="23" column="18" selection-start="838" selection-end="838" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -192,21 +205,21 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/utils/ClassUtils.java" />
-        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/CModel.java" />
-        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Transaction.java" />
-        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestServiceImpl.java" />
-        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/CBaseModel.java" />
-        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/ReferenceField.java" />
-        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/FunctionField.java" />
-        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/Field.java" />
-        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelManager.java" />
-        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelQuery.java" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/DateField.java" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Author.java" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Library.java" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Book.java" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Member.java" />
+        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ql/WhereASTVisitor.java" />
+        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ql/parser/SQLCommonAST.java" />
+        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ql/WhereParser.java" />
+        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelManager.java" />
+        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/Query.java" />
+        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelQuery.java" />
+        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/PersistenceManager.java" />
+        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ql/WhereTranslator.java" />
+        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/Field.java" />
+        <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/CBaseModel.java" />
         <option value="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestLocalServiceImpl.java" />
       </list>
     </option>
@@ -361,7 +374,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="META-INF" />
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jenginetest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="custom" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -392,6 +413,56 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="jenginetest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="builder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jengine-test-portlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jengine-test-portlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docroot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jenginetest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="builder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="impl" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -493,6 +564,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jengine-test-portlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jengine-test-portlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docroot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope">
@@ -552,9 +645,40 @@
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager" selected="Tomcat Server.jengine-tomcat">
+    <configuration default="false" name="WhereTranslator" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.jengine.db.ql.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.jengine.db.ql.WhereTranslator" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../../../../src" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="liferay-sdk" />
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method>
+        <option name="Make" enabled="false" />
+      </method>
+    </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
@@ -761,8 +885,9 @@
         <option name="Make" enabled="false" />
       </method>
     </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="Tomcat Server.jengine-tomcat" />
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="Application.WhereTranslator" />
+      <item index="1" class="java.lang.String" itemvalue="Tomcat Server.jengine-tomcat" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -902,7 +1027,11 @@
       <created>1376395800107</created>
       <updated>1376395800107</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="tests was refactored">
+      <created>1383324316111</created>
+      <updated>1383324316111</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TodoView" selected-index="3">
@@ -933,8 +1062,9 @@
       <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3266745" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3278496" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21288344" sideWeight="0.6733255" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4864865" sideWeight="0.49786097" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3983549" sideWeight="0.49786097" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4865135" sideWeight="0.4983957" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -947,10 +1077,9 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294347" sideWeight="0.60047" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24907975" sideWeight="0.6733255" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32902467" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286385" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1085,101 +1214,123 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/DynamicQueryManager.java">
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/Query.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="52" selection-start="3727" selection-end="3727" vertical-scroll-proportion="0.0" />
+        <state line="161" column="43" selection-start="4003" selection-end="4003" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/DateField.java">
+    <entry file="file://$PROJECT_DIR$/../../../liferay-portal-src-6.1.1-ce-ga2/portal-impl/src/com/liferay/portal/spring/aop/ServiceBeanMethodInvocation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="16" selection-start="1864" selection-end="1864" vertical-scroll-proportion="0.0" />
+        <state line="129" column="23" selection-start="3025" selection-end="3025" vertical-scroll-proportion="1.8470149">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelQuery.java">
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/liferay-plugin-package.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="113" column="22" selection-start="3581" selection-end="3581" vertical-scroll-proportion="0.0" />
+        <state line="13" column="55" selection-start="556" selection-end="556" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/PersistenceManager.java">
+    <entry file="file://$PROJECT_DIR$/../../../liferay-portal-src-6.1.1-ce-ga2/portal-impl/src/com/liferay/portal/servlet/DirectServletPathRegisterDispatcher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="365" column="33" selection-start="15122" selection-end="15122" vertical-scroll-proportion="0.0" />
+        <state line="52" column="0" selection-start="1585" selection-end="1585" vertical-scroll-proportion="0.53846157">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/Field.java">
+    <entry file="jar:///usr/lib/jvm/jdk1.6.0_34/src.zip!/java/lang/String.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="107" column="112" selection-start="3690" selection-end="3690" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/ui/Pager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="67" selection-start="329" selection-end="329" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="24" selection-start="2614" selection-end="2614" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/base/TestServiceBaseImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="587" column="29" selection-start="15549" selection-end="15549" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/service/com/jenginetest/builder/service/TestLocalService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="0" selection-start="1621" selection-end="1621" vertical-scroll-proportion="0.0" />
+        <state line="1928" column="18" selection-start="73746" selection-end="73746" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="308" column="16" selection-start="13874" selection-end="13874" vertical-scroll-proportion="0.0">
+        <state line="351" column="42" selection-start="16211" selection-end="16211" vertical-scroll-proportion="-11.12">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/Meta.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="18" selection-start="838" selection-end="838" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="0" selection-start="2269" selection-end="2269" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="322" column="34" selection-start="10602" selection-end="10602" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ExpressionImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="23" selection-start="900" selection-end="900" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/DynamicQueryManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="134" column="41" selection-start="5778" selection-end="5778" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/PersistenceManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="254" column="25" selection-start="10506" selection-end="10506" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/Field.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="348" column="0" selection-start="9670" selection-end="9670" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#9672#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ql/WhereTranslator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="65" selection-start="1946" selection-end="1946" vertical-scroll-proportion="-5.68">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1345#1357#0" expanded="true" />
+            <element signature="e#1409#1417#0" expanded="true" />
+            <element signature="e#1467#1474#0" expanded="true" />
+            <element signature="e#3454#3468#0" expanded="true" />
+            <element signature="e#6371#6379#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/CBaseModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="21" selection-start="3015" selection-end="3015" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Author.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="66" selection-start="1679" selection-end="1679" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Library.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="0" selection-start="3018" selection-end="3018" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Book.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="23" selection-start="2343" selection-end="2343" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Member.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="0" selection-start="2459" selection-end="2459" vertical-scroll-proportion="0.0">
+        <state line="266" column="33" selection-start="8966" selection-end="8966" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestLocalServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="276" column="71" selection-start="9272" selection-end="9272" vertical-scroll-proportion="1.9805068">
+        <state line="221" column="30" selection-start="7263" selection-end="7263" vertical-scroll-proportion="0.9369919">
           <folding>
-            <element signature="e#6449#6457#0" expanded="true" />
-            <element signature="e#6576#6582#0" expanded="true" />
-            <element signature="e#6677#6683#0" expanded="true" />
-            <element signature="e#6772#6778#0" expanded="true" />
+            <element signature="e#7171#7177#0" expanded="true" />
           </folding>
         </state>
       </provider>

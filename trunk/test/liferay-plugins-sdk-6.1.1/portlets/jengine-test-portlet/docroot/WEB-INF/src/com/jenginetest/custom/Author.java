@@ -41,7 +41,7 @@ public class Author extends CModel<SAuthor, SAuthorImpl> {
 
     @Manager
     public static ModelManager manager = new ModelManager(Author.class);
-    public static ClassUtil<Author> cls = new ClassUtil<Author>(Author.class);
+    public static ClassObject<Author> cls = new ClassObject<Author>(Author.class);
 
 
     public Author() throws SystemException, PortalException {
