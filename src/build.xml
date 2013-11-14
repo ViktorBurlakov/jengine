@@ -3,11 +3,12 @@
 
     <!-- set global properties for this build -->
     <property name="src" location="./jengine"/>
-    <property name="build" location="./.build"/>
-    <property name="dist"  location="./.dist"/>
+    <property name="build" location="../.build"/>
+    <property name="dist"  location="../.dist"/>
     <property name="lib_path"  location="../lib"/>
-    <property name="test_portlet_lib_path"  location="../test/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/lib"/>
-    <property name="version-number" value="0.1" />
+    <!--property name="test_portlet_lib_path"  location="../test/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/lib"/-->
+    <property name="version-number" value="0.1.1" />
+    <property name="antlr_grammar_path" value="jengine/com/jengine/db/ql/parser" />
     
 
     <path id="project.class.path">
@@ -16,6 +17,14 @@
 	    <include name="**/*.jar"/>
 	</fileset>
     </path>
+
+    <target name="antlr">
+	<java classname="antlr.Tool" classpath="${lib_path}/antlr2.jar" failonerror="true">
+	    <arg value="-o"/>
+	    <arg path="${antlr_grammar_path}"/>
+	    <arg path="${antlr_grammar_path}/sql.g"/>
+	</java>
+    </target>
 
     <target name="init">
 	<!-- Create the time stamp -->
@@ -31,21 +40,21 @@
 	</javac>
      </target>
 
-    <target name="dist" depends="compile,dist_src" description="generate the distribution" >
+    <target name="src" description="generate the source" >
+	<mkdir dir="${dist}"/>
+	<zip destfile="${dist}/jengine.${version-number}-src.jar" basedir="." includes="jengine/**"/>
+    </target>
+
+    <target name="dist" depends="compile, src" description="generate the distribution" >
 	<!-- Create the distribution directory -->
 	<mkdir dir="${dist}"/>
 	<!-- Put everything in ${build} into the jengine-${DSTAMP}.jar file -->
 	<jar jarfile="${dist}/jengine.${version-number}.jar" basedir="${build}"/>
     </target>
 
-    <target name="dist_src" description="generate the source" >
-	<zip destfile="${dist}/jengine.${version-number}-src.jar" basedir="." includes="jengine/**"/>
-    </target>
-
-    <target name="test_deploy" depends="dist,dist_src" description="copy to test jengine portlet" >
+    <!--target name="test_deploy" depends="dist,src" description="copy to test jengine portlet" >
 	 <copy file="${dist}/jengine.jar" todir="${test_portlet_lib_path}"/>
-	 <!--copy file="${dist}/jengine-src.jar" todir="${test_portlet_lib_path}"/-->
-    </target>
+    </target-->
 
     <target name="clean" description="clean up">
 	<!-- Delete the ${build} and ${dist} directory trees -->

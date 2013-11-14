@@ -93,7 +93,7 @@ public class ModelManager {
                 ReferenceField referenceField = (ReferenceField) field;
                 referenceField.setFieldClassImpl(field.getFieldClass().equals(customModel) ?
                         modelClassImpl : CBaseModel.getManager(field.getFieldClass()).getModelClassImpl());
-                // todo : more better
+                // todo : much better
                 // add multi reference field to another model
                 String multiFieldName = referenceField.getMultiReferenceFieldName() != null ?
                         referenceField.getMultiReferenceFieldName() : String.format("%s_set", customModel.getSimpleName().toLowerCase());
@@ -152,6 +152,10 @@ public class ModelManager {
 
     public ModelQuery select(List fields) throws SystemException {
         return new ModelQuery(this).fields(fields);
+    }
+
+    public ModelQuery filter(String query, Object ... params) throws SystemException {
+        return new ModelQuery(this).filter(query, (Object[]) params);
     }
 
     public ModelQuery filter(Map<String, Object> filter) throws SystemException {
