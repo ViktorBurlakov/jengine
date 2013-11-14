@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="jengine-lib">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../../../lib/antlr2.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
