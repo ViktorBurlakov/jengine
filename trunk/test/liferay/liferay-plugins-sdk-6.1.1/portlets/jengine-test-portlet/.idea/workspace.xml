@@ -5,21 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="ae150e8e-51d1-4f53-930c-7a5f84a66dc9" name="Default" comment="multi reference field support was added">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jengine_lib.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ql/WhereTranslator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jengine_lib.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Library.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Library.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/CBaseModel.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/CBaseModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelQuery.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelQuery.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/PersistenceManager.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/PersistenceManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/Field.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/Field.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Member.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Member.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/css/.sass-cache/main.css" afterPath="$PROJECT_DIR$/docroot/css/.sass-cache/main.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestLocalServiceImpl.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestLocalServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/PersistenceManager.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/PersistenceManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Transaction.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Transaction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelQuery.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelQuery.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/liferay-sdk.iml" afterPath="$PROJECT_DIR$/docroot/liferay-sdk.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Author.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Author.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Book.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Book.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Library.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Library.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Member.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Member.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Transaction.java" afterPath="$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/custom/Transaction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/css/.sass-cache/main.css" afterPath="$PROJECT_DIR$/docroot/css/.sass-cache/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docroot/liferay-sdk.iml" afterPath="$PROJECT_DIR$/docroot/liferay-sdk.iml" />
     </list>
     <ignored path="jengine-test-portlet.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -50,8 +50,8 @@
         <option name="CONDITION_ENABLED" value="false" />
         <option name="CLASS_FILTERS_ENABLED" value="false" />
         <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="&#13;&#13;JAVA" />
-        <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
       </breakpoint>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -65,84 +65,22 @@
         <option name="CONDITION_ENABLED" value="false" />
         <option name="CLASS_FILTERS_ENABLED" value="false" />
         <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="&#13;&#13;JAVA" />
-        <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
     <breakpoint_rules />
-    <ui_properties>
-      <property name="line_breakpoints_groupByMethods" value="false" />
-      <property name="line_breakpoints_viewId" value="TABLE" />
-      <property name="exception_breakpoints_flattenPackages" value="true" />
-      <property name="method_breakpoints_flattenPackages" value="true" />
-      <property name="field_breakpoints_flattenPackages" value="true" />
-      <property name="exception_breakpoints_groupByMethods" value="false" />
-      <property name="line_breakpoints_groupByClasses" value="true" />
-      <property name="method_breakpoints_viewId" value="TABLE" />
-      <property name="field_breakpoints_groupByMethods" value="false" />
-      <property name="line_breakpoints_flattenPackages" value="true" />
-      <property name="field_breakpoints_groupByClasses" value="true" />
-      <property name="method_breakpoints_groupByClasses" value="true" />
-      <property name="exception_breakpoints_viewId" value="TABLE" />
-      <property name="exception_breakpoints_groupByClasses" value="true" />
-      <property name="field_breakpoints_viewId" value="TABLE" />
-      <property name="method_breakpoints_groupByMethods" value="false" />
-    </ui_properties>
+    <ui_properties />
   </component>
   <component name="FavoritesManager">
     <favorites_list name="jengine-test-portlet" />
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="WhereTranslator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ql/WhereTranslator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="65" selection-start="1946" selection-end="1946" vertical-scroll-proportion="-5.68">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1345#1357#0" expanded="true" />
-                <element signature="e#1409#1417#0" expanded="true" />
-                <element signature="e#1467#1474#0" expanded="true" />
-                <element signature="e#3454#3468#0" expanded="true" />
-                <element signature="e#6371#6379#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Field.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/Field.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="348" column="0" selection-start="9670" selection-end="9670" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#9672#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ExpressionImpl.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ExpressionImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="23" selection-start="900" selection-end="900" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DynamicQueryManager.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/DynamicQueryManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="134" column="41" selection-start="5778" selection-end="5778" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="TestLocalServiceImpl.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestLocalServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="221" column="30" selection-start="7263" selection-end="7263" vertical-scroll-proportion="0.9369919">
+            <state line="221" column="30" selection-start="7263" selection-end="7263" vertical-scroll-proportion="0.028089888">
               <folding>
                 <element signature="e#7171#7177#0" expanded="true" />
               </folding>
@@ -154,42 +92,6 @@
         <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="61" column="0" selection-start="2269" selection-end="2269" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CBaseModel.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/CBaseModel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="266" column="33" selection-start="8966" selection-end="8966" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ModelQuery.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelQuery.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="322" column="34" selection-start="10602" selection-end="10602" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PersistenceManager.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/PersistenceManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="254" column="25" selection-start="10506" selection-end="10506" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Meta.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/Meta.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="18" selection-start="838" selection-end="838" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -602,17 +504,17 @@
   </component>
   <component name="PropertiesComponent">
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="132" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="122" />
     <property name="project.structure.last.edited" value="Modules" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="122" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="75" />
-    <property name="OverrideImplement.combined" value="true" />
-    <property name="project.structure.proportion" value="0.15" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="137" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="OverrideImplement.combined" value="true" />
     <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
-    <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="129" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder5" value="5" />
@@ -627,26 +529,26 @@
     <property name="GoToClass.includeJavaFiles" value="true" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="MemberChooser.showClasses" value="true" />
     <property name="Repository.Attach.Sources" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="122" />
-    <property name="GoToClass.includeLibraries" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth5" value="1047" />
-    <property name="Downloaded.Files.Path" value="$PROJECT_DIR$/lib" />
+    <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="last_directory_selection" value="$PROJECT_DIR$/docroot/WEB-INF/src" />
+    <property name="Downloaded.Files.Path" value="$PROJECT_DIR$/lib" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="options.lastSelected" value="copyright.profiles" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/docroot/WEB-INF/src" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder5" value="5" />
+    <property name="options.lastSelected" value="copyright.profiles" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
-    <property name="project.structure.side.proportion" value="0.2" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
-    <property name="dynamic.classpath" value="false" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RunManager" selected="Tomcat Server.jengine-tomcat">
     <configuration default="false" name="WhereTranslator" type="Application" factoryName="Application" temporary="true">
@@ -702,24 +604,6 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -746,6 +630,24 @@
       <envs />
       <properties />
       <listeners />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -1055,22 +957,19 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="24" width="1680" height="1002" extended-state="0" />
-    <editor active="false" />
+    <frame x="0" y="24" width="1680" height="1002" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3266745" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3278496" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21288344" sideWeight="0.6733255" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21288344" sideWeight="0.6733255" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3983549" sideWeight="0.49786097" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4865135" sideWeight="0.4983957" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3266745" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934132" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25285286" sideWeight="0.21878122" order="1" side_tool="true" content_ui="tabs" />
@@ -1079,7 +978,10 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24907975" sideWeight="0.6733255" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32902467" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3278496" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3266745" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1214,51 +1116,24 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/Query.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="161" column="43" selection-start="4003" selection-end="4003" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../liferay-portal-src-6.1.1-ce-ga2/portal-impl/src/com/liferay/portal/spring/aop/ServiceBeanMethodInvocation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="129" column="23" selection-start="3025" selection-end="3025" vertical-scroll-proportion="1.8470149">
-          <folding />
-        </state>
+        <state line="129" column="23" selection-start="3025" selection-end="3025" vertical-scroll-proportion="1.8470149" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/liferay-plugin-package.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="55" selection-start="556" selection-end="556" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="13" column="55" selection-start="556" selection-end="556" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../../liferay-portal-src-6.1.1-ce-ga2/portal-impl/src/com/liferay/portal/servlet/DirectServletPathRegisterDispatcher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="0" selection-start="1585" selection-end="1585" vertical-scroll-proportion="0.53846157">
-          <folding />
-        </state>
+        <state line="52" column="0" selection-start="1585" selection-end="1585" vertical-scroll-proportion="0.53846157" />
       </provider>
     </entry>
     <entry file="jar:///usr/lib/jvm/jdk1.6.0_34/src.zip!/java/lang/String.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1928" column="18" selection-start="73746" selection-end="73746" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="351" column="42" selection-start="16211" selection-end="16211" vertical-scroll-proportion="-11.12">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/Meta.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="18" selection-start="838" selection-end="838" vertical-scroll-proportion="0.0" />
+        <state line="1928" column="18" selection-start="73746" selection-end="73746" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestServiceImpl.java">
@@ -1268,67 +1143,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ModelQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="322" column="34" selection-start="10602" selection-end="10602" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ExpressionImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="23" selection-start="900" selection-end="900" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/DynamicQueryManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="134" column="41" selection-start="5778" selection-end="5778" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/PersistenceManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="254" column="25" selection-start="10506" selection-end="10506" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/field/Field.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="348" column="0" selection-start="9670" selection-end="9670" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#9672#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/ql/WhereTranslator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="65" selection-start="1946" selection-end="1946" vertical-scroll-proportion="-5.68">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1345#1357#0" expanded="true" />
-            <element signature="e#1409#1417#0" expanded="true" />
-            <element signature="e#1467#1474#0" expanded="true" />
-            <element signature="e#3454#3468#0" expanded="true" />
-            <element signature="e#6371#6379#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jengine/db/CBaseModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="266" column="33" selection-start="8966" selection-end="8966" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docroot/WEB-INF/src/com/jenginetest/builder/service/impl/TestLocalServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="221" column="30" selection-start="7263" selection-end="7263" vertical-scroll-proportion="0.9369919">
+        <state line="221" column="30" selection-start="7263" selection-end="7263" vertical-scroll-proportion="0.028089888">
           <folding>
             <element signature="e#7171#7177#0" expanded="true" />
           </folding>
