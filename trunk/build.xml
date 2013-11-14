@@ -31,6 +31,8 @@
 	<tstamp/>
 	<!-- Create the build directory structure used by compile -->
 	<mkdir dir="${build}"/>
+	<!-- Create the distribution directory -->
+	<mkdir dir="${dist}"/>
     </target>
 
     <target name="compile" depends="init"  description="compile the source " >
@@ -41,13 +43,10 @@
      </target>
 
     <target name="src" description="generate the source" >
-	<mkdir dir="${dist}"/>
-	<zip destfile="${dist}/jengine.${version-number}-src.jar" basedir="." includes="**"/>
+	<zip destfile="${dist}/jengine.${version-number}-src.jar" basedir="${src}" includes="**"/>
     </target>
 
     <target name="dist" depends="compile, src" description="generate the distribution" >
-	<!-- Create the distribution directory -->
-	<mkdir dir="${dist}"/>
 	<!-- Put everything in ${build} into the jengine-${DSTAMP}.jar file -->
 	<jar jarfile="${dist}/jengine.${version-number}.jar" basedir="${build}"/>
     </target>
