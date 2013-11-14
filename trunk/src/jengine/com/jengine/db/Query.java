@@ -30,6 +30,7 @@ public class Query {
     private Class model;
     private Map<String, List> relations = new LinkedHashMap<String, List>();
     private Map<String, Expression> fitler = new LinkedHashMap<String, Expression>();
+    private List<String> stringQueries = new ArrayList<String>();
     private Map<String, String> order = new HashMap<String, String>();
     private List params = new ArrayList();
     private Map<String, Class> entires = new LinkedHashMap<String, Class>();
@@ -147,5 +148,17 @@ public class Query {
 
     public void setScalars(Map<String, Type> scalars) {
         this.scalars = scalars;
+    }
+
+    public List<String> getStringQueries() {
+        return stringQueries;
+    }
+
+    public void setStringQueries(List<String> stringQueries) {
+        this.stringQueries = stringQueries;
+    }
+
+    public void addStringQuery(String stringQuery) {
+        this.stringQueries.add(stringQuery);
     }
 }
