@@ -17,7 +17,7 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.db.provider.liferay;
+package com.jengine.db.adapter.liferay;
 
 import com.jengine.db.expression.Expression;
 import com.jengine.db.expression.ExpressionImpl;
