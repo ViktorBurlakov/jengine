@@ -22,19 +22,18 @@ package com.jengine.db;
 
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
+import com.jengine.db.exception.DBException;
+import com.jengine.db.expression.Expression;
+import com.jengine.db.expression.ExpressionImpl;
 import com.jengine.db.field.Field;
 import com.jengine.db.field.FunctionField;
-import com.jengine.db.ql.WhereTranslator;
+import com.jengine.db.query.parser.WhereTranslator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.service.persistence.BasePersistence;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
-
-import static com.jengine.utils.CollectionUtil.map;
 
 public class ModelQuery {
     private Map<String, Field> fieldMap = new LinkedHashMap<String, Field>();
@@ -46,8 +45,9 @@ public class ModelQuery {
     private String orderType = null;
     private Map<String, Integer> page = new HashMap<String, Integer>();
     private ModelManager manager = null;
-    private Map<String, Map> context = null;
     private List<StringQuery> stringQueries= new ArrayList<StringQuery>();
+    private Map<String, Object> values = new LinkedHashMap<String, java.lang.Object>();
+    private List<Field> valueFields = new ArrayList<Field>();
 
     public ModelQuery(ModelManager manager) {
         this.manager = manager;
@@ -55,42 +55,48 @@ public class ModelQuery {
         this.page.put("end", QueryUtil.ALL_POS);
     }
 
-    public ModelQuery context(Map<String, Map> context) {
-        this.context = context;
-        return this;
-    }
-
     public ModelQuery field(Field field) {
         this.fields.add(field);
+        if (field.isFunction()) {
+            FunctionField functionField = (FunctionField) field;
+            for (Object attribute : functionField.getAttributes()) {
+                Field attributeField  = getField(attribute);
+                fieldMap.put(attributeField.getName(), attributeField);
+            }
+        } else {
+            fieldMap.put(field.getName(), field);
+        }
         return this;
     }
 
     public ModelQuery field(String field) {
-        this.fields.add(manager.getField(field));
-        return this;
+        return this.field(manager.getField(field));
     }
 
     public ModelQuery fields(Object ... fields) {
-        this.fields.addAll(getFields(Arrays.asList(fields)));
-
+        for(Object field : fields) {
+            field(getField(field));
+        }
         return this;
     }
 
     public ModelQuery fields(List fields) {
-        this.fields.addAll(getFields(fields));
-
-        return this;
-    }
-
-    public ModelQuery filterMap(Object ... filter) {
-        this.filter.addAll(PersistenceManager.parse(map(filter)));
+        for(Object field : fields) {
+            field(getField(field));
+        }
 
         return this;
     }
 
     public ModelQuery filter(String query, Object ... params) throws SystemException {
         try{
-            this.stringQueries.add(new StringQuery(query, params));
+            StringQuery stringQuery = new StringQuery(query, params);
+            this.stringQueries.add(stringQuery);
+            for (String field : stringQuery.findFields()) {
+                Field modelField = getField(field);
+                stringQuery.getModelFields().add(modelField);
+                fieldMap.put(modelField.getName(), modelField);
+            }
         } catch (Exception e) {
             throw new SystemException(e);
         }
@@ -99,85 +105,74 @@ public class ModelQuery {
     }
 
     public ModelQuery filter(Map<String, Object> filter) {
-        this.filter.addAll(PersistenceManager.parse(filter));
-
-        return this;
+        return filter(parse(filter));
     }
 
     public ModelQuery filter(List<Expression> filter) {
         this.filter.addAll(filter);
+        for (Expression expression : filter) {
+            Field modelField = fieldMap.get(expression.getField());
+            filterFields.add(modelField);
+            fieldMap.put(modelField.getName(), modelField);
+        }
 
         return this;
+    }
+
+    public ModelQuery filter(Expression ... filter) {
+        return this.filter(Arrays.asList(filter));
     }
 
     public ModelQuery order(Map<String, String> order) {
         if (order != null && order.size() > 0 && order.containsKey("field")) {
             this.orderFieldName = order.get("field");
+            orderField = getField(orderFieldName);
+            fieldMap.put(orderFieldName, orderField);
             if (order.containsKey("orderType")) {
                 this.orderType = order.get("orderType");
             }
         }
+
         return this;
     }
 
-    public <T extends Object> T one(Map context) throws SystemException, PortalException {
-        List values = list(context);
-        return values.size() > 0 ? (T) values.get(0) : null;
-    }
-
-    public long count() throws SystemException, PortalException {
-        return count(this.context);
-    }
-
-    public long count(Map<String, Map> context) throws SystemException, PortalException {
-        return this.field(manager.getCountAllField()).<Long>one(context);
-    }
-
-    public <T extends Object> List<T> list() throws SystemException, PortalException {
-        return list(context);
-    }
-
-    public <T extends Object> List<T> list(Map<String, Map> context) throws SystemException, PortalException {
-        BasePersistence persistence = (BasePersistence) context.get(manager.getModelClass().getSimpleName()).get("persistence");
-
-        // init model fields
-        init();
-
-        // exec Query
-        List values = this.manager.getPersistenceManager().select(this, persistence);
-
-        // process result
-        List result = new ArrayList();
-        if (fields.size() == 1) {
-            Field modelField = fields.get(0);
-            for (Object item : values) {
-                if (modelField.isReference() || modelField.isSelf()) {
-                    CBaseModel cObj = manager.wrap(modelField.getFieldClass(), (BaseModel) item, context);
-                    result.add(cObj);
-                    cObj.cache();
-                } else {
-                    result.add(modelField.castType(item));
-                }
-            }
-        } else if (fields.size() > 1) {
-            for (Object value : values) {
-                Object[] items = (Object[]) value;
-                Object[] resultItem = new Object[items.length];
-                for (int i=0; i < items.length; i++) {
-                    Field modelField = fields.get(i);
-                    if (modelField.isReference() || modelField.isSelf()) {
-                        CBaseModel obj = manager.wrap(modelField.getFieldClass(), (BaseModel) items[i], context);
-                        resultItem[i] = obj;
-                        obj.cache();
-                    } else {
-                        resultItem[i] = modelField.castType(items[i]);
-                    }
-                }
-                result.add(resultItem);
+    public ModelQuery values(Map<String, Object> values) {
+        if (values != null && values.size() > 0) {
+            for (String name : values.keySet()) {
+                value(name, values.get(name));
             }
         }
 
-        return result;
+        return this;
+    }
+
+    public ModelQuery value(String name, Object value) {
+        this.values.put(name, value);
+        Field modelField = getField(name);
+        valueFields.add(modelField);
+        fieldMap.put(modelField.getName(), modelField);
+        return this;
+    }
+
+    public <T extends Object> T one() throws SystemException, PortalException, DBException {
+        List values = list();
+        return values.size() > 0 ? (T) values.get(0) : null;
+    }
+
+    public long count() throws SystemException, PortalException, DBException {
+        return this.field(manager.getCountAllField()).<Long>one();
+    }
+
+    public <T extends Object> List<T> list() throws SystemException, PortalException, DBException {
+        return manager.getDb().run(this);
+    }
+
+    public void update() throws SystemException, PortalException, DBException {
+        manager.getDb().update(this);
+    }
+
+    public void remove() throws SystemException, PortalException, DBException {
+        manager.getDb().remove(this);
     }
 
     public ModelQuery page(Map<String, Object> page) {
@@ -186,65 +181,28 @@ public class ModelQuery {
             this.page.put("end", page.containsKey("end") ? (Integer) page.get("end") : QueryUtil.ALL_POS);
         }
 
-//        return ((QueryService) context.get("QueryService")).select(this);
         return this;
     }
 
-    public Query buildSQL() throws SystemException, PortalException {
-        init();
-        return this.manager.getPersistenceManager().buildSQL(this);
+    protected Field getField(Object field) {
+        return field.getClass().equals(String.class) ? getField((String) field) : (Field) field;
     }
 
-    protected void init() {
-        // init model fields
-        if (this.fields.size() > 0) {
-            for (Field modelField : this.fields) {
-                if (modelField.isFunction()) {
-                    for (Field attribute : getFields(((FunctionField) modelField).getAttributes())) {
-                        fieldMap.put(attribute.getName(), attribute);
-                    }
-                } else {
-                    fieldMap.put(modelField.getName(), modelField);
-                }
-            }
-        } else {
-            this.fields.add(manager.getSelf());
-        }
-        for(StringQuery stringQuery: stringQueries) {
-            for (String field : stringQuery.getFields()) {
-                Field modelField = fieldMap.containsKey(field) ?
-                        fieldMap.get(field) :
-                        manager.getField(field);
-                stringQuery.getModelFields().add(modelField);
-                fieldMap.put(modelField.getName(), modelField);
-            }
-        }
-        for (Expression expression : filter) {
-            Field modelField = fieldMap.containsKey(expression.getField()) ?
-                    fieldMap.get(expression.getField()) :
-                    manager.getField(expression.getField());
-            filterFields.add(modelField);
-            fieldMap.put(modelField.getName(), modelField);
-        }
-        if (orderFieldName != null) {
-            this.orderField = fieldMap.containsKey(orderFieldName) ? fieldMap.get(orderFieldName) : manager.getField(orderFieldName);
-            fieldMap.put(orderFieldName, orderField);
-        }
-
+    protected  Field getField(String fieldName) {
+        return fieldMap.containsKey(fieldName) ? fieldMap.get(fieldName) : manager.getField(fieldName);
     }
 
-    protected List<Field> getFields(List fields) {
-        List<Field> result = new ArrayList<Field>();
+    public List<Expression> parse(Map<String, Object> filter) {
+        List<Expression> expressionMap = new ArrayList<Expression>();
 
-        for (Object field : fields) {
-            if (field.getClass().equals(String.class)) {
-                result.add(manager.getField((String) field));
-            } else {
-                result.add((Field) field);
-            }
+        for (String key : filter.keySet()) {
+            String name = key.contains("__") ? key.split("__")[0] : key;
+            String operation = key.contains("__") ? key.split("__")[1] : "eq";
+            Object value = filter.get(key);
+            expressionMap.add(new ExpressionImpl(name, operation, value));
         }
 
-        return result;
+        return expressionMap;
     }
 
     /* setters and getters */
@@ -281,6 +239,13 @@ public class ModelQuery {
         return stringQueries;
     }
 
+    public ModelManager getManager() {
+        return manager;
+    }
+
+    public Map<String, Object> getValues() {
+        return values;
+    }
 
     /* private class */
 
@@ -323,7 +288,7 @@ public class ModelQuery {
             translator.getParams().get(index).setText(sql);
         }
 
-        public List<String> getFields() {
+        public List<String> findFields() {
             List<String> fields = new ArrayList<String>();
 
             for(WhereTranslator.Column column : translator.getColumns()) {

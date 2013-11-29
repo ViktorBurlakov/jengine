@@ -17,16 +17,12 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.db.ql;
+package com.jengine.db.query.parser;
 
 import antlr.ASTVisitor;
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
 import antlr.collections.AST;
-import com.jengine.db.ql.parser.SQLCommonAST;
-import com.jengine.db.ql.parser.SqlLexer;
-import com.jengine.db.ql.parser.SqlParser;
-import com.jengine.db.ql.parser.SqlTokenTypes;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -59,7 +55,7 @@ public class WhereTranslator implements ASTVisitor {
         InputStream in = new ByteArrayInputStream(input.getBytes("UTF-8"));
         SqlLexer lexer = new SqlLexer(new DataInputStream(in));
         SqlParser parser = new SqlParser(lexer);
-        parser.setASTNodeClass("com.jengine.db.ql.parser.SQLCommonAST");
+        parser.setASTNodeClass("com.jengine.db.query.parser.SQLCommonAST");
         parser.where_condition();
 
         WhereTranslator visitor = new WhereTranslator(input);

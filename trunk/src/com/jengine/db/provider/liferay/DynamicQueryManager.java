@@ -17,8 +17,11 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.db;
+package com.jengine.db.provider.liferay;
 
+import com.jengine.db.expression.Expression;
+import com.jengine.db.expression.ExpressionImpl;
+import com.jengine.db.ModelManager;
 import com.jengine.db.field.Field;
 import com.liferay.portal.kernel.dao.orm.*;
 import com.liferay.portal.kernel.exception.PortalException;
