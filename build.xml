@@ -8,7 +8,7 @@
     <property name="lib_path"  location="./lib"/>
     <!--property name="test_portlet_lib_path"  location="./test/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/lib"/-->
     <property name="version-number" value="0.1.1" />
-    <property name="antlr_grammar_path" value="src/com/jengine/db/ql/parser" />
+    <property name="antlr_grammar_path" value="src/com/jengine/db/query/parser" />
     
 
     <path id="project.class.path">

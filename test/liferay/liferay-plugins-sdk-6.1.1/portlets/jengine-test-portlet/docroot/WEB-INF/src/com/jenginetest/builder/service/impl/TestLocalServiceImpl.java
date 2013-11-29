@@ -206,7 +206,7 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
      * Sub query test
      */
     public void test4() throws SystemException, PortalException {
-        System.out.println("** Test4: Sub Query test");
+        System.out.println("** Test4: Sub SQLQuery test");
         Map context = getServiceContext();
 
         clearData();

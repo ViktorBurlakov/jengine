@@ -20,8 +20,8 @@
 package com.jengine.db.field;
 
 
-import com.jengine.db.Expression;
-import com.jengine.db.ExpressionImpl;
+import com.jengine.db.expression.Expression;
+import com.jengine.db.expression.ExpressionImpl;
 import com.jengine.db.ModelManager;
 import com.jengine.utils.CollectionUtil;
 import com.liferay.portal.kernel.dao.orm.Type;
