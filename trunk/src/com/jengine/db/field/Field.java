@@ -139,7 +139,7 @@ public class Field implements IModelField {
         this.isInit = true;
     }
 
-    public Object castType(Object value) throws SystemException, PortalException {
+    public Object castType(Object value) {
         if (fieldClass.equals(Long.class)) {
             return new Long(String.valueOf(value));
         }
