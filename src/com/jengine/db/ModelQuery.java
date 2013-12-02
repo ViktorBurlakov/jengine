@@ -29,8 +29,6 @@ import com.jengine.db.field.Field;
 import com.jengine.db.field.FunctionField;
 import com.jengine.db.query.parser.WhereTranslator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
@@ -88,7 +86,7 @@ public class ModelQuery {
         return this;
     }
 
-    public ModelQuery filter(String query, Object ... params) throws SystemException {
+    public ModelQuery filter(String query, Object ... params) throws DBException {
         try{
             StringQuery stringQuery = new StringQuery(query, params);
             this.stringQueries.add(stringQuery);
@@ -98,7 +96,7 @@ public class ModelQuery {
                 fieldMap.put(modelField.getName(), modelField);
             }
         } catch (Exception e) {
-            throw new SystemException(e);
+            throw new DBException(e);
         }
 
         return this;
@@ -154,24 +152,24 @@ public class ModelQuery {
         return this;
     }
 
-    public <T extends Object> T one() throws SystemException, PortalException, DBException {
+    public <T extends Object> T one() throws DBException {
         List values = list();
         return values.size() > 0 ? (T) values.get(0) : null;
     }
 
-    public long count() throws SystemException, PortalException, DBException {
+    public long count() throws DBException {
         return this.field(manager.getCountAllField()).<Long>one();
     }
 
-    public <T extends Object> List<T> list() throws SystemException, PortalException, DBException {
+    public <T extends Object> List<T> list() throws DBException {
         return manager.getDb().run(this);
     }
 
-    public void update() throws SystemException, PortalException, DBException {
+    public void update() throws DBException {
         manager.getDb().update(this);
     }
 
-    public void remove() throws SystemException, PortalException, DBException {
+    public void remove() throws DBException {
         manager.getDb().remove(this);
     }
 

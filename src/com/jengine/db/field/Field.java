@@ -20,13 +20,12 @@
 package com.jengine.db.field;
 
 
+import com.jengine.db.ModelManager;
+import com.jengine.db.exception.DBException;
 import com.jengine.db.expression.Expression;
 import com.jengine.db.expression.ExpressionImpl;
-import com.jengine.db.ModelManager;
 import com.jengine.utils.CollectionUtil;
 import com.liferay.portal.kernel.dao.orm.Type;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.sql.Types;
 import java.util.Date;
@@ -147,11 +146,11 @@ public class Field implements IModelField {
         return value;
     }
 
-    public Object castServiceType(Object value) throws SystemException, PortalException {
+    public Object castServiceType(Object value) throws DBException {
         return castType(value);
     }
 
-    public String format(Object value) throws SystemException, PortalException {
+    public String format(Object value) throws DBException {
         return String.valueOf(value);
     }
 

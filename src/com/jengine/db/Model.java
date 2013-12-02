@@ -21,8 +21,6 @@ package com.jengine.db;
 
 import com.jengine.db.exception.DBException;
 import com.jengine.db.field.*;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -33,49 +31,49 @@ public class Model {
     protected ModelClass cls;
     protected Map<String, Object> values = new LinkedHashMap<String, Object>();
 
-    public Model() throws SystemException, PortalException {
+    public Model() throws DBException {
         cls = (ModelClass) ModelClass.getClassObject(getClass());
     }
 
-    public Model(Map values) throws SystemException, PortalException {
+    public Model(Map values) throws DBException {
         this();
         setValues(values);
     }
 
-    public String getVerbose() throws SystemException, PortalException, DBException {
+    public String getVerbose() throws DBException {
         return String.valueOf(this.getPrimaryKey());
     }
 
-    public String format(String field) throws SystemException, PortalException, DBException {
+    public String format(String field) throws DBException {
         return cls.getManager().getField(field).format(this.getValue(field));
     }
 
     /* get & set field values */
 
-    public boolean isNew() throws SystemException, PortalException, DBException {
+    public boolean isNew() throws DBException {
         return getValue(cls.getManager().getPrimaryKey()) == null;
     }
 
-    public Serializable getPrimaryKey() throws SystemException, PortalException, DBException {
+    public Serializable getPrimaryKey() throws DBException {
         return (Serializable) getValue(cls.getManager().getPrimaryKey());
     }
 
-    public void setValue(String fieldName, Object value) throws SystemException, PortalException {
+    public void setValue(String fieldName, Object value) throws DBException {
         this.setValue(cls.getManager().getField(fieldName), value);
     }
 
-    public Object getValue(String fieldName) throws SystemException, PortalException, DBException {
+    public Object getValue(String fieldName) throws DBException {
         return this.getValue(cls.getManager().getField(fieldName));
     }
 
-    public void setValue(Field field, Object value) throws SystemException, PortalException {
+    public void setValue(Field field, Object value) throws DBException {
         if (field.isForeign() || field.isFunction() || field.isProperty()) {
             return;
         }
         values.put(field.getName(), field.castType(value));
     }
 
-    public Object getValue(Field field) throws SystemException, PortalException, DBException {
+    public Object getValue(Field field) throws DBException {
         if (field.isForeign()) {
             ForeignField foreignField = (ForeignField) field;
             Object referenceId = values.get(foreignField.getReference().getName());
@@ -91,20 +89,20 @@ public class Model {
                 Method method = getClass().getMethod(((ModelProperty) field).getMethodName());
                 return method.invoke(this);
             } catch (Exception e) {
-                throw new SystemException(e);
+                throw new DBException(e);
             }
         } else {
             return values.get(field.getServiceName());
         }
     }
 
-    public void setValues(Map<String, Object> valueMap) throws SystemException, PortalException {
+    public void setValues(Map<String, Object> valueMap) throws DBException {
         for (String fieldName : valueMap.keySet()) {
             setValue(fieldName, valueMap.get(fieldName));
         }
     }
 
-    public Map<String, Object> getValues(List<String> fields) throws SystemException, PortalException, DBException {
+    public Map<String, Object> getValues(List<String> fields) throws DBException {
         Map<String, Object> values = new LinkedHashMap<String, Object>();
 
         for (String fieldName : fields) {
@@ -116,27 +114,23 @@ public class Model {
 
     /* modify methods */
 
-    public Model save() throws SystemException, PortalException, DBException {
+    public Model save() throws DBException {
         return cls.getDb().save(this);
     }
 
-    public void remove() throws SystemException, PortalException, DBException {
+    public void remove() throws DBException {
         cls.getDb().remove(this);
     }
 
-    public void cache() throws SystemException, PortalException {
+    public void cache() throws DBException {
         cls.getDb().cache(this);
     }
 
     public boolean equals(Object obj) {
         try {
             return getPrimaryKey().equals(((Model)obj).getPrimaryKey());
-        } catch (SystemException e) {
-            e.printStackTrace();
-        } catch (PortalException e) {
-            e.printStackTrace();
         } catch (DBException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         return false;
     }
