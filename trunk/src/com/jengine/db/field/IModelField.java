@@ -20,15 +20,14 @@
 package com.jengine.db.field;
 
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.jengine.db.exception.DBException;
 
 import java.util.Map;
 
 public interface IModelField {
-    Object castType(Object value) throws SystemException, PortalException;
+    Object castType(Object value) throws DBException;
 
-    String format(Object value) throws SystemException, PortalException;
+    String format(Object value) throws DBException;
 
     String getServiceName();
 

@@ -20,10 +20,12 @@
 package com.jengine.db.field;
 
 import com.jengine.db.ModelManager;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.jengine.db.exception.DBException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class ForeignField extends Field {
     private ReferenceField reference = null;
@@ -47,11 +49,11 @@ public class ForeignField extends Field {
         this.field = field;
     }
 
-    public Object castType(Object value) throws SystemException, PortalException {
+    public Object castType(Object value) {
         return getField().castType(value);
     }
 
-    public Object castServiceType(Object value) throws SystemException, PortalException {
+    public Object castServiceType(Object value) throws DBException {
         return getField().castServiceType(value);
     }
 

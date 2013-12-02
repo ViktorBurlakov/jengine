@@ -51,7 +51,9 @@ public class Provider {
         this.adapter = adapter;
     }
 
+
     /* cache methods */
+
     public void cache(Model obj) {
     }
 
@@ -65,7 +67,26 @@ public class Provider {
     public void clearCache(Class cls) {
     }
 
+
     /* general methods */
+
+    public void insert(Model obj) throws DBException {
+        ModelManager manager = db.getManager(obj.getClass());
+        SQLQuery query = new SQLQuery();
+        Map value = obj.getValues(manager.getFields());
+
+        query.setTableName(manager.getTableName());
+        query.setTableAlias(manager.getSelf().getName());
+        for (Field field : ) {
+            Object value = ;
+            query.addValue(getSQLName(field), value);
+            query.addParam(value);
+        }
+
+        String sql = buildInsertSQL(query);
+
+        this.adapter.executeUpdate(sql, query.getParams());
+    }
 
     public void insert(ModelQuery modelQuery) throws DBException {
         SQLQuery query = new SQLQuery();
@@ -106,6 +127,7 @@ public class Provider {
 
         return this.adapter.executeQuery(sql, sqlQuery.getParams());
     }
+
 
     /* getters and setters */
 
