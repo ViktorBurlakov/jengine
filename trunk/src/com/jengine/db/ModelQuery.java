@@ -134,7 +134,7 @@ public class ModelQuery {
         return this;
     }
 
-    public ModelQuery values(Map<String, Object> values) {
+    public ModelQuery values(Map<String, Object> values) throws DBException {
         if (values != null && values.size() > 0) {
             for (String name : values.keySet()) {
                 value(name, values.get(name));
@@ -144,9 +144,9 @@ public class ModelQuery {
         return this;
     }
 
-    public ModelQuery value(String name, Object value) {
-        this.values.put(name, value);
+    public ModelQuery value(String name, Object value) throws DBException {
         Field modelField = getField(name);
+        this.values.put(name, modelField.castType(value));
         valueFields.add(modelField);
         fieldMap.put(modelField.getName(), modelField);
         return this;

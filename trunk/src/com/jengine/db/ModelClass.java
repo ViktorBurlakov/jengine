@@ -7,8 +7,6 @@ import com.jengine.db.field.ModelAttribute;
 import com.jengine.db.field.ModelProperty;
 import com.jengine.db.field.SelfField;
 import com.jengine.utils.ClassObject;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -43,7 +41,7 @@ public class ModelClass<T extends Model> extends ClassObject {
         // init fields and properties
         this.manager.addField(new SelfField(cls));
         this.manager.addFields(collectFields(cls));
-        this.manager.addFields((List<Field>) collectProperties(cls));
+        this.manager.addProperties(collectProperties(cls));
         this.manager.addField(new ModelProperty("verbose", "getVerbose", String.class, map("verbose", this.manager.getName())));
     }
 
@@ -55,97 +53,97 @@ public class ModelClass<T extends Model> extends ClassObject {
         return db;
     }
 
-    public T newInstance(Map values) throws SystemException, PortalException, DBException {
+    public T newInstance(Map values) throws DBException {
         Model obj = db.newInstance(cls);
         obj.setValues(values);
         return (T) obj;
     }
 
-    public T newInstance() throws SystemException, PortalException, DBException {
+    public T newInstance() throws DBException {
         return (T) db.newInstance(cls);
     }
 
-    public T get(Object id) throws SystemException, PortalException, DBException {
+    public T get(Object id) throws DBException {
         return (T) db.get(cls, id);
     }
 
-    public ModelQuery select() throws SystemException {
+    public ModelQuery select() throws DBException {
         return db.select(cls);
     }
 
-    public ModelQuery select(Object ... fields) throws SystemException {
+    public ModelQuery select(Object ... fields) throws DBException {
         return db.select(cls, fields);
     }
 
-    public ModelQuery select(Class cls, List ... fields) throws SystemException {
+    public ModelQuery select(Class cls, List ... fields) throws DBException {
         return db.select(cls, fields);
     }
 
-    public ModelQuery filter(String query, Object ... params) throws SystemException {
+    public ModelQuery filter(String query, Object ... params) throws DBException {
         return db.filter(cls, query, params);
     }
 
-    public ModelQuery filter(Map<String, Object> filter) throws SystemException {
+    public ModelQuery filter(Map<String, Object> filter) throws DBException {
         return db.filter(cls, filter);
     }
 
-    public ModelQuery filter(List<Expression> filter) throws SystemException {
+    public ModelQuery filter(List<Expression> filter) throws DBException {
         return db.filter(cls, filter);
     }
 
-    public ModelQuery filter(Expression ... filter) throws SystemException {
+    public ModelQuery filter(Expression ... filter) throws DBException {
         return db.filter(cls, filter);
     }
 
-    public Object max(String field) throws SystemException, PortalException, DBException {
+    public Object max(String field) throws DBException {
         return db.max(cls, field);
     }
 
-    public Object min(String field) throws SystemException, PortalException, DBException {
+    public Object min(String field) throws DBException {
         return db.min(cls, field);
     }
 
-    public long count() throws SystemException, PortalException, DBException {
+    public long count() throws DBException {
         return db.count(cls);
     }
 
-    public long count(String field) throws SystemException, PortalException, DBException {
+    public long count(String field) throws DBException {
         return db.count(cls, field);
     }
 
-    public Object avg(String field) throws SystemException, PortalException, DBException {
+    public Object avg(String field) throws DBException {
         return db.avg(cls, field);
     }
 
-    public Object sum(String field) throws SystemException, PortalException, DBException {
+    public Object sum(String field) throws DBException {
         return db.sum(cls, field);
     }
 
-    public <ResultType> ResultType max(Field field) throws SystemException, PortalException, DBException {
+    public <ResultType> ResultType max(Field field) throws DBException {
         return (ResultType) db.max(cls, field);
     }
 
-    public <ResultType> ResultType min(Field field) throws SystemException, PortalException, DBException {
+    public <ResultType> ResultType min(Field field) throws DBException {
         return (ResultType) db.min(cls, field);
     }
 
-    public long count(Field field) throws SystemException, PortalException, DBException {
+    public long count(Field field) throws DBException {
         return db.count(cls, field);
     }
 
-    public <ResultType> ResultType avg(Field field) throws SystemException, PortalException, DBException {
+    public <ResultType> ResultType avg(Field field) throws DBException {
         return (ResultType) db.avg(cls, field);
     }
 
-    public <ResultType> ResultType sum(Field field) throws SystemException, PortalException, DBException {
+    public <ResultType> ResultType sum(Field field) throws DBException {
         return (ResultType) db.sum(cls, field);
     }
 
-    public <ResultType> ResultType calc(String name, Class type, String expr, Field ... fields) throws SystemException, PortalException, DBException {
+    public <ResultType> ResultType calc(String name, Class type, String expr, Field ... fields) throws DBException {
         return (ResultType) db.calc(cls, name, type, expr, fields);
     }
 
-    public void remove() throws SystemException, DBException, PortalException {
+    public void remove() throws DBException {
         db.remove(cls);
     }
 

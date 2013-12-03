@@ -62,10 +62,12 @@ public class Field implements IModelField {
     protected Class model;
     protected String verbose;
     protected boolean primaryKey = false;
+    protected boolean auto = false;
     protected boolean visible = false;
     protected boolean isInit = false;
     protected Map<String, Object> options = new LinkedHashMap<String, Object>();
     protected ModelManager manager = null;
+    private boolean autoIncrement = false;
 
     public Field(Class fieldClass) {
         this.fieldClass = fieldClass;
@@ -135,10 +137,13 @@ public class Field implements IModelField {
         if (options.containsKey("serviceName")) {
             this.serviceName = (String) options.get("serviceName");
         }
+        if (options.containsKey("autoIncrement")) {
+            this.autoIncrement = (Boolean) options.get("autoIncrement");
+        }
         this.isInit = true;
     }
 
-    public Object castType(Object value) {
+    public Object castType(Object value) throws DBException {
         if (fieldClass.equals(Long.class)) {
             return new Long(String.valueOf(value));
         }
@@ -284,6 +289,14 @@ public class Field implements IModelField {
 
     public void setOptions(Map<String, Object> options) {
         this.options = options;
+    }
+
+    public boolean isAutoIncrement() {
+        return autoIncrement;
+    }
+
+    public void setAutoIncrement(boolean autoIncrement) {
+        this.autoIncrement = autoIncrement;
     }
 
     public Map<String, Object> toMap() {

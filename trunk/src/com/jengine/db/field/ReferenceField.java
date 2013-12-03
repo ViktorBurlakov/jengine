@@ -76,8 +76,8 @@ public class ReferenceField extends Field {
         this.fieldClassImpl = fieldClassImpl;
     }
 
-    public Object castType(Object value) {
-        return value instanceof Model ? value : new Long(String.valueOf(value));
+    public Object castType(Object value) throws DBException {
+        return value instanceof Model ? (Long) ((Model) value).getPrimaryKey() : new Long(String.valueOf(value));
     }
 
     public Object castServiceType(Object value) throws DBException {

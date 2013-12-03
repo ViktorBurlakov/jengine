@@ -112,6 +112,10 @@ public class Model {
         return values;
     }
 
+    public Map<String, Object> getDBValues() throws DBException {
+        return values;
+    }
+
     /* modify methods */
 
     public Model save() throws DBException {

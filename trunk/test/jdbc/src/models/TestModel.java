@@ -17,36 +17,16 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.db.query.parser;
+package models;
+
+import com.jengine.db.Model;
+import com.jengine.db.exception.DBException;
 
 
-import antlr.CommonAST;
-import antlr.Token;
+public class TestModel extends Model {
 
-public class SQLCommonAST extends CommonAST {
-    protected Token token;
 
-    public SQLCommonAST() {
-    }
-
-    public SQLCommonAST(Token tok) {
-        super(tok);
-    }
-
-    public void initialize(Token tok) {
-        super.initialize(tok);
-        this.token = tok;
-    }
-
-    public int getLine() {
-        return this.token.getLine();
-    }
-
-    public int getColumn() {
-        return this.token.getColumn();
-    }
-
-    public Token getToken() {
-        return token;
+    public TestModel() throws DBException {
+        super();
     }
 }

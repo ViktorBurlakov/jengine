@@ -1,5 +1,6 @@
 package com.jengine.db.adapter.jdbc;
 
+import com.jengine.db.DBConnection;
 import com.jengine.db.adapter.Adapter;
 import com.jengine.db.exception.DBException;
 
@@ -19,21 +20,42 @@ public class JDBCAdapter extends Adapter {
         this.connection = connection;
         this.user = user;
         this.password = password;
+        try {
+            Class.forName(driver);
+        } catch (ClassNotFoundException e) {
+            throw new DBException(e);
+        }
     }
 
-    public void executeUpdate(String sql, List params) throws DBException {
-        Connection connection = null;
+    public DBConnection getConnection() throws DBException {
+        try {
+            Connection connection = DriverManager.getConnection(this.connection, this.user, this.password);
+            return new DBConnection(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DBException(e);
+        }
+    }
+
+    public void executeUpdate(DBConnection dbConnection, String sql, List params) throws DBException {
+        Connection connection = (Connection) dbConnection.getNativeConnection();
         PreparedStatement pstmt = null;
 
         try {
-            connection =  getConnection();
-            pstmt = connection.prepareStatement(sql);
+            pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             int index = 0;
             for (Object item: params) {
                 pstmt.setObject(index++, item);
             }
             System.out.println(sql);
             pstmt.executeUpdate();
+            // set generated keys
+            List generatedKeys = new ArrayList();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            while (rs.next()) {
+                generatedKeys.add(rs.getObject(1));
+            }
+            dbConnection.setGeneratedKeys(generatedKeys);
         } catch (Exception e) {
             throw new DBException(e);
         } finally {
@@ -47,14 +69,13 @@ public class JDBCAdapter extends Adapter {
         }
     }
 
-    public List executeQuery(String sql, List params) throws DBException {
+    public List executeQuery(DBConnection dbConnection, String sql, List params) throws DBException {
         List items = new ArrayList();
-        Connection connection = null;
+        Connection connection = (Connection) dbConnection.getNativeConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
-            connection =  getConnection();
             pstmt = connection.prepareStatement(sql);
             int index = 0;
             for (Object item: params) {
@@ -82,10 +103,6 @@ public class JDBCAdapter extends Adapter {
         }
 
         return items;
-    }
-
-    protected Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(this.connection, this.user, this.password);
     }
 
 }

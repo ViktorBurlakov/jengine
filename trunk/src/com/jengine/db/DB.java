@@ -7,7 +7,6 @@ import com.jengine.db.field.Field;
 import com.jengine.db.field.FunctionField;
 import com.jengine.db.provider.Provider;
 import com.jengine.utils.ClassUtils;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +20,11 @@ public class DB {
     private String name;
     private Provider provider;
     public static ConcurrentHashMap<String, ModelManager> managers = new ConcurrentHashMap<String, ModelManager>();
+
+    public DB(Provider provider) {
+        this.name = "default";
+        this.provider = provider;
+    }
 
     public DB(String name, Provider provider) {
         this.name = name;
@@ -55,11 +59,11 @@ public class DB {
         return obj != null ? obj : (Model) new ModelQuery(manager).filter(manager.getPrimaryKey().eq(id)).one();
     }
 
-    public ModelQuery select(Class cls, Object ... fields) throws SystemException {
+    public ModelQuery select(Class cls, Object ... fields) throws DBException {
         return select(cls, Arrays.asList(fields));
     }
 
-    public ModelQuery select(Class cls, List fields) throws SystemException {
+    public ModelQuery select(Class cls, List fields) throws DBException {
         return new ModelQuery(getManager(cls)).fields(fields);
     }
 
@@ -171,9 +175,8 @@ public class DB {
 
     public Model insert(Model obj) throws DBException {
         ModelManager manager = getManager(obj.getClass());
-        insert(new ModelQuery(manager).values(obj.getValues(manager.getFieldNames())));
         provider.insert(obj);
-        return cache(obj);
+       return cache(obj);
     }
 
     public Model update(Model obj) throws DBException {

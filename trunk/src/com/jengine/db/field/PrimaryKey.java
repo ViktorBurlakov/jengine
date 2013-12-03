@@ -20,9 +20,8 @@
 package com.jengine.db.field;
 
 
-import com.jengine.db.CBaseModel;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.jengine.db.Model;
+import com.jengine.db.exception.DBException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,7 +55,7 @@ public class PrimaryKey extends Field {
         super.init();
     }
 
-    public Object castType(Object value) throws SystemException, PortalException {
-        return value instanceof CBaseModel ? ((CBaseModel) value).getPrimaryKey() : new Long(String.valueOf(value));
+    public Object castType(Object value) throws DBException {
+        return value instanceof Model ? ((Model) value).getPrimaryKey() : new Long(String.valueOf(value));
     }
 }
