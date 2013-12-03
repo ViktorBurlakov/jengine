@@ -109,7 +109,7 @@ public class ModelQuery {
     public ModelQuery filter(List<Expression> filter) {
         this.filter.addAll(filter);
         for (Expression expression : filter) {
-            Field modelField = fieldMap.get(expression.getField());
+            Field modelField = getField(expression.getField());
             filterFields.add(modelField);
             fieldMap.put(modelField.getName(), modelField);
         }

@@ -15,6 +15,7 @@ public class Test {
         DBFactory.register(new DB(provider));
 
         clearData();
+        loadData();
     }
 
     public static void test1(){

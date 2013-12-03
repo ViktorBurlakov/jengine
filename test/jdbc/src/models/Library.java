@@ -59,6 +59,7 @@ public class Library extends TestModel {
 
 
     public Library() throws DBException {
+        super();
     }
 
     public String getVerbose() throws DBException {

@@ -43,7 +43,7 @@ public class JDBCAdapter extends Adapter {
 
         try {
             pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            int index = 0;
+            int index = 1;
             for (Object item: params) {
                 pstmt.setObject(index++, item);
             }
@@ -77,7 +77,7 @@ public class JDBCAdapter extends Adapter {
 
         try {
             pstmt = connection.prepareStatement(sql);
-            int index = 0;
+            int index = 1;
             for (Object item: params) {
                 pstmt.setObject(index++, item);
             }

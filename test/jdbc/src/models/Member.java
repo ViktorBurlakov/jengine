@@ -39,6 +39,7 @@ public class Member extends TestModel {
     public static ModelClass<Member> cls = new ModelClass<Member>(Member.class);
 
     public Member() throws DBException {
+        super();
     }
 
     public String getVerbose() throws DBException {

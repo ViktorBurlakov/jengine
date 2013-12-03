@@ -41,6 +41,7 @@ public class Transaction extends TestModel {
 
 
     public Transaction() throws DBException {
+        super();
     }
 
     public String getVerbose() throws DBException {

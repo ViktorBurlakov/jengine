@@ -22,13 +22,13 @@ public class DB {
     public static ConcurrentHashMap<String, ModelManager> managers = new ConcurrentHashMap<String, ModelManager>();
 
     public DB(Provider provider) {
-        this.name = "default";
-        this.provider = provider;
+        this("default", provider);
     }
 
     public DB(String name, Provider provider) {
         this.name = name;
         this.provider = provider;
+        provider.setDb(this);
     }
 
     public ModelManager register(String className) {
@@ -176,7 +176,8 @@ public class DB {
     public Model insert(Model obj) throws DBException {
         ModelManager manager = getManager(obj.getClass());
         provider.insert(obj);
-       return cache(obj);
+        obj.setNew(false);
+        return cache(obj);
     }
 
     public Model update(Model obj) throws DBException {
@@ -233,6 +234,7 @@ public class DB {
         for (Field field : modelQuery.getFields()) {
             if (field.isReference() || field.isSelf()) {
                 Model obj = newInstance(field.getFieldClass());
+                obj.setNew(false);
                 for (Field objField : getManager(field.getFieldClass()).getFields()) {
                     if (!objField.isFunction()) {
                         obj.setValue(objField, items[index++]);
