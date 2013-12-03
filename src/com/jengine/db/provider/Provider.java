@@ -109,6 +109,11 @@ public class Provider {
         setFilters(query, modelQuery);
         setStringQuery(query, modelQuery);
 
+        // todo: design new classes for sql query to do better
+        if (query.getRelations().size() == 0) {
+            query.setTableAlias(null);
+        }
+
         String sql = buildRemoveSQL(query);
 
         DBConnection connection = this.adapter.getConnection();
@@ -227,7 +232,7 @@ public class Provider {
         List<String> targets = new ArrayList<String>();
         for (Object[] target : query.getTargets()) {
             if (target.length > 1) {
-                targets.add(String.format("%s as %s", target));
+                targets.add(String.format("%s AS %s", target));
             } else {
                 targets.add((String) target[0]);
             }
@@ -294,7 +299,7 @@ public class Provider {
         StringBuffer queryString = new StringBuffer();
 
         queryString.append(query.getTableName());
-        if (query.getRelations().size() > 0) {
+        if (query.getTableAlias() != null && query.getTableAlias().length() > 0) {
             queryString.append(" AS ").append(query.getTableAlias()).append(" ");
         }
         for (String alias : query.getRelations().keySet()) {
@@ -364,6 +369,12 @@ public class Provider {
         StringBuffer target = new StringBuffer();
         ModelManager manager = db.getManager(referenceField.getFieldClass());
         for (Field field : manager.getFields()) {
+            if (field.isSelf() || field.isProperty()) {
+                continue;
+            }
+            if (target.length() > 0) {
+                target.append(", ");
+            }
             target.append(alias).append(".").append(getSQLName(field));
         }
 

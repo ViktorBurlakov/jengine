@@ -84,9 +84,9 @@ public class JDBCAdapter extends Adapter {
             System.out.println(sql);
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                List record = new ArrayList();
+                Object[] record = new Object[rs.getMetaData().getColumnCount()];
                 for (int i=0; i< rs.getMetaData().getColumnCount(); i++) {
-                    record.add(rs.getObject(i+1));
+                    record[i] = rs.getObject(i+1);
                 }
                 items.add(record);
             }
