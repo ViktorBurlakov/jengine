@@ -38,6 +38,7 @@ public class Book extends TestModel {
     public static ModelClass<Book> cls = new ModelClass<Book>(Book.class);
 
     public Book() throws DBException {
+        super();
     }
 
     public String getVerbose() throws DBException {

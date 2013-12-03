@@ -153,16 +153,24 @@ public class Provider {
     protected String buildInsertSQL(SQLQuery query) {
         StringBuffer sql = new StringBuffer();
         StringBuffer fieldClause = new StringBuffer();
+        StringBuffer valueClause = new StringBuffer();
 
         sql.append(" INSERT INTO ").append(query.getTableName());
-        for (Object param :query.getValues().keySet()) {
+        for (String param :query.getValues().keySet()) {
             if (fieldClause.length() > 0) {
                 fieldClause.append(", ");
             }
-            fieldClause.append(param).append("=").append("?");
+            fieldClause.append(param);
         }
-        sql.append("(").append(fieldClause).append(")");
-        sql.append(" VALUES ").append("(").append(buildWhereClause(query)).append(")");
+        sql.append(" ").append("(").append(fieldClause).append(")");
+        sql.append(" VALUES ");
+        for (Object value :query.getValues().values()) {
+            if (valueClause.length() > 0) {
+                valueClause.append(", ");
+            }
+            valueClause.append("?");
+        }
+        sql.append(" ").append("(").append(valueClause).append(")");
 
         return sql.toString();
     }
@@ -285,7 +293,10 @@ public class Provider {
     protected StringBuffer buildTableClause(SQLQuery query) {
         StringBuffer queryString = new StringBuffer();
 
-        queryString.append(query.getTableName()).append(" as ").append(query.getTableAlias()).append(" ");
+        queryString.append(query.getTableName());
+        if (query.getRelations().size() > 0) {
+            queryString.append(" AS ").append(query.getTableAlias()).append(" ");
+        }
         for (String alias : query.getRelations().keySet()) {
             String relation = (String) query.getRelations().get(alias).get(0);
             String expr = (String) query.getRelations().get(alias).get(1);

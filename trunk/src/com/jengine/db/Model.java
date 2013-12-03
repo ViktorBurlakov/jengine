@@ -30,6 +30,7 @@ import java.util.*;
 public class Model {
     protected ModelClass cls;
     protected Map<String, Object> values = new LinkedHashMap<String, Object>();
+    protected boolean _new = true;
 
     public Model() throws DBException {
         cls = (ModelClass) ModelClass.getClassObject(getClass());
@@ -51,7 +52,11 @@ public class Model {
     /* get & set field values */
 
     public boolean isNew() throws DBException {
-        return getValue(cls.getManager().getPrimaryKey()) == null;
+        return _new;
+    }
+
+    public void setNew(boolean value) throws DBException {
+        _new = value;
     }
 
     public Serializable getPrimaryKey() throws DBException {
