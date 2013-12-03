@@ -3,23 +3,27 @@ import com.jengine.db.DBFactory;
 import com.jengine.db.adapter.Adapter;
 import com.jengine.db.adapter.jdbc.JDBCAdapter;
 import com.jengine.db.exception.DBException;
+import com.jengine.db.field.FunctionField;
 import com.jengine.db.provider.Provider;
 import com.jengine.db.provider.mysql.MySQLProvider;
 import models.*;
 
+import static com.jengine.utils.CollectionUtil.map;
+
 public class Test {
 
-    public static void main(String [] args) throws DBException {
+    public static void main(String [] args) throws Exception {
         Adapter adapter = new JDBCAdapter("sun.jdbc.odbc.JdbcOdbcDriver", "MySQL", "jdbc:mysql://localhost:3306/bookdb?", "root", "");
         Provider provider = new MySQLProvider(adapter);
         DBFactory.register(new DB(provider));
 
-        clearData();
-        loadData();
-    }
-
-    public static void test1(){
-
+        test1();
+        test2();
+        test3();
+        test4();
+        test5();
+        test6();
+        test7();
     }
 
     /**
@@ -126,6 +130,132 @@ public class Test {
         member5.setLastName("Simpson");
         member5.setLibrary(globeLibrary);
         member5.save();
+    }
+
+    /**
+     * Clearing data test
+     */
+    public static void test1() throws Exception {
+        System.out.println("** Test1: Clearing data test");
+
+        clearData();
+        // checking
+        check(Author.cls.count() == 0);
+        check(Library.cls.count() == 0);
+        check(Book.cls.count() == 0);
+        check(Member.cls.count() == 0);
+        check(Transaction.cls.count() == 0);
+    }
+
+    /**
+     *  Object creation test
+     */
+    public static void test2() throws Exception {
+        System.out.println("** Test2: Object creation test");
+
+        clearData();
+        loadData();
+
+        check(Author.cls.count() == 3);
+    }
+
+    /**
+     * Selection test
+     */
+    public static void test3() throws Exception {
+        System.out.println("** Test3: Object selection test");
+
+        clearData();
+        loadData();
+
+        // get testing
+        Author.cls.get(1).getLastName().equals("Verne");
+        Book.cls.get(1).getTitle().equals("The Dark Tower");
+
+        // filter
+        check(Member.cls.filter("lastName = ?", "Simpson").list().size() == 2);
+        check(Author.cls.filter(Author.firstName.eq("Stephen")).<Author>one().getLastName().equals("King"));
+//        check(Book.cls.filter(Book.library.eq(Library.cls.get(1))).<Book>list().size() == 3);
+        check(Book.cls.filter(map("library.name__like", "%Globe")).<Book>list().size() == 3);
+        check(Book.cls.filter(map("library.libraryId", 101)).<Book>list().size() == 0);
+    }
+
+    /**
+     * Sub query test
+     */
+    public static void test4() throws Exception {
+        System.out.println("** Test4: Sub SQLQuery test");
+
+        clearData();
+        loadData();
+
+//        check(Book.cls.filter("library = ?", Library.cls.select("libraryId").filter("name like ?", "%Globe"))
+//                .<Book>list().size() == 3);
+    }
+
+
+    /**
+     * Inserting and Updating test
+     */
+    public static void test5() throws Exception {
+        System.out.println("** Test 5: Inserting and Updating test");
+
+        clearData();
+        Author author1 = new Author();
+        author1.setAuthorId(1l);
+        author1.setFirstName("Jules");
+        author1.setLastName("Verne");
+        author1.save();
+
+        check(Author.cls.get(1).getLastName().equals("Verne"));
+
+        author1.setValue("firstName", "Jules1");
+        author1.save();
+
+        check(Author.cls.get(1).getFirstName().equals("Jules1"));
+    }
+
+    /**
+     * Aggregation testing
+     */
+    public static void test6() throws Exception {
+        System.out.println("** Test 6:  Aggregation testing");
+
+        clearData();
+        loadData();
+
+        check(Author.cls.<Long>max(Author.authorId) == 3l);
+        check(Author.cls.<Long>sum(Author.authorId) == 6l);
+        check(Author.cls.<Long>min(Author.authorId) == 1l);
+        check(Book.cls.count() == 3l);
+        check(Book.cls.select(new FunctionField("function1", Long.class, "%s + 1", Book.bookId))
+                .filter("bookId = 1")
+                .<Long>one() == 2l);
+        check(Book.cls.<Long>calc("sum", Long.class, "max(%s) + 2", Book.bookId) == 5l);
+    }
+
+    /**
+     * Model relation testing
+     */
+    public static void test7() throws Exception {
+        System.out.println("** Test 7: Model relation testing");
+
+        clearData();
+        loadData();
+
+//        check(Book.cls.get(1).getLibrary().equals(Library.cls.get(1)));
+
+        Library globe = Library.cls.filter("name = ?", "Globe").one();
+///        check(globe.getMemberList().size() == 5);
+//        check(globe.getMembers().list().size() == 5);
+//        check(globe.getMembers().count() == 5);
+//        check(globe.getMembers().filter("lastName = ?", "Simpson").count() == 2);
+    }
+
+    private static void check(boolean value) throws Exception {
+        if (!value) {
+            throw new Exception("Checking failed!!!");
+        }
     }
 
 }

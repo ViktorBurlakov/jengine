@@ -182,7 +182,7 @@ public class DB {
 
     public Model update(Model obj) throws DBException {
         ModelManager manager = getManager(obj.getClass());
-        new ModelQuery(manager).values(obj.getValues(manager.getFieldNames())).update();
+        new ModelQuery(manager).values(obj.getDBValues()).update();
         return cache(obj);
     }
 
@@ -230,13 +230,17 @@ public class DB {
 
     protected List processResultItem(ModelQuery modelQuery, Object[] items) throws DBException {
         List result = new ArrayList();
+        List<Field> fields = modelQuery.getFields();
         int index=0;
-        for (Field field : modelQuery.getFields()) {
+        if (fields.size() == 0) {
+            fields.add(modelQuery.getManager().getSelf());
+        }
+        for (Field field : fields) {
             if (field.isReference() || field.isSelf()) {
                 Model obj = newInstance(field.getFieldClass());
                 obj.setNew(false);
                 for (Field objField : getManager(field.getFieldClass()).getFields()) {
-                    if (!objField.isFunction()) {
+                    if (!objField.isFunction() && !objField.isSelf() && !objField.isProperty()) {
                         obj.setValue(objField, items[index++]);
                     }
                 }
