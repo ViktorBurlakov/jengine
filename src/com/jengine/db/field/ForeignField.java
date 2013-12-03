@@ -49,7 +49,7 @@ public class ForeignField extends Field {
         this.field = field;
     }
 
-    public Object castType(Object value) {
+    public Object castType(Object value) throws DBException {
         return getField().castType(value);
     }
 

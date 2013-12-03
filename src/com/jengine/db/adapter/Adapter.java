@@ -1,16 +1,22 @@
 package com.jengine.db.adapter;
 
 
+import com.jengine.db.DBConnection;
 import com.jengine.db.exception.DBException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter {
-    public void executeUpdate(String sql, List params) throws DBException {
+
+    public DBConnection getConnection() throws DBException {
+        return null;
     }
 
-    public List executeQuery(String sql, List params) throws DBException {
+    public void executeUpdate(DBConnection dbConnection, String sql, List params) throws DBException {
+    }
+
+    public List executeQuery(DBConnection dbConnection, String sql, List params) throws DBException {
         return  new ArrayList();
     }
 }

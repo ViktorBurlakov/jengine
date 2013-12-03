@@ -59,7 +59,7 @@
 //               an optional set of parenthesises, not any number.
 
 header {
-package com.jengine.db.ql.parser;
+package com.jengine.db.query.parser;
 }
 
 class SqlParser extends Parser;

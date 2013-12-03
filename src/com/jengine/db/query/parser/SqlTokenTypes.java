@@ -1,6 +1,6 @@
 // $ANTLR 2.7.7 (2006-11-01): "sql.g" -> "SqlLexer.java"$
 
-package com.jengine.db.ql.parser;
+package com.jengine.db.query.parser;
 
 public interface SqlTokenTypes {
 	int EOF = 1;

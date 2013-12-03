@@ -1,0 +1,154 @@
+-- MySQL dump 10.13  Distrib 5.5.34, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: bookdb
+-- ------------------------------------------------------
+-- Server version	5.5.34-0ubuntu0.12.04.1-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `SAuthor`
+--
+
+DROP TABLE IF EXISTS `SAuthor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SAuthor` (
+  `authorId` bigint(20) NOT NULL,
+  `firstName` varchar(75) DEFAULT NULL,
+  `lastName` varchar(75) DEFAULT NULL,
+  PRIMARY KEY (`authorId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `SAuthor`
+--
+
+LOCK TABLES `SAuthor` WRITE;
+/*!40000 ALTER TABLE `SAuthor` DISABLE KEYS */;
+INSERT INTO `SAuthor` VALUES (1,'Jules','Verne'),(2,'Isaac','Asimov'),(3,'Stephen','King');
+/*!40000 ALTER TABLE `SAuthor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `SBook`
+--
+
+DROP TABLE IF EXISTS `SBook`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SBook` (
+  `bookId` bigint(20) NOT NULL,
+  `libraryId` bigint(20) DEFAULT NULL,
+  `title` varchar(75) DEFAULT NULL,
+  PRIMARY KEY (`bookId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `SBook`
+--
+
+LOCK TABLES `SBook` WRITE;
+/*!40000 ALTER TABLE `SBook` DISABLE KEYS */;
+INSERT INTO `SBook` VALUES (1,1,'The Dark Tower'),(2,1,'The Shining '),(3,1,'Vingt mille lieues sous les mers');
+/*!40000 ALTER TABLE `SBook` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `SLibrary`
+--
+
+DROP TABLE IF EXISTS `SLibrary`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SLibrary` (
+  `libraryId` bigint(20) NOT NULL,
+  `name` varchar(75) DEFAULT NULL,
+  `address` varchar(75) DEFAULT NULL,
+  PRIMARY KEY (`libraryId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `SLibrary`
+--
+
+LOCK TABLES `SLibrary` WRITE;
+/*!40000 ALTER TABLE `SLibrary` DISABLE KEYS */;
+INSERT INTO `SLibrary` VALUES (1,'Globe','Springfield, 742 Evergreen Terrace'),(2,'Local','Local');
+/*!40000 ALTER TABLE `SLibrary` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `SMember`
+--
+
+DROP TABLE IF EXISTS `SMember`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SMember` (
+  `memberId` bigint(20) NOT NULL,
+  `libraryId` bigint(20) DEFAULT NULL,
+  `firstName` varchar(75) DEFAULT NULL,
+  `lastName` varchar(75) DEFAULT NULL,
+  PRIMARY KEY (`memberId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `SMember`
+--
+
+LOCK TABLES `SMember` WRITE;
+/*!40000 ALTER TABLE `SMember` DISABLE KEYS */;
+INSERT INTO `SMember` VALUES (1,1,'Mark','Adamson'),(2,1,'Peter','Douglas'),(3,1,'Gary','Miller'),(4,1,'Homer','Simpson'),(5,1,'Burt','Simpson');
+/*!40000 ALTER TABLE `SMember` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `STransaction`
+--
+
+DROP TABLE IF EXISTS `STransaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `STransaction` (
+  `transactionId` bigint(20) NOT NULL,
+  `bookId` bigint(20) DEFAULT NULL,
+  `memberId` bigint(20) DEFAULT NULL,
+  `tdate` datetime DEFAULT NULL,
+  PRIMARY KEY (`transactionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `STransaction`
+--
+
+LOCK TABLES `STransaction` WRITE;
+/*!40000 ALTER TABLE `STransaction` DISABLE KEYS */;
+/*!40000 ALTER TABLE `STransaction` ENABLE KEYS */;
+UNLOCK TABLES;
+
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2013-12-03 13:11:30

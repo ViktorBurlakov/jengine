@@ -19,11 +19,13 @@
 
 package com.jengine.db.adapter.liferay;
 
+import com.jengine.db.ModelManager;
 import com.jengine.db.expression.Expression;
 import com.jengine.db.expression.ExpressionImpl;
-import com.jengine.db.ModelManager;
-import com.jengine.db.field.Field;
-import com.liferay.portal.kernel.dao.orm.*;
+import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -90,28 +92,28 @@ public class DynamicQueryManager {
     }
 
     protected Criterion makeCriterion(Expression expression) throws SystemException, PortalException {
-        Field modelField = manager.getServiceFields().get(expression.getField());
-        Property property = PropertyFactoryUtil.forName(expression.getField());
-
-        if ("eq".equals(expression.getOperation())) {
-            return property.eq(modelField.castType(expression.getValue()));
-        } if ("ge".equals(expression.getOperation())) {
-            return property.ge(modelField.castType(expression.getValue()));
-        } if ("gt".equals(expression.getOperation())) {
-            return property.gt(modelField.castType(expression.getValue()));
-        } if ("le".equals(expression.getOperation())) {
-            return property.le(modelField.castType(expression.getValue()));
-        } if ("lt".equals(expression.getOperation())) {
-            return property.lt(modelField.castType(expression.getValue()));
-        } if ("like".equals(expression.getOperation())) {
-            return property.like(modelField.castType(expression.getValue()));
-        } if ("ne".equals(expression.getOperation())) {
-            return property.ne(modelField.castType(expression.getValue()));
-        } if ("isnull".equals(expression.getOperation())) {
-            return ((Boolean) expression.getValue()) ? property.isNull() : property.isNotNull();
-        } if ("isempty".equals(expression.getOperation())) {
-            return ((Boolean) expression.getValue()) ?  property.isEmpty() : property.isNotEmpty();
-        }
+//        Field modelField = manager.getField().get(expression.getField());
+//        Property property = PropertyFactoryUtil.forName(expression.getField());
+//
+//        if ("eq".equals(expression.getOperation())) {
+//            return property.eq(modelField.castType(expression.getValue()));
+//        } if ("ge".equals(expression.getOperation())) {
+//            return property.ge(modelField.castType(expression.getValue()));
+//        } if ("gt".equals(expression.getOperation())) {
+//            return property.gt(modelField.castType(expression.getValue()));
+//        } if ("le".equals(expression.getOperation())) {
+//            return property.le(modelField.castType(expression.getValue()));
+//        } if ("lt".equals(expression.getOperation())) {
+//            return property.lt(modelField.castType(expression.getValue()));
+//        } if ("like".equals(expression.getOperation())) {
+//            return property.like(modelField.castType(expression.getValue()));
+//        } if ("ne".equals(expression.getOperation())) {
+//            return property.ne(modelField.castType(expression.getValue()));
+//        } if ("isnull".equals(expression.getOperation())) {
+//            return ((Boolean) expression.getValue()) ? property.isNull() : property.isNotNull();
+//        } if ("isempty".equals(expression.getOperation())) {
+//            return ((Boolean) expression.getValue()) ?  property.isEmpty() : property.isNotEmpty();
+//        }
 
         return null;
     }

@@ -20,10 +20,7 @@
 package com.jengine.db.provider;
 
 
-import com.jengine.db.DB;
-import com.jengine.db.Model;
-import com.jengine.db.ModelManager;
-import com.jengine.db.ModelQuery;
+import com.jengine.db.*;
 import com.jengine.db.adapter.Adapter;
 import com.jengine.db.exception.DBException;
 import com.jengine.db.expression.Expression;
@@ -51,6 +48,9 @@ public class Provider {
         this.adapter = adapter;
     }
 
+    public DBConnection getConnection() throws DBException {
+        return adapter.getConnection();
+    }
 
     /* cache methods */
 
@@ -73,19 +73,23 @@ public class Provider {
     public void insert(Model obj) throws DBException {
         ModelManager manager = db.getManager(obj.getClass());
         SQLQuery query = new SQLQuery();
-        Map value = obj.getValues(manager.getFields());
 
         query.setTableName(manager.getTableName());
         query.setTableAlias(manager.getSelf().getName());
-        for (Field field : ) {
-            Object value = ;
+        for (String fieldName : obj.getDBValues().keySet()) {
+            Field field = manager.getField(fieldName);
+            Object value = obj.getDBValues().get(fieldName);
             query.addValue(getSQLName(field), value);
             query.addParam(value);
         }
-
         String sql = buildInsertSQL(query);
 
-        this.adapter.executeUpdate(sql, query.getParams());
+        DBConnection connection = this.adapter.getConnection();
+        this.adapter.executeUpdate(connection, sql, query.getParams());
+
+        if (manager.getPrimaryKey().isAutoIncrement()) {
+            obj.setValue(manager.getPrimaryKey(), connection.getGeneratedKeys().get(0));
+        }
     }
 
     public void insert(ModelQuery modelQuery) throws DBException {
@@ -95,7 +99,8 @@ public class Provider {
 
         String sql = buildInsertSQL(query);
 
-        this.adapter.executeUpdate(sql, query.getParams());
+        DBConnection connection = this.adapter.getConnection();
+        this.adapter.executeUpdate(connection, sql, query.getParams());
     }
 
     public void remove(ModelQuery modelQuery) throws DBException {
@@ -106,7 +111,8 @@ public class Provider {
 
         String sql = buildRemoveSQL(query);
 
-        this.adapter.executeUpdate(sql, query.getParams());
+        DBConnection connection = this.adapter.getConnection();
+        this.adapter.executeUpdate(connection, sql, query.getParams());
     }
 
     public void update(ModelQuery modelQuery) throws DBException{
@@ -118,14 +124,16 @@ public class Provider {
 
         String sql = buildUpdateSQL(query);
 
-        this.adapter.executeUpdate(sql, query.getParams());
+        DBConnection connection = this.adapter.getConnection();
+        this.adapter.executeUpdate(connection, sql, query.getParams());
     }
 
     public List select(ModelQuery modelQuery) throws DBException {
         SQLQuery sqlQuery = buildSelect(modelQuery);
         String sql = buildSelectSQL(sqlQuery);
 
-        return this.adapter.executeQuery(sql, sqlQuery.getParams());
+        DBConnection connection = this.adapter.getConnection();
+        return this.adapter.executeQuery(connection, sql, sqlQuery.getParams());
     }
 
 
@@ -191,7 +199,7 @@ public class Provider {
         return sql.toString();
     }
 
-    protected SQLQuery buildSelect(ModelQuery modelQuery) {
+    protected SQLQuery buildSelect(ModelQuery modelQuery) throws DBException {
         SQLQuery query = new SQLQuery();
 
         setModels(query, modelQuery);
@@ -236,10 +244,10 @@ public class Provider {
         return queryString.toString();
     }
 
-    protected void setValues(SQLQuery query, ModelQuery modelQuery) {
+    protected void setValues(SQLQuery query, ModelQuery modelQuery) throws DBException {
         for (String fieldName : modelQuery.getValues().keySet()) {
             Field field = modelQuery.getFieldMap().get(fieldName);
-            Object value = field.castType(modelQuery.getValues().get(fieldName));
+            Object value = modelQuery.getValues().get(fieldName);
             query.addValue(getSQLName(field), value);
             query.addParam(value);
         }
@@ -351,7 +359,7 @@ public class Provider {
         return target.toString();
     }
 
-    protected void setFilters(SQLQuery query, ModelQuery modelQuery) {
+    protected void setFilters(SQLQuery query, ModelQuery modelQuery) throws DBException {
         if (modelQuery.getFilter().size() > 0) {
             for (int i=0; i < modelQuery.getFilter().size(); i++) {
                 Expression expression = modelQuery.getFilter().get(i);
@@ -373,7 +381,7 @@ public class Provider {
         }
     }
 
-    protected void setStringQuery(SQLQuery query, ModelQuery modelQuery) {
+    protected void setStringQuery(SQLQuery query, ModelQuery modelQuery) throws DBException {
         if (modelQuery.getStringQueries().size() > 0) {
             for (int i=0; i < modelQuery.getStringQueries().size(); i++) {
                 ModelQuery.StringQuery stringQuery = modelQuery.getStringQueries().get(i);

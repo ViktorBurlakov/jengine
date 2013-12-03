@@ -43,6 +43,12 @@ public class ModelManager {
     public ModelManager() {
     }
 
+    public void addProperties(List<ModelProperty> properties) {
+        for (ModelProperty property: properties) {
+            addField(property);
+        }
+    }
+
     public void addFields(List<Field> fields) {
         for (Field field: fields) {
             addField(field);
@@ -267,4 +273,6 @@ public class ModelManager {
     public void setTableName(String tableName) {
         this.tableName = tableName;
     }
+
+
 }
