@@ -175,7 +175,7 @@ public class Test {
         // filter
         check(Member.cls.filter("lastName = ?", "Simpson").list().size() == 2);
         check(Author.cls.filter(Author.firstName.eq("Stephen")).<Author>one().getLastName().equals("King"));
-//        check(Book.cls.filter(Book.library.eq(Library.cls.get(1))).<Book>list().size() == 3);
+        check(Book.cls.filter(Book.library.eq(Library.cls.get(1))).<Book>list().size() == 3);
         check(Book.cls.filter(map("library.name__like", "%Globe")).<Book>list().size() == 3);
         check(Book.cls.filter(map("library.libraryId", 101)).<Book>list().size() == 0);
     }
@@ -189,8 +189,8 @@ public class Test {
         clearData();
         loadData();
 
-//        check(Book.cls.filter("library = ?", Library.cls.select("libraryId").filter("name like ?", "%Globe"))
-//                .<Book>list().size() == 3);
+        check(Book.cls.filter("library = ?", Library.cls.select("libraryId").filter("name like ?", "%Globe"))
+                .<Book>list().size() == 3);
     }
 
 
@@ -243,7 +243,7 @@ public class Test {
         clearData();
         loadData();
 
-//        check(Book.cls.get(1).getLibrary().equals(Library.cls.get(1)));
+        check(Book.cls.get(1).getLibrary().equals(Library.cls.get(1)));
 
         Library globe = Library.cls.filter("name = ?", "Globe").one();
 ///        check(globe.getMemberList().size() == 5);
