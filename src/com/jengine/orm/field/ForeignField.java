@@ -17,10 +17,10 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.db.field;
+package com.jengine.orm.field;
 
-import com.jengine.db.ModelManager;
-import com.jengine.db.exception.DBException;
+import com.jengine.orm.ModelManager;
+import com.jengine.orm.db.DBException;
 
 import java.util.ArrayList;
 import java.util.Arrays;

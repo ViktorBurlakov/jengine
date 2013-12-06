@@ -17,7 +17,7 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.db.expression;
+package com.jengine.orm.db.expression;
 
 public interface Expression {
     public String getField();

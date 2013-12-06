@@ -17,17 +17,17 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.db;
+package com.jengine.orm;
 
 
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
-import com.jengine.db.exception.DBException;
-import com.jengine.db.expression.Expression;
-import com.jengine.db.expression.ExpressionImpl;
-import com.jengine.db.field.Field;
-import com.jengine.db.field.FunctionField;
-import com.jengine.db.query.parser.WhereTranslator;
+import com.jengine.orm.db.DBException;
+import com.jengine.orm.db.expression.Expression;
+import com.jengine.orm.db.expression.ExpressionImpl;
+import com.jengine.orm.field.Field;
+import com.jengine.orm.field.FunctionField;
+import com.jengine.orm.db.query.parser.WhereTranslator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 
 import java.io.UnsupportedEncodingException;

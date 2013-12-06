@@ -17,11 +17,11 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.db.adapter.liferay;
+package com.jengine.orm.db.adapter.liferay;
 
-import com.jengine.db.ModelManager;
-import com.jengine.db.expression.Expression;
-import com.jengine.db.expression.ExpressionImpl;
+import com.jengine.orm.ModelManager;
+import com.jengine.orm.db.expression.Expression;
+import com.jengine.orm.db.expression.ExpressionImpl;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;

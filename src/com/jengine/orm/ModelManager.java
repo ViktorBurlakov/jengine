@@ -17,10 +17,10 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.db;
+package com.jengine.orm;
 
 
-import com.jengine.db.field.*;
+import com.jengine.orm.field.*;
 import com.liferay.portal.kernel.dao.orm.Type;
 
 import java.util.*;

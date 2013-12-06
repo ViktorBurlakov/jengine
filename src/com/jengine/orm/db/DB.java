@@ -1,7 +1,7 @@
-package com.jengine.db;
+package com.jengine.orm.db;
 
 
-import com.jengine.db.provider.Provider;
+import com.jengine.orm.db.provider.Provider;
 
 public class DB {
     private String name;

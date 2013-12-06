@@ -1,8 +1,8 @@
-import com.jengine.db.DB;
-import com.jengine.db.DBFactory;
+import com.jengine.orm.db.DB;
+import com.jengine.orm.db.DBFactory;
 import com.jengine.db.adapter.Adapter;
 import com.jengine.db.adapter.jdbc.JDBCAdapter;
-import com.jengine.db.exception.DBException;
+import com.jengine.orm.db.DBException;
 import com.jengine.db.field.FunctionField;
 import com.jengine.db.provider.Provider;
 import com.jengine.db.provider.mysql.MySQLProvider;

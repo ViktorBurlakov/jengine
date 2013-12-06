@@ -17,19 +17,23 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.db.provider;
+package com.jengine.orm.db.provider;
 
 
-import com.jengine.db.*;
-import com.jengine.db.adapter.Adapter;
-import com.jengine.db.exception.DBException;
-import com.jengine.db.expression.Expression;
-import com.jengine.db.expression.ExpressionImpl;
-import com.jengine.db.field.Field;
-import com.jengine.db.field.ForeignField;
-import com.jengine.db.field.FunctionField;
-import com.jengine.db.field.ReferenceField;
-import com.jengine.db.query.SQLQuery;
+import com.jengine.orm.Model;
+import com.jengine.orm.ModelClass;
+import com.jengine.orm.ModelManager;
+import com.jengine.orm.ModelQuery;
+import com.jengine.orm.db.DBConnection;
+import com.jengine.orm.db.DBException;
+import com.jengine.orm.db.adapter.Adapter;
+import com.jengine.orm.db.expression.Expression;
+import com.jengine.orm.db.expression.ExpressionImpl;
+import com.jengine.orm.db.query.SQLQuery;
+import com.jengine.orm.field.Field;
+import com.jengine.orm.field.ForeignField;
+import com.jengine.orm.field.FunctionField;
+import com.jengine.orm.field.ReferenceField;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,6 +1,6 @@
 // $ANTLR 2.7.7 (2006-11-01): "sql.g" -> "SqlLexer.java"$
 
-package com.jengine.db.query.parser;
+package com.jengine.orm.db.query.parser;
 
 import antlr.*;
 import antlr.collections.impl.BitSet;
