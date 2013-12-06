@@ -82,13 +82,13 @@ public class Model {
         if (field.isForeign()) {
             ForeignField foreignField = (ForeignField) field;
             Object referenceId = values.get(foreignField.getReference().getName());
-            Model reference = cls.getDb().get(field.getFieldClass(), referenceId);
+            Model reference = cls.getModelClass(field.getFieldClass()).get(referenceId);
             return reference.getValue(foreignField.getField());
         } else if (field.isReference()) {
-            return cls.getDb().get(field.getFieldClass(), values.get(field.getName()));
+            return cls.getModelClass(field.getFieldClass()).get(values.get(field.getName()));
         } else if (field.isMultiReference()) {
             MultiReferenceField multiField = (MultiReferenceField) field;
-            return cls.getDb().filter(field.getFieldClass(), "? = ?", multiField.getReferenceModelField(), getPrimaryKey());
+            return cls.getModelClass(field.getFieldClass()).filter("? = ?", multiField.getReferenceModelField(), getPrimaryKey());
         } else if (field.isProperty()) {
             try {
                 Method method = getClass().getMethod(((ModelProperty) field).getMethodName());
@@ -124,15 +124,38 @@ public class Model {
     /* modify methods */
 
     public Model save() throws DBException {
-        return cls.getDb().save(this);
+        if (_new) {
+            cls.insert(this);
+            this.cache();
+            return this;
+        }
+        return this.update();
+    }
+
+
+    public Model update() throws DBException {
+        ModelManager manager = cls.getManager();
+        new ModelQuery(manager).values(values).update();
+        cache();
+        return this;
     }
 
     public void remove() throws DBException {
-        cls.getDb().remove(this);
+        ModelManager manager = cls.getManager();
+        new ModelQuery(manager).values(values).remove();
+        clearCache();
+    }
+
+    public void clearCache() throws DBException {
+        if (cls.getManager().getCacheEnabled()) {
+            cls.getProvider().clearCache(this);
+        }
     }
 
     public void cache() throws DBException {
-        cls.getDb().cache(this);
+        if (cls.getManager().getCacheEnabled()) {
+            cls.getProvider().cache(this);
+        }
     }
 
     public boolean equals(Object obj) {

@@ -13,7 +13,7 @@ import static com.jengine.utils.CollectionUtil.map;
 public class Test {
 
     public static void main(String [] args) throws Exception {
-        Adapter adapter = new JDBCAdapter("sun.jdbc.odbc.JdbcOdbcDriver", "MySQL", "jdbc:mysql://localhost:3306/bookdb?", "root", "");
+        Adapter adapter = new JDBCAdapter("com.mysql.jdbc.Driver", "MySQL", "jdbc:mysql://localhost:3306/bookdb?", "root", "");
         Provider provider = new MySQLProvider(adapter);
         DBFactory.register(new DB(provider));
 

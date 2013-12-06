@@ -41,7 +41,7 @@ import static com.jengine.utils.CollectionUtil.list;
 
 
 public class Provider {
-    private DB db;
+    private ModelClass cls;
     private Adapter adapter;
 
     public Provider(Adapter adapter) {
@@ -71,7 +71,7 @@ public class Provider {
     /* general methods */
 
     public void insert(Model obj) throws DBException {
-        ModelManager manager = db.getManager(obj.getClass());
+        ModelManager manager = cls.getModelClass(obj.getClass()).getManager();
         SQLQuery query = new SQLQuery();
 
         query.setTableName(manager.getTableName());
@@ -144,16 +144,15 @@ public class Provider {
 
     /* getters and setters */
 
-    public DB getDb() {
-        return db;
+    public ModelClass getCls() {
+        return cls;
     }
 
-    public void setDb(DB db) {
-        this.db = db;
+    public void setCls(ModelClass cls) {
+        this.cls = cls;
     }
 
-
-    /* protected methods */
+/* protected methods */
 
     protected String buildInsertSQL(SQLQuery query) {
         StringBuffer sql = new StringBuffer();
@@ -323,7 +322,7 @@ public class Provider {
     }
 
     protected void addRelation(SQLQuery query, List<String> path, String alias, ForeignField foreignField) {
-        ModelManager manager = db.getManager(foreignField.getReference().getFieldClass());
+        ModelManager manager =  cls.getModelClass(foreignField.getReference().getFieldClass()).getManager();
         path.add(foreignField.getReference().getName());
         String foreignAlias = concat(path, "__");
         List value = list(manager.getTableName(),String.format("%s.%s = %s.%s",
@@ -367,7 +366,7 @@ public class Provider {
 
     protected String buildReferenceTargets(String alias, ReferenceField referenceField) {
         StringBuffer target = new StringBuffer();
-        ModelManager manager = db.getManager(referenceField.getFieldClass());
+        ModelManager manager =  cls.getModelClass(referenceField.getFieldClass()).getManager();
         for (Field field : manager.getFields()) {
             if (field.isSelf() || field.isProperty()) {
                 continue;
