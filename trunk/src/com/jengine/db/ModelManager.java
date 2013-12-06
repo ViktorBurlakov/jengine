@@ -38,7 +38,7 @@ public class ModelManager {
     private Field primaryKey = null;
     private SelfField self;
     private Boolean cacheEnabled;
-    private DB db;
+    private ModelClass cls;
 
     public ModelManager() {
     }
@@ -154,7 +154,7 @@ public class ModelManager {
             List<String> parts = Arrays.asList(fieldName.split("\\."));
             ReferenceField referenceField = (ReferenceField) fields.get(parts.get(0));
             Class referenceModelClass = referenceField.getFieldClass();
-            ModelManager manager = db.getManager(referenceModelClass);
+            ModelManager manager = cls.getModelClass(referenceModelClass).getManager();
             String tail = concat(parts.subList(1, parts.size()), ".");
             return new ForeignField(this, fieldName, referenceField, manager.getField(tail));
         } else {
@@ -218,12 +218,12 @@ public class ModelManager {
 
     /* getters and setters */
 
-    public DB getDb() {
-        return db;
+    public ModelClass getCls() {
+        return cls;
     }
 
-    public void setDb(DB db) {
-        this.db = db;
+    public void setCls(ModelClass cls) {
+        this.cls = cls;
     }
 
     public SelfField getSelf() {

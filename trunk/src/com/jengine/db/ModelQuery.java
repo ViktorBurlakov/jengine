@@ -162,15 +162,15 @@ public class ModelQuery {
     }
 
     public <T extends Object> List<T> list() throws DBException {
-        return manager.getDb().run(this);
+        return manager.getCls().select(this);
     }
 
     public void update() throws DBException {
-        manager.getDb().update(this);
+        manager.getCls().update(this);
     }
 
     public void remove() throws DBException {
-        manager.getDb().remove(this);
+        manager.getCls().remove(this);
     }
 
     public ModelQuery page(Map<String, Object> page) {
