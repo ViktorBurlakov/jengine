@@ -1,11 +1,11 @@
 import com.jengine.orm.db.DB;
-import com.jengine.orm.db.DBFactory;
-import com.jengine.db.adapter.Adapter;
-import com.jengine.db.adapter.jdbc.JDBCAdapter;
 import com.jengine.orm.db.DBException;
-import com.jengine.db.field.FunctionField;
-import com.jengine.db.provider.Provider;
-import com.jengine.db.provider.mysql.MySQLProvider;
+import com.jengine.orm.db.DBFactory;
+import com.jengine.orm.db.adapter.Adapter;
+import com.jengine.orm.db.adapter.jdbc.JDBCAdapter;
+import com.jengine.orm.db.provider.Provider;
+import com.jengine.orm.db.provider.mysql.MySQLProvider;
+import com.jengine.orm.field.FunctionField;
 import models.*;
 
 import static com.jengine.utils.CollectionUtil.map;
