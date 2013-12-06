@@ -17,7 +17,7 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.db.query.parser;
+package com.jengine.orm.db.query.parser;
 
 
 import antlr.CommonAST;

@@ -17,7 +17,7 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.db.field;
+package com.jengine.orm.field;
 
 public class MultiReferenceField extends Field {
     private String referenceModelField;

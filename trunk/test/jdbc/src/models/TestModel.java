@@ -19,9 +19,9 @@
 
 package models;
 
-import com.jengine.db.Model;
-import com.jengine.db.exception.DBException;
 
+import com.jengine.orm.Model;
+import com.jengine.orm.db.DBException;
 
 public class TestModel extends Model {
 

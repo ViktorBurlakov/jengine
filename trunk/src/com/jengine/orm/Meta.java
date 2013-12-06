@@ -17,7 +17,7 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.db;
+package com.jengine.orm;
 
 
 @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)

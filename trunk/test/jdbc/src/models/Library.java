@@ -39,13 +39,13 @@
 package models;
 
 
-import com.jengine.db.Meta;
-import com.jengine.db.ModelClass;
-import com.jengine.db.ModelQuery;
-import com.jengine.db.exception.DBException;
-import com.jengine.db.field.Field;
-import com.jengine.db.field.PrimaryKey;
-import com.jengine.db.field.StringField;
+import com.jengine.orm.Meta;
+import com.jengine.orm.ModelClass;
+import com.jengine.orm.ModelQuery;
+import com.jengine.orm.db.DBException;
+import com.jengine.orm.field.Field;
+import com.jengine.orm.field.PrimaryKey;
+import com.jengine.orm.field.StringField;
 
 import java.util.List;
 

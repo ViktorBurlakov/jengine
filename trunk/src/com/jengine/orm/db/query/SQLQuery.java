@@ -17,10 +17,10 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.db.query;
+package com.jengine.orm.db.query;
 
 
-import com.jengine.db.expression.Expression;
+import com.jengine.orm.db.expression.Expression;
 
 import java.util.*;
 
