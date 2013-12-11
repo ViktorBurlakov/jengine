@@ -40,7 +40,7 @@ public class SelfField extends ReferenceField {
     public void config(ModelManager manager) {
         super.config(DEFAULT_NAME, manager);
         if (!options.containsKey("columnName")) {
-            columnName =  fieldName;
+            columnName =  null;
         }
         if (!options.containsKey("referenceModelFieldName")) {
             referenceModelFieldName = null;
