@@ -19,88 +19,63 @@
 
 package com.jengine.orm.field;
 
-import com.jengine.orm.ModelManager;
 import com.jengine.orm.db.DBException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ForeignField extends Field {
-    private ReferenceField reference = null;
-    private Field field = null;
+    private Map<String, Field> fieldMap = new LinkedHashMap<String, Field>();
+    private List<String> fields = new ArrayList<String>();
+    private ReferenceField currentField;
+    private Field nextField;
 
-    public ForeignField(ReferenceField reference, Field field) {
-        super(field.getFieldClass());
-        this.reference = reference;
-        this.field = field;
+    public ForeignField(ReferenceField currentField, Field nextField) {
+        super(nextField.getFieldClass());
+        this.type = Type.FOREIGN;
+        this.currentField = currentField;
+        this.nextField = nextField;
+        this.fieldMap.put(currentField.getFieldName(), currentField);
+        if (nextField instanceof ForeignField) {
+            ForeignField foreignField = (ForeignField) nextField;
+            this.fieldMap.putAll(foreignField.getFieldMap());
+        } else {
+            this.fieldMap.put(nextField.getFieldName(), nextField);
+        }
+        this.fields.addAll(this.fieldMap.keySet());
     }
 
-    public ForeignField(ModelManager manager, String name, ReferenceField reference, Field field) {
-        super(manager, name, field.getFieldClass());
-        this.reference = reference;
-        this.field = field;
+    public List<String> getReferenceFields() {
+        return fieldMap.get(fieldMap.size()-1) instanceof ReferenceField ? fields : fields.subList(0, fields.size()-1);
     }
 
-    public ForeignField(ModelManager manager, String name, Map<String, Object> options, ReferenceField reference, Field field) {
-        super(manager, name, field.getFieldClass(), options);
-        this.reference = reference;
-        this.field = field;
+    public String getColumnName() {
+        return fieldMap.get(fieldMap.size()-1).getColumnName();
     }
 
     public Object castType(Object value) throws DBException {
-        return getField().castType(value);
+        return nextField.castType(value);
     }
 
-    public Object castServiceType(Object value) throws DBException {
-        return getField().castServiceType(value);
+    public Map<String, Field> getFieldMap() {
+        return fieldMap;
     }
 
-    public String getDbName() {
-        return getField().getDbName();
+    public ReferenceField getCurrentField() {
+        return currentField;
     }
 
-    public Field getLastField() {
-        return this.field.isForeign() ? ((ForeignField)field).getLastField() : field;
+    public void setCurrentField(ReferenceField currentField) {
+        this.currentField = currentField;
     }
 
-    public List<String> getReferencePath() {
-        List<String> path = new ArrayList<String>();
-        path.add(reference.getName());
-        if (field.isForeign()) {
-            path.addAll(((ForeignField) field).getReferencePath());
-        } else if (field.isReference()) {
-            path.add(field.getName());
-        }
-        return path;
+    public Field getNextField() {
+        return nextField;
     }
 
-    public List<String> getPath() {
-        return Arrays.asList(getName().split("\\."));
-    }
-
-    public ReferenceField getReference() {
-        return reference;
-    }
-
-    public void setReference(ReferenceField reference) {
-        this.reference = reference;
-    }
-
-    public Field getField() {
-        return field;
-    }
-
-    public void setField(Field field) {
-        this.field = field;
-    }
-
-    public boolean isForeign() {
-        return true;
-    }
-
-    public boolean isReference() {
-        return this.field.isReference();
+    public void setNextField(Field nextField) {
+        this.nextField = nextField;
     }
 }

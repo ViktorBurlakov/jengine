@@ -20,23 +20,20 @@
 package com.jengine.orm.field;
 
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ModelProperty extends Field {
     private String methodName;
 
-    public ModelProperty(String name, String methodName, Class fieldClass) {
-        super(name, fieldClass);
-        this.methodName = methodName;
+    public ModelProperty(String methodName, Class fieldClass) {
+        this(methodName, fieldClass, new HashMap<String, Object>());
     }
 
-    public ModelProperty(String name, String methodName, Class fieldClass, Map<String, Object> options) {
-        super(name, fieldClass, options);
+    public ModelProperty(String methodName, Class fieldClass, Map<String, Object> options) {
+        super(fieldClass, options);
         this.methodName = methodName;
-    }
-
-    public boolean isProperty() {
-        return true;
+        this.type = Type.PROPERTY;
     }
 
     public String getMethodName() {

@@ -20,24 +20,31 @@
 package com.jengine.orm.field;
 
 
+import com.jengine.orm.ModelManager;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class SelfField extends ReferenceField {
+    public static String DEFAULT_NAME = "self";
 
     public SelfField(Class fieldClass) {
-        this("self", fieldClass);
+        this(fieldClass, new HashMap<String, Object>());
     }
 
-    public SelfField(String name, Class fieldClass) {
-        this(name, fieldClass, new HashMap<String, Object>());
+    public SelfField(Class fieldClass, Map<String, Object> options) {
+        super(fieldClass, options);
+        this.type = Type.SELF;
     }
 
-    public SelfField(String name, Class fieldClass, Map<String, Object> options) {
-        super(name, fieldClass, options);
-    }
+    public void config(ModelManager manager) {
+        super.config(DEFAULT_NAME, manager);
+        if (!options.containsKey("columnName")) {
+            columnName =  fieldName;
+        }
+        if (!options.containsKey("referenceModelFieldName")) {
+            referenceModelFieldName = null;
+        }
 
-    public boolean isSelf() {
-        return true;
     }
 }

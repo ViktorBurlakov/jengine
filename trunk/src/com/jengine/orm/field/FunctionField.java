@@ -20,50 +20,22 @@
 package com.jengine.orm.field;
 
 
-import com.jengine.orm.ModelManager;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class FunctionField extends Field {
     private String expression = "";
     private List attributes = new ArrayList();
 
-    public FunctionField(Class fieldClass, String expr, Object ... attributes) {
-        super(fieldClass);
-        this.expression = expr;
-        this.attributes = new ArrayList(Arrays.asList(attributes));
+    public FunctionField(Class fieldClass, String expression, Object ... attributes) {
+        this(fieldClass, new HashMap<String, Object>(), expression, attributes);
     }
 
-    public FunctionField(String name, Class fieldClass, String expression, Object ... attributes) {
-        super(name, fieldClass);
+    public FunctionField(Class fieldClass, Map<String, Object> options, String expression, Object ... attributes) {
+        super(fieldClass, options);
+        this.type = Type.FUNCTION;
         this.expression = expression;
         this.attributes = new ArrayList(Arrays.asList(attributes));
-    }
-
-    public FunctionField(String name, Class fieldClass, Map<String, Object> options, String expression, Object ... attributes) {
-        super(name, fieldClass, options);
-        this.expression = expression;
-        this.attributes = new ArrayList(Arrays.asList(attributes));
-    }
-
-    public FunctionField(ModelManager manager, String name, Class fieldClass, String expression, Object ... attributes) {
-        super(manager, name, fieldClass);
-        this.expression = expression;
-        this.attributes = new ArrayList(Arrays.asList(attributes));
-    }
-
-    public FunctionField(ModelManager manager, String name, Class fieldClass, Map<String, Object> options, String expression, Object ... attributes) {
-        super(manager, name, fieldClass, options);
-        this.expression = expression;
-        this.attributes = new ArrayList(Arrays.asList(attributes));
-    }
-
-    public boolean isFunction() {
-        return true;
     }
 
     public String render(List<String> attributes) {

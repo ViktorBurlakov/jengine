@@ -20,6 +20,7 @@
 package com.jengine.orm;
 
 
+import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.*;
 import com.liferay.portal.kernel.dao.orm.Type;
 
@@ -55,7 +56,12 @@ public class ModelManager {
         }
     }
 
-    public void addField(Field field) {
+    public Field addField(String name, Field field) {
+        field.config(name, this);
+        return addField(field);
+    }
+
+    public Field addField(Field field) {
         // collect fields
 //        if (deferredReferences.containsKey(customModel.getName())) {
 //            for (MultiReferenceField multiReferenceField: deferredReferences.get(customModel.getName())){
@@ -63,9 +69,7 @@ public class ModelManager {
 //           }
 //        }
         // init field
-        field.setManager(this);
-        field.init();
-        if (field.isReference()) {
+        if (field.getType() == Field.Type.REFERENCE) {
             ReferenceField referenceField = (ReferenceField) field;
             // add multi reference field to another model
 //                String multiFieldName = referenceField.getMultiReferenceFieldName() != null ?
@@ -82,71 +86,90 @@ public class ModelManager {
 //                }
         }
         // register field
-        this.fields.put(field.getName(), field);
+        this.fields.put(field.getFieldName(), field);
         if (field.isPrimaryKey()) {
             this.primaryKey = field;
         }
-        if (field.isSelf()) {
+        if (field.getType() == Field.Type.SELF) {
             this.self = (SelfField) field;
         }
+
+        return field;
     }
 
     public void addMultiField(MultiReferenceField field) {
-        field.setManager(this);
-        field.init();
+//        field.config(this);
         // register field
-        this.fields.put(field.getName(), field);
+        this.fields.put(field.getFieldName(), field);
     }
 
     /* aggregation function fields */
 
-    public FunctionField getCountField(String field) {
-        return getCountField(getField(field));
+    public FunctionField newCalcField(String name, Class type, String expr, Field ... fields) {
+        FunctionField functionField = new FunctionField(type, map(), expr, (Field[]) fields);
+        functionField.config(name, this);
+        return functionField;
     }
 
-    public FunctionField getCountAllField() {
-        return new FunctionField(this, "_count_", Long.class, "count(*)");
+    public FunctionField newCountField(String field) {
+        return newCountField(getField(field));
     }
 
-    public FunctionField getCountField(Field modelField) {
-        String name = String.format("count_%s", modelField.getName().replaceAll("\\.", "__"));
-        return new FunctionField(this, name, modelField.getFieldClass(), map("ormType", Type.LONG), "count(%s)", modelField);
+    public FunctionField newCountAllField() {
+        FunctionField field = new FunctionField(Long.class, "count(*)");
+        field.config("_count_", this);
+        return field;
     }
 
-    public FunctionField getMaxField(String field) {
-        return getMaxField(getField(field));
+    public FunctionField newCountField(Field modelField) {
+        String name = String.format("count_%s", modelField.getFieldName().replaceAll("\\.", "__"));
+        FunctionField field = new FunctionField(modelField.getFieldClass(), map("columnType", Type.LONG), "count(%s)", modelField);
+        field.config(name, this);
+        return field;
     }
 
-    public FunctionField getMaxField(Field modelField) {
-        String name = String.format("max_%s", modelField.getName().replaceAll("\\.", "__"));
-        return new FunctionField(this, name, modelField.getFieldClass(), map("ormType", modelField.getOrmType()), "max(%s)", modelField);
+    public FunctionField newMaxField(String field) {
+        return newMaxField(getField(field));
     }
 
-    public FunctionField getMinField(String field) {
-        return getMinField(getField(field));
+    public FunctionField newMaxField(Field modelField) {
+        String name = String.format("max_%s", modelField.getFieldName().replaceAll("\\.", "__"));
+        FunctionField field = new FunctionField(modelField.getFieldClass(), map("columnType", modelField.getColumnType()), "max(%s)", modelField);
+        field.config(name, this);
+        return field;
     }
 
-    public FunctionField getMinField(Field modelField) {
-        String name = String.format("min_%s", modelField.getName().replaceAll("\\.", "__"));
-        return new FunctionField(this, name, modelField.getFieldClass(), map("ormType", modelField.getOrmType()), "min(%s)", modelField);
+    public FunctionField newMinField(String field) throws DBException {
+        return newMinField(getField(field));
     }
 
-    public FunctionField getAvgField(String field) {
-        return getAvgField(getField(field));
+    public FunctionField newMinField(Field modelField) {
+        String name = String.format("min_%s", modelField.getFieldName().replaceAll("\\.", "__"));
+        FunctionField field = new FunctionField(modelField.getFieldClass(), map("columnType", modelField.getColumnType()), "min(%s)", modelField);
+        field.config(name, this);
+        return field;
     }
 
-    public FunctionField getAvgField(Field modelField) {
-        String name = String.format("avg_%s", modelField.getName().replaceAll("\\.", "__"));
-        return new FunctionField(this, name, modelField.getFieldClass(), map("ormType", Type.DOUBLE), "avg(%s)", modelField);
+    public FunctionField newAvgField(String field) {
+        return newAvgField(getField(field));
     }
 
-    public FunctionField getSumField(String field) {
-        return getSumField(getField(field));
+    public FunctionField newAvgField(Field modelField) {
+        String name = String.format("avg_%s", modelField.getFieldName().replaceAll("\\.", "__"));
+        FunctionField field = new FunctionField(modelField.getFieldClass(), map("columnType", Type.DOUBLE), "avg(%s)", modelField);
+        field.config(name, this);
+        return field;
     }
 
-    public FunctionField getSumField(Field modelField) {
-        String name = String.format("sum_%s", modelField.getName().replaceAll("\\.", "__"));
-        return new FunctionField(this, name, modelField.getFieldClass(), map("ormType", modelField.getOrmType()), "sum(%s)", modelField);
+    public FunctionField newSumField(String field) {
+        return newSumField(getField(field));
+    }
+
+    public FunctionField newSumField(Field modelField) {
+        String name = String.format("sum_%s", modelField.getFieldName().replaceAll("\\.", "__"));
+        FunctionField field = new FunctionField(modelField.getFieldClass(), map("columnType", modelField.getColumnType()), "sum(%s)", modelField);
+        field.config(name, this);
+        return field;
     }
 
     public Field getField(String fieldName) {
@@ -155,55 +178,19 @@ public class ModelManager {
             ReferenceField referenceField = (ReferenceField) fields.get(parts.get(0));
             Class referenceModelClass = referenceField.getFieldClass();
             ModelManager manager = cls.getModelClass(referenceModelClass).getManager();
-            String tail = concat(parts.subList(1, parts.size()), ".");
-            return new ForeignField(this, fieldName, referenceField, manager.getField(tail));
+            String tail = concat(parts.subList(1, parts.size()), ".").toString();
+            ForeignField foreignField = new ForeignField(referenceField,  manager.getField(tail));
+            foreignField.config(fieldName, this);
+            return foreignField;
         } else {
             return fields.get(fieldName);
         }
     }
 
-    public List<Field> getFields(boolean visible, boolean keys) {
-        return getFields(new ArrayList<String>(), visible, keys, new ArrayList<String>());
-    }
-
-    public List<Field> getFields(List<String> fields) {
-        return getFields(fields, false, false, new ArrayList<String>());
-    }
-
-    public List<Field> getFields(List<String> fields, boolean visible, boolean keys, List<String> exclude) {
-        List<Field> result = new ArrayList<Field>();
-        Map<String, Field> cache = new  HashMap<String, Field>();
-
-        for (String fieldName : fields) {
-            Field field = getField(fieldName);
-            cache.put(fieldName, field);
-            result.add(field);
-        }
-        if (keys) {
-            for (Field field : this.fields.values()) {
-                if (field.isKey() && !cache.containsKey(field.getName())) {
-                    cache.put(field.getName(), field);
-                    result.add(field);
-                }
-            }
-        }
-        if (visible) {
-            for (Field field : this.fields.values()) {
-                if (field.isVisible() && !cache.containsKey(field.getName())) {
-                    cache.put(field.getName(), field);
-                    result.add(field);
-                }
-            }
-        }
-        return  result;
-    }
-
     public List<Field> getFields() {
         List<Field> result = new ArrayList<Field>();
 
-        for (Field field : this.fields.values()) {
-            result.add(field);
-        }
+        result.addAll(this.fields.values());
 
         return  result;
     }

@@ -59,6 +59,10 @@ public class Model {
         _new = value;
     }
 
+    public void setPrimaryKey(Serializable value) throws DBException {
+        setValue(cls.getManager().getPrimaryKey(), value);
+    }
+
     public Serializable getPrimaryKey() throws DBException {
         return (Serializable) getValue(cls.getManager().getPrimaryKey());
     }
@@ -72,24 +76,23 @@ public class Model {
     }
 
     public void setValue(Field field, Object value) throws DBException {
-        if (field.isForeign() || field.isFunction() || field.isProperty()) {
-            return;
+        if (field.getType() == Field.Type.PLAIN || field.getType() == Field.Type.REFERENCE) {
+            values.put(field.getFieldName(), field.castType(value));
         }
-        values.put(field.getName(), field.castType(value));
     }
 
     public Object getValue(Field field) throws DBException {
-        if (field.isForeign()) {
+        if (field instanceof ForeignField) {
             ForeignField foreignField = (ForeignField) field;
-            Object referenceId = values.get(foreignField.getReference().getName());
+            Object referenceId = values.get(foreignField.getCurrentField().getFieldName());
             Model reference = cls.getModelClass(field.getFieldClass()).get(referenceId);
-            return reference.getValue(foreignField.getField());
-        } else if (field.isReference()) {
-            return cls.getModelClass(field.getFieldClass()).get(values.get(field.getName()));
-        } else if (field.isMultiReference()) {
+            return reference.getValue(foreignField.getNextField());
+        } else if (field instanceof ReferenceField) {
+            return cls.getModelClass(field.getFieldClass()).get(values.get(field.getFieldName()));
+        } else if (field instanceof MultiReferenceField) {
             MultiReferenceField multiField = (MultiReferenceField) field;
-            return cls.getModelClass(field.getFieldClass()).filter("? = ?", multiField.getReferenceModelField(), getPrimaryKey());
-        } else if (field.isProperty()) {
+            return cls.getModelClass(field.getFieldClass()).filter("? = ?", multiField.getReferenceModelFieldName(), getPrimaryKey());
+        } else if (field instanceof ModelProperty) {
             try {
                 Method method = getClass().getMethod(((ModelProperty) field).getMethodName());
                 return method.invoke(this);
@@ -97,7 +100,7 @@ public class Model {
                 throw new DBException(e);
             }
         } else {
-            return values.get(field.getServiceName());
+            return values.get(field.getFieldName());
         }
     }
 
@@ -118,31 +121,40 @@ public class Model {
     }
 
     public Map<String, Object> getDBValues() throws DBException {
-        return values;
+        Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+        for (String fldName : values.keySet()) {
+            Field fld = cls.getManager().getField(fldName);
+            result.put(fld.getColumnName(), values.get(fldName));
+        }
+
+        return result;
     }
 
     /* modify methods */
 
     public Model save() throws DBException {
         if (_new) {
-            cls.insert(this);
-            this.cache();
-            return this;
+            return insert();
         }
-        return this.update();
+        return update();
     }
 
 
+    public Model insert() throws DBException {
+        cls.insert(this);
+        this.cache();
+        return this;
+    }
+
     public Model update() throws DBException {
-        ModelManager manager = cls.getManager();
-        new ModelQuery(manager).values(values).update();
+        cls.update(this);
         cache();
         return this;
     }
 
     public void remove() throws DBException {
-        ModelManager manager = cls.getManager();
-        new ModelQuery(manager).values(values).remove();
+        cls.remove(this);
         clearCache();
     }
 

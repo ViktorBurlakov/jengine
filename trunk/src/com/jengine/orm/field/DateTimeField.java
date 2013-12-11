@@ -20,38 +20,27 @@
 package com.jengine.orm.field;
 
 
-import com.jengine.orm.ModelManager;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+
+import static com.jengine.utils.CollectionUtil.map;
 
 public class DateTimeField extends Field {
     private String dateFormat = "yyyy-MM-dd HH:mm:ss"; // ISO date time format
 
     public DateTimeField() {
-        super(Date.class);
+        this(new HashMap<String, Object>());
     }
 
     public DateTimeField(Object... options) {
+        this(map(options));
+    }
+
+    public DateTimeField(Map<String, Object> options) {
         super(Date.class, options);
-    }
-
-    public DateTimeField( Map<String, Object> options) {
-        super(Date.class, options);
-    }
-
-    public DateTimeField(String name, Map<String, Object> options) {
-        super(name, Date.class, options);
-    }
-
-    public DateTimeField(ModelManager manager, String name, Map<String, Object> options) {
-        super(manager, name, Date.class, options);
-    }
-
-    public void init() {
-        super.init();
         if (options.containsKey("dateFormat")) {
             this.dateFormat = (String) options.get("dateFormat");
         }

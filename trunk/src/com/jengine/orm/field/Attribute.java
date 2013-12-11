@@ -19,39 +19,14 @@
 
 package com.jengine.orm.field;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-import com.jengine.orm.db.DBException;
-
-import java.util.Map;
-
-public interface IModelField {
-    Object castType(Object value) throws DBException;
-
-    String format(Object value) throws DBException;
-
-    String getServiceName();
-
-    String getDbName();
-
-    String getName();
-
-    String getVerbose();
-
-    Class getFieldClass();
-
-    int getDbType();
-
-    boolean isReference();
-
-    boolean isProperty();
-
-    boolean isKey();
-
-    boolean isPrimaryKey();
-
-    boolean isVisible();
-
-    Class getModel();
-
-    Map<String, Object> toMap();
+@Target(value= ElementType.METHOD)
+@Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
+public @interface Attribute {
+    String name();
+    String verbose();
+    boolean visible();
 }
