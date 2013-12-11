@@ -34,14 +34,15 @@ import com.jengine.orm.field.Field;
 import com.jengine.orm.field.ForeignField;
 import com.jengine.orm.field.FunctionField;
 import com.jengine.orm.field.ReferenceField;
+import com.jengine.utils.CollectionUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.jengine.utils.CollectionUtil.concat;
-import static com.jengine.utils.CollectionUtil.list;
+import static com.jengine.utils.CollectionUtil.*;
 
 
 public class Provider {
@@ -74,29 +75,60 @@ public class Provider {
 
     /* general methods */
 
-    public void insert(Model obj) throws DBException {
-        ModelManager manager = cls.getModelClass(obj.getClass()).getManager();
-        SQLQuery query = new SQLQuery();
+    public Object insert(String table, Map<String, Object> attributes) throws DBException {
+        List columns = new ArrayList();
+        columns.addAll(attributes.keySet());
 
-        query.setTableName(manager.getTableName());
-        query.setTableAlias(manager.getSelf().getName());
-        for (String fieldName : obj.getDBValues().keySet()) {
-            Field field = manager.getField(fieldName);
-            Object value = obj.getDBValues().get(fieldName);
-            query.addValue(getSQLName(field), value);
-            query.addParam(value);
-        }
-        String sql = buildInsertSQL(query);
-
-        DBConnection connection = this.adapter.getConnection();
-        this.adapter.executeUpdate(connection, sql, query.getParams());
-
-        if (manager.getPrimaryKey().isAutoIncrement()) {
-            obj.setValue(manager.getPrimaryKey(), connection.getGeneratedKeys().get(0));
-        }
+        return insert(table, columns, CollectionUtil.values(columns, attributes));
     }
 
-    public void insert(ModelQuery modelQuery) throws DBException {
+    public Object insert(String table, List<String> columns, List values) throws DBException {
+        StringBuffer sql = new StringBuffer();
+        List valuesMarks = newList(values.size(), "?");
+
+        sql.append("INSERT INTO ")
+                .append(table)
+                .append(" (").append(concat(columns, ", ")).append(") ")
+                .append(" VALUES ").append(" (").append(concat(valuesMarks, ", ")).append(") ");
+
+        DBConnection connection = this.adapter.getConnection();
+        this.adapter.executeUpdate(connection, sql.toString(), values);
+
+        return connection.getGeneratedKeys().size() == 1 ? connection.getGeneratedKeys().get(0) : null;
+    }
+
+    public void update(String table, Map<String, Object> attributes) throws DBException {
+        StringBuffer sql = new StringBuffer();
+        List pairs = new ArrayList();
+        List params = new ArrayList();
+
+        for (String columnName : attributes.keySet()) {
+            StringBuffer pair = new StringBuffer();
+            pair.append(columnName).append("=").append("?");
+            pairs.add(pair.toString());
+            params.add(attributes.get(columnName));
+        }
+        sql.append("UPDATE ").append(table).append(" SET ").append(concat(pairs, ", "));
+
+        DBConnection connection = this.adapter.getConnection();
+        this.adapter.executeUpdate(connection, sql.toString(), params);
+    }
+
+    public void remove(String table, String primaryKey, Serializable id) throws DBException {
+        StringBuffer sql = new StringBuffer();
+        List params = new ArrayList();
+        params.add(id);
+
+        sql.append("DELETE FROM ")
+                .append(table)
+                .append(" WHERE ")
+                .append(primaryKey).append("=").append("?");
+
+        DBConnection connection = this.adapter.getConnection();
+        this.adapter.executeUpdate(connection, sql.toString(), params);
+    }
+
+    public Object insert(ModelQuery modelQuery) throws DBException {
         SQLQuery query = new SQLQuery();
         setModels(query, modelQuery);
         setValues(query, modelQuery);
@@ -105,6 +137,8 @@ public class Provider {
 
         DBConnection connection = this.adapter.getConnection();
         this.adapter.executeUpdate(connection, sql, query.getParams());
+
+        return connection.getGeneratedKeys();
     }
 
     public void remove(ModelQuery modelQuery) throws DBException {
@@ -316,25 +350,26 @@ public class Provider {
 
     protected void setModels(SQLQuery query, ModelQuery modelQuery) {
         query.setTableName(modelQuery.getManager().getTableName());
-        query.setTableAlias(modelQuery.getManager().getSelf().getName());
+        query.setTableAlias(modelQuery.getManager().getSelf().getFieldName());
 
         for (Field field : modelQuery.getFieldMap().values()) {
-            if (field.isForeign()) {
+            if (field.getType() == Field.Type.FOREIGN) {
                 addRelation(query, new ArrayList<String>(), query.getTableAlias(), (ForeignField) field);
             }
         }
     }
 
     protected void addRelation(SQLQuery query, List<String> path, String alias, ForeignField foreignField) {
-        ModelManager manager =  cls.getModelClass(foreignField.getReference().getFieldClass()).getManager();
-        path.add(foreignField.getReference().getName());
-        String foreignAlias = concat(path, "__");
+        ModelManager manager =  cls.getModelClass(foreignField.getCurrentField().getFieldClass()).getManager();
+        Field referenceModelField = manager.getField(foreignField.getCurrentField().getReferenceModelFieldName());
+        path.add(foreignField.getCurrentField().getFieldName());
+        String foreignAlias = concat(path, "__").toString();
         List value = list(manager.getTableName(),String.format("%s.%s = %s.%s",
-                foreignAlias, foreignField.getReference().getReferenceFieldDbName(),
-                alias, foreignField.getReference().getDbName()));
+                foreignAlias, referenceModelField.getColumnName(),
+                alias, foreignField.getCurrentField().getColumnName()));
         query.getRelations().put(foreignAlias, value);
-        if (foreignField.getField().isForeign()) {
-            addRelation(query, path, foreignAlias, (ForeignField) foreignField.getField());
+        if (foreignField.getNextField().getType() == Field.Type.FOREIGN) {
+            addRelation(query, path, foreignAlias, (ForeignField) foreignField.getNextField());
         }
     }
 
@@ -347,21 +382,19 @@ public class Provider {
             fields.addAll(modelQuery.getFields());
         }
         for (Field field : fields) {
-            if (field.isReference()) {
-                if (field.isForeign()) {
-                    String sqlName = field.getName().replaceAll("\\.", "__");
+            if (field instanceof ForeignField) {
+                    String sqlName = field.getFieldName().replaceAll("\\.", "__");
                     query.addTarget(buildReferenceTargets(sqlName, (ReferenceField) field));
-                } else {
-                    query.addTarget(buildReferenceTargets(field.getName(), (ReferenceField) field));
-                }
-            } else if (field.isFunction()) {
+            } else if (field instanceof ReferenceField) {
+                    query.addTarget(buildReferenceTargets(field.getFieldName(), (ReferenceField) field));
+            } else if (field instanceof FunctionField) {
                 FunctionField functionField = (FunctionField) field;
                 List<Field> attributes = functionField.getAttributes();
                 List<String> dbAttributes = new ArrayList<String>();
                 for (Field attr : attributes) {
                     dbAttributes.add(getSQLName(attr));
                 }
-                query.addTarget(functionField.render(dbAttributes), functionField.getName());
+                query.addTarget(functionField.render(dbAttributes), functionField.getFieldName());
             } else {
                 query.addTarget(getSQLName(field));
             }
@@ -372,7 +405,7 @@ public class Provider {
         StringBuffer target = new StringBuffer();
         ModelManager manager =  cls.getModelClass(referenceField.getFieldClass()).getManager();
         for (Field field : manager.getFields()) {
-            if (field.isSelf() || field.isProperty()) {
+            if (field.getType() == Field.Type.SELF || field.getType() == Field.Type.PROPERTY) {
                 continue;
             }
             if (target.length() > 0) {
@@ -451,16 +484,15 @@ public class Provider {
     }
 
     protected String normalize(ForeignField field) {
-        ForeignField foreignField = (ForeignField) field;
-        String alias = concat(foreignField.getReferencePath(), "__");
-        return String.format("%s.%s", alias, foreignField.getDbName());
+        String alias = concat(field.getReferenceFields(), "__").toString();
+        return String.format("%s.%s", alias, field.getColumnName());
     }
 
     protected String getSQLName(Field field) {
-        if (field.isForeign()) {
+        if (field.getType() == Field.Type.FOREIGN) {
             return normalize((ForeignField) field);
         }  else {
-            return field.getServiceName();
+            return field.getColumnName();
         }
     }
 

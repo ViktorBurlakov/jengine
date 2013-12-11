@@ -24,7 +24,39 @@ import java.util.*;
 
 public class CollectionUtil {
 
-    public static String concat(Collection collection, String separator) {
+    public static List values(List keys, Map map) {
+        List result = new ArrayList();
+
+        for (Object key : keys) {
+            result.add(map.get(key));
+        }
+
+        return result;
+    }
+
+    public static List newList(int length) {
+        List result = new ArrayList();
+
+        for (int i=0; i<length; i++) {
+            result.add(null);
+        }
+
+        return result;
+    }
+
+    public static <Type> List<Type> newList(int length, Type value) {
+        return fill(newList(length), value);
+    }
+
+    public static <Type> List<Type> fill(List<Type> input, Type value) {
+        for(int i=0; i < input.size(); i++) {
+            input.set(i, value);
+        }
+
+        return input;
+    }
+
+    public static StringBuffer concat(Collection collection, String separator) {
         StringBuffer result = new StringBuffer();
 
         for(Object item : collection) {
@@ -34,7 +66,7 @@ public class CollectionUtil {
             result.append(item);
         }
 
-        return result.toString();
+        return result;
     }
 
     public static List toList(Collection collection) {

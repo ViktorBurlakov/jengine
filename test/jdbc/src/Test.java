@@ -227,7 +227,7 @@ public class Test {
         assert Author.cls.<Long>sum(Author.authorId) == 6l;
         assert Author.cls.<Long>min(Author.authorId) == 1l;
         assert Book.cls.count() == 3l;
-        FunctionField function1 = new FunctionField("function1", Long.class, "%s + 1", Book.bookId);
+        FunctionField function1 = Book.cls.getManager().newCalcField("function1", Long.class, "%s + 1", Book.bookId);
         assert Book.cls.select(function1).filter("bookId = 1").<Long>one() == 2l;
         assert Book.cls.<Long>calc("sum", Long.class, "max(%s) + 2", Book.bookId) == 5l;
     }

@@ -24,159 +24,107 @@ import com.jengine.orm.ModelManager;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.expression.Expression;
 import com.jengine.orm.db.expression.ExpressionImpl;
-import com.jengine.utils.CollectionUtil;
-import com.liferay.portal.kernel.dao.orm.Type;
 
-import java.sql.Types;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static com.jengine.utils.CollectionUtil.map;
 
-
-public class Field implements IModelField {
-    public static Map<String, Type> ORM_TYPE_MAP = CollectionUtil.map(
-            String.class.getSimpleName(), Type.STRING,
-            Long.class.getSimpleName(), Type.LONG,
-            Integer.class.getSimpleName(), Type.INTEGER,
-            Date.class.getSimpleName(), Type.DATE,
-            Float.class.getSimpleName(), Type.DOUBLE,
-            Boolean.class.getSimpleName(), Type.BOOLEAN
-    );
-    public static Map<String, Integer> DB_TYPE_MAP = CollectionUtil.map(
-                    String.class.getSimpleName(), Types.VARCHAR,
-                    Long.class.getSimpleName(), Types.BIGINT,
-                    Integer.class.getSimpleName(), Types.INTEGER,
-                    Date.class.getSimpleName(), Types.TIMESTAMP,
-                    Float.class.getSimpleName(), Types.DOUBLE,
-                    Boolean.class.getSimpleName(), Types.BOOLEAN
-    );
-    protected String name;
-    protected String serviceName;
-    protected String dbName;
+public class Field {
+    public enum Type { PLAIN, SELF, MULTI_REFERENCE, MANY_REFERENCE, REFERENCE, FOREIGN, FUNCTION, PROPERTY };
+    protected Type type = Type.PLAIN;
+    protected String fieldName;
     protected Class fieldClass;
-    protected Type ormType;
-    protected int dbType;
-    protected Class model;
+    protected String columnName;
+    protected Integer columnType;
+    protected ModelManager manager;
     protected String verbose;
     protected boolean primaryKey = false;
-    protected boolean auto = false;
+    protected boolean autoIncrement = false;
     protected boolean visible = false;
-    protected boolean isInit = false;
     protected Map<String, Object> options = new LinkedHashMap<String, Object>();
-    protected ModelManager manager = null;
-    private boolean autoIncrement = false;
 
-    public Field(Class fieldClass) {
-        this.fieldClass = fieldClass;
+    public Field() {
     }
 
-    public Field(Class fieldClass, Object ... options) {
-        this(fieldClass, map(options));
+    public Field(Class fieldClass) {
+        this(fieldClass, new HashMap<String, Object>());
     }
 
     public Field(Class fieldClass, Map<String, Object> options) {
         this.fieldClass = fieldClass;
         this.options.putAll(options);
-    }
-
-    public Field(String name, Class fieldClass) {
-        this.name = name;
-        this.fieldClass = fieldClass;
-    }
-
-    public Field(String name, Class fieldClass, Map<String, Object> options) {
-        this.name = name;
-        this.fieldClass = fieldClass;
-        this.options.putAll(options);
-    }
-
-    public Field(ModelManager manager, String name, Class fieldClass) {
-        this.name = name;
-        this.manager = manager;
-        this.fieldClass = fieldClass;
-        this.init();
-    }
-
-    public Field(ModelManager manager, String name, Class fieldClass, Map<String, Object> options) {
-        this.name = name;
-        this.manager = manager;
-        this.fieldClass = fieldClass;
-        this.options.putAll(options);
-        this.init();
-    }
-
-    public void init() {
-        this.serviceName = name;
-        this.dbName = name;
-        this.ormType = ORM_TYPE_MAP.containsKey(fieldClass.getSimpleName()) ?
-                ORM_TYPE_MAP.get(fieldClass.getSimpleName()) : Type.LONG;
-        this.dbType = DB_TYPE_MAP.containsKey(fieldClass.getSimpleName()) ?
-                DB_TYPE_MAP.get(fieldClass.getSimpleName()) : Types.BIGINT;
         if (options.containsKey("primaryKey")) {
             this.primaryKey = (Boolean) options.get("primaryKey");
         }
         if (options.containsKey("verbose")) {
             this.verbose = (String) options.get("verbose");
-            this.visible = verbose != null && verbose.length() > 0;
         }
         if (options.containsKey("visible")) {
             this.visible = (Boolean) options.get("visible");
         }
-        if (options.containsKey("dbName")) {
-            this.dbName = (String) options.get("dbName");
+        if (options.containsKey("columnName")) {
+            this.columnName = (String) options.get("columnName");
         }
-        if (options.containsKey("ormType")) {
-            this.ormType = (Type) options.get("ormType");
-        }
-        if (options.containsKey("dbType")) {
-            this.dbType =  (Integer) options.get("dbType");
-        }
-        if (options.containsKey("serviceName")) {
-            this.serviceName = (String) options.get("serviceName");
+        if (options.containsKey("columnType")) {
+            this.columnType = (Integer) options.get("columnType");
         }
         if (options.containsKey("autoIncrement")) {
             this.autoIncrement = (Boolean) options.get("autoIncrement");
         }
-        this.isInit = true;
+    }
+
+    public void config(String fieldName, ModelManager manager) {
+        this.fieldName = fieldName;
+        this.manager = manager;
+        if (visible) {
+            this.visible = (verbose != null && verbose.length() > 0);
+        }
+        if (columnName == null) {
+            this.columnName = fieldName;
+        }
     }
 
     public Object castType(Object value) throws DBException {
-        if (fieldClass.equals(Long.class)) {
-            return new Long(String.valueOf(value));
-        }
-
         return value;
-    }
-
-    public Object castServiceType(Object value) throws DBException {
-        return castType(value);
     }
 
     public String format(Object value) throws DBException {
         return String.valueOf(value);
     }
 
-    public String getServiceName() {
-        return serviceName;
+    public boolean isKey() {
+        return false;
     }
 
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
+    /* getters and setters */
+
+    public String getFieldName() {
+        return fieldName;
     }
 
-    public String getDbName() {
-        return dbName;
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
     }
 
-    public String getName() {
-        return name;
+    public String getColumnName() {
+        return columnName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setColumnName(String columnName) {
+        this.columnName = columnName;
+    }
+
+    public Integer getColumnType() {
+        return columnType;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public ModelManager getManager() {
+        return manager;
     }
 
     public String getVerbose() {
@@ -195,42 +143,6 @@ public class Field implements IModelField {
         this.fieldClass = fieldClass;
     }
 
-    public int getDbType() {
-        return dbType;
-    }
-
-    public void setDbType(int dbType) {
-        this.dbType = dbType;
-    }
-
-    public boolean isFunction() {
-        return false;
-    }
-
-    public boolean isSelf() {
-        return false;
-    }
-
-    public boolean isMultiReference() {
-        return false;
-    }
-
-    public boolean isReference() {
-        return false;
-    }
-
-    public boolean isForeign() {
-        return false;
-    }
-
-    public boolean isProperty() {
-        return false;
-    }
-
-    public boolean isKey() {
-        return primaryKey || isReference();
-    }
-
     public boolean isPrimaryKey() {
         return primaryKey;
     }
@@ -245,42 +157,6 @@ public class Field implements IModelField {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
-    }
-
-    public Class getModel() {
-        return model;
-    }
-
-    public void setModel(Class model) {
-        this.model = model;
-    }
-
-    public Type getOrmType() {
-        return ormType;
-    }
-
-    public void setOrmType(Type ormType) {
-        this.ormType = ormType;
-    }
-
-    public void setDbName(String dbName) {
-        this.dbName = dbName;
-    }
-
-    public ModelManager getManager() {
-        return manager;
-    }
-
-    public void setManager(ModelManager manager) {
-        this.manager = manager;
-    }
-
-    public boolean isInit() {
-        return isInit;
-    }
-
-    public void setInit(boolean init) {
-        isInit = init;
     }
 
     public Map<String, Object> getOptions() {
@@ -302,17 +178,13 @@ public class Field implements IModelField {
     public Map<String, Object> toMap() {
         Map result = new HashMap();
 
-        result.put("name" , name);
-        result.put("fullname" , String.format("%s.%s", model.getSimpleName(), name));
-        result.put("model" , model.getSimpleName());
+        result.put("fieldName" , fieldName);
         result.put("fieldClass" , fieldClass.getName());
         result.put("primaryKey" , primaryKey);
         result.put("verbose" , verbose);
         result.put("visible" , visible);
-        result.put("reference" , isReference());
-        result.put("dbName" , dbName);
-        result.put("ormType" , ormType);
-        result.put("serviceName" , serviceName);
+        result.put("type" , type);
+        result.put("columnType" , columnType);
 
         return result;
     }
@@ -320,42 +192,42 @@ public class Field implements IModelField {
     /* operation method */
 
     public Expression eq(Object value) {
-        return new ExpressionImpl(name, "eq", value);
+        return new ExpressionImpl(fieldName, "eq", value);
     }
 
     public Expression ge(Object value) {
-        return new ExpressionImpl(name, "ge", value);
+        return new ExpressionImpl(fieldName, "ge", value);
     }
 
     public Expression gt(Object value) {
-        return new ExpressionImpl(name, "gt", value);
+        return new ExpressionImpl(fieldName, "gt", value);
     }
 
     public Expression le(Object value) {
-        return new ExpressionImpl(name, "le", value);
+        return new ExpressionImpl(fieldName, "le", value);
     }
 
     public Expression lt(Object value) {
-        return new ExpressionImpl(name, "lt", value);
+        return new ExpressionImpl(fieldName, "lt", value);
     }
 
     public Expression like(Object value) {
-        return new ExpressionImpl(name, "like", value);
+        return new ExpressionImpl(fieldName, "like", value);
     }
 
     public Expression ne(Object value) {
-        return new ExpressionImpl(name, "ne", value);
+        return new ExpressionImpl(fieldName, "ne", value);
     }
 
-    public Expression isnull(Object value) {
-        return new ExpressionImpl(name, "isnull", value);
+    public Expression is_null(Object value) {
+        return new ExpressionImpl(fieldName, "isnull", value);
     }
 
-    public Expression isempty(Object value) {
-        return new ExpressionImpl(name, "isempty", value);
+    public Expression is_empty(Object value) {
+        return new ExpressionImpl(fieldName, "isempty", value);
     }
 
     public Expression op(String op, Object value) {
-        return new ExpressionImpl(name, op, value);
+        return new ExpressionImpl(fieldName, op, value);
     }
 }

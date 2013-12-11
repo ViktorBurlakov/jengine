@@ -20,29 +20,22 @@
 package com.jengine.orm.field;
 
 
-import com.jengine.orm.ModelManager;
-
+import java.util.HashMap;
 import java.util.Map;
+
+import static com.jengine.utils.CollectionUtil.map;
 
 public class BooleanField extends Field {
 
     public BooleanField() {
-        super(Boolean.class);
+        this(new HashMap<String, Object>());
     }
 
     public BooleanField(Object... options) {
-        super(Boolean.class, options);
+        this(map(options));
     }
 
     public BooleanField(Map<String, Object> options) {
         super(Boolean.class, options);
-    }
-
-    public BooleanField(String name, Map<String, Object> options) {
-        super(name, Boolean.class, options);
-    }
-
-    public BooleanField(ModelManager manager, String name, Map<String, Object> options) {
-        super(manager, name, Boolean.class, options);
     }
 }

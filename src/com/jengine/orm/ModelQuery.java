@@ -55,14 +55,14 @@ public class ModelQuery {
 
     public ModelQuery field(Field field) {
         this.fields.add(field);
-        if (field.isFunction()) {
+        if (field instanceof FunctionField) {
             FunctionField functionField = (FunctionField) field;
             for (Object attribute : functionField.getAttributes()) {
                 Field attributeField  = getField(attribute);
-                fieldMap.put(attributeField.getName(), attributeField);
+                fieldMap.put(attributeField.getFieldName(), attributeField);
             }
         } else {
-            fieldMap.put(field.getName(), field);
+            fieldMap.put(field.getFieldName(), field);
         }
         return this;
     }
@@ -93,7 +93,7 @@ public class ModelQuery {
             for (String field : stringQuery.findFields()) {
                 Field modelField = getField(field);
                 stringQuery.getModelFields().add(modelField);
-                fieldMap.put(modelField.getName(), modelField);
+                fieldMap.put(modelField.getFieldName(), modelField);
             }
         } catch (Exception e) {
             throw new DBException(e);
@@ -111,7 +111,7 @@ public class ModelQuery {
         for (Expression expression : filter) {
             Field modelField = getField(expression.getField());
             filterFields.add(modelField);
-            fieldMap.put(modelField.getName(), modelField);
+            fieldMap.put(modelField.getFieldName(), modelField);
         }
 
         return this;
@@ -148,7 +148,7 @@ public class ModelQuery {
         Field modelField = getField(name);
         this.values.put(name, modelField.castType(value));
         valueFields.add(modelField);
-        fieldMap.put(modelField.getName(), modelField);
+        fieldMap.put(modelField.getFieldName(), modelField);
         return this;
     }
 
@@ -158,7 +158,7 @@ public class ModelQuery {
     }
 
     public long count() throws DBException {
-        return this.field(manager.getCountAllField()).<Long>one();
+        return this.field(manager.newCountAllField()).<Long>one();
     }
 
     public <T extends Object> List<T> list() throws DBException {

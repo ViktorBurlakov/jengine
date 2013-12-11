@@ -21,88 +21,65 @@ package com.jengine.orm.field;
 
 
 import com.jengine.orm.Model;
+import com.jengine.orm.ModelManager;
 import com.jengine.orm.db.DBException;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.jengine.utils.CollectionUtil.map;
 
 public class ReferenceField extends Field {
-    protected String referenceFieldDbName;
-    protected String referenceFieldServiceName;
-    protected Class fieldClassImpl;
+    protected String referenceModelFieldName;
     protected String multiReferenceFieldName;
 
     public ReferenceField(Class fieldClass) {
-        super(fieldClass);
+        this(fieldClass, new HashMap<String, Object>());
     }
 
     public ReferenceField(Class fieldClass, Object... options) {
-        super(fieldClass, map(options));
+        this(fieldClass, map(options));
     }
 
     public ReferenceField(Class fieldClass, Map<String, Object> options) {
         super(fieldClass, options);
-    }
-
-    public ReferenceField(String name, Class fieldClass, Map<String, Object> options) {
-        super(name, fieldClass, options);
-    }
-
-    public void init() {
-        super.init();
-        if (!options.containsKey("dbName")) {
-            this.dbName = String.format("%sId", name);
-            this.referenceFieldDbName = this.dbName;
-        }
-        if (!options.containsKey("serviceName")) {
-            this.serviceName = String.format("%sId", name);
-            this.referenceFieldServiceName = this.serviceName;
+        this.type = Type.REFERENCE;
+        if (options.containsKey("referenceModelFieldName")) {
+            this.referenceModelFieldName = (String) options.get("referenceModelFieldName");
         }
         if (options.containsKey("multiReferenceFieldName")) {
             this.multiReferenceFieldName = (String) options.get("multiReferenceFieldName");
         }
     }
 
-    public boolean isReference() {
+    public void config(String fieldName, ModelManager manager) {
+        super.config(fieldName, manager);
+        if (!options.containsKey("columnName")) {
+            columnName =  String.format("%sId", fieldName);
+        }
+        if (referenceModelFieldName == null) {
+            referenceModelFieldName = fieldName;
+        }
+    }
+
+    public boolean isKey() {
         return true;
-    }
-
-    public Class getFieldClassImpl() {
-        return fieldClassImpl;
-    }
-
-    public void setFieldClassImpl(Class fieldClassImpl) {
-        this.fieldClassImpl = fieldClassImpl;
     }
 
     public Object castType(Object value) throws DBException {
         return value instanceof Model ? (Long) ((Model) value).getPrimaryKey() : new Long(String.valueOf(value));
     }
 
-    public Object castServiceType(Object value) throws DBException {
-        Object value2 = castType(value);
-        return Long.class.equals(value2.getClass()) ? value2 : (Long) ((Model) value2).getPrimaryKey();
-    }
-
     public String format(Object value) throws DBException {
         return ((Model)value).getVerbose();
     }
 
-    public String getReferenceFieldDbName() {
-        return referenceFieldDbName;
+    public String getReferenceModelFieldName() {
+        return referenceModelFieldName;
     }
 
-    public void setReferenceFieldDbName(String referenceFieldDbName) {
-        this.referenceFieldDbName = referenceFieldDbName;
-    }
-
-    public String getReferenceFieldServiceName() {
-        return referenceFieldServiceName;
-    }
-
-    public void setReferenceFieldServiceName(String referenceFieldServiceName) {
-        this.referenceFieldServiceName = referenceFieldServiceName;
+    public void setReferenceModelFieldName(String referenceModelFieldName) {
+        this.referenceModelFieldName = referenceModelFieldName;
     }
 
     public String getMultiReferenceFieldName() {

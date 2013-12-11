@@ -44,18 +44,14 @@ public class PrimaryKey extends Field {
 
     public PrimaryKey(Class fieldClass, Map<String, Object> options) {
         super(fieldClass, options);
-    }
-
-    public PrimaryKey(String name, Class fieldClass, Map<String, Object> options) {
-        super(name, fieldClass, options);
-    }
-
-    public void init() {
         primaryKey = true;
-        super.init();
     }
 
     public Object castType(Object value) throws DBException {
         return value instanceof Model ? ((Model) value).getPrimaryKey() : new Long(String.valueOf(value));
+    }
+
+    public boolean isKey() {
+        return true;
     }
 }

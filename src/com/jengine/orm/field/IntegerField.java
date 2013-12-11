@@ -19,29 +19,16 @@
 
 package com.jengine.orm.field;
 
-import com.jengine.orm.ModelManager;
-
+import java.util.HashMap;
 import java.util.Map;
 
 public class IntegerField extends Field {
 
     public IntegerField() {
-        super(Integer.class);
-    }
-
-    public IntegerField(Object... options) {
-        super(Integer.class, options);
+        this(new HashMap());
     }
 
     public IntegerField(Map<String, Object> options) {
         super(Integer.class, options);
-    }
-
-    public IntegerField(String name, Map<String, Object> options) {
-        super(name, Integer.class, options);
-    }
-
-    public IntegerField(ModelManager manager, String name, Map<String, Object> options) {
-        super(manager, name, Integer.class, options);
     }
 }

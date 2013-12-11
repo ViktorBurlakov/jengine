@@ -8,6 +8,7 @@ import com.jengine.orm.db.provider.Provider;
 import com.jengine.orm.field.*;
 import com.jengine.utils.ClassObject;
 
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
@@ -39,10 +40,15 @@ public class ModelClass<T extends Model> extends ClassObject {
         this.manager.setCacheEnabled(options.containsKey("cacheEnabled") ?
                 (Boolean) options.get("cacheEnabled") : cls.getAnnotation(Meta.class).cacheEnabled());
         // init fields and properties
-        this.manager.addField(new SelfField(cls));
-        this.manager.addFields(collectFields(cls));
-        this.manager.addProperties(collectProperties(cls));
-        this.manager.addField(new ModelProperty("verbose", "getVerbose", String.class, map("verbose", this.manager.getName())));
+        Map<String, Field> fields = new LinkedHashMap<String, Field>();
+        fields.put(SelfField.DEFAULT_NAME, new SelfField(cls));
+        fields.putAll(collectFields(cls));
+        fields.putAll(collectProperties(cls));
+        fields.put("verbose", new ModelProperty("getVerbose", String.class, map("verbose", this.manager.getName())));
+        for (String fieldName : fields.keySet()) {
+            Field field = fields.get(fieldName);
+            this.manager.addField(fieldName, field);
+        }
     }
 
     public ModelClass getModelClass(Class clazz) {
@@ -99,51 +105,51 @@ public class ModelClass<T extends Model> extends ClassObject {
     }
 
     public Long count() throws DBException {
-        return (Long) new ModelQuery(manager).field(manager.getCountField(manager.getPrimaryKey().getName())).one();
+        return (Long) new ModelQuery(manager).field(manager.newCountField(manager.getPrimaryKey().getFieldName())).one();
     }
 
     public Long count(String field) throws DBException {
-        return (Long) new ModelQuery(manager).field(manager.getCountField(field)).one();
+        return (Long) new ModelQuery(manager).field(manager.newCountField(field)).one();
     }
 
     public Object max(String field) throws DBException {
-        return new ModelQuery(manager).field(manager.getMaxField(field)).one();
+        return new ModelQuery(manager).field(manager.newMaxField(field)).one();
     }
 
     public Object min(String field) throws DBException {
-        return new ModelQuery(manager).field(manager.getMinField(field)).one();
+        return new ModelQuery(manager).field(manager.newMinField(field)).one();
     }
 
     public Object avg(String field) throws DBException {
-        return new ModelQuery(manager).field(manager.getAvgField(field)).one();
+        return new ModelQuery(manager).field(manager.newAvgField(field)).one();
     }
 
     public Object sum(String field) throws DBException {
-        return new ModelQuery(manager).field(manager.getSumField(field)).one();
+        return new ModelQuery(manager).field(manager.newSumField(field)).one();
     }
 
     public Long count(Field field) throws DBException {
-        return (Long) new ModelQuery(manager).field(manager.getCountField(field)).one();
+        return (Long) new ModelQuery(manager).field(manager.newCountField(field)).one();
     }
 
     public <ResultType> ResultType max(Field field) throws DBException {
-        return (ResultType) new ModelQuery(manager).field(manager.getMaxField(field)).one();
+        return (ResultType) new ModelQuery(manager).field(manager.newMaxField(field)).one();
     }
 
     public <ResultType> ResultType min(Field field) throws DBException {
-        return (ResultType) new ModelQuery(manager).field(manager.getMinField(field)).one();
+        return (ResultType) new ModelQuery(manager).field(manager.newMinField(field)).one();
     }
 
     public <ResultType> ResultType avg(Field field) throws DBException {
-        return (ResultType) new ModelQuery(manager).field(manager.getAvgField(field)).one();
+        return (ResultType) new ModelQuery(manager).field(manager.newAvgField(field)).one();
     }
 
     public <ResultType> ResultType sum(Field field) throws DBException {
-        return (ResultType) new ModelQuery(manager).field(manager.getSumField(field)).one();
+        return (ResultType) new ModelQuery(manager).field(manager.newSumField(field)).one();
     }
 
     public <ResultType> ResultType calc(String name, Class type, String expr, Field ... fields) throws DBException {
-        FunctionField functionField = new FunctionField(manager, name, type, map(), expr, (Field[]) fields);
+        FunctionField functionField = manager.newCalcField(name, type, expr, fields);
         return (ResultType) new ModelQuery(manager).field(functionField).one();
     }
 
@@ -163,10 +169,23 @@ public class ModelClass<T extends Model> extends ClassObject {
     }
 
     public T insert(Model obj) throws DBException {
-        provider.insert(obj);
+        Object id = provider.insert(manager.getTableName(), obj.getDBValues());
         obj.setNew(false);
+        if (manager.getPrimaryKey().isAutoIncrement()) {
+            obj.setPrimaryKey((Serializable) id);
+        }
         return (T) obj;
     }
+
+    public Model update(Model obj) throws DBException {
+        provider.update(manager.getTableName(), obj.getDBValues());
+        return obj;
+    }
+
+    public void remove(Model obj) throws DBException {
+        provider.remove(manager.getTableName(), manager.getPrimaryKey().getColumnName(), obj.getPrimaryKey());
+    }
+
 
     public void insert(ModelQuery modelQuery) throws DBException {
         provider.insert(modelQuery);
@@ -205,12 +224,12 @@ public class ModelClass<T extends Model> extends ClassObject {
             fields.add(modelQuery.getManager().getSelf());
         }
         for (Field field : fields) {
-            if (field.isReference() || field.isSelf()) {
+            if (field.getType() == Field.Type.REFERENCE || field.getType() == Field.Type.SELF) {
                 ModelClass fieldModelClass = getModelClass(field.getFieldClass());
                 Model obj = fieldModelClass.newInstance();
                 obj.setNew(false);
                 for (Field objField : fieldModelClass.getManager().getFields()) {
-                    if (!objField.isFunction() && !objField.isSelf() && !objField.isProperty()) {
+                    if (objField.getType() == Field.Type.PLAIN || objField.getType() == Field.Type.REFERENCE) {
                         obj.setValue(objField, items[index++]);
                     }
                 }
@@ -236,8 +255,8 @@ public class ModelClass<T extends Model> extends ClassObject {
 
     /* collect methods */
 
-    public List<Field> collectFields(Class cls) {
-        List<Field> modelFields = new ArrayList<Field>();
+    public Map<String, Field> collectFields(Class cls) {
+        Map<String, Field> modelFields = new LinkedHashMap<String, Field>();
         java.lang.reflect.Field fieldlist[] = cls.getDeclaredFields();
         for (int i = 0; i < fieldlist.length; i++) {
             java.lang.reflect.Field fld = fieldlist[i];
@@ -245,8 +264,7 @@ public class ModelClass<T extends Model> extends ClassObject {
                     fld.getType().isAssignableFrom(Field.class)) {
                 try {
                     Field modelField = (Field) fld.get(null);
-                    modelField.setName(fld.getName());
-                    modelFields.add(modelField);
+                    modelFields.put(fld.getName(), modelField);
                 } catch (IllegalAccessException e) {
                 }
             }
@@ -254,16 +272,19 @@ public class ModelClass<T extends Model> extends ClassObject {
         return modelFields;
     }
 
-    public List<ModelProperty> collectProperties(Class cls) {
-        List<ModelProperty> properties = new ArrayList<ModelProperty>();
+    public Map<String, ModelProperty> collectProperties(Class cls) {
+        Map<String, ModelProperty> properties =  new LinkedHashMap<String, ModelProperty>();
 
         for (Method method : cls.getMethods()) {
-            if (method.isAnnotationPresent(ModelAttribute.class)) {
-                ModelAttribute attribute = method.getAnnotation(ModelAttribute.class);
-                properties.add(new ModelProperty(attribute.name(), method.getName(), method.getReturnType(),
-                        map("verbose", attribute.verbose(), "visible", attribute.visible())));
+            if (method.isAnnotationPresent(Attribute.class)) {
+                Attribute attribute = method.getAnnotation(Attribute.class);
+                properties.put(attribute.name(),
+                        new ModelProperty(method.getName(), method.getReturnType(),
+                                map("verbose", attribute.verbose(), "visible", attribute.visible()))
+                );
             }
         }
+
         return properties;
     }
 

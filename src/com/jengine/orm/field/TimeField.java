@@ -32,19 +32,11 @@ public class TimeField extends Field {
 
 
     public TimeField(Object... options) {
-        super(Date.class, map(options));
+        this(map(options));
     }
 
     public TimeField(Map<String, Object> options) {
         super(Date.class, options);
-    }
-
-    public TimeField(String name, Map<String, Object> options) {
-        super(name, Date.class, options);
-    }
-
-    public void init() {
-        super.init();
         if (options.containsKey("timeFormat")) {
             this.timeFormat = (String) options.get("timeFormat");
         }
