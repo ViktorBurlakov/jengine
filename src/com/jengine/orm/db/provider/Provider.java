@@ -360,7 +360,7 @@ public class Provider {
     }
 
     protected void addRelation(SQLQuery query, List<String> path, String alias, ForeignField foreignField) {
-        ModelManager manager =  cls.getModelClass(foreignField.getCurrentField().getFieldClass()).getManager();
+        ModelManager manager =  cls.getModelClass(foreignField.getCurrentField().getReferenceModelName()).getManager();
         Field referenceModelField = manager.getField(foreignField.getCurrentField().getReferenceModelFieldName());
         path.add(foreignField.getCurrentField().getFieldName());
         String foreignAlias = concat(path, "__").toString();
@@ -395,7 +395,7 @@ public class Provider {
                     dbAttributes.add(getSQLName(attr));
                 }
                 query.addTarget(functionField.render(dbAttributes), functionField.getFieldName());
-            } else {
+            } else if (field.getType() == Field.Type.PLAIN) {
                 query.addTarget(getSQLName(field));
             }
         }
@@ -403,15 +403,14 @@ public class Provider {
 
     protected String buildReferenceTargets(String alias, ReferenceField referenceField) {
         StringBuffer target = new StringBuffer();
-        ModelManager manager =  cls.getModelClass(referenceField.getFieldClass()).getManager();
+        ModelManager manager =  cls.getModelClass(referenceField.getReferenceModelName()).getManager();
         for (Field field : manager.getFields()) {
-            if (field.getType() == Field.Type.SELF || field.getType() == Field.Type.PROPERTY) {
-                continue;
+            if (field.getType() == Field.Type.PLAIN || field.getType() == Field.Type.REFERENCE) {
+                if (target.length() > 0) {
+                    target.append(", ");
+                }
+                target.append(alias).append(".").append(getSQLName(field));
             }
-            if (target.length() > 0) {
-                target.append(", ");
-            }
-            target.append(alias).append(".").append(getSQLName(field));
         }
 
         return target.toString();

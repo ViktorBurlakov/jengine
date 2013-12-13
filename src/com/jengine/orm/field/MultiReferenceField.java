@@ -22,11 +22,17 @@ package com.jengine.orm.field;
 import java.util.HashMap;
 
 public class MultiReferenceField extends Field {
+    private String referenceModelName;
     private String referenceModelFieldName;
 
     public MultiReferenceField(Class fieldClass, String referenceModelFieldName) {
+        this(fieldClass.getSimpleName(), fieldClass, referenceModelFieldName);
+    }
+
+    public MultiReferenceField(String referenceModelName, Class fieldClass, String referenceModelFieldName) {
         super(fieldClass, new HashMap<String, Object>());
         this.referenceModelFieldName = referenceModelFieldName;
+        this.referenceModelName = referenceModelName;
         this.type = Type.MULTI_REFERENCE;
     }
 
@@ -36,5 +42,13 @@ public class MultiReferenceField extends Field {
 
     public void setReferenceModelFieldName(String referenceModelFieldName) {
         this.referenceModelFieldName = referenceModelFieldName;
+    }
+
+    public void setReferenceModelName(String referenceModelName) {
+        this.referenceModelName = referenceModelName;
+    }
+
+    public String getReferenceModelName() {
+        return referenceModelName;
     }
 }
