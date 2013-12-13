@@ -140,11 +140,11 @@ public class Test {
 
         clearData();
         // checking
-        assert Author.cls.count() == 0;
-        assert Library.cls.count() == 0;
-        assert Book.cls.count() == 0;
-        assert Member.cls.count() == 0;
-        assert Transaction.cls.count() == 0;
+        check( Author.cls.count() == 0 );
+        check( Library.cls.count() == 0 );
+        check( Book.cls.count() == 0 );
+        check( Member.cls.count() == 0 );
+        check( Transaction.cls.count() == 0 );
     }
 
     /**
@@ -156,7 +156,7 @@ public class Test {
         clearData();
         loadData();
 
-        assert Author.cls.count() == 3;
+        check( Author.cls.count() == 3 );
     }
 
     /**
@@ -173,11 +173,11 @@ public class Test {
         Book.cls.get(1).getTitle().equals("The Dark Tower");
 
         // filter
-        assert Member.cls.filter("lastName = ?", "Simpson").list().size() == 2;
-        assert Author.cls.filter(Author.firstName.eq("Stephen")).<Author>one().getLastName().equals("King");
-        assert Book.cls.filter(Book.library.eq(Library.cls.get(1))).list().size() == 3;
-        assert Book.cls.filter(map("library.name__like", "%Globe")).list().size() == 3;
-        assert Book.cls.filter(map("library.libraryId", 101)).<Book>list().size() == 0;
+        check( Member.cls.filter("lastName = ?", "Simpson").list().size() == 2 );
+        check( Author.cls.filter(Author.firstName.eq("Stephen")).<Author>one().getLastName().equals("King") );
+        check( Book.cls.filter(Book.library.eq(Library.cls.get(1))).list().size() == 3 );
+        check( Book.cls.filter(map("library.name__like", "%Globe")).list().size() == 3 );
+        check( Book.cls.filter(map("library.libraryId", 101)).<Book>list().size() == 0 );
     }
 
     /**
@@ -189,7 +189,7 @@ public class Test {
         clearData();
         loadData();
 
-        assert Book.cls.filter("library = ?", Library.cls.select("libraryId").filter("name like ?", "%Globe")).list().size() == 3;
+        check( Book.cls.filter("library = ?", Library.cls.select("libraryId").filter("name like ?", "%Globe")).list().size() == 3 );
     }
 
 
@@ -206,12 +206,12 @@ public class Test {
         author1.setLastName("Verne");
         author1.save();
 
-        assert Author.cls.get(1).getLastName().equals("Verne");
+        check( Author.cls.get(1).getLastName().equals("Verne") );
 
         author1.setValue("firstName", "Jules1");
         author1.save();
 
-        assert Author.cls.get(1).getFirstName().equals("Jules1");
+        check( Author.cls.get(1).getFirstName().equals("Jules1") );
     }
 
     /**
@@ -223,13 +223,13 @@ public class Test {
         clearData();
         loadData();
 
-        assert Author.cls.<Long>max(Author.authorId) == 3l;
-        assert Author.cls.<Long>sum(Author.authorId) == 6l;
-        assert Author.cls.<Long>min(Author.authorId) == 1l;
-        assert Book.cls.count() == 3l;
+        check( Author.cls.<Long>max(Author.authorId) == 3l );
+        check( Author.cls.<Long>sum(Author.authorId) == 6l );
+        check( Author.cls.<Long>min(Author.authorId) == 1l );
+        check( Book.cls.count() == 3l );
         FunctionField function1 = Book.cls.getManager().newCalcField("function1", Long.class, "%s + 1", Book.bookId);
-        assert Book.cls.select(function1).filter("bookId = 1").<Long>one() == 2l;
-        assert Book.cls.<Long>calc("sum", Long.class, "max(%s) + 2", Book.bookId) == 5l;
+        check( Book.cls.select(function1).filter("bookId = 1").<Long>one() == 2l );
+        check( Book.cls.<Long>calc("sum", Long.class, "max(%s) + 2", Book.bookId) == 5l );
     }
 
     /**
@@ -241,13 +241,18 @@ public class Test {
         clearData();
         loadData();
 
-        assert Book.cls.get(1).getLibrary().equals(Library.cls.get(1));
+        check( Book.cls.get(1).getLibrary().equals(Library.cls.get(1)) );
 
         Library globe = Library.cls.filter("name = ?", "Globe").one();
-///        check(globe.getMemberList().size() == 5);
-//        check(globe.getMembers().list().size() == 5);
-//        check(globe.getMembers().count() == 5);
-//        check(globe.getMembers().filter("lastName = ?", "Simpson").count() == 2);
+        check( globe.getMemberList().size() == 5 );
+        check( globe.getMembers().list().size() == 5 );
+        check( globe.getMembers().count() == 5 );
+        check( globe.getMembers().filter("lastName = ?", "Simpson").count() == 2 );
     }
 
+    private static void check(boolean value) throws Exception {
+        if (!value) {
+            throw new Exception("Checking failed!!!");
+        }
+    }
 }

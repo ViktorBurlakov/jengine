@@ -30,6 +30,7 @@ import java.util.Map;
 import static com.jengine.utils.CollectionUtil.map;
 
 public class ReferenceField extends Field {
+    protected String referenceModelName;
     protected String referenceModelFieldName;
     protected String multiReferenceFieldName;
 
@@ -44,11 +45,17 @@ public class ReferenceField extends Field {
     public ReferenceField(Class fieldClass, Map<String, Object> options) {
         super(fieldClass, options);
         this.type = Type.REFERENCE;
+        this.referenceModelName = fieldClass.getSimpleName();
+        if (options.containsKey("referenceModelName")) {
+            this.referenceModelName = (String) options.get("referenceModelName");
+        }
         if (options.containsKey("referenceModelFieldName")) {
             this.referenceModelFieldName = (String) options.get("referenceModelFieldName");
         }
         if (options.containsKey("multiReferenceFieldName")) {
             this.multiReferenceFieldName = (String) options.get("multiReferenceFieldName");
+        } else {
+            this.multiReferenceFieldName = String.format("%s_set", referenceModelName.toLowerCase());
         }
     }
 
@@ -58,7 +65,7 @@ public class ReferenceField extends Field {
             columnName =  String.format("%sId", fieldName);
         }
         if (referenceModelFieldName == null) {
-            referenceModelFieldName = fieldName;
+            referenceModelFieldName = String.format("%sId", fieldName);
         }
     }
 
@@ -88,5 +95,13 @@ public class ReferenceField extends Field {
 
     public void setMultiReferenceFieldName(String multiReferenceFieldName) {
         this.multiReferenceFieldName = multiReferenceFieldName;
+    }
+
+    public String getReferenceModelName() {
+        return referenceModelName;
+    }
+
+    public void setReferenceModelName(String referenceModelName) {
+        this.referenceModelName = referenceModelName;
     }
 }

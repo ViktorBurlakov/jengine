@@ -28,17 +28,12 @@ import java.util.*;
 
 
 public class Model {
-    protected ModelClass cls;
+    protected ModelClassBase cls;
     protected Map<String, Object> values = new LinkedHashMap<String, Object>();
     protected boolean _new = true;
 
     public Model() throws DBException {
-        cls = (ModelClass) ModelClass.getClassObject(getClass());
-    }
-
-    public Model(Map values) throws DBException {
-        this();
-        setValues(values);
+        cls = ModelClassBase.getModelClass(getClass().getSimpleName());
     }
 
     public String getVerbose() throws DBException {
@@ -57,6 +52,14 @@ public class Model {
 
     public void setNew(boolean value) throws DBException {
         _new = value;
+    }
+
+    public ModelClassBase getModelClass() {
+        return cls;
+    }
+
+    public void setModelClass(ModelClassBase cls) {
+        this.cls = cls;
     }
 
     public void setPrimaryKey(Serializable value) throws DBException {
@@ -85,13 +88,15 @@ public class Model {
         if (field instanceof ForeignField) {
             ForeignField foreignField = (ForeignField) field;
             Object referenceId = values.get(foreignField.getCurrentField().getFieldName());
-            Model reference = cls.getModelClass(field.getFieldClass()).get(referenceId);
+            Model reference = cls.getModelClass(foreignField.getCurrentField().getReferenceModelName()).get(referenceId);
             return reference.getValue(foreignField.getNextField());
         } else if (field instanceof ReferenceField) {
-            return cls.getModelClass(field.getFieldClass()).get(values.get(field.getFieldName()));
+            return cls.getModelClass(((ReferenceField)field).getReferenceModelName()).get(values.get(field.getFieldName()));
         } else if (field instanceof MultiReferenceField) {
             MultiReferenceField multiField = (MultiReferenceField) field;
-            return cls.getModelClass(field.getFieldClass()).filter("? = ?", multiField.getReferenceModelFieldName(), getPrimaryKey());
+            ModelClassBase referenceCls = cls.getModelClass(multiField.getReferenceModelName());
+            Field referenceModelField =  referenceCls.getManager().getField(multiField.getReferenceModelFieldName());
+            return referenceCls.filter(referenceModelField.eq(getPrimaryKey()));
         } else if (field instanceof ModelProperty) {
             try {
                 Method method = getClass().getMethod(((ModelProperty) field).getMethodName());

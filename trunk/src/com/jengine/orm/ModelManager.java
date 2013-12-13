@@ -22,16 +22,17 @@ package com.jengine.orm;
 
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.*;
-import com.liferay.portal.kernel.dao.orm.Type;
 
+import java.sql.Types;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.jengine.utils.CollectionUtil.concat;
 import static com.jengine.utils.CollectionUtil.map;
 
 
 public class ModelManager {
-//    public static Map<String, List<MultiReferenceField>> deferredReferences = new ConcurrentHashMap<String, List<MultiReferenceField>>();
+    public static Map<String, Map<String, Field>> deferredFields = new ConcurrentHashMap<String, Map<String, Field>>();
     private String name;
     private String tableName;
     private Class modelClass;
@@ -62,28 +63,18 @@ public class ModelManager {
     }
 
     public Field addField(Field field) {
-        // collect fields
-//        if (deferredReferences.containsKey(customModel.getName())) {
-//            for (MultiReferenceField multiReferenceField: deferredReferences.get(customModel.getName())){
-//                clsFields.put(multiReferenceField.getName(), multiReferenceField);
-//           }
-//        }
-        // init field
         if (field.getType() == Field.Type.REFERENCE) {
             ReferenceField referenceField = (ReferenceField) field;
             // add multi reference field to another model
-//                String multiFieldName = referenceField.getMultiReferenceFieldName() != null ?
-//                        referenceField.getMultiReferenceFieldName() : String.format("%s_set", customModel.getSimpleName().toLowerCase());
-//                MultiReferenceField multiReferenceField = new MultiReferenceField(multiFieldName, customModel, referenceField.getName());
-//                ModelManager referenceManager = CBaseModel.getManager(field.getFieldClass());
-//                if (referenceManager != null) {
-//                    referenceManager.addMultiField(multiReferenceField);
-//                } else {
-//                    if (!deferredReferences.containsKey(field.getFieldClass().getName())) {
-//                        deferredReferences.put(field.getFieldClass().getName(), new ArrayList<MultiReferenceField>());
-//                    }
-//                    deferredReferences.get(field.getFieldClass().getName()).add(multiReferenceField);
-//                }
+            String multiFieldName = referenceField.getMultiReferenceFieldName();
+            MultiReferenceField multiReferenceField = new MultiReferenceField(name, modelClass, referenceField.getFieldName());
+            ModelClassBase referenceModelClass = cls.getModelClass(referenceField.getReferenceModelName());
+            if (referenceModelClass != null) {
+                multiReferenceField.config(multiFieldName, referenceModelClass.getManager());
+                referenceModelClass.getManager().addField(multiReferenceField);
+            } else {
+                putDeferredField(referenceField.getReferenceModelName(), multiFieldName, multiReferenceField);
+            }
         }
         // register field
         this.fields.put(field.getFieldName(), field);
@@ -97,10 +88,23 @@ public class ModelManager {
         return field;
     }
 
-    public void addMultiField(MultiReferenceField field) {
-//        field.config(this);
-        // register field
-        this.fields.put(field.getFieldName(), field);
+    public void addDeferredFields() {
+        if (deferredFields.containsKey(name)) {
+            for (String fieldName: deferredFields.get(name).keySet()){
+                Field field = deferredFields.get(name).get(fieldName);
+                field.config(fieldName, this);
+                if (!fields.containsKey(fieldName)) {
+                    addField(field);
+                }
+            }
+        }
+    }
+
+    protected void putDeferredField(String modelName, String fieldName, Field field) {
+        if (!deferredFields.containsKey(modelName)) {
+            deferredFields.put(modelName, new LinkedHashMap<String, Field>());
+        }
+        deferredFields.get(modelName).put(fieldName, field);
     }
 
     /* aggregation function fields */
@@ -123,7 +127,7 @@ public class ModelManager {
 
     public FunctionField newCountField(Field modelField) {
         String name = String.format("count_%s", modelField.getFieldName().replaceAll("\\.", "__"));
-        FunctionField field = new FunctionField(modelField.getFieldClass(), map("columnType", Type.LONG), "count(%s)", modelField);
+        FunctionField field = new FunctionField(modelField.getFieldClass(), map("columnType", Types.DECIMAL), "count(%s)", modelField);
         field.config(name, this);
         return field;
     }
@@ -156,7 +160,7 @@ public class ModelManager {
 
     public FunctionField newAvgField(Field modelField) {
         String name = String.format("avg_%s", modelField.getFieldName().replaceAll("\\.", "__"));
-        FunctionField field = new FunctionField(modelField.getFieldClass(), map("columnType", Type.DOUBLE), "avg(%s)", modelField);
+        FunctionField field = new FunctionField(modelField.getFieldClass(), map("columnType", Types.DOUBLE), "avg(%s)", modelField);
         field.config(name, this);
         return field;
     }
@@ -176,8 +180,7 @@ public class ModelManager {
         if (fieldName.contains(".")) {
             List<String> parts = Arrays.asList(fieldName.split("\\."));
             ReferenceField referenceField = (ReferenceField) fields.get(parts.get(0));
-            Class referenceModelClass = referenceField.getFieldClass();
-            ModelManager manager = cls.getModelClass(referenceModelClass).getManager();
+            ModelManager manager = cls.getModelClass(referenceField.getReferenceModelName()).getManager();
             String tail = concat(parts.subList(1, parts.size()), ".").toString();
             ForeignField foreignField = new ForeignField(referenceField,  manager.getField(tail));
             foreignField.config(fieldName, this);

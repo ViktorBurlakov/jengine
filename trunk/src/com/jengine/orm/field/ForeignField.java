@@ -20,6 +20,7 @@
 package com.jengine.orm.field;
 
 import com.jengine.orm.db.DBException;
+import com.jengine.utils.CollectionUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -52,7 +53,7 @@ public class ForeignField extends Field {
     }
 
     public String getColumnName() {
-        return fieldMap.get(fieldMap.size()-1).getColumnName();
+        return CollectionUtil.<Field>toList(fieldMap.values()).get(fieldMap.size()-1).getColumnName();
     }
 
     public Object castType(Object value) throws DBException {
