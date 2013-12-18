@@ -24,10 +24,16 @@ import com.jengine.orm.ModelManager;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.expression.Expression;
 import com.jengine.orm.db.expression.ExpressionImpl;
+import com.jengine.utils.Variant;
 
+import java.sql.Time;
+import java.sql.Types;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import static com.jengine.utils.CollectionUtil.map;
 
 
 public class Field {
@@ -68,6 +74,8 @@ public class Field {
         }
         if (options.containsKey("columnType")) {
             this.columnType = (Integer) options.get("columnType");
+//            this.columnType = options.containsKey("columnType") ?  (Integer) options.get("columnType") :
+//                    (getTypeMap().containsKey(fieldClass.getName()) ? getTypeMap().get(fieldClass.getName())[0] : null);
         }
         if (options.containsKey("autoIncrement")) {
             this.autoIncrement = (Boolean) options.get("autoIncrement");
@@ -85,8 +93,22 @@ public class Field {
         }
     }
 
-    public Object castType(Object value) throws DBException {
-        return value;
+    protected Map<String, Integer[]> getTypeMap() {
+        return map(
+                String.class.getName(), new Integer[] {Types.VARCHAR, Types.CHAR, Types.LONGNVARCHAR, Types.NVARCHAR, Types.LONGVARCHAR, Types.NCHAR},
+                Integer.class.getName(), new Integer[] {Types.INTEGER, Types.DECIMAL, Types.NUMERIC, Types.SMALLINT, Types.TINYINT},
+                Long.class.getName(), new Integer[] { Types.BIGINT },
+                Float.class.getName(), new Integer[] { Types.FLOAT, Types.REAL },
+                Double.class.getName(), new Integer[] { Types.DOUBLE },
+                Boolean.class.getName(), new Integer[] { Types.BOOLEAN, Types.BIT },
+                Date.class.getName(), new Integer[] { Types.DATE, Types.TIMESTAMP },
+                java.sql.Date.class.getName(), new Integer[] { Types.DATE, Types.TIMESTAMP },
+                Time.class.getName(), new Integer[] { Types.TIME, Types.TIMESTAMP }
+        );
+    }
+
+    public Object cast(Object value) throws DBException {
+        return new Variant(value).convertTo(getFieldClass());
     }
 
     public String format(Object value) throws DBException {

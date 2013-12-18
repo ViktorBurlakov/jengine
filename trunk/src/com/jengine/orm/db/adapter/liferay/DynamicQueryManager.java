@@ -96,19 +96,19 @@ public class DynamicQueryManager {
 //        Property property = PropertyFactoryUtil.forName(expression.getField());
 //
 //        if ("eq".equals(expression.getOperation())) {
-//            return property.eq(modelField.castType(expression.getValue()));
+//            return property.eq(modelField.cast(expression.getValue()));
 //        } if ("ge".equals(expression.getOperation())) {
-//            return property.ge(modelField.castType(expression.getValue()));
+//            return property.ge(modelField.cast(expression.getValue()));
 //        } if ("gt".equals(expression.getOperation())) {
-//            return property.gt(modelField.castType(expression.getValue()));
+//            return property.gt(modelField.cast(expression.getValue()));
 //        } if ("le".equals(expression.getOperation())) {
-//            return property.le(modelField.castType(expression.getValue()));
+//            return property.le(modelField.cast(expression.getValue()));
 //        } if ("lt".equals(expression.getOperation())) {
-//            return property.lt(modelField.castType(expression.getValue()));
+//            return property.lt(modelField.cast(expression.getValue()));
 //        } if ("like".equals(expression.getOperation())) {
-//            return property.like(modelField.castType(expression.getValue()));
+//            return property.like(modelField.cast(expression.getValue()));
 //        } if ("ne".equals(expression.getOperation())) {
-//            return property.ne(modelField.castType(expression.getValue()));
+//            return property.ne(modelField.cast(expression.getValue()));
 //        } if ("isnull".equals(expression.getOperation())) {
 //            return ((Boolean) expression.getValue()) ? property.isNull() : property.isNotNull();
 //        } if ("isempty".equals(expression.getOperation())) {

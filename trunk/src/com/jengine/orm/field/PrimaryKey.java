@@ -47,7 +47,7 @@ public class PrimaryKey extends Field {
         primaryKey = true;
     }
 
-    public Object castType(Object value) throws DBException {
+    public Object cast(Object value) throws DBException {
         return value instanceof Model ? ((Model) value).getPrimaryKey() : new Long(String.valueOf(value));
     }
 

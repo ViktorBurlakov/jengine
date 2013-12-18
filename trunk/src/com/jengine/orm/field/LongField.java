@@ -19,8 +19,6 @@
 
 package com.jengine.orm.field;
 
-import com.jengine.orm.db.DBException;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,13 +30,5 @@ public class LongField extends Field {
 
     public LongField(Map<String, Object> options) {
         super(Long.class, options);
-    }
-
-    public Object castType(Object value) throws DBException {
-        if (fieldClass.equals(Long.class)) {
-            return new Long(String.valueOf(value));
-        }
-
-        return super.castType(value);
     }
 }

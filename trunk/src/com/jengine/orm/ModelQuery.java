@@ -146,7 +146,7 @@ public class ModelQuery {
 
     public ModelQuery value(String name, Object value) throws DBException {
         Field modelField = getField(name);
-        this.values.put(name, modelField.castType(value));
+        this.values.put(name, modelField.cast(value));
         valueFields.add(modelField);
         fieldMap.put(modelField.getFieldName(), modelField);
         return this;

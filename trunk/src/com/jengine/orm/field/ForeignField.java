@@ -56,8 +56,16 @@ public class ForeignField extends Field {
         return CollectionUtil.<Field>toList(fieldMap.values()).get(fieldMap.size()-1).getColumnName();
     }
 
-    public Object castType(Object value) throws DBException {
-        return nextField.castType(value);
+    public Integer getColumnType() {
+        return getActualField().getColumnType();
+    }
+
+    public Field getActualField() {
+        return fieldMap.get(this.fields.get(this.fields.size()-1));
+    }
+
+    public Object cast(Object value) throws DBException {
+        return nextField.cast(value);
     }
 
     public Map<String, Field> getFieldMap() {

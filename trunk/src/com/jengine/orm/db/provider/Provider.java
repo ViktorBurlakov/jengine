@@ -382,26 +382,38 @@ public class Provider {
             fields.addAll(modelQuery.getFields());
         }
         for (Field field : fields) {
-            if (field instanceof ForeignField) {
-                    String sqlName = field.getFieldName().replaceAll("\\.", "__");
-                    query.addTarget(buildReferenceTargets(sqlName, (ReferenceField) field));
-            } else if (field instanceof ReferenceField) {
-                    query.addTarget(buildReferenceTargets(field.getFieldName(), (ReferenceField) field));
-            } else if (field instanceof FunctionField) {
-                FunctionField functionField = (FunctionField) field;
-                List<Field> attributes = functionField.getAttributes();
-                List<String> dbAttributes = new ArrayList<String>();
-                for (Field attr : attributes) {
-                    dbAttributes.add(getSQLName(attr));
-                }
-                query.addTarget(functionField.render(dbAttributes), functionField.getFieldName());
-            } else if (field.getType() == Field.Type.PLAIN) {
-                query.addTarget(getSQLName(field));
-            }
+            addTarget(field, query, modelQuery);
         }
     }
 
-    protected String buildReferenceTargets(String alias, ReferenceField referenceField) {
+    protected void addTarget(Field field, SQLQuery query, ModelQuery modelQuery) {
+        if (field instanceof ForeignField) {
+            ForeignField foreignField = (ForeignField) field;
+            String sqlName = getSQLName(foreignField);
+            if (foreignField.getActualField() instanceof ReferenceField) {
+                query.addTarget(buildReferenceTargets(query, sqlName, (ReferenceField) foreignField.getActualField()));
+            } else {
+                addTarget(foreignField.getActualField(), query, modelQuery);
+            }
+        } else if (field instanceof ReferenceField) {
+            query.addTarget(buildReferenceTargets(query, field.getFieldName(), (ReferenceField) field));
+        } else if (field instanceof FunctionField) {
+            FunctionField functionField = (FunctionField) field;
+            List<Field> attributes = functionField.getAttributes();
+            List<String> dbAttributes = new ArrayList<String>();
+            for (Field attr : attributes) {
+                dbAttributes.add(getSQLName(attr));
+            }
+            query.addTarget(functionField.render(dbAttributes), functionField.getFieldName());
+            query.putTargetType(functionField.getFieldName(), functionField.getColumnType());
+        } else if (field.getType() == Field.Type.PLAIN) {
+            String sqlName = getSQLName(field);
+            query.addTarget(sqlName);
+            query.putTargetType(sqlName, field.getColumnType());
+        }
+    }
+
+    protected String buildReferenceTargets(SQLQuery query, String alias, ReferenceField referenceField) {
         StringBuffer target = new StringBuffer();
         ModelManager manager =  cls.getModelClass(referenceField.getReferenceModelName()).getManager();
         for (Field field : manager.getFields()) {
@@ -409,7 +421,15 @@ public class Provider {
                 if (target.length() > 0) {
                     target.append(", ");
                 }
-                target.append(alias).append(".").append(getSQLName(field));
+                String sqlName = getSQLName(field);
+                if (field.getType() == Field.Type.REFERENCE) {
+                    ReferenceField referenceField1 = (ReferenceField) field;
+                    ModelManager manager1 =  cls.getModelClass(referenceField1.getReferenceModelName()).getManager();
+                    query.putTargetType(sqlName, manager1.getField(referenceField1.getReferenceModelFieldName()).getColumnType());
+                } else {
+                    query.putTargetType(sqlName, field.getColumnType());
+                }
+                target.append(alias).append(".").append(sqlName);
             }
         }
 
@@ -430,7 +450,7 @@ public class Provider {
                         query.getParams().add(param);
                     }
                 } else {
-                    Object value = field.castType(expression.getValue());
+                    Object value = field.cast(expression.getValue());
                     query.getFitler().put(sqlName, new ExpressionImpl(sqlName, expression.getOperation(), value));
                     query.getParams().add(value);
                 }

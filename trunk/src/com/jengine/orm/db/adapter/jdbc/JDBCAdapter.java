@@ -1,8 +1,8 @@
 package com.jengine.orm.db.adapter.jdbc;
 
 import com.jengine.orm.db.DBConnection;
-import com.jengine.orm.db.adapter.Adapter;
 import com.jengine.orm.db.DBException;
+import com.jengine.orm.db.adapter.Adapter;
 
 import java.sql.*;
 import java.util.ArrayList;
