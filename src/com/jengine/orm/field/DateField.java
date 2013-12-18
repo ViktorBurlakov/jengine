@@ -20,6 +20,7 @@
 package com.jengine.orm.field;
 
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,6 +31,7 @@ import static com.jengine.utils.CollectionUtil.map;
 
 
 public class DateField extends Field {
+    private DateFormat dateFormatter = null;
     private String dateFormat = "yyyy-MM-dd"; // ISO date format
 
     public DateField() {
@@ -45,6 +47,7 @@ public class DateField extends Field {
         if (options.containsKey("dateFormat")) {
             this.dateFormat = (String) options.get("dateFormat");
         }
+        this.dateFormatter = new SimpleDateFormat(dateFormat);
     }
 
     public String getDateFormat() {
@@ -55,13 +58,13 @@ public class DateField extends Field {
         this.dateFormat = dateFormat;
     }
 
-    public Date castType(Object value){
+    public Date cast(Object value){
         if (Long.class.isInstance(value)) {
             return new Date((Long)value);
         } else if (String.class.isInstance(value)){
             try {
 
-                return new SimpleDateFormat(dateFormat).parse((String) value);
+                return dateFormatter.parse((String) value);
             } catch (ParseException e) {
                 e.printStackTrace();
             }

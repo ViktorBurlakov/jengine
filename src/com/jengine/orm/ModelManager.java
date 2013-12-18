@@ -66,7 +66,7 @@ public class ModelManager {
         if (field.getType() == Field.Type.REFERENCE) {
             ReferenceField referenceField = (ReferenceField) field;
             // add multi reference field to another model
-            String multiFieldName = referenceField.getMultiReferenceFieldName();
+            String multiFieldName = String.format("%s_set", name.toLowerCase());
             MultiReferenceField multiReferenceField = new MultiReferenceField(name, modelClass, referenceField.getFieldName());
             ModelClassBase referenceModelClass = cls.getModelClass(referenceField.getReferenceModelName());
             if (referenceModelClass != null) {

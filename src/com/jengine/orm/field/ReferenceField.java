@@ -54,8 +54,6 @@ public class ReferenceField extends Field {
         }
         if (options.containsKey("multiReferenceFieldName")) {
             this.multiReferenceFieldName = (String) options.get("multiReferenceFieldName");
-        } else {
-            this.multiReferenceFieldName = String.format("%s_set", referenceModelName.toLowerCase());
         }
     }
 
@@ -73,7 +71,7 @@ public class ReferenceField extends Field {
         return true;
     }
 
-    public Object castType(Object value) throws DBException {
+    public Object cast(Object value) throws DBException {
         return value instanceof Model ? (Long) ((Model) value).getPrimaryKey() : new Long(String.valueOf(value));
     }
 

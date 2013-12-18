@@ -32,6 +32,7 @@ public class SQLQuery {
     private List<String> stringQueries = new ArrayList<String>();
     private List params = new ArrayList();
     private List<Object[]> targets = new ArrayList<Object[]>();
+    private LinkedHashMap<String, Integer> targetTypes = new LinkedHashMap<String, Integer>();
     private Map<String, String> order = new HashMap<String, String>();
     private Map<String, Object> values = new LinkedHashMap<String, Object>();
     private int start;
@@ -145,5 +146,17 @@ public class SQLQuery {
 
     public Map<String, Object> getValues() {
         return values;
+    }
+
+    public LinkedHashMap<String, Integer> getTargetTypes() {
+        return targetTypes;
+    }
+
+    public void putTargetType(String name, Integer type) {
+        this.targetTypes.put(name, type);
+    }
+
+    public void setTargetTypes(LinkedHashMap<String, Integer> targetTypes) {
+        this.targetTypes = targetTypes;
     }
 }

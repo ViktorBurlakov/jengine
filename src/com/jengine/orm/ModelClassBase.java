@@ -216,7 +216,7 @@ public class ModelClassBase<T extends Model> {
                 obj.cache();
                 result.add(obj);
             } else {
-                result.add(field.castType(items[index++]));
+                result.add(field.cast(items[index++]));
             }
         }
 

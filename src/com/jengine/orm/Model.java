@@ -80,7 +80,7 @@ public class Model {
 
     public void setValue(Field field, Object value) throws DBException {
         if (field.getType() == Field.Type.PLAIN || field.getType() == Field.Type.REFERENCE) {
-            values.put(field.getFieldName(), field.castType(value));
+            values.put(field.getFieldName(), field.cast(value));
         }
     }
 
