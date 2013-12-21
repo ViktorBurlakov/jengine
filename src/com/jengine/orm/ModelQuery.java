@@ -25,9 +25,12 @@ import antlr.TokenStreamException;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.expression.Expression;
 import com.jengine.orm.db.expression.ExpressionImpl;
-import com.jengine.orm.field.Field;
-import com.jengine.orm.field.FunctionField;
 import com.jengine.orm.db.query.parser.WhereTranslator;
+import com.jengine.orm.field.Field;
+import com.jengine.orm.field.ForeignField;
+import com.jengine.orm.field.FunctionField;
+import com.jengine.orm.field.ReferenceField;
+import com.jengine.utils.CollectionUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -36,6 +39,7 @@ import java.util.*;
 public class ModelQuery {
     private Map<String, Field> fieldMap = new LinkedHashMap<String, Field>();
     private List<Field> fields = new ArrayList<Field>();
+    private Map<String, List<Field>> multiFieldMap = new HashMap<String, List<Field>>();
     private List<Field> filterFields = new ArrayList<Field>();
     private List<Expression> filter = new ArrayList<Expression>();
     private Field orderField = null;
@@ -49,21 +53,51 @@ public class ModelQuery {
 
     public ModelQuery(ModelManager manager) {
         this.manager = manager;
+        this.addToFieldMap(manager.getSelf());
         this.page.put("start", QueryUtil.ALL_POS);
         this.page.put("end", QueryUtil.ALL_POS);
     }
 
-    public ModelQuery field(Field field) {
-        this.fields.add(field);
+    protected void addToFieldMap(Field field) {
         if (field instanceof FunctionField) {
             FunctionField functionField = (FunctionField) field;
             for (Object attribute : functionField.getAttributes()) {
                 Field attributeField  = getField(attribute);
                 fieldMap.put(attributeField.getFieldName(), attributeField);
+                multiFieldMap.put(attributeField.getFieldName(), CollectionUtil.list(attributeField));
+            }
+        } if (field instanceof ForeignField) {
+            fieldMap.put(field.getFieldName(), field);
+            multiFieldMap.put(field.getFieldName(), new ArrayList<Field>());
+            ForeignField foreignField = (ForeignField)field;
+            if (foreignField.getActualField() instanceof ReferenceField) {
+                ReferenceField actualField = (ReferenceField) foreignField.getActualField();
+                ModelClassBase fieldModelClass = manager.getCls().getModelClass(actualField.getReferenceModelName());
+                for (Field field1 : fieldModelClass.getManager().getFields(Field.Type.PLAIN, Field.Type.REFERENCE)) {
+                    String fullFieldName = String.format("%s.%s", foreignField.getFieldName(), field1.getFieldName());
+                    fieldMap.put(fullFieldName, manager.getField(fullFieldName));
+                    multiFieldMap.get(field.getFieldName()).add(fieldMap.get(fullFieldName));
+                }
+            }
+        } if (field instanceof ReferenceField) {
+            fieldMap.put(field.getFieldName(), field);
+            multiFieldMap.put(field.getFieldName(), new ArrayList<Field>());
+            ReferenceField referenceField = (ReferenceField)field;
+            ModelClassBase fieldModelClass = manager.getCls().getModelClass(referenceField.getReferenceModelName());
+            for (Field field1 : fieldModelClass.getManager().getFields(Field.Type.PLAIN, Field.Type.REFERENCE)) {
+                String fullFieldName = String.format("%s.%s", referenceField.getFieldName(), field1.getFieldName());
+                fieldMap.put(fullFieldName, manager.getField(fullFieldName));
+                multiFieldMap.get(field.getFieldName()).add(fieldMap.get(fullFieldName));
             }
         } else {
             fieldMap.put(field.getFieldName(), field);
+            multiFieldMap.put(field.getFieldName(), CollectionUtil.list(field));
         }
+    }
+
+    public ModelQuery field(Field field) {
+        this.fields.add(field);
+        this.addToFieldMap(field);
         return this;
     }
 
@@ -93,7 +127,7 @@ public class ModelQuery {
             for (String field : stringQuery.findFields()) {
                 Field modelField = getField(field);
                 stringQuery.getModelFields().add(modelField);
-                fieldMap.put(modelField.getFieldName(), modelField);
+                this.addToFieldMap(modelField);
             }
         } catch (Exception e) {
             throw new DBException(e);
@@ -111,7 +145,7 @@ public class ModelQuery {
         for (Expression expression : filter) {
             Field modelField = getField(expression.getField());
             filterFields.add(modelField);
-            fieldMap.put(modelField.getFieldName(), modelField);
+            this.addToFieldMap(modelField);
         }
 
         return this;
@@ -125,7 +159,7 @@ public class ModelQuery {
         if (order != null && order.size() > 0 && order.containsKey("field")) {
             this.orderFieldName = order.get("field");
             orderField = getField(orderFieldName);
-            fieldMap.put(orderFieldName, orderField);
+            this.addToFieldMap(orderField);
             if (order.containsKey("orderType")) {
                 this.orderType = order.get("orderType");
             }
@@ -148,7 +182,7 @@ public class ModelQuery {
         Field modelField = getField(name);
         this.values.put(name, modelField.cast(value));
         valueFields.add(modelField);
-        fieldMap.put(modelField.getFieldName(), modelField);
+        this.addToFieldMap(modelField);
         return this;
     }
 
@@ -209,8 +243,23 @@ public class ModelQuery {
         return fieldMap;
     }
 
+    public List<Field> getFullFields() {
+        List<Field> result = new ArrayList<Field>();
+
+        for (Field field : getFields()) {
+            if (multiFieldMap.containsKey(field.getFieldName()) &&
+                    multiFieldMap.get(field.getFieldName()).size() > 0) {
+                result.addAll(multiFieldMap.get(field.getFieldName()));
+            } else {
+                result.add(field);
+            }
+        }
+
+        return result;
+    }
+
     public List<Field> getFields() {
-        return fields;
+        return fields.size() == 0 ? CollectionUtil.list(manager.getSelf()) : fields;
     }
 
     public List<Field> getFilterFields() {

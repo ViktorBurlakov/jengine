@@ -35,7 +35,6 @@ public class ForeignField extends Field {
 
     public ForeignField(ReferenceField currentField, Field nextField) {
         super(nextField.getFieldClass());
-        this.type = Type.FOREIGN;
         this.currentField = currentField;
         this.nextField = nextField;
         this.fieldMap.put(currentField.getFieldName(), currentField);
@@ -46,6 +45,10 @@ public class ForeignField extends Field {
             this.fieldMap.put(nextField.getFieldName(), nextField);
         }
         this.fields.addAll(this.fieldMap.keySet());
+    }
+
+    public Type getType() {
+        return Type.FOREIGN;
     }
 
     public List<String> getReferenceFields() {

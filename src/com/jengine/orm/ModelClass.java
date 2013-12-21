@@ -27,7 +27,7 @@ public class ModelClass<T extends Model> extends ModelClassBase<T> {
                 (String) options.get("dbName") : cls.getAnnotation(Meta.class).dbName();
         this.db = DBFactory.get(dbName);
         this.provider = this.db.getProvider();
-        this.provider.setCls(this);
+        this.provider.setModelClass(this);
         this.manager = new ModelManager();
         this.manager.setModelClass(cls);
         this.manager.setCls(this);

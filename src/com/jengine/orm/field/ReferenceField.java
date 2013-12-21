@@ -44,8 +44,9 @@ public class ReferenceField extends Field {
 
     public ReferenceField(Class fieldClass, Map<String, Object> options) {
         super(fieldClass, options);
-        this.type = Type.REFERENCE;
-        this.referenceModelName = fieldClass.getSimpleName();
+        if (fieldClass != null) {
+            this.referenceModelName = fieldClass.getSimpleName();
+        }
         if (options.containsKey("referenceModelName")) {
             this.referenceModelName = (String) options.get("referenceModelName");
         }
@@ -65,6 +66,10 @@ public class ReferenceField extends Field {
         if (referenceModelFieldName == null) {
             referenceModelFieldName = String.format("%sId", fieldName);
         }
+    }
+
+    public Type getType() {
+        return Type.REFERENCE;
     }
 
     public boolean isKey() {

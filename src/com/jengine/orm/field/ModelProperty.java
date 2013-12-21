@@ -33,7 +33,10 @@ public class ModelProperty extends Field {
     public ModelProperty(String methodName, Class fieldClass, Map<String, Object> options) {
         super(fieldClass, options);
         this.methodName = methodName;
-        this.type = Type.PROPERTY;
+    }
+
+    public Type getType() {
+        return Type.PROPERTY;
     }
 
     public String getMethodName() {
