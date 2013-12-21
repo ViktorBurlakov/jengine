@@ -97,6 +97,12 @@ public class Model {
             ModelClassBase referenceCls = cls.getModelClass(multiField.getReferenceModelName());
             Field referenceModelField =  referenceCls.getManager().getField(multiField.getReferenceModelFieldName());
             return referenceCls.filter(referenceModelField.eq(getPrimaryKey()));
+        } else if (field instanceof ManyReferenceField) {
+            ManyReferenceField manyField = (ManyReferenceField) field;
+            ModelClassBase middleCls = cls.getModelClass(manyField.getMiddleModelName());
+            Field middleField =  middleCls.getManager().getField(manyField.getMiddleModelFieldName());
+            Object keyValue = getValue(manyField.getKeyFieldName());
+            return middleCls.filter(middleField.eq(keyValue)).field(middleField);
         } else if (field instanceof ModelProperty) {
             try {
                 Method method = getClass().getMethod(((ModelProperty) field).getMethodName());

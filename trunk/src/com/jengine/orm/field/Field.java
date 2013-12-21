@@ -37,8 +37,7 @@ import static com.jengine.utils.CollectionUtil.map;
 
 
 public class Field {
-    public enum Type { PLAIN, SELF, MULTI_REFERENCE, MANY_REFERENCE, REFERENCE, FOREIGN, FUNCTION, PROPERTY };
-    protected Type type = Type.PLAIN;
+    public enum Type { PLAIN, SELF, MULTI_REFERENCE, MANY_REFERENCE, REVERSE_MANY_REFERENCE, REFERENCE, FOREIGN, FUNCTION, PROPERTY };
     protected String fieldName;
     protected Class fieldClass;
     protected String columnName;
@@ -142,7 +141,7 @@ public class Field {
     }
 
     public Type getType() {
-        return type;
+        return Type.PLAIN;
     }
 
     public ModelManager getManager() {
@@ -205,7 +204,7 @@ public class Field {
         result.put("primaryKey" , primaryKey);
         result.put("verbose" , verbose);
         result.put("visible" , visible);
-        result.put("type" , type);
+        result.put("type" , getType());
         result.put("columnType" , columnType);
 
         return result;

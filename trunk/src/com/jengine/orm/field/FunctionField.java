@@ -33,9 +33,12 @@ public class FunctionField extends Field {
 
     public FunctionField(Class fieldClass, Map<String, Object> options, String expression, Object ... attributes) {
         super(fieldClass, options);
-        this.type = Type.FUNCTION;
         this.expression = expression;
         this.attributes = new ArrayList(Arrays.asList(attributes));
+    }
+
+    public Type getType() {
+        return Type.FUNCTION;
     }
 
     public String render(List<String> attributes) {

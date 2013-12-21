@@ -33,7 +33,10 @@ public class MultiReferenceField extends Field {
         super(fieldClass, new HashMap<String, Object>());
         this.referenceModelFieldName = referenceModelFieldName;
         this.referenceModelName = referenceModelName;
-        this.type = Type.MULTI_REFERENCE;
+    }
+
+    public Type getType() {
+        return Type.MULTI_REFERENCE;
     }
 
     public String getReferenceModelFieldName() {

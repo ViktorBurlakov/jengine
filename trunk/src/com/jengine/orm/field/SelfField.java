@@ -34,7 +34,6 @@ public class SelfField extends ReferenceField {
 
     public SelfField(Class fieldClass, Map<String, Object> options) {
         super(fieldClass, options);
-        this.type = Type.SELF;
     }
 
     public void config(ModelManager manager) {
@@ -46,5 +45,9 @@ public class SelfField extends ReferenceField {
             referenceModelFieldName = null;
         }
 
+    }
+
+    public Type getType() {
+        return Type.SELF;
     }
 }

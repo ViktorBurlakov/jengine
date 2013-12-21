@@ -22,8 +22,10 @@ package models;
 
 import com.jengine.orm.Meta;
 import com.jengine.orm.ModelClass;
+import com.jengine.orm.ModelQuery;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.Field;
+import com.jengine.orm.field.ManyReferenceField;
 import com.jengine.orm.field.PrimaryKey;
 import com.jengine.orm.field.StringField;
 
@@ -33,6 +35,7 @@ public class Author extends TestModel {
     public static Field authorId  = new PrimaryKey();
     public static Field firstName = new StringField("verbose", "First Name");
     public static Field lastName  = new StringField("verbose", "Last Name");
+    public static Field books  = new ManyReferenceField(Book.class);
     public static ModelClass<Author> cls = new ModelClass<Author>(Author.class);
 
     public Author() throws DBException {
@@ -67,5 +70,9 @@ public class Author extends TestModel {
 
     public String getLastName() throws DBException {
         return (String) getValue(lastName);
+    }
+
+    public ModelQuery getBooks() throws DBException {
+        return (ModelQuery) getValue(books);
     }
 }

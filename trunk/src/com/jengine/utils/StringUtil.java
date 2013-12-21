@@ -22,6 +22,12 @@ package com.jengine.utils;
 
 public class StringUtil {
 
+    static public String caps(String input) {
+        StringBuffer tmp = new StringBuffer(input);
+        tmp.replace(0, 1, String.valueOf(Character.toUpperCase(tmp.charAt(0))));
+        return tmp.toString();
+    }
+
     static public String toString(String[] input) {
         StringBuilder sb = new StringBuilder();
         for (String n : input) {

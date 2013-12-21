@@ -66,6 +66,22 @@ INSERT INTO `SBook` VALUES (1,1,'The Dark Tower'),(2,1,'The Shining '),(3,1,'Vin
 UNLOCK TABLES;
 
 --
+-- Table structure for table `SAuthor_SBook_books`
+--
+
+DROP TABLE IF EXISTS `SAuthor_SBook_books`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SAuthor_SBook_books` (
+  `id` bigint(20) NOT NULL,
+  `sauthorAuthorId` bigint(20) NOT NULL,
+  `sbookBookId` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+--
 -- Table structure for table `SLibrary`
 --
 

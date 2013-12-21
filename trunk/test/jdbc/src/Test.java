@@ -248,6 +248,7 @@ public class Test {
         check( globe.getMembers().list().size() == 5 );
         check( globe.getMembers().count() == 5 );
         check( globe.getMembers().filter("lastName = ?", "Simpson").count() == 2 );
+        System.out.println(Author.cls.get(1).getBooks().list());
     }
 
     private static void check(boolean value) throws Exception {

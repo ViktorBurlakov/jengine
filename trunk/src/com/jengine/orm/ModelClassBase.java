@@ -208,10 +208,8 @@ public class ModelClassBase<T extends Model> {
                 ModelClassBase fieldModelClass = getModelClass(((ReferenceField)field).getReferenceModelName());
                 Model obj = fieldModelClass.newInstance();
                 obj.setNew(false);
-                for (Field objField : fieldModelClass.getManager().getFields()) {
-                    if (objField.getType() == Field.Type.PLAIN || objField.getType() == Field.Type.REFERENCE) {
-                        obj.setValue(objField, items[index++]);
-                    }
+                for (Field objField : fieldModelClass.getManager().getFields(Field.Type.PLAIN, Field.Type.REFERENCE)) {
+                    obj.setValue(objField, items[index++]);
                 }
                 obj.cache();
                 result.add(obj);
