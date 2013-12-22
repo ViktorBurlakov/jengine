@@ -23,6 +23,7 @@ package com.jengine.orm.field;
 import com.jengine.orm.Model;
 import com.jengine.orm.ModelManager;
 import com.jengine.orm.db.DBException;
+import com.jengine.utils.Variant;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -77,7 +78,8 @@ public class ReferenceField extends Field {
     }
 
     public Object cast(Object value) throws DBException {
-        return value instanceof Model ? (Long) ((Model) value).getPrimaryKey() : new Long(String.valueOf(value));
+        Field field = manager.getCls().getModelClass(referenceModelName).getManager().getField(referenceModelFieldName);
+        return value instanceof Model ? ((Model) value).getValue(field) : new Variant(value).convertTo(field.getFieldClass());
     }
 
     public String format(Object value) throws DBException {

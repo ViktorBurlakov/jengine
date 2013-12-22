@@ -73,7 +73,7 @@ DROP TABLE IF EXISTS `SAuthor_SBook_books`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SAuthor_SBook_books` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `sauthorAuthorId` bigint(20) NOT NULL,
   `sbookBookId` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)

@@ -1,10 +1,7 @@
 package com.jengine.orm;
 
 import com.jengine.orm.db.DBFactory;
-import com.jengine.orm.field.Attribute;
-import com.jengine.orm.field.Field;
-import com.jengine.orm.field.ModelProperty;
-import com.jengine.orm.field.SelfField;
+import com.jengine.orm.field.*;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -57,7 +54,7 @@ public class ModelClass<T extends Model> extends ModelClassBase<T> {
         for (int i = 0; i < fieldlist.length; i++) {
             java.lang.reflect.Field fld = fieldlist[i];
             if (Modifier.isStatic(fld.getModifiers()) &&
-                    fld.getType().isAssignableFrom(Field.class)) {
+                    (fld.getType().isAssignableFrom(Field.class) || fld.getType().isAssignableFrom(ManyReferenceField.class))) {
                 try {
                     Field modelField = (Field) fld.get(null);
                     modelFields.put(fld.getName(), modelField);

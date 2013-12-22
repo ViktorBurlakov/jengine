@@ -79,7 +79,8 @@ public class Model {
     }
 
     public void setValue(Field field, Object value) throws DBException {
-        if (field.getType() == Field.Type.PLAIN || field.getType() == Field.Type.REFERENCE) {
+        if (field.getType() == Field.Type.PLAIN || field.getType() == Field.Type.REFERENCE ||
+                field.getType() == Field.Type.MANY_REFERENCE || field.getType() == Field.Type.REVERSE_MANY_REFERENCE) {
             values.put(field.getFieldName(), field.cast(value));
         }
     }
@@ -134,9 +135,22 @@ public class Model {
     public Map<String, Object> getDBValues() throws DBException {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-        for (String fldName : values.keySet()) {
-            Field fld = cls.getManager().getField(fldName);
-            result.put(fld.getColumnName(), values.get(fldName));
+        for (Field field : cls.getManager().getFields(Field.Type.REFERENCE, Field.Type.PLAIN)) {
+            if (values.containsKey(field.getFieldName())) {
+                result.put(field.getColumnName(), values.get(field.getFieldName()));
+            }
+        }
+
+        return result;
+    }
+
+    public Map<String, Object> getReferenceValues() throws DBException {
+        Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+        for (Field field : cls.getManager().getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE)) {
+            if (values.containsKey(field.getFieldName())) {
+                result.put(field.getFieldName(), values.get(field.getFieldName()));
+            }
         }
 
         return result;

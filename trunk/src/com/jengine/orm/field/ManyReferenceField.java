@@ -1,8 +1,12 @@
 package com.jengine.orm.field;
 
 
-import java.util.HashMap;
-import java.util.Map;
+import com.jengine.orm.Model;
+import com.jengine.orm.ModelClassBase;
+import com.jengine.orm.db.DBException;
+import com.jengine.utils.Variant;
+
+import java.util.*;
 
 public class ManyReferenceField extends Field {
     private String keyFieldName;
@@ -48,8 +52,25 @@ public class ManyReferenceField extends Field {
         }
     }
 
+    public Object cast(Object value) throws DBException {
+        List result = new ArrayList();
+        List values = value instanceof List ? (List) value : Arrays.asList(value);
+        Field field = manager.getCls().getModelClass(referenceModelName).getManager().getField(referenceKeyFieldName);
+
+        for (Object item : values) {
+            result.add(item instanceof Model ?
+                    ((Model) item).getValue(field) : new Variant(item).convertTo(field.getFieldClass()));
+        }
+
+        return result;
+    }
+
     public Type getType() {
         return Type.MANY_REFERENCE;
+    }
+
+    public ModelClassBase getMiddleClass() {
+        return manager.getCls().getModelClass(middleModelName);
     }
 
     public String getReferenceModelName() {
