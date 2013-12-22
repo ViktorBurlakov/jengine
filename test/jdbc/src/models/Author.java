@@ -29,13 +29,15 @@ import com.jengine.orm.field.ManyReferenceField;
 import com.jengine.orm.field.PrimaryKey;
 import com.jengine.orm.field.StringField;
 
+import java.util.List;
+
 
 @Meta(table = "SAuthor")
 public class Author extends TestModel {
     public static Field authorId  = new PrimaryKey();
     public static Field firstName = new StringField("verbose", "First Name");
     public static Field lastName  = new StringField("verbose", "Last Name");
-    public static Field books  = new ManyReferenceField(Book.class);
+    public static ManyReferenceField books = new ManyReferenceField(Book.class);
     public static ModelClass<Author> cls = new ModelClass<Author>(Author.class);
 
     public Author() throws DBException {
@@ -74,5 +76,9 @@ public class Author extends TestModel {
 
     public ModelQuery getBooks() throws DBException {
         return (ModelQuery) getValue(books);
+    }
+
+    public void setBooks(List<Book> values) throws DBException {
+        setValue(books, values);
     }
 }

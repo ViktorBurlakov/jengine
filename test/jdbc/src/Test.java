@@ -8,6 +8,7 @@ import com.jengine.orm.db.provider.mysql.MySQLProvider;
 import com.jengine.orm.field.FunctionField;
 import models.*;
 
+import static com.jengine.utils.CollectionUtil.list;
 import static com.jengine.utils.CollectionUtil.map;
 
 public class Test {
@@ -36,6 +37,7 @@ public class Test {
         Book.cls.remove();
         Member.cls.remove();
         Transaction.cls.remove();
+        Author.books.getMiddleClass().remove();
 
     }
 
@@ -82,6 +84,9 @@ public class Test {
         book1.setTitle("The Dark Tower");
         book1.setLibrary(globeLibrary);
         book1.save();
+
+        king.setBooks(list(book1));
+        king.save();
 
         Book book2 = new Book();
         book2.setBookId(2l);
@@ -248,7 +253,7 @@ public class Test {
         check( globe.getMembers().list().size() == 5 );
         check( globe.getMembers().count() == 5 );
         check( globe.getMembers().filter("lastName = ?", "Simpson").count() == 2 );
-        System.out.println(Author.cls.get(1).getBooks().list());
+        check( Author.cls.get(3).getBooks().list().size() == 1);
     }
 
     private static void check(boolean value) throws Exception {

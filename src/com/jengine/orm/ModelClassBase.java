@@ -6,6 +6,7 @@ import com.jengine.orm.db.expression.Expression;
 import com.jengine.orm.db.provider.Provider;
 import com.jengine.orm.field.Field;
 import com.jengine.orm.field.FunctionField;
+import com.jengine.orm.field.ManyReferenceField;
 import com.jengine.orm.field.ReferenceField;
 
 import java.io.Serializable;
@@ -154,16 +155,56 @@ public class ModelClassBase<T extends Model> {
         if (manager.getPrimaryKey().isAutoIncrement()) {
             obj.setPrimaryKey((Serializable) id);
         }
+        insertReferences(obj);
         return (T) obj;
     }
 
+    protected void insertReferences(Model obj) throws DBException {
+        Map values = obj.getReferenceValues();
+        if (values.size() == 0) {
+            return;
+        }
+        for (Field field : manager.getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE)) {
+            ManyReferenceField manyReferenceField = (ManyReferenceField) field;
+            if (values.containsKey(field.getFieldName())) {
+                List keys = (List) values.get(field.getFieldName());
+                ModelClassBase referenceModelClass = getModelClass(manyReferenceField.getReferenceModelName());
+                ModelClassBase middleModelClass = getModelClass(manyReferenceField.getMiddleModelName());
+                Field referenceKeyField = referenceModelClass.getManager().getField(manyReferenceField.getReferenceKeyFieldName());
+                Field middleModelField = middleModelClass.getManager().getField(manyReferenceField.getMiddleModelFieldName());
+                Field middleModelReferenceField = middleModelClass.getManager().getField(manyReferenceField.getMiddleModelReferenceFieldName());
+                for (Object key : keys) {
+                    Model referenceObj = referenceModelClass.filter(referenceKeyField.eq(key)).one();
+                    Model middleObj = middleModelClass.newInstance();
+                    middleObj.setValue(middleModelField, obj.getValue(manyReferenceField.getKeyFieldName()));
+                    middleObj.setValue(middleModelReferenceField, referenceObj);
+                    middleObj.save();
+                }
+            }
+        }
+    }
+
+    protected void removeReferences(Model obj) throws DBException {
+        for (Field field : manager.getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE)) {
+            ManyReferenceField manyReferenceField = (ManyReferenceField) field;
+            ModelClassBase middleModelClass = getModelClass(manyReferenceField.getMiddleModelName());
+            Field middleModelField = middleModelClass.getManager().getField(manyReferenceField.getMiddleModelFieldName());
+            middleModelClass.filter(middleModelField.eq(obj.getValue(manyReferenceField.getKeyFieldName()))).remove();
+        }
+    }
+
     public Model update(Model obj) throws DBException {
-        provider.update(manager.getTableName(), obj.getDBValues());
+        provider.update(manager.getTableName(), manager.getPrimaryKey().getColumnName(), obj.getDBValues());
+        if (obj.getReferenceValues().size() > 0) {
+            removeReferences(obj);
+            insertReferences(obj);
+        }
         return obj;
     }
 
     public void remove(Model obj) throws DBException {
         provider.remove(manager.getTableName(), manager.getPrimaryKey().getColumnName(), obj.getPrimaryKey());
+        removeReferences(obj);
     }
 
 

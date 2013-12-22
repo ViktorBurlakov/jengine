@@ -94,24 +94,29 @@ public class Provider {
         return connection.getGeneratedKeys().size() == 1 ? connection.getGeneratedKeys().get(0) : null;
     }
 
-    public void update(String table, Map<String, Object> attributes) throws DBException {
+    public void update(String table, String keyName, Map<String, Object> attributes) throws DBException {
         StringBuffer sql = new StringBuffer();
         List pairs = new ArrayList();
         List params = new ArrayList();
 
         for (String columnName : attributes.keySet()) {
+            if (keyName.equals(columnName)) {
+                continue;
+            }
             StringBuffer pair = new StringBuffer();
             pair.append(columnName).append("=").append("?");
             pairs.add(pair.toString());
             params.add(attributes.get(columnName));
         }
-        sql.append("UPDATE ").append(table).append(" SET ").append(concat(pairs, ", "));
+        params.add(attributes.get(keyName));
+        sql.append("UPDATE ").append(table).append(" SET ").append(concat(pairs, ", "))
+                .append(" WHERE ").append(keyName).append("=").append("?");
 
         DBConnection connection = this.adapter.getConnection();
         this.adapter.executeUpdate(connection, sql.toString(), params);
     }
 
-    public void remove(String table, String primaryKey, Serializable id) throws DBException {
+    public void remove(String table, String key, Serializable id) throws DBException {
         StringBuffer sql = new StringBuffer();
         List params = new ArrayList();
         params.add(id);
@@ -119,7 +124,7 @@ public class Provider {
         sql.append("DELETE FROM ")
                 .append(table)
                 .append(" WHERE ")
-                .append(primaryKey).append("=").append("?");
+                .append(key).append("=").append("?");
 
         DBConnection connection = this.adapter.getConnection();
         this.adapter.executeUpdate(connection, sql.toString(), params);
@@ -143,11 +148,6 @@ public class Provider {
         setModels(query, modelQuery);
         setFilters(query, modelQuery);
         setStringQuery(query, modelQuery);
-
-        // todo: design new classes for sql query to do better
-        if (query.getRelations().size() == 0) {
-            query.setTableAlias(null);
-        }
 
         String sql = buildRemoveSQL(query);
 
@@ -226,7 +226,15 @@ public class Provider {
     protected String buildRemoveSQL(SQLQuery query)  {
         StringBuffer sql = new StringBuffer();
 
-        sql.append(" DELETE FROM ").append(buildTableClause(query)).append(" ").append(buildWhereClause(query));
+        // todo: design new classes for sql query to do better
+        if (query.getRelations().size() == 0) {
+            query.setTableAlias(null);
+        }
+        sql.append(" DELETE ");
+        if (query.getRelations().size() != 0) {
+            sql.append(query.getTableAlias()).append(".*");
+        }
+        sql.append(" FROM ").append(buildTableClause(query)).append(" ").append(buildWhereClause(query));
 
         return sql.toString();
     }

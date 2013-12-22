@@ -110,17 +110,21 @@ public class ModelManager {
         } else if (field.getType() == Field.Type.REVERSE_MANY_REFERENCE) {
             ReverseManyReferenceField reverseField = (ReverseManyReferenceField) field;
             ModelClassBase referenceModelClass = cls.getModelClass(reverseField.getReferenceModelName());
+            ManyReferenceField manyReferenceField = (ManyReferenceField) referenceModelClass.getManager().getField(reverseField.getReferenceFieldName());
             if (reverseField.getKeyFieldName() == null) {
                 reverseField.setKeyFieldName(primaryKey.getFieldName());
+                manyReferenceField.setReferenceKeyFieldName(reverseField.getKeyFieldName());
             }
             if (reverseField.getMiddleModelFieldName() == null) {
                 reverseField.setMiddleModelFieldName(String.format("%s%s", name.toLowerCase(), caps(reverseField.getKeyFieldName())));
+                manyReferenceField.setMiddleModelReferenceFieldName(reverseField.getMiddleModelFieldName());
             }
             if (reverseField.getMiddleModelTableName() == null) {
                 reverseField.setMiddleModelTableName(String.format("%s_%s_%s",
                         referenceModelClass.getManager().getTableName(),
                         tableName,
                         reverseField.getReferenceFieldName()));
+                manyReferenceField.setMiddleModelTableName(reverseField.getMiddleModelTableName());
             }
             ModelClassBase middleModelClass = cls.getModelClass(reverseField.getMiddleModelName());
             if (middleModelClass == null) {
@@ -145,7 +149,7 @@ public class ModelManager {
                                 "referenceModelFieldName", reverseField.getKeyFieldName(),
                                 "columnName", String.format("%s%s", tableName.toLowerCase(), caps(getField(reverseField.getKeyFieldName()).getColumnName()))))
                 );
-                middleModelClass.getManager().addField("id", new PrimaryKey());
+                middleModelClass.getManager().addField("id", new PrimaryKey(map("autoIncrement", true)));
             }
         }
 
