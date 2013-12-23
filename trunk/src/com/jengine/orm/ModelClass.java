@@ -53,11 +53,12 @@ public class ModelClass<T extends Model> extends ModelClassBase<T> {
         java.lang.reflect.Field fieldlist[] = cls.getDeclaredFields();
         for (int i = 0; i < fieldlist.length; i++) {
             java.lang.reflect.Field fld = fieldlist[i];
-            if (Modifier.isStatic(fld.getModifiers()) &&
-                    (fld.getType().isAssignableFrom(Field.class) || fld.getType().isAssignableFrom(ManyReferenceField.class))) {
+            if (Modifier.isStatic(fld.getModifiers())) {
                 try {
-                    Field modelField = (Field) fld.get(null);
-                    modelFields.put(fld.getName(), modelField);
+                    if (fld.get(null) instanceof Field) {
+                        Field modelField = (Field) fld.get(null);
+                        modelFields.put(fld.getName(), modelField);
+                    }
                 } catch (IllegalAccessException e) {
                 }
             }
