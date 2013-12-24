@@ -22,7 +22,7 @@ package com.jengine.orm;
 
 @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
 public @interface Meta {
-    public String table();
+    public String table() default "";
     public String dbName() default "default";
     public boolean cacheEnabled() default true;
 }

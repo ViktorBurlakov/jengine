@@ -65,7 +65,7 @@ public class ReferenceField extends Field {
             columnName =  String.format("%sId", fieldName);
         }
         if (referenceModelFieldName == null) {
-            referenceModelFieldName = String.format("%sId", fieldName);
+            referenceModelFieldName = "id";
         }
     }
 

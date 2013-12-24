@@ -20,10 +20,38 @@
 package com.jengine.utils;
 
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClassUtils {
 
+    public static Map annotationToMap(Object iface) {
+        Map result = new HashMap();
+
+        for (Method method : iface.getClass().getDeclaredMethods()) {
+            try {
+                result.put(method.getName(), method.invoke(iface));
+            } catch (Exception e) {
+            }
+        }
+
+        return result;
+    }
+
+    public static Map annotationToMap(Class iface) {
+        Map result = new HashMap();
+
+        if (iface.isInterface()) {
+            for (Method method : iface.getDeclaredMethods()) {
+                result.put(method.getName(), method.getDefaultValue());
+            }
+        }
+
+        return result;
+    }
     /**
      *  returns the class (without the package if any)
      * @param

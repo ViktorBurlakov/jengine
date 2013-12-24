@@ -20,19 +20,16 @@
 package models;
 
 
-import com.jengine.orm.Meta;
 import com.jengine.orm.ModelClass;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.Field;
-import com.jengine.orm.field.PrimaryKey;
 import com.jengine.orm.field.ReferenceField;
 import com.jengine.orm.field.StringField;
 
 import static com.jengine.utils.CollectionUtil.map;
 
-@Meta(table = "SMember")
+
 public class Member extends TestModel {
-    public static Field memberId  = new PrimaryKey();
     public static Field firstName = new StringField("verbose", "First Name");
     public static Field lastName  = new StringField("verbose", "Last Name");
     public static Field library   = new ReferenceField(Library.class, map("verbose", "Library"));
@@ -47,14 +44,6 @@ public class Member extends TestModel {
     }
 
     /* getters and setters block  */
-
-    public void setMemberId(Long value) throws DBException {
-        setValue(memberId, value);
-    }
-
-    public Long getMemberId() throws DBException {
-        return (Long) getValue(memberId);
-    }
 
     public void setFirstName(String value) throws DBException {
         setValue(firstName, value);
