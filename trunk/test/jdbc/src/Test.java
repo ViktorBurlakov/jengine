@@ -48,39 +48,39 @@ public class Test {
     public static void loadData() throws DBException {
         /* Authors */
         Author jule = new Author();
-        jule.setAuthorId(1l);
+        jule.setId(1l);
         jule.setFirstName("Jules");
         jule.setLastName("Verne");
         jule.save();
 
         Author asimov = new Author();
-        asimov.setAuthorId(2l);
+        asimov.setId(2l);
         asimov.setFirstName("Isaac");
         asimov.setLastName("Asimov");
         asimov.save();
 
         Author king = new Author();
-        king.setAuthorId(3l);
+        king.setId(3l);
         king.setFirstName("Stephen");
         king.setLastName("King");
         king.save();
 
         /* Libraries */
         Library globeLibrary = new Library();
-        globeLibrary.setLibraryId(1l);
+        globeLibrary.setId(1l);
         globeLibrary.setName("Globe");
         globeLibrary.setAddress("Springfield, 742 Evergreen Terrace");
         globeLibrary.save();
 
         Library localLibrary = new Library();
-        localLibrary.setLibraryId(2l);
+        localLibrary.setId(2l);
         localLibrary.setName("Local");
         localLibrary.setAddress("Local");
         localLibrary.save();
 
         /* Books */
         Book book1 = new Book();
-        book1.setBookId(1l);
+        book1.setId(1l);
         book1.setTitle("The Dark Tower");
         book1.setLibrary(globeLibrary);
         book1.save();
@@ -89,48 +89,48 @@ public class Test {
         king.save();
 
         Book book2 = new Book();
-        book2.setBookId(2l);
+        book2.setId(2l);
         book2.setTitle("The Shining ");
         book2.setLibrary(globeLibrary);
         book2.save();
 
         Book book3 = new Book();
-        book3.setBookId(3l);
+        book3.setId(3l);
         book3.setTitle("Vingt mille lieues sous les mers");
         book3.setLibrary(globeLibrary);
         book3.save();
 
         /* Members */
         Member member1 = new Member();
-        member1.setMemberId(1l);
+        member1.setId(1l);
         member1.setFirstName("Mark");
         member1.setLastName("Adamson");
         member1.setLibrary(globeLibrary);
         member1.save();
 
         Member member2 = new Member();
-        member2.setMemberId(2l);
+        member2.setId(2l);
         member2.setFirstName("Peter");
         member2.setLastName("Douglas");
         member2.setLibrary(globeLibrary);
         member2.save();
 
         Member member3 = new Member();
-        member3.setMemberId(3l);
+        member3.setId(3l);
         member3.setFirstName("Gary");
         member3.setLastName("Miller");
         member3.setLibrary(globeLibrary);
         member3.save();
 
         Member member4 = new Member();
-        member4.setMemberId(4l);
+        member4.setId(4l);
         member4.setFirstName("Homer");
         member4.setLastName("Simpson");
         member4.setLibrary(globeLibrary);
         member4.save();
 
         Member member5 = new Member();
-        member5.setMemberId(5l);
+        member5.setId(5l);
         member5.setFirstName("Burt");
         member5.setLastName("Simpson");
         member5.setLibrary(globeLibrary);
@@ -182,7 +182,7 @@ public class Test {
         check( Author.cls.filter(Author.firstName.eq("Stephen")).<Author>one().getLastName().equals("King") );
         check( Book.cls.filter(Book.library.eq(Library.cls.get(1))).list().size() == 3 );
         check( Book.cls.filter(map("library.name__like", "%Globe")).list().size() == 3 );
-        check( Book.cls.filter(map("library.libraryId", 101)).<Book>list().size() == 0 );
+        check( Book.cls.filter(map("library.id", 101)).<Book>list().size() == 0 );
     }
 
     /**
@@ -194,7 +194,7 @@ public class Test {
         clearData();
         loadData();
 
-        check( Book.cls.filter("library = ?", Library.cls.select("libraryId").filter("name like ?", "%Globe")).list().size() == 3 );
+        check( Book.cls.filter("library = ?", Library.cls.select("id").filter("name like ?", "%Globe")).list().size() == 3 );
     }
 
 
@@ -206,7 +206,7 @@ public class Test {
 
         clearData();
         Author author1 = new Author();
-        author1.setAuthorId(1l);
+        author1.setId(1l);
         author1.setFirstName("Jules");
         author1.setLastName("Verne");
         author1.save();
@@ -228,13 +228,13 @@ public class Test {
         clearData();
         loadData();
 
-        check( Author.cls.<Long>max(Author.authorId) == 3l );
-        check( Author.cls.<Long>sum(Author.authorId) == 6l );
-        check( Author.cls.<Long>min(Author.authorId) == 1l );
+        check( Author.cls.<Long>max(Author.id) == 3l );
+        check( Author.cls.<Long>sum(Author.id) == 6l );
+        check( Author.cls.<Long>min(Author.id) == 1l );
         check( Book.cls.count() == 3l );
-        FunctionField function1 = Book.cls.getManager().newCalcField("function1", Long.class, "%s + 1", Book.bookId);
-        check( Book.cls.select(function1).filter("bookId = 1").<Long>one() == 2l );
-        check( Book.cls.<Long>calc("sum", Long.class, "max(%s) + 2", Book.bookId) == 5l );
+        FunctionField function1 = Book.cls.getManager().newCalcField("function1", Long.class, "%s + 1", Book.id);
+        check( Book.cls.select(function1).filter("id = ?", 1l).<Long>one() == 2l );
+        check( Book.cls.<Long>calc("sum", Long.class, "max(%s) + 2", Book.id) == 5l );
     }
 
     /**

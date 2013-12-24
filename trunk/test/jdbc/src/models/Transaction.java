@@ -20,21 +20,18 @@
 package models;
 
 
-import com.jengine.orm.Meta;
 import com.jengine.orm.ModelClass;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.DateField;
 import com.jengine.orm.field.Field;
-import com.jengine.orm.field.PrimaryKey;
 import com.jengine.orm.field.ReferenceField;
 
 import java.util.Date;
 
 import static com.jengine.utils.CollectionUtil.map;
 
-@Meta(table = "STransaction")
+
 public class Transaction extends TestModel {
-    public static Field transactionId = new PrimaryKey();
     public static Field book   = new ReferenceField(Book.class, map("verbose", "Book"));
     public static Field member = new ReferenceField(Member.class, map("verbose", "Member"));
     public static Field tdate  = new DateField("verbose", "Date");

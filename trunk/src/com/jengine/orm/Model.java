@@ -70,6 +70,14 @@ public class Model {
         return (Serializable) getValue(cls.getManager().getPrimaryKey());
     }
 
+    public void setId(Serializable value) throws DBException {
+        setPrimaryKey(value);
+    }
+
+    public Serializable getId() throws DBException {
+        return getPrimaryKey();
+    }
+
     public void setValue(String fieldName, Object value) throws DBException {
         this.setValue(cls.getManager().getField(fieldName), value);
     }

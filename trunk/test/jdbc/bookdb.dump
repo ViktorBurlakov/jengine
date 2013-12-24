@@ -16,145 +16,145 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `SAuthor`
+-- Table structure for table `Author`
 --
 
-DROP TABLE IF EXISTS `SAuthor`;
+DROP TABLE IF EXISTS `Author`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `SAuthor` (
-  `authorId` bigint(20) NOT NULL,
+CREATE TABLE `Author` (
+  `id` bigint(20) NOT NULL,
   `firstName` varchar(75) DEFAULT NULL,
   `lastName` varchar(75) DEFAULT NULL,
-  PRIMARY KEY (`authorId`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `SAuthor`
+-- Dumping data for table `Author`
 --
 
-LOCK TABLES `SAuthor` WRITE;
-/*!40000 ALTER TABLE `SAuthor` DISABLE KEYS */;
-INSERT INTO `SAuthor` VALUES (1,'Jules','Verne'),(2,'Isaac','Asimov'),(3,'Stephen','King');
-/*!40000 ALTER TABLE `SAuthor` ENABLE KEYS */;
+LOCK TABLES `Author` WRITE;
+/*!40000 ALTER TABLE `Author` DISABLE KEYS */;
+INSERT INTO `Author` VALUES (1,'Jules','Verne'),(2,'Isaac','Asimov'),(3,'Stephen','King');
+/*!40000 ALTER TABLE `Author` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `SBook`
+-- Table structure for table `Book`
 --
 
-DROP TABLE IF EXISTS `SBook`;
+DROP TABLE IF EXISTS `Book`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `SBook` (
-  `bookId` bigint(20) NOT NULL,
+CREATE TABLE `Book` (
+  `id` bigint(20) NOT NULL,
   `libraryId` bigint(20) DEFAULT NULL,
   `title` varchar(75) DEFAULT NULL,
-  PRIMARY KEY (`bookId`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `SBook`
+-- Dumping data for table `Book`
 --
 
-LOCK TABLES `SBook` WRITE;
-/*!40000 ALTER TABLE `SBook` DISABLE KEYS */;
-INSERT INTO `SBook` VALUES (1,1,'The Dark Tower'),(2,1,'The Shining '),(3,1,'Vingt mille lieues sous les mers');
-/*!40000 ALTER TABLE `SBook` ENABLE KEYS */;
+LOCK TABLES `Book` WRITE;
+/*!40000 ALTER TABLE `Book` DISABLE KEYS */;
+INSERT INTO `Book` VALUES (1,1,'The Dark Tower'),(2,1,'The Shining '),(3,1,'Vingt mille lieues sous les mers');
+/*!40000 ALTER TABLE `Book` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `SAuthor_SBook_books`
+-- Table structure for table `Author_Book_books`
 --
 
-DROP TABLE IF EXISTS `SAuthor_SBook_books`;
+DROP TABLE IF EXISTS `Author_books`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `SAuthor_SBook_books` (
+CREATE TABLE `Author_books` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `sauthorAuthorId` bigint(20) NOT NULL,
-  `sbookBookId` bigint(20) NOT NULL,
+  `author` bigint(20) NOT NULL,
+  `book` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 
 --
--- Table structure for table `SLibrary`
+-- Table structure for table `Library`
 --
 
-DROP TABLE IF EXISTS `SLibrary`;
+DROP TABLE IF EXISTS `Library`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `SLibrary` (
-  `libraryId` bigint(20) NOT NULL,
+CREATE TABLE `Library` (
+  `id` bigint(20) NOT NULL,
   `name` varchar(75) DEFAULT NULL,
   `address` varchar(75) DEFAULT NULL,
-  PRIMARY KEY (`libraryId`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `SLibrary`
+-- Dumping data for table `Library`
 --
 
-LOCK TABLES `SLibrary` WRITE;
-/*!40000 ALTER TABLE `SLibrary` DISABLE KEYS */;
-INSERT INTO `SLibrary` VALUES (1,'Globe','Springfield, 742 Evergreen Terrace'),(2,'Local','Local');
-/*!40000 ALTER TABLE `SLibrary` ENABLE KEYS */;
+LOCK TABLES `Library` WRITE;
+/*!40000 ALTER TABLE `Library` DISABLE KEYS */;
+INSERT INTO `Library` VALUES (1,'Globe','Springfield, 742 Evergreen Terrace'),(2,'Local','Local');
+/*!40000 ALTER TABLE `Library` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `SMember`
+-- Table structure for table `Member`
 --
 
-DROP TABLE IF EXISTS `SMember`;
+DROP TABLE IF EXISTS `Member`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `SMember` (
-  `memberId` bigint(20) NOT NULL,
+CREATE TABLE `Member` (
+  `id` bigint(20) NOT NULL,
   `libraryId` bigint(20) DEFAULT NULL,
   `firstName` varchar(75) DEFAULT NULL,
   `lastName` varchar(75) DEFAULT NULL,
-  PRIMARY KEY (`memberId`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `SMember`
+-- Dumping data for table `Member`
 --
 
-LOCK TABLES `SMember` WRITE;
-/*!40000 ALTER TABLE `SMember` DISABLE KEYS */;
-INSERT INTO `SMember` VALUES (1,1,'Mark','Adamson'),(2,1,'Peter','Douglas'),(3,1,'Gary','Miller'),(4,1,'Homer','Simpson'),(5,1,'Burt','Simpson');
-/*!40000 ALTER TABLE `SMember` ENABLE KEYS */;
+LOCK TABLES `Member` WRITE;
+/*!40000 ALTER TABLE `Member` DISABLE KEYS */;
+INSERT INTO `Member` VALUES (1,1,'Mark','Adamson'),(2,1,'Peter','Douglas'),(3,1,'Gary','Miller'),(4,1,'Homer','Simpson'),(5,1,'Burt','Simpson');
+/*!40000 ALTER TABLE `Member` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `STransaction`
+-- Table structure for table `Transaction`
 --
 
-DROP TABLE IF EXISTS `STransaction`;
+DROP TABLE IF EXISTS `Transaction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `STransaction` (
-  `transactionId` bigint(20) NOT NULL,
+CREATE TABLE `Transaction` (
+  `id` bigint(20) NOT NULL,
   `bookId` bigint(20) DEFAULT NULL,
   `memberId` bigint(20) DEFAULT NULL,
   `tdate` datetime DEFAULT NULL,
-  PRIMARY KEY (`transactionId`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `STransaction`
+-- Dumping data for table `Transaction`
 --
 
-LOCK TABLES `STransaction` WRITE;
-/*!40000 ALTER TABLE `STransaction` DISABLE KEYS */;
-/*!40000 ALTER TABLE `STransaction` ENABLE KEYS */;
+LOCK TABLES `Transaction` WRITE;
+/*!40000 ALTER TABLE `Transaction` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Transaction` ENABLE KEYS */;
 UNLOCK TABLES;
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

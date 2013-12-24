@@ -25,7 +25,6 @@ import com.jengine.orm.db.DBException;
 
 public class TestModel extends Model {
 
-
     public TestModel() throws DBException {
         super();
     }

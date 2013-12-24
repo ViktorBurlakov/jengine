@@ -20,7 +20,6 @@
 package models;
 
 
-import com.jengine.orm.Meta;
 import com.jengine.orm.ModelClass;
 import com.jengine.orm.ModelQuery;
 import com.jengine.orm.db.DBException;
@@ -31,10 +30,8 @@ import com.jengine.orm.field.StringField;
 
 import java.util.List;
 
-
-@Meta(table = "SAuthor")
 public class Author extends TestModel {
-    public static Field authorId  = new PrimaryKey();
+    public static Field id  = new PrimaryKey();
     public static Field firstName = new StringField("verbose", "First Name");
     public static Field lastName  = new StringField("verbose", "Last Name");
     public static ManyReferenceField books = new ManyReferenceField(Book.class);
@@ -49,14 +46,6 @@ public class Author extends TestModel {
     }
 
     /* Getters and Setters */
-
-    public void setAuthorId(Long value) throws DBException {
-        setValue(authorId, value);
-    }
-
-    public Long getAuthorId() throws DBException {
-        return (Long) getValue(authorId);
-    }
 
     public void setFirstName(String value) throws DBException {
         setValue(firstName, value);

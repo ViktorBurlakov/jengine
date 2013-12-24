@@ -4,16 +4,10 @@ import com.jengine.orm.db.DB;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.expression.Expression;
 import com.jengine.orm.db.provider.Provider;
-import com.jengine.orm.field.Field;
-import com.jengine.orm.field.FunctionField;
-import com.jengine.orm.field.ManyReferenceField;
-import com.jengine.orm.field.ReferenceField;
+import com.jengine.orm.field.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ModelClassBase<T extends Model> {
@@ -24,14 +18,14 @@ public class ModelClassBase<T extends Model> {
     protected String name;
     protected Class<T> cls;
 
+    static  public ModelClassBase getModelClass(String name) {
+        return classMap.get(name);
+    }
+
     public ModelClassBase(String name, Class<T> cls) {
         this.name = name;
         this.cls = cls;
         this.classMap.put(name, this);
-    }
-
-    static  public ModelClassBase getModelClass(String name) {
-        return classMap.get(name);
     }
 
     public T newInstance(Map values) throws DBException {

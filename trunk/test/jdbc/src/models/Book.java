@@ -19,7 +19,6 @@
 
 package models;
 
-import com.jengine.orm.Meta;
 import com.jengine.orm.ModelClass;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.Field;
@@ -30,9 +29,8 @@ import com.jengine.orm.field.StringField;
 import static com.jengine.utils.CollectionUtil.map;
 
 
-@Meta(table = "SBook")
 public class Book extends TestModel {
-    public static Field bookId  = new PrimaryKey();
+    public static Field id  = new PrimaryKey();
     public static Field title   = new StringField("verbose", "Title");
     public static Field library = new ReferenceField(Library.class, map("verbose", "Library"));
     public static ModelClass<Book> cls = new ModelClass<Book>(Book.class);
@@ -46,14 +44,6 @@ public class Book extends TestModel {
     }
 
     /* getters and setters block  */
-
-    public void setBookId(Long value) throws DBException {
-        setValue(bookId, value);
-    }
-
-    public Long getBookId() throws DBException {
-        return (Long) getValue(bookId);
-    }
 
     public void setTitle(String value) throws DBException {
         setValue(title, value);

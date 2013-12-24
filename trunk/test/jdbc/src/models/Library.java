@@ -39,20 +39,16 @@
 package models;
 
 
-import com.jengine.orm.Meta;
 import com.jengine.orm.ModelClass;
 import com.jengine.orm.ModelQuery;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.Field;
-import com.jengine.orm.field.PrimaryKey;
 import com.jengine.orm.field.StringField;
 
 import java.util.List;
 
 
-@Meta(table = "SLibrary")
 public class Library extends TestModel {
-    public static Field libraryId = new PrimaryKey();
     public static Field name    = new StringField("verbose", "Name");
     public static Field address = new StringField("verbose", "Address");
     public static ModelClass<Library> cls = new ModelClass<Library>(Library.class);
@@ -67,14 +63,6 @@ public class Library extends TestModel {
     }
 
     /* getters and setters block  */
-
-    public void setLibraryId(Long value) throws DBException {
-        setValue(libraryId, value);
-    }
-
-    public Long getLibraryId() throws DBException {
-        return (Long) getValue(libraryId);
-    }
 
     public void setName(String value) throws DBException {
         setValue(name, value);

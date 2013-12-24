@@ -2,6 +2,7 @@ package com.jengine.orm;
 
 import com.jengine.orm.db.DBFactory;
 import com.jengine.orm.field.*;
+import com.jengine.utils.ClassUtils;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -20,8 +21,15 @@ public class ModelClass<T extends Model> extends ModelClassBase<T> {
 
     public ModelClass(Class<T> cls, Map options) {
         super(cls.getSimpleName(), cls);
-        String dbName = options.containsKey("dbName") ?
-                (String) options.get("dbName") : cls.getAnnotation(Meta.class).dbName();
+        Meta meta = cls.getAnnotation(Meta.class);
+        Map metaMap = meta == null ? ClassUtils.annotationToMap(Meta.class) : ClassUtils.annotationToMap(meta);
+        String dbName = options.containsKey("dbName") ? (String) options.get("dbName") : (String) metaMap.get("dbName");
+        String tableName = options.containsKey("table") ? (String) options.get("table") : (String) metaMap.get("table");
+        if (tableName == null || tableName.length() == 0) {
+            tableName = name;
+        }
+        Boolean cacheEnabled = options.containsKey("cacheEnabled") ?
+                (Boolean) options.get("cacheEnabled") : (Boolean) metaMap.get("cacheEnabled");
         this.db = DBFactory.get(dbName);
         this.provider = this.db.getProvider();
         this.provider.setModelClass(this);
@@ -29,22 +37,35 @@ public class ModelClass<T extends Model> extends ModelClassBase<T> {
         this.manager.setModelClass(cls);
         this.manager.setCls(this);
         this.manager.setName(options.containsKey("name") ? (String) options.get("name") : cls.getSimpleName());
-        this.manager.setTableName(options.containsKey("table") ?
-                (String) options.get("table") : cls.getAnnotation(Meta.class).table());
-        this.manager.setCacheEnabled(options.containsKey("cacheEnabled") ?
-                (Boolean) options.get("cacheEnabled") : cls.getAnnotation(Meta.class).cacheEnabled());
+        this.manager.setTableName(tableName);
+        this.manager.setCacheEnabled(cacheEnabled);
         // init fields and properties
-        Map<String, Field> fields = new LinkedHashMap<String, Field>();
+        LinkedHashMap<String, Field> fields = new LinkedHashMap<String, Field>();
         fields.put(SelfField.DEFAULT_NAME, new SelfField(cls));
         fields.putAll(collectFields(cls));
         fields.putAll(collectProperties(cls));
         fields.put("verbose", new ModelProperty("getVerbose", String.class, map("verbose", this.manager.getName())));
+        Field pkField = getPrimaryKey(fields);
+        if (pkField == null) {
+            this.manager.addField("id", new PrimaryKey());
+        }
         for (String fieldName : fields.keySet()) {
             Field field = fields.get(fieldName);
             this.manager.addField(fieldName, field);
         }
         this.manager.addDeferredFields();
     }
+
+    protected Field getPrimaryKey(LinkedHashMap<String, Field> fields) {
+        for (Field field : fields.values()) {
+            if (field.isPrimaryKey()) {
+                return field;
+            }
+        }
+
+        return null;
+    }
+
 
     /* collect methods */
 
