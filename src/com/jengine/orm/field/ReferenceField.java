@@ -21,7 +21,6 @@ package com.jengine.orm.field;
 
 
 import com.jengine.orm.Model;
-import com.jengine.orm.ModelManager;
 import com.jengine.orm.db.DBException;
 import com.jengine.utils.Variant;
 
@@ -29,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.jengine.utils.CollectionUtil.map;
+import static com.jengine.utils.StringUtil.caps;
 
 public class ReferenceField extends Field {
     protected String referenceModelName;
@@ -59,13 +59,6 @@ public class ReferenceField extends Field {
         }
     }
 
-    public void config(String fieldName, ModelManager manager) {
-        super.config(fieldName, manager);
-        if (!options.containsKey("columnName")) {
-            columnName =  String.format("%sId", fieldName);
-        }
-    }
-
     public Type getType() {
         return Type.REFERENCE;
     }
@@ -81,6 +74,10 @@ public class ReferenceField extends Field {
 
     public String format(Object value) throws DBException {
         return ((Model)value).getVerbose();
+    }
+
+    public String getColumnName() {
+        return columnName != null ? columnName : String.format("%s%s", fieldName, caps(getReferenceModelField().getColumnName()));
     }
 
     public Field getReferenceModelField() {

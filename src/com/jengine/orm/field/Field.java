@@ -84,12 +84,6 @@ public class Field {
     public void config(String fieldName, ModelManager manager) {
         this.fieldName = fieldName;
         this.manager = manager;
-        if (visible) {
-            this.visible = (verbose != null && verbose.length() > 0);
-        }
-        if (columnName == null) {
-            this.columnName = fieldName;
-        }
     }
 
     protected Map<String, Integer[]> getTypeMap() {
@@ -129,7 +123,7 @@ public class Field {
     }
 
     public String getColumnName() {
-        return columnName;
+        return columnName == null ? fieldName : columnName;
     }
 
     public void setColumnName(String columnName) {
@@ -173,7 +167,7 @@ public class Field {
     }
 
     public boolean isVisible() {
-        return visible;
+        return visible && (verbose != null && verbose.length() > 0);
     }
 
     public void setVisible(boolean visible) {
