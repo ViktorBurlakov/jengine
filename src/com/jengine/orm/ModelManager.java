@@ -29,7 +29,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static com.jengine.utils.CollectionUtil.concat;
 import static com.jengine.utils.CollectionUtil.map;
-import static com.jengine.utils.StringUtil.caps;
 
 
 public class ModelManager {
@@ -70,7 +69,6 @@ public class ModelManager {
             if (referenceField.getMultiReferenceFieldName() == null) {
                 referenceField.setMultiReferenceFieldName(String.format("%s_set", name.toLowerCase()));
             }
-                    ;
             MultiReferenceField multiReferenceField = new MultiReferenceField(name, modelClass, referenceField.getFieldName());
             ModelClassBase referenceModelClass = cls.getModelClass(referenceField.getReferenceModelName());
 
