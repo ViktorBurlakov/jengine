@@ -64,9 +64,6 @@ public class ReferenceField extends Field {
         if (!options.containsKey("columnName")) {
             columnName =  String.format("%sId", fieldName);
         }
-        if (referenceModelFieldName == null) {
-            referenceModelFieldName = "id";
-        }
     }
 
     public Type getType() {
@@ -78,7 +75,7 @@ public class ReferenceField extends Field {
     }
 
     public Object cast(Object value) throws DBException {
-        Field field = manager.getCls().getModelClass(referenceModelName).getManager().getField(referenceModelFieldName);
+        Field field = getReferenceModelField();
         return value instanceof Model ? ((Model) value).getValue(field) : new Variant(value).convertTo(field.getFieldClass());
     }
 
@@ -86,8 +83,20 @@ public class ReferenceField extends Field {
         return ((Model)value).getVerbose();
     }
 
+    public Field getReferenceModelField() {
+        if (referenceModelFieldName != null) {
+            return manager.getCls().getModelClass(referenceModelName).getManager().getField(referenceModelFieldName);
+        } else {
+            return manager.getCls().getModelClass(referenceModelName).getManager().getPrimaryKey();
+        }
+    }
+
     public String getReferenceModelFieldName() {
-        return referenceModelFieldName;
+        if (referenceModelFieldName != null) {
+            return referenceModelFieldName;
+        } else {
+            return manager.getCls().getModelClass(referenceModelName).getManager().getPrimaryKey().getFieldName();
+        }
     }
 
     public void setReferenceModelFieldName(String referenceModelFieldName) {
