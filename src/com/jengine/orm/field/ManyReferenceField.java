@@ -8,6 +8,8 @@ import com.jengine.utils.Variant;
 
 import java.util.*;
 
+import static com.jengine.utils.CollectionUtil.map;
+
 public class ManyReferenceField extends Field {
     private String keyFieldName;
     private String referenceModelName;
@@ -55,7 +57,7 @@ public class ManyReferenceField extends Field {
     public Object cast(Object value) throws DBException {
         List result = new ArrayList();
         List values = value instanceof List ? (List) value : Arrays.asList(value);
-        Field field = manager.getCls().getModelClass(referenceModelName).getManager().getField(referenceKeyFieldName);
+        Field field = getManyReferenceField().getKeyField();
 
         for (Object item : values) {
             result.add(item instanceof Model ?
@@ -69,8 +71,32 @@ public class ManyReferenceField extends Field {
         return Type.MANY_REFERENCE;
     }
 
+    public ReverseManyReferenceField newReverseField(){
+        return new ReverseManyReferenceField(manager.getName(), map(
+                "keyFieldName", referenceKeyFieldName,
+                "referenceFieldName", fieldName,
+                "referenceKeyFieldName", getKeyFieldName(),
+                "middleModelName", getMiddleModelName(),
+                "middleModelTableName", getMiddleModelTableName(),
+                "middleModelFieldName", middleModelReferenceFieldName,
+                "middleModelReferenceFieldName", getMiddleModelFieldName()
+        ));
+    }
+
     public ModelClassBase getMiddleClass() {
-        return manager.getCls().getModelClass(middleModelName);
+        return manager.getCls().getModelClass(getMiddleModelName());
+    }
+
+    public ModelClassBase getReferenceClass() {
+        return manager.getCls().getModelClass(referenceModelName);
+    }
+
+    public ManyReferenceField getManyReferenceField() {
+        return (ManyReferenceField) getReferenceClass().getManager().getField(getReferenceFieldName());
+    }
+
+    public Field getKeyField() {
+        return manager.getField(getKeyFieldName());
     }
 
     public String getReferenceModelName() {
@@ -82,7 +108,7 @@ public class ManyReferenceField extends Field {
     }
 
     public String getMiddleModelName() {
-        return middleModelName;
+        return middleModelName != null ? middleModelName : String.format("%s_%s", manager.getName(), fieldName);
     }
 
     public void setMiddleModelName(String middleModelName) {
@@ -90,15 +116,11 @@ public class ManyReferenceField extends Field {
     }
 
     public String getMiddleModelFieldName() {
-        return middleModelFieldName;
+        return middleModelFieldName != null ? middleModelFieldName : manager.getName().toLowerCase();
     }
 
     public void setMiddleModelFieldName(String middleModelFieldName) {
         this.middleModelFieldName = middleModelFieldName;
-    }
-
-    public String getMiddleModelReferenceFieldName() {
-        return middleModelReferenceFieldName;
     }
 
     public void setMiddleModelReferenceFieldName(String middleModelReferenceFieldName) {
@@ -106,7 +128,7 @@ public class ManyReferenceField extends Field {
     }
 
     public String getKeyFieldName() {
-        return keyFieldName;
+        return keyFieldName != null ? keyFieldName : manager.getPrimaryKey().getFieldName();
     }
 
     public void setKeyFieldName(String keyFieldName) {
@@ -114,12 +136,13 @@ public class ManyReferenceField extends Field {
     }
 
     public String getReferenceFieldName() {
-        return referenceFieldName;
+        return referenceFieldName != null ? referenceFieldName :String.format("%s_set", manager.getName().toLowerCase());
     }
 
     public void setReferenceFieldName(String referenceFieldName) {
         this.referenceFieldName = referenceFieldName;
     }
+
 
     public String getReferenceKeyFieldName() {
         return referenceKeyFieldName;
@@ -130,7 +153,7 @@ public class ManyReferenceField extends Field {
     }
 
     public String getMiddleModelTableName() {
-        return middleModelTableName;
+        return middleModelTableName != null ? middleModelTableName : String.format("%s_%s", manager.getTableName(), fieldName);
     }
 
     public void setMiddleModelTableName(String middleModelTableName) {

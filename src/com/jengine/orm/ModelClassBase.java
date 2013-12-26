@@ -164,9 +164,9 @@ public class ModelClassBase<T extends Model> {
                 List keys = (List) values.get(field.getFieldName());
                 ModelClassBase referenceModelClass = getModelClass(manyReferenceField.getReferenceModelName());
                 ModelClassBase middleModelClass = getModelClass(manyReferenceField.getMiddleModelName());
-                Field referenceKeyField = referenceModelClass.getManager().getField(manyReferenceField.getReferenceKeyFieldName());
+                Field referenceKeyField = manyReferenceField.getManyReferenceField().getKeyField();
                 Field middleModelField = middleModelClass.getManager().getField(manyReferenceField.getMiddleModelFieldName());
-                Field middleModelReferenceField = middleModelClass.getManager().getField(manyReferenceField.getMiddleModelReferenceFieldName());
+                Field middleModelReferenceField = middleModelClass.getManager().getField(manyReferenceField.getManyReferenceField().getMiddleModelFieldName());
                 for (Object key : keys) {
                     Model referenceObj = referenceModelClass.filter(referenceKeyField.eq(key)).one();
                     Model middleObj = middleModelClass.newInstance();
@@ -264,5 +264,13 @@ public class ModelClassBase<T extends Model> {
 
     public ModelManager getManager() {
         return manager;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

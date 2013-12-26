@@ -20,7 +20,9 @@
 package com.jengine.orm.db.provider;
 
 
-import com.jengine.orm.*;
+import com.jengine.orm.Model;
+import com.jengine.orm.ModelClassBase;
+import com.jengine.orm.ModelQuery;
 import com.jengine.orm.db.DBConnection;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.adapter.Adapter;
@@ -30,7 +32,6 @@ import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.field.Field;
 import com.jengine.orm.field.ForeignField;
 import com.jengine.orm.field.FunctionField;
-import com.jengine.orm.field.ReferenceField;
 import com.jengine.utils.CollectionUtil;
 
 import java.io.Serializable;
@@ -368,40 +369,25 @@ public class Provider {
         for (Field field : modelQuery.getFieldMap().values()) {
             if (field.getType() == Field.Type.FOREIGN) {
                 addRelation(query, new ArrayList<String>(), query.getTableAlias(), (ForeignField) field);
-//            }  else if (field.getType() == Field.Type.REFERENCE) {
-//                addRelation(query, new ArrayList<String>(), query.getTableAlias(), (ReferenceField) field);
             }
         }
     }
 
     protected void addRelation(SQLQuery query, List<String> path, String alias, ForeignField foreignField) {
-        ModelManager manager =  modelClass.getModelClass(foreignField.getCurrentField().getReferenceModelName()).getManager();
-        Field referenceModelField = manager.getField(foreignField.getCurrentField().getReferenceModelFieldName());
         path.add(foreignField.getCurrentField().getFieldName());
         String foreignAlias = concat(path, "__").toString();
         if (foreignField.getCurrentField().getType() != Field.Type.SELF) {
-            List value = list(manager.getTableName(),String.format("%s.%s = %s.%s",
+            String tableName =  foreignField.getCurrentField().getReferenceModel().getManager().getTableName();
+            Field referenceModelField = foreignField.getCurrentField().getReferenceModelField();
+            List value = list(tableName,String.format("%s.%s = %s.%s",
                     foreignAlias, referenceModelField.getColumnName(),
                     alias, foreignField.getCurrentField().getColumnName()));
             query.getRelations().put(foreignAlias, value);
         }
         if (foreignField.getNextField().getType() == Field.Type.FOREIGN) {
             addRelation(query, path, foreignAlias, (ForeignField) foreignField.getNextField());
-//        } else if (foreignField.getNextField().getType() == Field.Type.REFERENCE){
-//            addRelation(query, path, foreignAlias, (ReferenceField) foreignField.getNextField());
         }
     }
-
-//    protected void addRelation(SQLQuery query,  List<String> path, String alias, ReferenceField referenceField) {
-//        ModelManager manager =  modelClass.getModelClass(referenceField.getReferenceModelName()).getManager();
-//        Field referenceModelField = manager.getField(referenceField.getReferenceModelFieldName());
-//        path.add(referenceField.getFieldName());
-//        String foreignAlias = concat(path, "__").toString();
-//        List value = list(manager.getTableName(),String.format("%s.%s = %s.%s",
-//                foreignAlias, referenceModelField.getColumnName(),
-//                alias, referenceField.getColumnName()));
-//        query.getRelations().put(foreignAlias, value);
-//    }
 
     protected void setTargets(SQLQuery query, ModelQuery modelQuery) {
         for (Field field : modelQuery.getFullFields()) {
@@ -424,29 +410,6 @@ public class Provider {
             query.addTarget(sqlName);
             query.putTargetType(sqlName, field.getColumnType());
         }
-    }
-
-    protected String buildReferenceTargets(SQLQuery query, String alias, ReferenceField referenceField) {
-        StringBuffer target = new StringBuffer();
-        ModelManager manager =  modelClass.getModelClass(referenceField.getReferenceModelName()).getManager();
-        for (Field field : manager.getFields()) {
-            if (field.getType() == Field.Type.PLAIN || field.getType() == Field.Type.REFERENCE) {
-                if (target.length() > 0) {
-                    target.append(", ");
-                }
-                String sqlName = getSQLName(query, field);
-                if (field.getType() == Field.Type.REFERENCE) {
-                    ReferenceField referenceField1 = (ReferenceField) field;
-                    ModelManager manager1 =  modelClass.getModelClass(referenceField1.getReferenceModelName()).getManager();
-                    query.putTargetType(sqlName, manager1.getField(referenceField1.getReferenceModelFieldName()).getColumnType());
-                } else {
-                    query.putTargetType(sqlName, field.getColumnType());
-                }
-                target.append(alias).append(".").append(sqlName);
-            }
-        }
-
-        return target.toString();
     }
 
     protected void setFilters(SQLQuery query, ModelQuery modelQuery) throws DBException {
