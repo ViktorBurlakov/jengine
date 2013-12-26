@@ -21,6 +21,7 @@ package com.jengine.orm.field;
 
 
 import com.jengine.orm.Model;
+import com.jengine.orm.ModelClassBase;
 import com.jengine.orm.db.DBException;
 import com.jengine.utils.Variant;
 
@@ -80,20 +81,14 @@ public class ReferenceField extends Field {
         return columnName != null ? columnName : String.format("%s%s", fieldName, caps(getReferenceModelField().getColumnName()));
     }
 
-    public Field getReferenceModelField() {
-        if (referenceModelFieldName != null) {
-            return manager.getCls().getModelClass(referenceModelName).getManager().getField(referenceModelFieldName);
-        } else {
-            return manager.getCls().getModelClass(referenceModelName).getManager().getPrimaryKey();
-        }
+    public ModelClassBase getReferenceModel() {
+        return manager.getCls().getModelClass(referenceModelName);
     }
 
-    public String getReferenceModelFieldName() {
-        if (referenceModelFieldName != null) {
-            return referenceModelFieldName;
-        } else {
-            return manager.getCls().getModelClass(referenceModelName).getManager().getPrimaryKey().getFieldName();
-        }
+    public Field getReferenceModelField() {
+        return referenceModelFieldName != null ?
+                getReferenceModel().getManager().getField(referenceModelFieldName) :
+                getReferenceModel().getManager().getPrimaryKey();
     }
 
     public void setReferenceModelFieldName(String referenceModelFieldName) {
@@ -101,7 +96,8 @@ public class ReferenceField extends Field {
     }
 
     public String getMultiReferenceFieldName() {
-        return multiReferenceFieldName;
+        return multiReferenceFieldName != null ?
+                multiReferenceFieldName : String.format("%s_set", manager.getName().toLowerCase());
     }
 
     public void setMultiReferenceFieldName(String multiReferenceFieldName) {
