@@ -24,7 +24,7 @@ import com.jengine.orm.ModelClass;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.DateField;
 import com.jengine.orm.field.Field;
-import com.jengine.orm.field.ReferenceField;
+import com.jengine.orm.field.reference.ReferenceField;
 
 import java.util.Date;
 

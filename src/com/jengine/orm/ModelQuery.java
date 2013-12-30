@@ -29,7 +29,7 @@ import com.jengine.orm.db.query.parser.WhereTranslator;
 import com.jengine.orm.field.Field;
 import com.jengine.orm.field.ForeignField;
 import com.jengine.orm.field.FunctionField;
-import com.jengine.orm.field.ReferenceField;
+import com.jengine.orm.field.reference.ReferenceField;
 import com.jengine.utils.CollectionUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 
@@ -73,7 +73,7 @@ public class ModelQuery {
             if (foreignField.getActualField() instanceof ReferenceField) {
                 ReferenceField actualField = (ReferenceField) foreignField.getActualField();
                 ModelClassBase fieldModelClass = manager.getCls().getModelClass(actualField.getReferenceModelName());
-                for (Field field1 : fieldModelClass.getManager().getFields(Field.Type.PLAIN, Field.Type.REFERENCE)) {
+                for (Field field1 : fieldModelClass.getManager().getFields(Field.Type.PLAIN, Field.Type.REFERENCE, Field.Type.SINGLE_REFERENCE)) {
                     String fullFieldName = String.format("%s.%s", foreignField.getFieldName(), field1.getFieldName());
                     fieldMap.put(fullFieldName, manager.getField(fullFieldName));
                     multiFieldMap.get(field.getFieldName()).add(fieldMap.get(fullFieldName));
@@ -83,8 +83,7 @@ public class ModelQuery {
             fieldMap.put(field.getFieldName(), field);
             multiFieldMap.put(field.getFieldName(), new ArrayList<Field>());
             ReferenceField referenceField = (ReferenceField)field;
-            ModelClassBase fieldModelClass = manager.getCls().getModelClass(referenceField.getReferenceModelName());
-            for (Field field1 : fieldModelClass.getManager().getFields(Field.Type.PLAIN, Field.Type.REFERENCE)) {
+            for (Field field1 : referenceField.getReferenceClass().getManager().getFields(Field.Type.PLAIN, Field.Type.REFERENCE, Field.Type.SINGLE_REFERENCE)) {
                 String fullFieldName = String.format("%s.%s", referenceField.getFieldName(), field1.getFieldName());
                 fieldMap.put(fullFieldName, manager.getField(fullFieldName));
                 multiFieldMap.get(field.getFieldName()).add(fieldMap.get(fullFieldName));

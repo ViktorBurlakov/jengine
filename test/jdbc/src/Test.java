@@ -18,12 +18,12 @@ public class Test {
         Provider provider = new MySQLProvider(adapter);
         DBFactory.register(new DB(provider));
 
-        test1();
-        test2();
-        test3();
-        test4();
-        test5();
-        test6();
+//        test1();
+//        test2();
+//        test3();
+//        test4();
+//        test5();
+//        test6();
         test7();
     }
 
@@ -37,6 +37,7 @@ public class Test {
         Book.cls.remove();
         Member.cls.remove();
         Transaction.cls.remove();
+        Address.cls.remove();
         Author.books.getMiddleClass().remove();
 
     }
@@ -135,6 +136,13 @@ public class Test {
         member5.setLastName("Simpson");
         member5.setLibrary(globeLibrary);
         member5.save();
+
+        Address address1 = new Address();
+        address1.setId(1l);
+        address1.setStreet("Evergreen Terrace");
+        address1.setNumber("742");
+        address1.setMember(member5);
+        address1.save();
     }
 
     /**
@@ -254,6 +262,8 @@ public class Test {
         check( globe.getMembers().count() == 5 );
         check( globe.getMembers().filter("lastName = ?", "Simpson").count() == 2 );
         check( Author.cls.get(3).getBooks().list().size() == 1);
+        check( Member.cls.filter("firstName = ?", "Burt").<Member>one().getAddress().getNumber().equals("742"));
+        check( Address.cls.filter("member.firstName = ?", "Burt").<Address>one().getNumber().equals("742"));
     }
 
     private static void check(boolean value) throws Exception {

@@ -20,11 +20,19 @@
 package com.jengine.orm;
 
 import com.jengine.orm.db.DBException;
-import com.jengine.orm.field.*;
+import com.jengine.orm.field.Field;
+import com.jengine.orm.field.ForeignField;
+import com.jengine.orm.field.ModelProperty;
+import com.jengine.orm.field.reference.*;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static com.jengine.utils.CollectionUtil.set;
 
 
 public class Model {
@@ -70,12 +78,12 @@ public class Model {
         return (Serializable) getValue(cls.getManager().getPrimaryKey());
     }
 
-    public void setId(Serializable value) throws DBException {
+    public <T extends Serializable> void setId(T value) throws DBException {
         setPrimaryKey(value);
     }
 
-    public Serializable getId() throws DBException {
-        return getPrimaryKey();
+    public <T extends Serializable> T getId() throws DBException {
+        return (T) getPrimaryKey();
     }
 
     public void setValue(String fieldName, Object value) throws DBException {
@@ -87,8 +95,14 @@ public class Model {
     }
 
     public void setValue(Field field, Object value) throws DBException {
-        if (field.getType() == Field.Type.PLAIN || field.getType() == Field.Type.REFERENCE ||
-                field.getType() == Field.Type.MANY_REFERENCE || field.getType() == Field.Type.REVERSE_MANY_REFERENCE) {
+        Set types = set(Field.Type.PLAIN,
+                Field.Type.REFERENCE,
+                Field.Type.SINGLE_REFERENCE,
+                Field.Type.MANY_REFERENCE,
+                Field.Type.REVERSE_MANY_REFERENCE,
+                Field.Type.REVERSE_SINGLE_REFERENCE
+        );
+        if (types.contains(field.getType())) {
             values.put(field.getFieldName(), field.cast(value));
         }
     }
@@ -101,11 +115,18 @@ public class Model {
             return reference.getValue(foreignField.getNextField());
         } else if (field instanceof ReferenceField) {
             return cls.getModelClass(((ReferenceField)field).getReferenceModelName()).get(values.get(field.getFieldName()));
-        } else if (field instanceof MultiReferenceField) {
-            MultiReferenceField multiField = (MultiReferenceField) field;
-            ModelClassBase referenceCls = cls.getModelClass(multiField.getReferenceModelName());
-            Field referenceModelField =  referenceCls.getManager().getField(multiField.getReferenceModelFieldName());
-            return referenceCls.filter(referenceModelField.eq(getPrimaryKey()));
+        } else if (field instanceof ReverseReferenceField) {
+            ReverseReferenceField multiField = (ReverseReferenceField) field;
+            ModelClassBase referenceCls = multiField.getReferenceClass();
+            ReferenceField reverseField = (ReferenceField) multiField.getReverseField();
+            Object key = values.get(reverseField.getReferenceModelKey().getFieldName());
+            return referenceCls.filter(reverseField.eq(key));
+        } else if (field instanceof ReverseSingleReferenceField) {
+            ReverseSingleReferenceField reverseSingleField = (ReverseSingleReferenceField) field;
+            ModelClassBase referenceCls = reverseSingleField.getReferenceClass();
+            SingleReferenceField singleField = (SingleReferenceField) reverseSingleField.getReverseField();
+            Object key = values.get(singleField.getReferenceModelKey().getFieldName());
+            return referenceCls.filter(singleField.eq(key)).one();
         } else if (field instanceof ManyReferenceField) {
             ManyReferenceField manyField = (ManyReferenceField) field;
             ModelClassBase middleCls = cls.getModelClass(manyField.getMiddleModelName());
@@ -143,7 +164,7 @@ public class Model {
     public Map<String, Object> getDBValues() throws DBException {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-        for (Field field : cls.getManager().getFields(Field.Type.REFERENCE, Field.Type.PLAIN)) {
+        for (Field field : cls.getManager().getFields(Field.Type.REFERENCE, Field.Type.PLAIN, Field.Type.SINGLE_REFERENCE)) {
             if (values.containsKey(field.getFieldName())) {
                 result.put(field.getColumnName(), values.get(field.getFieldName()));
             }

@@ -79,6 +79,16 @@ public class CollectionUtil {
         return Arrays.asList(values);
     }
 
+    public static <V> Set<V> set(Object... values) {
+        Set<V> result = new LinkedHashSet<V>();
+
+        for(int i=0; i < values.length; i++) {
+            result.add((V) values[i]);
+        }
+
+        return  result;
+    }
+
     public static <V> LinkedHashMap<String, V> map(Object... values) {
         LinkedHashMap<String, V> result = new LinkedHashMap<String, V>();
 

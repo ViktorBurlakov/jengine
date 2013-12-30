@@ -17,37 +17,21 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.orm.field;
+package com.jengine.orm.field.reference;
 
+import static com.jengine.utils.CollectionUtil.map;
 
-import com.jengine.orm.ModelManager;
+public class ReverseReferenceField extends BaseReference {
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class SelfField extends ReferenceField {
-    public static String DEFAULT_NAME = "self";
-
-    public SelfField(Class fieldClass) {
-        this(fieldClass, new HashMap<String, Object>());
+    public ReverseReferenceField(Class fieldClass, String reverseFieldName) {
+        super(fieldClass, map("reverseFieldName", reverseFieldName));
     }
 
-    public SelfField(Class fieldClass, Map<String, Object> options) {
-        super(fieldClass, options);
-    }
-
-    public void config(ModelManager manager) {
-        super.config(DEFAULT_NAME, manager);
-        if (!options.containsKey("columnName")) {
-            columnName =  null;
-        }
-        if (!options.containsKey("referenceModelFieldName")) {
-            referenceModelFieldName = null;
-        }
-
+    public ReverseReferenceField(Class fieldClass, String referenceModelName, String reverseFieldName) {
+        super(fieldClass, referenceModelName, map("reverseFieldName", reverseFieldName));
     }
 
     public Type getType() {
-        return Type.SELF;
+        return Type.REVERSE_REFERENCE;
     }
 }

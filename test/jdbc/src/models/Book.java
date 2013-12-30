@@ -23,7 +23,7 @@ import com.jengine.orm.ModelClass;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.Field;
 import com.jengine.orm.field.PrimaryKey;
-import com.jengine.orm.field.ReferenceField;
+import com.jengine.orm.field.reference.ReferenceField;
 import com.jengine.orm.field.StringField;
 
 import static com.jengine.utils.CollectionUtil.map;

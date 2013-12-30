@@ -102,9 +102,12 @@ public class WhereTranslator implements ASTVisitor {
                 SQLCommonAST commonAST = (SQLCommonAST) child.getFirstChild();
                 fields.add(commonAST);
                 fieldNames.add(commonAST.getText());
-                start = start == -1 ? commonAST.getColumn() - 1 : start;
-                end =  start + commonAST.getText().length() - 1;
                 printNode(child.getFirstChild());
+                start = start == -1 ? (commonAST.getColumn() - 1) : start;
+                end = end == -1 ? start + commonAST.getText().length() - 1 : end + commonAST.getText().length();
+            } else if (child.getType() == SqlTokenTypes.DOT) {
+                end +=  child.getText().length();
+                printNode(child);
             } else {
                 printNode(child);
             }

@@ -23,7 +23,7 @@ package models;
 import com.jengine.orm.ModelClass;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.Field;
-import com.jengine.orm.field.ReferenceField;
+import com.jengine.orm.field.reference.ReferenceField;
 import com.jengine.orm.field.StringField;
 
 import static com.jengine.utils.CollectionUtil.map;
@@ -68,4 +68,13 @@ public class Member extends TestModel {
     public Library getLibrary() throws DBException {
         return (Library) getValue(library);
     }
+
+    public Address getAddress() throws DBException {
+        return (Address) getValue("address");
+    }
+
+    public void setAddress(Address value) throws DBException {
+        setValue("address", value);
+    }
+
 }

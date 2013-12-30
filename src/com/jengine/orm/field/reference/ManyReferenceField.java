@@ -1,19 +1,19 @@
-package com.jengine.orm.field;
+package com.jengine.orm.field.reference;
 
 
 import com.jengine.orm.Model;
 import com.jengine.orm.ModelClassBase;
+import com.jengine.orm.ModelManager;
 import com.jengine.orm.db.DBException;
+import com.jengine.orm.field.Field;
 import com.jengine.utils.Variant;
 
 import java.util.*;
 
 import static com.jengine.utils.CollectionUtil.map;
 
-public class ManyReferenceField extends Field {
+public class ManyReferenceField extends BaseReference {
     private String keyFieldName;
-    private String referenceModelName;
-    private String referenceFieldName;
     private String referenceKeyFieldName;
     private String middleModelName;
     private String middleModelTableName;
@@ -25,17 +25,17 @@ public class ManyReferenceField extends Field {
     }
 
     public ManyReferenceField(Class fieldClass, Map<String, Object> options) {
-        this(fieldClass.getSimpleName(), options);
+        super(fieldClass, options);
     }
 
-    public ManyReferenceField(String referenceModelName, Map<String, Object> options) {
-        super(null, options);
-        this.referenceModelName = referenceModelName;
+    public ManyReferenceField(Class fieldClass, String referenceModelName, Map<String, Object> options) {
+        super(fieldClass, referenceModelName, options);
+    }
+
+    public void config(String fieldName, ModelManager manager) {
+        super.config(fieldName, manager);
         if (options.containsKey("keyFieldName")) {
             keyFieldName = (String) options.get("keyFieldName");
-        }
-        if (options.containsKey("referenceFieldName")) {
-            referenceFieldName = (String) options.get("referenceFieldName");
         }
         if (options.containsKey("middleModelName")) {
             middleModelName = (String) options.get("middleModelName");
@@ -57,7 +57,7 @@ public class ManyReferenceField extends Field {
     public Object cast(Object value) throws DBException {
         List result = new ArrayList();
         List values = value instanceof List ? (List) value : Arrays.asList(value);
-        Field field = getManyReferenceField().getKeyField();
+        Field field = getReverseField().getKeyField();
 
         for (Object item : values) {
             result.add(item instanceof Model ?
@@ -72,9 +72,9 @@ public class ManyReferenceField extends Field {
     }
 
     public ReverseManyReferenceField newReverseField(){
-        return new ReverseManyReferenceField(manager.getName(), map(
+        return new ReverseManyReferenceField(manager.getModelClass(), manager.getName(), map(
                 "keyFieldName", referenceKeyFieldName,
-                "referenceFieldName", fieldName,
+                "reverseFieldName", fieldName,
                 "referenceKeyFieldName", getKeyFieldName(),
                 "middleModelName", getMiddleModelName(),
                 "middleModelTableName", getMiddleModelTableName(),
@@ -87,24 +87,12 @@ public class ManyReferenceField extends Field {
         return manager.getCls().getModelClass(getMiddleModelName());
     }
 
-    public ModelClassBase getReferenceClass() {
-        return manager.getCls().getModelClass(referenceModelName);
-    }
-
-    public ManyReferenceField getManyReferenceField() {
-        return (ManyReferenceField) getReferenceClass().getManager().getField(getReferenceFieldName());
+    public ManyReferenceField getReverseField() {
+        return (ManyReferenceField) super.getReverseField();
     }
 
     public Field getKeyField() {
         return manager.getField(getKeyFieldName());
-    }
-
-    public String getReferenceModelName() {
-        return referenceModelName;
-    }
-
-    public void setReferenceModelName(String referenceModelName) {
-        this.referenceModelName = referenceModelName;
     }
 
     public String getMiddleModelName() {
@@ -135,14 +123,13 @@ public class ManyReferenceField extends Field {
         this.keyFieldName = keyFieldName;
     }
 
-    public String getReferenceFieldName() {
-        return referenceFieldName != null ? referenceFieldName :String.format("%s_set", manager.getName().toLowerCase());
+    public String getReverseFieldName() {
+        return reverseFieldName != null ? reverseFieldName :String.format("%s_set", manager.getName().toLowerCase());
     }
 
-    public void setReferenceFieldName(String referenceFieldName) {
-        this.referenceFieldName = referenceFieldName;
+    public void setReverseFieldName(String reverseFieldName) {
+        this.reverseFieldName = reverseFieldName;
     }
-
 
     public String getReferenceKeyFieldName() {
         return referenceKeyFieldName;
