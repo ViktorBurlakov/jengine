@@ -377,8 +377,8 @@ public class Provider {
         path.add(foreignField.getCurrentField().getFieldName());
         String foreignAlias = concat(path, "__").toString();
         if (foreignField.getCurrentField().getType() != Field.Type.SELF) {
-            String tableName =  foreignField.getCurrentField().getReferenceModel().getManager().getTableName();
-            Field referenceModelField = foreignField.getCurrentField().getReferenceModelField();
+            String tableName =  foreignField.getCurrentField().getReferenceClass().getManager().getTableName();
+            Field referenceModelField = foreignField.getCurrentField().getReferenceModelKey();
             List value = list(tableName,String.format("%s.%s = %s.%s",
                     foreignAlias, referenceModelField.getColumnName(),
                     alias, foreignField.getCurrentField().getColumnName()));

@@ -5,6 +5,8 @@ import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.expression.Expression;
 import com.jengine.orm.db.provider.Provider;
 import com.jengine.orm.field.*;
+import com.jengine.orm.field.reference.ManyReferenceField;
+import com.jengine.orm.field.reference.ReferenceField;
 
 import java.io.Serializable;
 import java.util.*;
@@ -164,9 +166,9 @@ public class ModelClassBase<T extends Model> {
                 List keys = (List) values.get(field.getFieldName());
                 ModelClassBase referenceModelClass = getModelClass(manyReferenceField.getReferenceModelName());
                 ModelClassBase middleModelClass = getModelClass(manyReferenceField.getMiddleModelName());
-                Field referenceKeyField = manyReferenceField.getManyReferenceField().getKeyField();
+                Field referenceKeyField = manyReferenceField.getReverseField().getKeyField();
                 Field middleModelField = middleModelClass.getManager().getField(manyReferenceField.getMiddleModelFieldName());
-                Field middleModelReferenceField = middleModelClass.getManager().getField(manyReferenceField.getManyReferenceField().getMiddleModelFieldName());
+                Field middleModelReferenceField = middleModelClass.getManager().getField(manyReferenceField.getReverseField().getMiddleModelFieldName());
                 for (Object key : keys) {
                     Model referenceObj = referenceModelClass.filter(referenceKeyField.eq(key)).one();
                     Model middleObj = middleModelClass.newInstance();
@@ -239,11 +241,12 @@ public class ModelClassBase<T extends Model> {
             fields.add(modelQuery.getManager().getSelf());
         }
         for (Field field : fields) {
-            if (field.getType() == Field.Type.REFERENCE || field.getType() == Field.Type.SELF) {
+            if (field.getType() == Field.Type.REFERENCE || field.getType() == Field.Type.SELF
+                    || field.getType() == Field.Type.SINGLE_REFERENCE) {
                 ModelClassBase fieldModelClass = getModelClass(((ReferenceField)field).getReferenceModelName());
                 Model obj = fieldModelClass.newInstance();
                 obj.setNew(false);
-                for (Field objField : fieldModelClass.getManager().getFields(Field.Type.PLAIN, Field.Type.REFERENCE)) {
+                for (Field objField : fieldModelClass.getManager().getFields(Field.Type.PLAIN, Field.Type.REFERENCE, Field.Type.SINGLE_REFERENCE)) {
                     obj.setValue(objField, items[index++]);
                 }
                 obj.cache();

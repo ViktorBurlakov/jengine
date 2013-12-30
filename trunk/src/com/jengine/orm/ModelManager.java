@@ -22,6 +22,7 @@ package com.jengine.orm;
 
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.*;
+import com.jengine.orm.field.reference.*;
 
 import java.sql.Types;
 import java.util.*;
@@ -65,22 +66,32 @@ public class ModelManager {
     public Field addField(Field field) {
         if (field.getType() == Field.Type.REFERENCE) {
             ReferenceField referenceField = (ReferenceField) field;
-            MultiReferenceField multiReferenceField = new MultiReferenceField(name, modelClass, referenceField.getFieldName());
+            ReverseReferenceField multiReferenceField = new ReverseReferenceField(modelClass, name, referenceField.getFieldName());
             ModelClassBase referenceModelClass = cls.getModelClass(referenceField.getReferenceModelName());
             if (referenceModelClass != null) {
-                multiReferenceField.config(referenceField.getMultiReferenceFieldName(), referenceModelClass.getManager());
+                multiReferenceField.config(referenceField.getReverseFieldName(), referenceModelClass.getManager());
                 referenceModelClass.getManager().addField(multiReferenceField);
             } else {
-                putDeferredField(referenceField.getReferenceModelName(), referenceField.getMultiReferenceFieldName(), multiReferenceField);
+                putDeferredField(referenceField.getReferenceModelName(), referenceField.getReverseFieldName(), multiReferenceField);
+            }
+        } else if (field.getType() == Field.Type.SINGLE_REFERENCE) {
+            ReferenceField referenceField = (ReferenceField) field;
+            ReverseSingleReferenceField reverseField = new ReverseSingleReferenceField(modelClass, name, referenceField.getFieldName());
+            ModelClassBase referenceModelClass = cls.getModelClass(referenceField.getReferenceModelName());
+            if (referenceModelClass != null) {
+                reverseField.config(referenceField.getReverseFieldName(), referenceModelClass.getManager());
+                referenceModelClass.getManager().addField(reverseField);
+            } else {
+                putDeferredField(referenceField.getReferenceModelName(), referenceField.getReverseFieldName(), reverseField);
             }
         }  else if (field.getType() == Field.Type.MANY_REFERENCE) {
             ManyReferenceField manyField = (ManyReferenceField) field;
             ModelClassBase referenceModelClass = cls.getModelClass(manyField.getReferenceModelName());
             ReverseManyReferenceField reverseField = manyField.newReverseField();
             if (referenceModelClass != null) {
-                referenceModelClass.getManager().addField(manyField.getReferenceFieldName(), reverseField);
+                referenceModelClass.getManager().addField(manyField.getReverseFieldName(), reverseField);
             } else {
-                putDeferredField(manyField.getReferenceModelName(), manyField.getReferenceFieldName(), reverseField);
+                putDeferredField(manyField.getReferenceModelName(), manyField.getReverseFieldName(), reverseField);
             }
         }  else if (field.getType() == Field.Type.REVERSE_MANY_REFERENCE) {
             createMiddleClass((ManyReferenceField) field);
@@ -113,7 +124,7 @@ public class ModelManager {
     protected void createMiddleClass(ManyReferenceField manyField) {
         ModelClassBase referenceModelClass = manyField.getReferenceClass();
         ModelClassBase middleModelClass = manyField.getMiddleClass();
-        ManyReferenceField referenceField = manyField.getManyReferenceField();
+        ManyReferenceField referenceField = manyField.getReverseField();
         if (middleModelClass == null) {
             middleModelClass = new DynamicModelClass(
                     manyField.getMiddleModelName(),
@@ -124,14 +135,14 @@ public class ModelManager {
                     referenceField.getMiddleModelFieldName(),
                     new ReferenceField(referenceModelClass.getManager().getModelClass(), map(
                             "referenceModelName", referenceModelClass.getName(),
-                            "referenceModelFieldName", referenceField.getKeyFieldName(),
+                            "referenceModelKeyName", referenceField.getKeyFieldName(),
                             "columnName", referenceModelClass.getManager().getTableName().toLowerCase()))
             );
             middleModelClass.getManager().addField(
                     manyField.getMiddleModelFieldName(),
                     new ReferenceField(modelClass, map(
                             "referenceModelName", name,
-                            "referenceModelFieldName", manyField.getKeyFieldName(),
+                            "referenceModelKeyName", manyField.getKeyFieldName(),
                             "columnName", tableName.toLowerCase()))
             );
             middleModelClass.getManager().addField("id", new PrimaryKey());

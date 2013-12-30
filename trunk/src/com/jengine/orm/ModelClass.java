@@ -2,6 +2,7 @@ package com.jengine.orm;
 
 import com.jengine.orm.db.DBFactory;
 import com.jengine.orm.field.*;
+import com.jengine.orm.field.reference.SelfField;
 import com.jengine.utils.ClassUtils;
 
 import java.lang.reflect.Method;

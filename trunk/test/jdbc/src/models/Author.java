@@ -24,7 +24,7 @@ import com.jengine.orm.ModelClass;
 import com.jengine.orm.ModelQuery;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.Field;
-import com.jengine.orm.field.ManyReferenceField;
+import com.jengine.orm.field.reference.ManyReferenceField;
 import com.jengine.orm.field.PrimaryKey;
 import com.jengine.orm.field.StringField;
 
