@@ -20,60 +20,22 @@
 package com.jengine.orm.field;
 
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import static com.jengine.utils.CollectionUtil.map;
 
 
-public class DateField extends Field {
-    private DateFormat dateFormatter = null;
-    private String dateFormat = "yyyy-MM-dd"; // ISO date format
+public class DateField extends BaseDateField {
 
     public DateField() {
-        this(new HashMap<String, Object>());
+        super(map());
     }
 
-    public DateField(Object... options) {
-        this(map(options));
+    public DateField(Object ... options) {
+        super(map(options));
     }
 
     public DateField(Map<String, Object> options) {
-        super(Date.class, options);
-        if (options.containsKey("dateFormat")) {
-            this.dateFormat = (String) options.get("dateFormat");
-        }
-        this.dateFormatter = new SimpleDateFormat(dateFormat);
-    }
-
-    public String getDateFormat() {
-        return dateFormat;
-    }
-
-    public void setDateFormat(String dateFormat) {
-        this.dateFormat = dateFormat;
-    }
-
-    public Date cast(Object value){
-        if (Long.class.isInstance(value)) {
-            return new Date((Long)value);
-        } else if (String.class.isInstance(value)){
-            try {
-
-                return dateFormatter.parse((String) value);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return (Date) value;
-    }
-
-    public String format(Object value) {
-        return new SimpleDateFormat(dateFormat).format(value);
+        super(options);
     }
 }

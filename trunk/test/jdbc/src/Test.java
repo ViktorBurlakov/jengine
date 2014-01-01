@@ -18,12 +18,12 @@ public class Test {
         Provider provider = new MySQLProvider(adapter);
         DBFactory.register(new DB(provider));
 
-//        test1();
-//        test2();
-//        test3();
-//        test4();
-//        test5();
-//        test6();
+        test1();
+        test2();
+        test3();
+        test4();
+        test5();
+        test6();
         test7();
     }
 

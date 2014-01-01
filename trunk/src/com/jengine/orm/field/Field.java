@@ -48,6 +48,8 @@ public class Field {
     protected boolean primaryKey = false;
     protected boolean autoIncrement = false;
     protected boolean visible = false;
+    protected boolean required = false;
+    protected Object defaultValue = null;
     protected Map<String, Object> options = new LinkedHashMap<String, Object>();
 
     public Field() {
@@ -77,8 +79,11 @@ public class Field {
 //            this.columnType = options.containsKey("columnType") ?  (Integer) options.get("columnType") :
 //                    (getTypeMap().containsKey(fieldClass.getName()) ? getTypeMap().get(fieldClass.getName())[0] : null);
         }
-        if (options.containsKey("autoIncrement")) {
-            this.autoIncrement = (Boolean) options.get("autoIncrement");
+        if (options.containsKey("required")) {
+            this.required = (Boolean) options.get("required");
+        }
+        if (options.containsKey("defaultValue")) {
+            this.defaultValue = options.get("defaultValue");
         }
     }
 
@@ -111,6 +116,12 @@ public class Field {
 
     public boolean isKey() {
         return false;
+    }
+
+    public void validate(Object value) throws DBException {
+        if (required && value == null) {
+            new DBException("'%s' field validation error: required field is empty");
+        }
     }
 
     /* getters and setters */
@@ -191,6 +202,22 @@ public class Field {
         this.autoIncrement = autoIncrement;
     }
 
+    public boolean isRequired() {
+        return required;
+    }
+
+    public void setRequired(boolean required) {
+        this.required = required;
+    }
+
+    public Object getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(Object defaultValue) {
+        this.defaultValue = defaultValue;
+    }
+
     public Map<String, Object> toMap() {
         Map result = new HashMap();
 
@@ -199,13 +226,13 @@ public class Field {
         result.put("primaryKey" , primaryKey);
         result.put("verbose" , verbose);
         result.put("visible" , visible);
-        result.put("type" , getType());
+        result.put("type" , getType().name());
         result.put("columnType" , columnType);
 
         return result;
     }
 
-    /* operation method */
+    /* operation methods */
 
     public Expression eq(Object value) {
         return new ExpressionImpl(fieldName, "eq", value);
