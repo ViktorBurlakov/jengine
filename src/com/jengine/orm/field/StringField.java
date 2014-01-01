@@ -20,17 +20,39 @@
 package com.jengine.orm.field;
 
 
+import com.jengine.orm.db.DBException;
+
 import java.util.Map;
 
 import static com.jengine.utils.CollectionUtil.map;
 
 public class StringField extends Field {
+    private Integer maxLength = null;
 
     public StringField(Object... options) {
-        super(String.class, map(options));
+        this(map(options));
     }
 
     public StringField(Map<String, Object> options) {
         super(String.class, options);
+        if (options.containsKey("maxLength")) {
+            maxLength = (Integer) options.get("maxLength");
+        }
+    }
+
+    public void validate(String value) throws DBException {
+        super.validate(value);
+        if (maxLength != null && value != null && value.length() > maxLength) {
+            throw new DBException(String.format("'%s' field validation error: max length < actual size (%s)", fieldName, value.length()));
+        }
+    }
+
+
+    public Integer getMaxLength() {
+        return maxLength;
+    }
+
+    public void setMaxLength(Integer maxLength) {
+        this.maxLength = maxLength;
     }
 }
