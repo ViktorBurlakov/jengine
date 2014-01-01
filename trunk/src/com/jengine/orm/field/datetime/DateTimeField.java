@@ -17,18 +17,36 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.orm.field;
+package com.jengine.orm.field.datetime;
 
+
+import java.sql.Types;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LongField extends Field {
+import static com.jengine.utils.CollectionUtil.map;
 
-    public LongField() {
+public class DateTimeField extends BaseDateField {
+    public static String DEFAULT_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+    public DateTimeField() {
         this(new HashMap<String, Object>());
     }
 
-    public LongField(Map<String, Object> options) {
-        super(Long.class, options);
+    public DateTimeField(Object... options) {
+        this(map(options));
+    }
+
+    public DateTimeField(Map<String, Object> options) {
+        super(Date.class, options);
+    }
+
+    protected Map<String, Integer[]> getTypeMap() {
+        return map(Date.class.getName(), new Integer[] { Types.TIMESTAMP, Types.BIGINT });
+    }
+
+    public String getDefaultFormat() {
+        return DEFAULT_FORMAT;
     }
 }

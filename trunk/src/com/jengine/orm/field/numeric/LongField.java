@@ -17,18 +17,20 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.orm.field;
+package com.jengine.orm.field.numeric;
+
+import com.jengine.orm.field.Field;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class IntegerField extends Field {
+public class LongField extends Field {
 
-    public IntegerField() {
-        this(new HashMap());
+    public LongField() {
+        this(new HashMap<String, Object>());
     }
 
-    public IntegerField(Map<String, Object> options) {
-        super(Integer.class, options);
+    public LongField(Map<String, Object> options) {
+        super(Long.class, options);
     }
 }

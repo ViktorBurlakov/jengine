@@ -17,22 +17,17 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.orm.field;
+package com.jengine.orm.field.datetime;
 
 
 import java.sql.Types;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
 import static com.jengine.utils.CollectionUtil.map;
 
-public class TimeField extends Field {
-    private DateFormat dateTimeFormat = null;
-    private String timeFormat = "HH:mm:ss"; // ISO date time format
-
+public class TimeField extends BaseDateField {
+    public static String DEFAULT_FORMAT = "HH:mm:ss"; // ISO date time format
 
     public TimeField(Object... options) {
         this(map(options));
@@ -40,40 +35,13 @@ public class TimeField extends Field {
 
     public TimeField(Map<String, Object> options) {
         super(Date.class, options);
-        if (options.containsKey("timeFormat")) {
-            this.timeFormat = (String) options.get("timeFormat");
-        }
-        this.dateTimeFormat = new SimpleDateFormat(timeFormat);
     }
 
     protected Map<String, Integer[]> getTypeMap() {
         return map(Date.class.getName(), new Integer[] { Types.TIME, Types.TIMESTAMP });
     }
 
-    public String getTimeFormat() {
-        return timeFormat;
-    }
-
-    public void setTimeFormat(String timeFormat) {
-        this.timeFormat = timeFormat;
-    }
-
-    public Object cast(Object value){
-        if (Long.class.isInstance(value)) {
-            return new Date((Long)value);
-        } else if (String.class.isInstance(value)){
-            try {
-
-                return dateTimeFormat.parse((String) value);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return value;
-    }
-
-    public String format(Object value) {
-        return new SimpleDateFormat(timeFormat).format(value);
+    public String getDefaultFormat() {
+        return DEFAULT_FORMAT;
     }
 }

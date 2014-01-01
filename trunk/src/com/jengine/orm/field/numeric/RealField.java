@@ -1,5 +1,7 @@
-package com.jengine.orm.field;
+package com.jengine.orm.field.numeric;
 
+
+import com.jengine.orm.field.Field;
 
 import java.util.Map;
 

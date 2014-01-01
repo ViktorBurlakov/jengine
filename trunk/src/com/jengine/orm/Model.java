@@ -161,12 +161,13 @@ public class Model {
         return values;
     }
 
-    public Map<String, Object> getDBValues() throws DBException {
+    public Map<String, Object> getData() throws DBException {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 
         for (Field field : cls.getManager().getFields(Field.Type.REFERENCE, Field.Type.PLAIN, Field.Type.SINGLE_REFERENCE)) {
             if (values.containsKey(field.getFieldName())) {
-                result.put(field.getColumnName(), values.get(field.getFieldName()));
+                Object value = values.containsKey(field.getFieldName()) ? values.get(field.getFieldName()) : field.getDefaultValue();
+                result.put(field.getColumnName(), value);
             }
         }
 
@@ -183,6 +184,12 @@ public class Model {
         }
 
         return result;
+    }
+
+    public void validate() throws DBException {
+        for (Field field : cls.getManager().getFields()) {
+            field.validate(values.get(field.getFieldName()));
+        }
     }
 
     /* modify methods */

@@ -1,4 +1,6 @@
-package com.jengine.orm.field;
+package com.jengine.orm.field.datetime;
+
+import com.jengine.orm.field.Field;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -6,20 +8,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-/**
- * Created with IntelliJ IDEA.
- * User: victor
- * Date: 1/1/14
- * Time: 12:19 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class BaseDateField extends Field {
     protected DateFormat formatter = null;
-    protected String format = "yyyy-MM-dd"; // ISO date format
+    protected String format = null;
     protected Boolean autoNow = false;
 
-    public BaseDateField(Map<String, Object> options) {
-        super(Date.class, options);
+    public BaseDateField(Class fieldClass, Map<String, Object> options) {
+        super(fieldClass, options);
+        format = getDefaultFormat();
         if (options.containsKey("format")) {
             this.format = (String) options.get("format");
         }
@@ -29,12 +26,21 @@ public class BaseDateField extends Field {
         this.formatter = new SimpleDateFormat(format);
     }
 
+    public Object getDefaultValue() {
+        return autoNow ? new Date() : super.getDefaultValue();
+    }
+
+    public String getDefaultFormat() {
+        return "yyyy-MM-dd";
+    }
+
     public String getFormat() {
         return format;
     }
 
     public void setFormat(String format) {
         this.format = format;
+        this.formatter = new SimpleDateFormat(format);
     }
 
     public Date cast(Object value){
