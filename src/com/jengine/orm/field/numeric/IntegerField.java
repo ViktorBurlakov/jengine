@@ -17,25 +17,20 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.orm.field;
+package com.jengine.orm.field.numeric;
 
+import com.jengine.orm.field.Field;
 
+import java.util.HashMap;
 import java.util.Map;
 
-import static com.jengine.utils.CollectionUtil.map;
+public class IntegerField extends Field {
 
-
-public class DateField extends BaseDateField {
-
-    public DateField() {
-        super(map());
+    public IntegerField() {
+        this(new HashMap());
     }
 
-    public DateField(Object ... options) {
-        super(map(options));
-    }
-
-    public DateField(Map<String, Object> options) {
-        super(options);
+    public IntegerField(Map<String, Object> options) {
+        super(Integer.class, options);
     }
 }

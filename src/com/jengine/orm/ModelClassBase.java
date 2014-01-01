@@ -146,7 +146,7 @@ public class ModelClassBase<T extends Model> {
     }
 
     public T insert(Model obj) throws DBException {
-        Object id = provider.insert(manager.getTableName(), obj.getDBValues());
+        Object id = provider.insert(manager.getTableName(), obj.getData());
         obj.setNew(false);
         if (manager.getPrimaryKey().isAutoIncrement()) {
             obj.setPrimaryKey((Serializable) id);
@@ -190,7 +190,7 @@ public class ModelClassBase<T extends Model> {
     }
 
     public Model update(Model obj) throws DBException {
-        provider.update(manager.getTableName(), manager.getPrimaryKey().getColumnName(), obj.getDBValues());
+        provider.update(manager.getTableName(), manager.getPrimaryKey().getColumnName(), obj.getData());
         if (obj.getReferenceValues().size() > 0) {
             removeReferences(obj);
             insertReferences(obj);
