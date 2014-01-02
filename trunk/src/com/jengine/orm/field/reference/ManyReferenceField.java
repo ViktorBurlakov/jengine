@@ -3,7 +3,6 @@ package com.jengine.orm.field.reference;
 
 import com.jengine.orm.Model;
 import com.jengine.orm.ModelClassBase;
-import com.jengine.orm.ModelManager;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.Field;
 import com.jengine.utils.Variant;
@@ -25,15 +24,11 @@ public class ManyReferenceField extends BaseReference {
     }
 
     public ManyReferenceField(Class fieldClass, Map<String, Object> options) {
-        super(fieldClass, options);
+        this(fieldClass, fieldClass.getSimpleName(), options);
     }
 
     public ManyReferenceField(Class fieldClass, String referenceModelName, Map<String, Object> options) {
         super(fieldClass, referenceModelName, options);
-    }
-
-    public void config(String fieldName, ModelManager manager) {
-        super.config(fieldName, manager);
         if (options.containsKey("keyFieldName")) {
             keyFieldName = (String) options.get("keyFieldName");
         }
