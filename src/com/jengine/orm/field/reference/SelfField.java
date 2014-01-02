@@ -20,7 +20,6 @@
 package com.jengine.orm.field.reference;
 
 
-import com.jengine.orm.ModelManager;
 import com.jengine.orm.field.Field;
 
 import java.util.HashMap;
@@ -38,15 +37,11 @@ public class SelfField extends ReferenceField {
     }
 
     public SelfField(Class fieldClass, Map<String, Object> options) {
-        super(fieldClass, options);
+        this(fieldClass, fieldClass.getSimpleName(), options);
     }
 
     public SelfField(Class fieldClass, String referenceModelName, Map<String, Object> options) {
         super(fieldClass, referenceModelName, options);
-    }
-
-    public void config(String fieldName, ModelManager manager) {
-        super.config(fieldName, manager);
         if (!options.containsKey("columnName")) {
             columnName =  null;
         }
