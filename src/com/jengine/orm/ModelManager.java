@@ -87,7 +87,15 @@ public class ModelManager {
         }  else if (field.getType() == Field.Type.MANY_REFERENCE) {
             ManyReferenceField manyField = (ManyReferenceField) field;
             ModelClassBase referenceModelClass = cls.getModelClass(manyField.getReferenceModelName());
-            ReverseManyReferenceField reverseField = manyField.newReverseField();
+            ReverseManyReferenceField reverseField =  new ReverseManyReferenceField(modelClass, name, map(
+                        "keyFieldName", manyField.getReferenceKeyFieldName(),
+                        "reverseFieldName", manyField.getFieldName(),
+                        "referenceKeyFieldName", manyField.getKeyFieldName(),
+                        "middleModelName", manyField.getMiddleModelName(),
+                        "middleModelTableName", manyField.getMiddleModelTableName(),
+                        "middleModelFieldName", manyField.getMiddleModelReferenceFieldName(),
+                        "middleModelReferenceFieldName", manyField.getMiddleModelFieldName()
+                ));
             if (referenceModelClass != null) {
                 referenceModelClass.getManager().addField(manyField.getReverseFieldName(), reverseField);
             } else {

@@ -9,8 +9,6 @@ import com.jengine.utils.Variant;
 
 import java.util.*;
 
-import static com.jengine.utils.CollectionUtil.map;
-
 public class ManyReferenceField extends BaseReference {
     private String keyFieldName;
     private String referenceKeyFieldName;
@@ -66,18 +64,6 @@ public class ManyReferenceField extends BaseReference {
         return Type.MANY_REFERENCE;
     }
 
-    public ReverseManyReferenceField newReverseField(){
-        return new ReverseManyReferenceField(manager.getModelClass(), manager.getName(), map(
-                "keyFieldName", referenceKeyFieldName,
-                "reverseFieldName", fieldName,
-                "referenceKeyFieldName", getKeyFieldName(),
-                "middleModelName", getMiddleModelName(),
-                "middleModelTableName", getMiddleModelTableName(),
-                "middleModelFieldName", middleModelReferenceFieldName,
-                "middleModelReferenceFieldName", getMiddleModelFieldName()
-        ));
-    }
-
     public ModelClassBase getMiddleClass() {
         return manager.getCls().getModelClass(getMiddleModelName());
     }
@@ -108,6 +94,10 @@ public class ManyReferenceField extends BaseReference {
 
     public void setMiddleModelReferenceFieldName(String middleModelReferenceFieldName) {
         this.middleModelReferenceFieldName = middleModelReferenceFieldName;
+    }
+
+    public String getMiddleModelReferenceFieldName() {
+        return middleModelReferenceFieldName;
     }
 
     public String getKeyFieldName() {
