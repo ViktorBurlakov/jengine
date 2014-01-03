@@ -60,4 +60,8 @@ public class FunctionField extends Field {
     public String getExpression() {
         return expression;
     }
+
+    public boolean isPersistence() {
+        return false;
+    }
 }

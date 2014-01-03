@@ -268,6 +268,18 @@ public class ModelManager {
         return  result;
     }
 
+    public List<Field> getPersistenceFields() {
+        List<Field> result = new ArrayList<Field>();
+
+        for (Field field : fields.values()) {
+            if (field.isPersistence()) {
+                result.add(field);
+            }
+        }
+
+        return  result;
+    }
+
     public List<String> getFieldNames() {
         List<String> result = new ArrayList<String>();
 

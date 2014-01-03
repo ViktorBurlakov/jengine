@@ -57,6 +57,10 @@ public class ReferenceField extends BaseReference {
         return Type.REFERENCE;
     }
 
+    public boolean isPersistence() {
+        return true;
+    }
+
     public Object getValue(Model obj) throws DBException {
         Object key = obj.getData().get(fieldName);
         return getReferenceClass().filter(getReferenceModelKey().eq(key)).one();

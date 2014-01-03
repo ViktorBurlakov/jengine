@@ -53,4 +53,8 @@ public class SelfField extends ReferenceField {
     public Field.Type getType() {
         return Field.Type.SELF;
     }
+
+    public boolean isPersistence() {
+        return false;
+    }
 }

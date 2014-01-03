@@ -35,6 +35,7 @@ public class Transaction extends TestModel {
     public static Field book   = new ReferenceField(Book.class, map("verbose", "Book"));
     public static Field member = new ReferenceField(Member.class, map("verbose", "Member"));
     public static Field tdate  = new DateField("verbose", "Date");
+    public static Field modificationDate  = new DateField("verbose", "Modification Date", "required", true, "autoNow", true);
     public static ModelClass<Transaction> cls = new ModelClass<Transaction>(Transaction.class);
 
 
