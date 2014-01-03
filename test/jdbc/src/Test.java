@@ -5,8 +5,11 @@ import com.jengine.orm.db.adapter.Adapter;
 import com.jengine.orm.db.adapter.jdbc.JDBCAdapter;
 import com.jengine.orm.db.provider.Provider;
 import com.jengine.orm.db.provider.mysql.MySQLProvider;
+import com.jengine.orm.exception.ValidateException;
 import com.jengine.orm.field.FunctionField;
 import models.*;
+
+import java.util.Date;
 
 import static com.jengine.utils.CollectionUtil.list;
 import static com.jengine.utils.CollectionUtil.map;
@@ -24,7 +27,7 @@ public class Test {
         test4();
         test5();
         test6();
-        test7();
+//        test7();
     }
 
     /**
@@ -46,7 +49,7 @@ public class Test {
      * New objects Adding
      * @throws DBException
      */
-    public static void loadData() throws DBException {
+    public static void loadData() throws Exception {
         /* Authors */
         Author jule = new Author();
         jule.setId(1l);
@@ -143,6 +146,22 @@ public class Test {
         address1.setNumber("742");
         address1.setMember(member5);
         address1.save();
+
+        Transaction transaction1 = new Transaction();
+        transaction1.setId(1l);
+        transaction1.setBook(book1);
+        transaction1.setMember(member1);
+        transaction1.save();
+        Transaction transaction2 = new Transaction();
+        transaction2.setId(2l);
+        transaction2.setBook(book2);
+        transaction2.setMember(member2);
+        transaction2.save();
+        Transaction transaction3 = new Transaction();
+        transaction3.setId(3l);
+        transaction3.setBook(book2);
+        transaction3.setMember(member1);
+        transaction3.save();
     }
 
     /**
@@ -169,7 +188,24 @@ public class Test {
         clearData();
         loadData();
 
-        check( Author.cls.count() == 3 );
+        Date tdate = Transaction.cls.get(1).getDate();
+        Date modificationDate = Transaction.cls.get(1).getModificationDate();
+        Thread.sleep(2000);
+        Transaction.cls.get(1).save();
+
+        check(Transaction.cls.get(1).getDate().equals(tdate));
+        check(!Transaction.cls.get(1).getModificationDate().equals(modificationDate));
+        check(Author.cls.count() == 3);
+
+        try {
+            Transaction transaction4 = new Transaction();
+            transaction4.setId(4l);
+            transaction4.setBook(Book.cls.get(2));
+            transaction4.save();
+            check(false);
+        } catch (ValidateException e) {
+            System.out.println("Test was ok : " + e.getMessage());
+        }
     }
 
     /**

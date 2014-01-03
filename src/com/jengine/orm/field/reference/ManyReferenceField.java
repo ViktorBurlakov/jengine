@@ -4,6 +4,7 @@ package com.jengine.orm.field.reference;
 import com.jengine.orm.Model;
 import com.jengine.orm.ModelClassBase;
 import com.jengine.orm.db.DBException;
+import com.jengine.orm.exception.ValidateException;
 import com.jengine.orm.field.Field;
 import com.jengine.utils.Variant;
 
@@ -71,7 +72,7 @@ public class ManyReferenceField extends BaseReference {
         return middleCls.filter(middleField.eq(keyValue)).field(middleField);
     }
 
-    public void insert(Model obj) throws DBException {
+    public void insert(Model obj) throws ValidateException, DBException {
         Map values = obj.getData();
         if (!values.containsKey(fieldName) || values.get(fieldName) == null) {
             return;

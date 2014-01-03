@@ -32,9 +32,9 @@ import static com.jengine.utils.CollectionUtil.map;
 
 
 public class Transaction extends TestModel {
-    public static Field book   = new ReferenceField(Book.class, map("verbose", "Book"));
-    public static Field member = new ReferenceField(Member.class, map("verbose", "Member"));
-    public static Field tdate  = new DateField("verbose", "Date");
+    public static Field book   = new ReferenceField(Book.class, map("verbose", "Book", "required", true));
+    public static Field member = new ReferenceField(Member.class, map("verbose", "Member", "required", true));
+    public static Field tdate  = new DateField("verbose", "Date", "required", true, "autoNowAdd", true);
     public static Field modificationDate  = new DateField("verbose", "Modification Date", "required", true, "autoNow", true);
     public static ModelClass<Transaction> cls = new ModelClass<Transaction>(Transaction.class);
 
@@ -49,15 +49,31 @@ public class Transaction extends TestModel {
 
     /* getters and setters block  */
 
+    public void setBook(Book obj) throws DBException {
+        setValue(book, obj);
+    }
+
     public Book getBook() throws DBException {
         return (Book) getValue(book);
+    }
+
+    public void setMember(Member obj) throws DBException {
+        setValue(member, obj);
     }
 
     public Member getMember() throws DBException {
         return (Member) getValue(member);
     }
 
+    public void setDate(Date d) throws DBException {
+        setValue(tdate, d);
+    }
+
     public Date getDate() throws DBException {
         return (Date) getValue(tdate);
+    }
+
+    public Date getModificationDate() throws DBException {
+        return (Date) getValue(modificationDate);
     }
 }

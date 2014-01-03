@@ -1,5 +1,7 @@
 package com.jengine.orm.field.datetime;
 
+import com.jengine.orm.Model;
+import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.Field;
 
 import java.text.DateFormat;
@@ -32,6 +34,10 @@ public class BaseDateField extends Field {
 
     public Object getDefaultValue() {
         return autoNow || autoNowAdd ? new Date() : super.getDefaultValue();
+    }
+
+    public Object getPersistenceValue(Model obj) throws DBException {
+        return autoNow ? new Date() : super.getPersistenceValue(obj);
     }
 
     public String getDefaultFormat() {

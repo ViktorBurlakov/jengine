@@ -4,12 +4,17 @@ import com.jengine.orm.db.DB;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.expression.Expression;
 import com.jengine.orm.db.provider.Provider;
-import com.jengine.orm.field.*;
+import com.jengine.orm.exception.ValidateException;
+import com.jengine.orm.field.Field;
+import com.jengine.orm.field.FunctionField;
 import com.jengine.orm.field.reference.ManyReferenceField;
 import com.jengine.orm.field.reference.ReferenceField;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ModelClassBase<T extends Model> {
@@ -145,7 +150,7 @@ public class ModelClassBase<T extends Model> {
         }
     }
 
-    public T insert(Model obj) throws DBException {
+    public T insert(Model obj) throws ValidateException, DBException {
         Object id = provider.insert(manager.getTableName(), obj.getPersistenceValues());
         obj.setNew(false);
         if (manager.getPrimaryKey().isAutoIncrement()) {
@@ -158,7 +163,7 @@ public class ModelClassBase<T extends Model> {
         return (T) obj;
     }
 
-    public Model update(Model obj) throws DBException {
+    public Model update(Model obj) throws ValidateException, DBException {
         provider.update(manager.getTableName(), manager.getPrimaryKey().getColumnName(),
                 obj.getPersistenceValues());
         for (Field field : manager.getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE)) {
