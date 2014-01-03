@@ -57,6 +57,11 @@ public class ReferenceField extends BaseReference {
         return Type.REFERENCE;
     }
 
+    public Object getValue(Model obj) throws DBException {
+        Object key = obj.getData().get(fieldName);
+        return getReferenceClass().filter(getReferenceModelKey().eq(key)).one();
+    }
+
     public Object cast(Object value) throws DBException {
         Field field = getReferenceModelKey();
         return value instanceof Model ? ((Model) value).getValue(field) : new Variant(value).convertTo(field.getFieldClass());

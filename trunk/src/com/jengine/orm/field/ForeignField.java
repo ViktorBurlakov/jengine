@@ -19,6 +19,7 @@
 
 package com.jengine.orm.field;
 
+import com.jengine.orm.Model;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.reference.ReferenceField;
 import com.jengine.utils.CollectionUtil;
@@ -50,6 +51,11 @@ public class ForeignField extends Field {
 
     public Type getType() {
         return Type.FOREIGN;
+    }
+
+    public Object getValue(Model obj) throws DBException {
+        Object referenceId = obj.getData().get(currentField.getFieldName());
+        return currentField.getReferenceClass().get(referenceId).getValue(nextField);
     }
 
     public List<String> getReferenceFields() {

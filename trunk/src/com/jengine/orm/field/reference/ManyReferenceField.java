@@ -64,8 +64,19 @@ public class ManyReferenceField extends BaseReference {
         return Type.MANY_REFERENCE;
     }
 
+    public Object getValue(Model obj) throws DBException {
+        ModelClassBase middleCls = getMiddleClass();
+        Field middleField = getMiddleField();
+        Object keyValue = obj.getData().get(getKeyFieldName());
+        return middleCls.filter(middleField.eq(keyValue)).field(middleField);
+    }
+
     public ModelClassBase getMiddleClass() {
         return manager.getCls().getModelClass(getMiddleModelName());
+    }
+
+    public Field getMiddleField() {
+        return getMiddleClass().getManager().getField(getMiddleModelFieldName());
     }
 
     public ManyReferenceField getReverseField() {

@@ -158,7 +158,7 @@ public class ModelClassBase<T extends Model> {
 
     protected Map<String, Object> getDbValues(Model obj, List<Field> fields) throws DBException {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
-        Map<String, Object> values = obj._getData(fields);
+        Map<String, Object> values = obj.getData(fields);
 
         for (String fieldName : values.keySet()) {
             result.put(manager.getField(fieldName).getColumnName(), values.get(fieldName));
@@ -169,7 +169,7 @@ public class ModelClassBase<T extends Model> {
 
     protected void insertReferences(Model obj) throws DBException {
         List<Field> fields = manager.getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE);
-        Map values = obj._getManyReferenceData();
+        Map values = obj.getManyReferenceData();
         if (values.size() == 0) {
             return;
         }
@@ -206,10 +206,10 @@ public class ModelClassBase<T extends Model> {
     public Model update(Model obj) throws DBException {
         List<Field> fields = manager.getFields(Field.Type.REFERENCE, Field.Type.PLAIN, Field.Type.SINGLE_REFERENCE);
         provider.update(manager.getTableName(), manager.getPrimaryKey().getColumnName(), getDbValues(obj, fields));
-        if (obj._getManyReferenceData().size() > 0) {
+        if (obj.getManyReferenceData().size() > 0) {
             removeReferences(obj);
             insertReferences(obj);
-            obj._getManyReferenceData().clear();
+            obj.getManyReferenceData().clear();
         }
         return obj;
     }
