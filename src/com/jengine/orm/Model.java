@@ -30,18 +30,31 @@ import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import static com.jengine.utils.CollectionUtil.set;
 
 
 public class Model {
     protected ModelClassBase cls;
     protected Map<String, Object> values = new LinkedHashMap<String, Object>();
+    protected Map<String, Object> manyReferenceValues = new LinkedHashMap<String, Object>();
     protected boolean _new = true;
 
     public Model() throws DBException {
         cls = ModelClassBase.getModelClass(getClass().getSimpleName());
+        init();
+    }
+
+    protected void init() {
+        if (cls == null) {
+            return;
+        }
+        values.clear();
+        manyReferenceValues.clear();
+        for(Field field : cls.getManager().getFields()) {
+            if (field.getType() != Field.Type.MANY_REFERENCE &&
+                    field.getType() != Field.Type.REVERSE_MANY_REFERENCE) {
+                values.put(field.getFieldName(), field.getDefaultValue());
+            }
+        }
     }
 
     public String getVerbose() throws DBException {
@@ -68,6 +81,7 @@ public class Model {
 
     public void setModelClass(ModelClassBase cls) {
         this.cls = cls;
+        init();
     }
 
     public void setPrimaryKey(Serializable value) throws DBException {
@@ -95,15 +109,10 @@ public class Model {
     }
 
     public void setValue(Field field, Object value) throws DBException {
-        Set types = set(Field.Type.PLAIN,
-                Field.Type.REFERENCE,
-                Field.Type.SINGLE_REFERENCE,
-                Field.Type.MANY_REFERENCE,
-                Field.Type.REVERSE_MANY_REFERENCE,
-                Field.Type.REVERSE_SINGLE_REFERENCE
-        );
-        if (types.contains(field.getType())) {
+        if (field.getType() != Field.Type.MANY_REFERENCE && field.getType() != Field.Type.REVERSE_MANY_REFERENCE) {
             values.put(field.getFieldName(), field.cast(value));
+        } else {
+            manyReferenceValues.put(field.getFieldName(), field.cast(value));
         }
     }
 
@@ -161,29 +170,24 @@ public class Model {
         return values;
     }
 
-    public Map<String, Object> getData() throws DBException {
-        Map<String, Object> result = new LinkedHashMap<String, Object>();
-
-        for (Field field : cls.getManager().getFields(Field.Type.REFERENCE, Field.Type.PLAIN, Field.Type.SINGLE_REFERENCE)) {
-            if (values.containsKey(field.getFieldName())) {
-                Object value = values.containsKey(field.getFieldName()) ? values.get(field.getFieldName()) : field.getDefaultValue();
-                result.put(field.getColumnName(), value);
-            }
-        }
-
-        return result;
+    public Map<String, Object> _getData() throws DBException {
+        return values;
     }
 
-    public Map<String, Object> getReferenceValues() throws DBException {
+    public Map<String, Object> _getData(List<Field> fields) throws DBException {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-        for (Field field : cls.getManager().getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE)) {
+        for (Field field : fields) {
             if (values.containsKey(field.getFieldName())) {
                 result.put(field.getFieldName(), values.get(field.getFieldName()));
             }
         }
 
         return result;
+    }
+
+    public Map<String, Object> _getManyReferenceData() throws DBException {
+        return manyReferenceValues;
     }
 
     public void validate() throws DBException {
@@ -210,7 +214,7 @@ public class Model {
 
     public Model update() throws DBException {
         cls.update(this);
-        cache();
+        this.cache();
         return this;
     }
 
