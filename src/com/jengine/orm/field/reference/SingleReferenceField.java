@@ -23,4 +23,8 @@ public class SingleReferenceField extends ReferenceField {
     public String getReverseFieldName() {
         return reverseFieldName != null ? reverseFieldName : manager.getName().toLowerCase();
     }
+
+    public boolean isPersistence() {
+        return true;
+    }
 }

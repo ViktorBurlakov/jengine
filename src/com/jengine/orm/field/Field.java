@@ -83,8 +83,8 @@ public class Field {
         if (options.containsKey("required")) {
             this.required = (Boolean) options.get("required");
         }
-        if (options.containsKey("defaultValue")) {
-            this.defaultValue = options.get("defaultValue");
+        if (options.containsKey("default")) {
+            this.defaultValue = options.get("default");
         }
     }
 
@@ -109,7 +109,12 @@ public class Field {
 
     public Object getValue(Model obj) throws DBException {
         Map<String, Object> data = obj.getData();
-        return data.containsKey(fieldName) ? data.get(fieldName) : defaultValue;
+        return data.containsKey(fieldName) ? data.get(fieldName) : getDefaultValue();
+    }
+
+    public Object getPersistenceValue(Model obj) throws DBException {
+        Map<String, Object> data = obj.getData();
+        return data.containsKey(fieldName) ? data.get(fieldName) : getDefaultValue();
     }
 
     public Object cast(Object value) throws DBException {
@@ -120,14 +125,19 @@ public class Field {
         return String.valueOf(value);
     }
 
+    public void validate(Model obj) throws DBException {
+        Object value = getPersistenceValue(obj);
+        if (required && value == null) {
+            new DBException("'%s' field validation error: required field is empty");
+        }
+    }
+
     public boolean isKey() {
         return false;
     }
 
-    public void validate(Object value) throws DBException {
-        if (required && value == null) {
-            new DBException("'%s' field validation error: required field is empty");
-        }
+    public boolean isPersistence() {
+        return true;
     }
 
     /* getters and setters */

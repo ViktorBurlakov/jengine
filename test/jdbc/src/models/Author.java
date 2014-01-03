@@ -34,6 +34,7 @@ public class Author extends TestModel {
     public static Field id  = new PrimaryKey();
     public static Field firstName = new StringField("verbose", "First Name");
     public static Field lastName  = new StringField("verbose", "Last Name");
+    public static Field icon  = new StringField("verbose", "Icon", "default", "no_icon.img");
     public static ManyReferenceField books = new ManyReferenceField(Book.class);
     public static ModelClass<Author> cls = new ModelClass<Author>(Author.class);
 

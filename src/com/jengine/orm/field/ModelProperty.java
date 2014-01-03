@@ -59,4 +59,8 @@ public class ModelProperty extends Field {
             throw new DBException(e);
         }
     }
+
+    public boolean isPersistence() {
+        return false;
+    }
 }

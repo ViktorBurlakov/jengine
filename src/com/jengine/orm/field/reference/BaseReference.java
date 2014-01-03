@@ -42,6 +42,10 @@ abstract public class BaseReference extends Field {
         return true;
     }
 
+    public boolean isPersistence() {
+        return false;
+    }
+
     public ModelClassBase getReferenceClass() {
         return manager.getCls().getModelClass(referenceModelName);
     }

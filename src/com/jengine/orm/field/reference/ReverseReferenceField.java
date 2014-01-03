@@ -28,7 +28,7 @@ import static com.jengine.utils.CollectionUtil.map;
 public class ReverseReferenceField extends BaseReference {
 
     public ReverseReferenceField(Class fieldClass, String reverseFieldName) {
-        super(fieldClass, map("reverseFieldName", reverseFieldName));
+        this(fieldClass, fieldClass.getSimpleName(), reverseFieldName);
     }
 
     public ReverseReferenceField(Class fieldClass, String referenceModelName, String reverseFieldName) {

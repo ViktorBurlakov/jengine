@@ -24,33 +24,16 @@ import com.jengine.orm.field.Field;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 
 public class Model {
     protected ModelClassBase cls;
     protected Map<String, Object> values = new LinkedHashMap<String, Object>();
-    protected Map<String, Object> manyReferenceValues = new LinkedHashMap<String, Object>();
     protected boolean _new = true;
 
     public Model() throws DBException {
         cls = ModelClassBase.getModelClass(getClass().getSimpleName());
-//        init();
-    }
-
-    protected void init() {
-        if (cls == null) {
-            return;
-        }
-        values.clear();
-        manyReferenceValues.clear();
-        for(Field field : cls.getManager().getFields()) {
-            if (field.getType() != Field.Type.MANY_REFERENCE &&
-                    field.getType() != Field.Type.REVERSE_MANY_REFERENCE) {
-                values.put(field.getFieldName(), field.getDefaultValue());
-            }
-        }
     }
 
     public String getVerbose() throws DBException {
@@ -77,7 +60,6 @@ public class Model {
 
     public void setModelClass(ModelClassBase cls) {
         this.cls = cls;
-//        init();
     }
 
     public void setPrimaryKey(Serializable value) throws DBException {
@@ -105,11 +87,7 @@ public class Model {
     }
 
     public void setValue(Field field, Object value) throws DBException {
-        if (field.getType() != Field.Type.MANY_REFERENCE && field.getType() != Field.Type.REVERSE_MANY_REFERENCE) {
-            values.put(field.getFieldName(), field.cast(value));
-        } else {
-            manyReferenceValues.put(field.getFieldName(), field.cast(value));
-        }
+        values.put(field.getFieldName(), field.cast(value));
     }
 
     public Object getValue(Field field) throws DBException {
@@ -122,39 +100,23 @@ public class Model {
         }
     }
 
-    public Map<String, Object> getValues(List<String> fields) throws DBException {
-        Map<String, Object> values = new LinkedHashMap<String, Object>();
-
-        for (String fieldName : fields) {
-            values.put(fieldName, getValue(fieldName));
-        }
-
-        return values;
-    }
-
     public Map<String, Object> getData() throws DBException {
         return values;
     }
 
-    public Map<String, Object> getData(List<Field> fields) throws DBException {
+    protected Map<String, Object> getPersistenceValues() throws DBException {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-        for (Field field : fields) {
-            if (values.containsKey(field.getFieldName())) {
-                result.put(field.getFieldName(), values.get(field.getFieldName()));
-            }
+        for (Field field : cls.getManager().getPersistenceFields()) {
+            result.put(field.getColumnName(), field.getPersistenceValue(this));
         }
 
         return result;
     }
 
-    public Map<String, Object> getManyReferenceData() throws DBException {
-        return manyReferenceValues;
-    }
-
     public void validate() throws DBException {
         for (Field field : cls.getManager().getFields()) {
-            field.validate(values.get(field.getFieldName()));
+            field.validate(this);
         }
     }
 

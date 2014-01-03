@@ -71,6 +71,29 @@ public class ManyReferenceField extends BaseReference {
         return middleCls.filter(middleField.eq(keyValue)).field(middleField);
     }
 
+    public void insert(Model obj) throws DBException {
+        Map values = obj.getData();
+        if (!values.containsKey(fieldName) || values.get(fieldName) == null) {
+            return;
+        }
+        List keys = (List) values.get(fieldName);
+        ModelClassBase middleModelClass = getMiddleClass();
+        Field middleModelField = getMiddleField();
+        Field middleModelReferenceField = getReverseField().getMiddleField();
+        for (Object key : keys) {
+            Model middleObj = middleModelClass.newInstance();
+            middleObj.setValue(middleModelField, values.get(getKeyFieldName()));
+            middleObj.setValue(middleModelReferenceField, key);
+            middleObj.save();
+        }
+    }
+
+    public void remove(Model obj) throws DBException {
+        ModelClassBase middleModelClass = getMiddleClass();
+        Field middleModelField = getMiddleField();
+        middleModelClass.filter(middleModelField.eq(obj.getValue(getKeyFieldName()))).remove();
+    }
+
     public ModelClassBase getMiddleClass() {
         return manager.getCls().getModelClass(getMiddleModelName());
     }
