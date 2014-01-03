@@ -13,6 +13,7 @@ public class BaseDateField extends Field {
     protected DateFormat formatter = null;
     protected String format = null;
     protected Boolean autoNow = false;
+    protected Boolean autoNowAdd = false;
 
     public BaseDateField(Class fieldClass, Map<String, Object> options) {
         super(fieldClass, options);
@@ -23,11 +24,14 @@ public class BaseDateField extends Field {
         if (options.containsKey("autoNow")) {
             this.autoNow = (Boolean) options.get("autoNow");
         }
+        if (options.containsKey("autoNowAdd")) {
+            this.autoNowAdd = (Boolean) options.get("autoNowAdd");
+        }
         this.formatter = new SimpleDateFormat(format);
     }
 
     public Object getDefaultValue() {
-        return autoNow ? new Date() : super.getDefaultValue();
+        return autoNow || autoNowAdd ? new Date() : super.getDefaultValue();
     }
 
     public String getDefaultFormat() {

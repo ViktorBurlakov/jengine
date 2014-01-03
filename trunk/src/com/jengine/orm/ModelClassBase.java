@@ -146,7 +146,8 @@ public class ModelClassBase<T extends Model> {
     }
 
     public T insert(Model obj) throws DBException {
-        Object id = provider.insert(manager.getTableName(), obj.getData());
+        List<Field> fields = manager.getFields(Field.Type.REFERENCE, Field.Type.PLAIN, Field.Type.SINGLE_REFERENCE);
+        Object id = provider.insert(manager.getTableName(), getDbValues(obj, fields));
         obj.setNew(false);
         if (manager.getPrimaryKey().isAutoIncrement()) {
             obj.setPrimaryKey((Serializable) id);
@@ -155,12 +156,24 @@ public class ModelClassBase<T extends Model> {
         return (T) obj;
     }
 
+    protected Map<String, Object> getDbValues(Model obj, List<Field> fields) throws DBException {
+        Map<String, Object> result = new LinkedHashMap<String, Object>();
+        Map<String, Object> values = obj._getData(fields);
+
+        for (String fieldName : values.keySet()) {
+            result.put(manager.getField(fieldName).getColumnName(), values.get(fieldName));
+        }
+
+        return result;
+    }
+
     protected void insertReferences(Model obj) throws DBException {
-        Map values = obj.getReferenceValues();
+        List<Field> fields = manager.getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE);
+        Map values = obj._getManyReferenceData();
         if (values.size() == 0) {
             return;
         }
-        for (Field field : manager.getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE)) {
+        for (Field field : fields) {
             ManyReferenceField manyReferenceField = (ManyReferenceField) field;
             if (values.containsKey(field.getFieldName())) {
                 List keys = (List) values.get(field.getFieldName());
@@ -181,7 +194,8 @@ public class ModelClassBase<T extends Model> {
     }
 
     protected void removeReferences(Model obj) throws DBException {
-        for (Field field : manager.getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE)) {
+        List<Field> fields = manager.getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE);
+        for (Field field : fields) {
             ManyReferenceField manyReferenceField = (ManyReferenceField) field;
             ModelClassBase middleModelClass = getModelClass(manyReferenceField.getMiddleModelName());
             Field middleModelField = middleModelClass.getManager().getField(manyReferenceField.getMiddleModelFieldName());
@@ -190,10 +204,12 @@ public class ModelClassBase<T extends Model> {
     }
 
     public Model update(Model obj) throws DBException {
-        provider.update(manager.getTableName(), manager.getPrimaryKey().getColumnName(), obj.getData());
-        if (obj.getReferenceValues().size() > 0) {
+        List<Field> fields = manager.getFields(Field.Type.REFERENCE, Field.Type.PLAIN, Field.Type.SINGLE_REFERENCE);
+        provider.update(manager.getTableName(), manager.getPrimaryKey().getColumnName(), getDbValues(obj, fields));
+        if (obj._getManyReferenceData().size() > 0) {
             removeReferences(obj);
             insertReferences(obj);
+            obj._getManyReferenceData().clear();
         }
         return obj;
     }
