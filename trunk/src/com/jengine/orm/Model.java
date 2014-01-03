@@ -20,6 +20,7 @@
 package com.jengine.orm;
 
 import com.jengine.orm.db.DBException;
+import com.jengine.orm.exception.ValidateException;
 import com.jengine.orm.field.Field;
 
 import java.io.Serializable;
@@ -29,11 +30,12 @@ import java.util.Map;
 
 public class Model {
     protected ModelClassBase cls;
-    protected Map<String, Object> values = new LinkedHashMap<String, Object>();
+    protected Map<String, Object> data = new LinkedHashMap<String, Object>();
     protected boolean _new = true;
 
     public Model() throws DBException {
         cls = ModelClassBase.getModelClass(getClass().getSimpleName());
+        _init();
     }
 
     public String getVerbose() throws DBException {
@@ -42,6 +44,15 @@ public class Model {
 
     public String format(String field) throws DBException {
         return cls.getManager().getField(field).format(this.getValue(field));
+    }
+
+    protected void _init() {
+        if (cls == null) {
+            return;
+        }
+        for (Field field : cls.getManager().getPersistenceFields()) {
+            data.put(field.getFieldName(), field.getDefaultValue());
+        }
     }
 
     /* get & set field values */
@@ -60,6 +71,7 @@ public class Model {
 
     public void setModelClass(ModelClassBase cls) {
         this.cls = cls;
+        _init();
     }
 
     public void setPrimaryKey(Serializable value) throws DBException {
@@ -87,7 +99,7 @@ public class Model {
     }
 
     public void setValue(Field field, Object value) throws DBException {
-        values.put(field.getFieldName(), field.cast(value));
+        data.put(field.getFieldName(), field.cast(value));
     }
 
     public Object getValue(Field field) throws DBException {
@@ -100,8 +112,18 @@ public class Model {
         }
     }
 
+    public Map<String, Object> getValues() throws DBException {
+        Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+        for (Field field : cls.getManager().getPersistenceFields()) {
+            result.put(field.getFieldName(), getValue(field));
+        }
+
+        return result;
+    }
+
     public Map<String, Object> getData() throws DBException {
-        return values;
+        return data;
     }
 
     protected Map<String, Object> getPersistenceValues() throws DBException {
@@ -114,7 +136,7 @@ public class Model {
         return result;
     }
 
-    public void validate() throws DBException {
+    public void validate() throws ValidateException, DBException {
         for (Field field : cls.getManager().getFields()) {
             field.validate(this);
         }
@@ -122,7 +144,7 @@ public class Model {
 
     /* modify methods */
 
-    public Model save() throws DBException {
+    public Model save() throws ValidateException, DBException {
         if (_new) {
             return insert();
         }
@@ -130,13 +152,15 @@ public class Model {
     }
 
 
-    public Model insert() throws DBException {
+    public Model insert() throws ValidateException, DBException {
+        this.validate();
         cls.insert(this);
         this.cache();
         return this;
     }
 
-    public Model update() throws DBException {
+    public Model update() throws ValidateException, DBException {
+        this.validate();
         cls.update(this);
         this.cache();
         return this;

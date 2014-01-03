@@ -25,6 +25,7 @@ import com.jengine.orm.ModelManager;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.expression.Expression;
 import com.jengine.orm.db.expression.ExpressionImpl;
+import com.jengine.orm.exception.ValidateException;
 import com.jengine.utils.Variant;
 
 import java.sql.Time;
@@ -125,10 +126,10 @@ public class Field {
         return String.valueOf(value);
     }
 
-    public void validate(Model obj) throws DBException {
+    public void validate(Model obj) throws ValidateException, DBException {
         Object value = getPersistenceValue(obj);
         if (required && value == null) {
-            new DBException("'%s' field validation error: required field is empty");
+            throw new ValidateException("'%s' field validation error: required field is empty");
         }
     }
 

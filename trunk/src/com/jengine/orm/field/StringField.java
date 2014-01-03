@@ -22,6 +22,7 @@ package com.jengine.orm.field;
 
 import com.jengine.orm.Model;
 import com.jengine.orm.db.DBException;
+import com.jengine.orm.exception.ValidateException;
 
 import java.util.Map;
 
@@ -41,11 +42,11 @@ public class StringField extends Field {
         }
     }
 
-    public void validate(Model obj) throws DBException {
+    public void validate(Model obj) throws ValidateException, DBException {
         super.validate(obj);
         String value = (String) getPersistenceValue(obj);
         if (maxLength != null && value != null && value.length() > maxLength) {
-            throw new DBException(String.format("'%s' field validation error: max length < actual size (%s)", fieldName, value.length()));
+            throw new ValidateException(String.format("'%s' field validation error: max length < actual size (%s)", fieldName, value.length()));
         }
     }
 
