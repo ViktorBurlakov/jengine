@@ -20,6 +20,7 @@
 package com.jengine.orm.field;
 
 
+import com.jengine.orm.Model;
 import com.jengine.orm.ModelManager;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.expression.Expression;
@@ -104,6 +105,11 @@ public class Field {
                 java.sql.Date.class.getName(), new Integer[] { Types.DATE, Types.TIMESTAMP },
                 Time.class.getName(), new Integer[] { Types.TIME, Types.TIMESTAMP }
         );
+    }
+
+    public Object getValue(Model obj) throws DBException {
+        Map<String, Object> data = obj.getData();
+        return data.containsKey(fieldName) ? data.get(fieldName) : defaultValue;
     }
 
     public Object cast(Object value) throws DBException {

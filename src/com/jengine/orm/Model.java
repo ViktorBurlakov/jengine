@@ -21,12 +21,8 @@ package com.jengine.orm;
 
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.Field;
-import com.jengine.orm.field.ForeignField;
-import com.jengine.orm.field.ModelProperty;
-import com.jengine.orm.field.reference.*;
 
 import java.io.Serializable;
-import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +36,7 @@ public class Model {
 
     public Model() throws DBException {
         cls = ModelClassBase.getModelClass(getClass().getSimpleName());
-        init();
+//        init();
     }
 
     protected void init() {
@@ -81,7 +77,7 @@ public class Model {
 
     public void setModelClass(ModelClassBase cls) {
         this.cls = cls;
-        init();
+//        init();
     }
 
     public void setPrimaryKey(Serializable value) throws DBException {
@@ -117,41 +113,7 @@ public class Model {
     }
 
     public Object getValue(Field field) throws DBException {
-        if (field instanceof ForeignField) {
-            ForeignField foreignField = (ForeignField) field;
-            Object referenceId = values.get(foreignField.getCurrentField().getFieldName());
-            Model reference = cls.getModelClass(foreignField.getCurrentField().getReferenceModelName()).get(referenceId);
-            return reference.getValue(foreignField.getNextField());
-        } else if (field instanceof ReferenceField) {
-            return cls.getModelClass(((ReferenceField)field).getReferenceModelName()).get(values.get(field.getFieldName()));
-        } else if (field instanceof ReverseReferenceField) {
-            ReverseReferenceField multiField = (ReverseReferenceField) field;
-            ModelClassBase referenceCls = multiField.getReferenceClass();
-            ReferenceField reverseField = (ReferenceField) multiField.getReverseField();
-            Object key = values.get(reverseField.getReferenceModelKey().getFieldName());
-            return referenceCls.filter(reverseField.eq(key));
-        } else if (field instanceof ReverseSingleReferenceField) {
-            ReverseSingleReferenceField reverseSingleField = (ReverseSingleReferenceField) field;
-            ModelClassBase referenceCls = reverseSingleField.getReferenceClass();
-            SingleReferenceField singleField = (SingleReferenceField) reverseSingleField.getReverseField();
-            Object key = values.get(singleField.getReferenceModelKey().getFieldName());
-            return referenceCls.filter(singleField.eq(key)).one();
-        } else if (field instanceof ManyReferenceField) {
-            ManyReferenceField manyField = (ManyReferenceField) field;
-            ModelClassBase middleCls = cls.getModelClass(manyField.getMiddleModelName());
-            Field middleField =  middleCls.getManager().getField(manyField.getMiddleModelFieldName());
-            Object keyValue = getValue(manyField.getKeyFieldName());
-            return middleCls.filter(middleField.eq(keyValue)).field(middleField);
-        } else if (field instanceof ModelProperty) {
-            try {
-                Method method = getClass().getMethod(((ModelProperty) field).getMethodName());
-                return method.invoke(this);
-            } catch (Exception e) {
-                throw new DBException(e);
-            }
-        } else {
-            return values.get(field.getFieldName());
-        }
+        return field.getValue(this);
     }
 
     public void setValues(Map<String, Object> valueMap) throws DBException {
@@ -170,11 +132,11 @@ public class Model {
         return values;
     }
 
-    public Map<String, Object> _getData() throws DBException {
+    public Map<String, Object> getData() throws DBException {
         return values;
     }
 
-    public Map<String, Object> _getData(List<Field> fields) throws DBException {
+    public Map<String, Object> getData(List<Field> fields) throws DBException {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 
         for (Field field : fields) {
@@ -186,7 +148,7 @@ public class Model {
         return result;
     }
 
-    public Map<String, Object> _getManyReferenceData() throws DBException {
+    public Map<String, Object> getManyReferenceData() throws DBException {
         return manyReferenceValues;
     }
 

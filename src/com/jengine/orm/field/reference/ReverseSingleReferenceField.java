@@ -1,5 +1,9 @@
 package com.jengine.orm.field.reference;
 
+import com.jengine.orm.Model;
+import com.jengine.orm.ModelClassBase;
+import com.jengine.orm.db.DBException;
+
 import static com.jengine.utils.CollectionUtil.map;
 
 public class ReverseSingleReferenceField extends BaseReference {
@@ -13,5 +17,12 @@ public class ReverseSingleReferenceField extends BaseReference {
 
     public Type getType() {
         return Type.REVERSE_SINGLE_REFERENCE;
+    }
+
+    public Object getValue(Model obj) throws DBException {
+        ModelClassBase referenceCls = getReferenceClass();
+        SingleReferenceField singleField = (SingleReferenceField) getReverseField();
+        Object key = obj.getData().get(singleField.getReferenceModelKey().getFieldName());
+        return referenceCls.filter(singleField.eq(key)).one();
     }
 }

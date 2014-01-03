@@ -20,6 +20,10 @@
 package com.jengine.orm.field;
 
 
+import com.jengine.orm.Model;
+import com.jengine.orm.db.DBException;
+
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,5 +49,14 @@ public class ModelProperty extends Field {
 
     public void setMethodName(String methodName) {
         this.methodName = methodName;
+    }
+
+    public Object getValue(Model obj) throws DBException {
+        try {
+            Method method = obj.getClass().getMethod(methodName);
+            return method.invoke(obj);
+        } catch (Exception e) {
+            throw new DBException(e);
+        }
     }
 }
