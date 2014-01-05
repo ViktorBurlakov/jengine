@@ -15,7 +15,6 @@ public class DynamicModelClass<T extends Model> extends ModelClassBase<T> {
         String dbName = options.containsKey("dbName") ? (String) options.get("dbName") : "default";
         this.db = DBFactory.get(dbName);
         this.provider = this.db.getProvider();
-        this.provider.setModelClass(this);
         this.manager = new ModelManager();
         this.manager.setModelClass(cls);
         this.manager.setCls(this);

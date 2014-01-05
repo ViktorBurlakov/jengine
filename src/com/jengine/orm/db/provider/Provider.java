@@ -20,23 +20,16 @@
 package com.jengine.orm.db.provider;
 
 
-import com.jengine.orm.Model;
-import com.jengine.orm.ModelClassBase;
-import com.jengine.orm.ModelQuery;
 import com.jengine.orm.db.DBConnection;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.adapter.Adapter;
 import com.jengine.orm.db.expression.Expression;
-import com.jengine.orm.db.expression.ExpressionImpl;
 import com.jengine.orm.db.query.SQLQuery;
-import com.jengine.orm.field.Field;
-import com.jengine.orm.field.ForeignField;
-import com.jengine.orm.field.FunctionField;
+import com.jengine.orm.db.query.StringSQLQuery;
 import com.jengine.utils.CollectionUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +37,6 @@ import static com.jengine.utils.CollectionUtil.*;
 
 
 public class Provider {
-    private ModelClassBase modelClass;
     private Adapter adapter;
 
     public Provider(Adapter adapter) {
@@ -57,17 +49,17 @@ public class Provider {
 
     /* cache methods */
 
-    public void cache(Model obj) {
+    public void cache(String table, Map<String, Object> attributes) {
     }
 
-    public Model getCache(Class cls, Object id) {
+    public Map<String, Object> getCache(String table, Object id) {
         return null;
     }
 
-    public void clearCache(Model obj) {
+    public void clearCache(String table, Object id) {
     }
 
-    public void clearCache(Class cls) {
+    public void clearCache(String table) {
     }
 
 
@@ -119,74 +111,41 @@ public class Provider {
 
     public void remove(String table, String key, Serializable id) throws DBException {
         StringBuffer sql = new StringBuffer();
-        List params = new ArrayList();
-        params.add(id);
+        List params = list(id);
 
-        sql.append("DELETE FROM ")
-                .append(table)
-                .append(" WHERE ")
-                .append(key).append("=").append("?");
+        sql.append("DELETE FROM ").append(table).append(" WHERE ").append(key).append("=").append("?");
 
         DBConnection connection = this.adapter.getConnection();
         this.adapter.executeUpdate(connection, sql.toString(), params);
     }
 
-    public Object insert(ModelQuery modelQuery) throws DBException {
-        SQLQuery query = new SQLQuery();
-        setModels(query, modelQuery);
-        setValues(query, modelQuery);
-
+    public Object insert(SQLQuery query) throws DBException {
         String sql = buildInsertSQL(query);
-
         DBConnection connection = this.adapter.getConnection();
         this.adapter.executeUpdate(connection, sql, query.getParams());
-
         return connection.getGeneratedKeys();
     }
 
-    public void remove(ModelQuery modelQuery) throws DBException {
-        SQLQuery query = new SQLQuery();
-        setModels(query, modelQuery);
-        setFilters(query, modelQuery);
-        setStringQuery(query, modelQuery);
-
+    public void remove(SQLQuery query) throws DBException {
         String sql = buildRemoveSQL(query);
-
         DBConnection connection = this.adapter.getConnection();
         this.adapter.executeUpdate(connection, sql, query.getParams());
     }
 
-    public void update(ModelQuery modelQuery) throws DBException{
-        SQLQuery query = new SQLQuery();
-        setModels(query, modelQuery);
-        setValues(query, modelQuery);
-        setFilters(query, modelQuery);
-        setStringQuery(query, modelQuery);
-
+    public void update(SQLQuery query) throws DBException{
         String sql = buildUpdateSQL(query);
-
         DBConnection connection = this.adapter.getConnection();
         this.adapter.executeUpdate(connection, sql, query.getParams());
     }
 
-    public List select(ModelQuery modelQuery) throws DBException {
-        SQLQuery sqlQuery = buildSelect(modelQuery);
+    public List select(SQLQuery sqlQuery) throws DBException {
         String sql = buildSelectSQL(sqlQuery);
-
         DBConnection connection = this.adapter.getConnection();
         return this.adapter.executeQuery(connection, sql, sqlQuery.getParams());
     }
 
 
     /* getters and setters */
-
-    public ModelClassBase getModelClass() {
-        return modelClass;
-    }
-
-    public void setModelClass(ModelClassBase modelClass) {
-        this.modelClass = modelClass;
-    }
 
     public Adapter getAdapter() {
         return adapter;
@@ -196,7 +155,7 @@ public class Provider {
         this.adapter = adapter;
     }
 
-/* protected methods */
+    /* protected methods */
 
     protected String buildInsertSQL(SQLQuery query) {
         StringBuffer sql = new StringBuffer();
@@ -263,19 +222,6 @@ public class Provider {
         return sql.toString();
     }
 
-    protected SQLQuery buildSelect(ModelQuery modelQuery) throws DBException {
-        SQLQuery query = new SQLQuery();
-
-        setModels(query, modelQuery);
-        setTargets(query, modelQuery);
-        setFilters(query, modelQuery);
-        setStringQuery(query, modelQuery);
-        setOrder(query, modelQuery);
-        setPage(query, modelQuery);
-
-        return query;
-    }
-
     protected String buildSelectSQL(SQLQuery query) {
         StringBuffer queryString = new StringBuffer();
 
@@ -308,15 +254,6 @@ public class Provider {
         return queryString.toString();
     }
 
-    protected void setValues(SQLQuery query, ModelQuery modelQuery) throws DBException {
-        for (String fieldName : modelQuery.getValues().keySet()) {
-            Field field = modelQuery.getFieldMap().get(fieldName);
-            Object value = modelQuery.getValues().get(fieldName);
-            query.addValue(getSQLName(query, field), value);
-            query.addParam(value);
-        }
-    }
-
     protected StringBuffer buildWhereClause(SQLQuery query) {
         StringBuffer queryString = new StringBuffer();
 
@@ -333,11 +270,18 @@ public class Provider {
                 }
             }
             if (!query.getStringQueries().isEmpty()) {
-                for (String stringQuery : query.getStringQueries()) {
+                for (StringSQLQuery stringQuery : query.getStringQueries()) {
                     if (expressionClause.length() > 0) {
                         expressionClause.append(" AND ");
                     }
-                    expressionClause.append(stringQuery);
+                    // sub query building
+                    for(int paramIndex =0 ; paramIndex < stringQuery.getParams().size(); paramIndex++) {
+                        Object param = stringQuery.getParams().get(paramIndex);
+                        if (param != null && param.getClass().equals(SQLQuery.class)) {
+                            stringQuery.putParamSQL(paramIndex, "(" + buildSelectSQL((SQLQuery) param) + ")");
+                        }
+                    }
+                    expressionClause.append(stringQuery.getSQL());
                 }
             }
             queryString.append(expressionClause).append(" ");
@@ -360,131 +304,6 @@ public class Provider {
                     .append(" ON ").append(expr).append(" ");
         }
         return queryString;
-    }
-
-    protected void setModels(SQLQuery query, ModelQuery modelQuery) {
-        query.setTableName(modelQuery.getManager().getTableName());
-        query.setTableAlias(modelQuery.getManager().getSelf().getFieldName());
-
-        for (Field field : modelQuery.getFieldMap().values()) {
-            if (field.getType() == Field.Type.FOREIGN) {
-                addRelation(query, new ArrayList<String>(), query.getTableAlias(), (ForeignField) field);
-            }
-        }
-    }
-
-    protected void addRelation(SQLQuery query, List<String> path, String alias, ForeignField foreignField) {
-        path.add(foreignField.getCurrentField().getFieldName());
-        String foreignAlias = concat(path, "__").toString();
-        if (foreignField.getCurrentField().getType() != Field.Type.SELF) {
-            String tableName =  foreignField.getCurrentField().getReferenceClass().getManager().getTableName();
-            Field referenceModelField = foreignField.getCurrentField().getReferenceModelKey();
-            List value = list(tableName,String.format("%s.%s = %s.%s",
-                    foreignAlias, referenceModelField.getColumnName(),
-                    alias, foreignField.getCurrentField().getColumnName()));
-            query.getRelations().put(foreignAlias, value);
-        }
-        if (foreignField.getNextField().getType() == Field.Type.FOREIGN) {
-            addRelation(query, path, foreignAlias, (ForeignField) foreignField.getNextField());
-        }
-    }
-
-    protected void setTargets(SQLQuery query, ModelQuery modelQuery) {
-        for (Field field : modelQuery.getFullFields()) {
-            addTarget(field, query, modelQuery);
-        }
-    }
-
-    protected void addTarget(Field field, SQLQuery query, ModelQuery modelQuery) {
-        if (field.getType() == Field.Type.FUNCTION) {
-            FunctionField functionField = (FunctionField) field;
-            List<Field> attributes = functionField.getAttributes();
-            List<String> dbAttributes = new ArrayList<String>();
-            for (Field attr : attributes) {
-                dbAttributes.add(getSQLName(query, attr));
-            }
-            query.addTarget(functionField.render(dbAttributes), functionField.getFieldName());
-            query.putTargetType(functionField.getFieldName(), functionField.getColumnType());
-        } else {
-            String sqlName = getSQLName(query, field);
-            query.addTarget(sqlName);
-            query.putTargetType(sqlName, field.getColumnType());
-        }
-    }
-
-    protected void setFilters(SQLQuery query, ModelQuery modelQuery) throws DBException {
-        if (modelQuery.getFilter().size() > 0) {
-            for (int i=0; i < modelQuery.getFilter().size(); i++) {
-                Expression expression = modelQuery.getFilter().get(i);
-                Field field = modelQuery.getFilterFields().get(i);
-                String sqlName = getSQLName(query, field);
-
-                if (expression.getValue() != null && expression.getValue().getClass().equals(ModelQuery.class)) {
-                    SQLQuery subSql = buildSelect((ModelQuery) expression.getValue());
-                    query.getFitler().put(sqlName, new ExpressionImpl(sqlName, expression.getOperation(), subSql));
-                    for(Object param : subSql.getParams()) {
-                        query.getParams().add(param);
-                    }
-                } else {
-                    Object value = field.cast(expression.getValue());
-                    query.getFitler().put(sqlName, new ExpressionImpl(sqlName, expression.getOperation(), value));
-                    query.getParams().add(value);
-                }
-            }
-        }
-    }
-
-    protected void setStringQuery(SQLQuery query, ModelQuery modelQuery) throws DBException {
-        if (modelQuery.getStringQueries().size() > 0) {
-            for (int i=0; i < modelQuery.getStringQueries().size(); i++) {
-                ModelQuery.StringQuery stringQuery = modelQuery.getStringQueries().get(i);
-                List<Field> modelFields = stringQuery.getModelFields();
-                List<String> sqlFields = new ArrayList<String>();
-
-                for (Field field : modelFields) {
-                    sqlFields.add(getSQLName(query, field));
-                }
-                for (int paramIndex = 0; paramIndex < stringQuery.getParams().size(); paramIndex++) {
-                    Object param = stringQuery.getParams().get(paramIndex);
-
-                    if (param != null && param.getClass().equals(ModelQuery.class)) {
-                        SQLQuery subSql = buildSelect((ModelQuery) param);
-                        for(Object subParam : subSql.getParams()) {
-                            query.getParams().add(subParam);
-                        }
-                        stringQuery.setParamSQL(paramIndex, "(" + buildSelectSQL(subSql) + ")");
-                    } else {
-                        query.getParams().add(param);
-                    }
-                }
-                query.addStringQuery(stringQuery.getSQL(sqlFields));
-            }
-        }
-    }
-
-    protected void setOrder(SQLQuery query, ModelQuery modelQuery) {
-        if (modelQuery.getOrderField() != null) {
-            Map<String, String> result = new HashMap<String, String>();
-            result.put("orderByCol", getSQLName(query, modelQuery.getOrderField()));
-            if (modelQuery.getOrderType() != null) {
-                result.put("orderByType", modelQuery.getOrderType());
-            }
-            query.setOrder(result);
-        }
-    }
-
-    protected void setPage(SQLQuery query, ModelQuery modelQuery) {
-        query.setStart(modelQuery.getPage().get("start"));
-        query.setEnd(modelQuery.getPage().get("end"));
-    }
-
-    protected String getSQLName(SQLQuery query, Field field) {
-        if (field.getType() == Field.Type.FOREIGN) {
-            String alias = concat(((ForeignField)field).getReferenceFields(), "__").toString();
-            return String.format("%s.%s", alias, field.getColumnName());
-        } else {
-            return String.format("%s.%s", query.getTableAlias(), field.getColumnName());
-        }
     }
 
     protected String makeSQLExpr(String field, String operation, Object value) {

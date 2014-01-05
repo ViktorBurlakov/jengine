@@ -29,7 +29,7 @@ public class SQLQuery {
     private String tableAlias;
     private Map<String, List> relations = new LinkedHashMap<String, List>();
     private Map<String, Expression> fitler = new LinkedHashMap<String, Expression>();
-    private List<String> stringQueries = new ArrayList<String>();
+    private List<StringSQLQuery> stringQueries = new ArrayList<StringSQLQuery>();
     private List params = new ArrayList();
     private List<Object[]> targets = new ArrayList<Object[]>();
     private LinkedHashMap<String, Integer> targetTypes = new LinkedHashMap<String, Integer>();
@@ -41,7 +41,7 @@ public class SQLQuery {
     public SQLQuery() {
     }
 
-    public void addStringQuery(String stringQuery) {
+    public void addStringQuery(StringSQLQuery stringQuery) {
         this.stringQueries.add(stringQuery);
     }
 
@@ -83,11 +83,11 @@ public class SQLQuery {
         this.tableName = tableName;
     }
 
-    public List<String> getStringQueries() {
+    public List<StringSQLQuery> getStringQueries() {
         return stringQueries;
     }
 
-    public void setStringQueries(List<String> stringQueries) {
+    public void setStringQueries(List<StringSQLQuery> stringQueries) {
         this.stringQueries = stringQueries;
     }
 

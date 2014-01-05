@@ -141,12 +141,24 @@ public class ModelClassBase<T extends Model> {
     }
 
     public T getCache(Object id) throws DBException {
-        return manager.getCacheEnabled() ? (T) provider.getCache(cls, id) : null;
+        return manager.getCacheEnabled() ? (T) provider.getCache(manager.getTableName(), id) : null;
     }
 
     public void clearCache(Class cls) throws DBException {
         if (manager.getCacheEnabled()) {
-            provider.clearCache(cls);
+            provider.clearCache(manager.getTableName());
+        }
+    }
+
+    public void clearCache(Model obj) throws DBException {
+        if (manager.getCacheEnabled()) {
+            provider.clearCache(manager.getTableName(), obj.getPrimaryKey());
+        }
+    }
+
+    public void cache(Model obj) throws DBException {
+        if (manager.getCacheEnabled()) {
+            provider.cache(manager.getTableName(), obj.getPersistenceValues());
         }
     }
 
@@ -182,19 +194,19 @@ public class ModelClassBase<T extends Model> {
 
 
     public void insert(ModelQuery modelQuery) throws DBException {
-        provider.insert(modelQuery);
+        provider.insert(PersistenceManager.buildInsertSQL(modelQuery));
     }
 
     public void update(ModelQuery modelQuery) throws DBException {
-        provider.update(modelQuery);
+        provider.update(PersistenceManager.buildUpdateSQL(modelQuery));
     }
 
     public void remove(ModelQuery modelQuery) throws DBException {
-        provider.remove(modelQuery);
+        provider.remove(PersistenceManager.buildRemoveSQL(modelQuery));
     }
 
     public List select(ModelQuery modelQuery) throws DBException {
-        List values = provider.select(modelQuery);
+        List values = provider.select(PersistenceManager.buildSelectSQL(modelQuery));
         return processResult(modelQuery, values);
     }
 

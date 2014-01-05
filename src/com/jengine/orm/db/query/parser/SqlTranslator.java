@@ -31,7 +31,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WhereTranslator implements ASTVisitor {
+public class SqlTranslator implements ASTVisitor {
     private List<ResultPart> parts = new ArrayList<ResultPart>();
     private List<Column> columns = new ArrayList<Column>();
     private List<Param> params = new ArrayList<Param>();
@@ -39,26 +39,26 @@ public class WhereTranslator implements ASTVisitor {
     protected String source;
     private boolean debug = false;
 
-    public WhereTranslator(String source) {
+    public SqlTranslator(String source) {
         this.source = source;
     }
 
     public static void main(String[] args) {
         try {
-            WhereTranslator.parse("(a.b.c = 1 AND c.s.c = ? ) OR (ab.c in (1,23,3))");
+            SqlTranslator.parse("(a.b.c = 1 AND c.s.c = ? ) OR (ab.c in (1,23,3))");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static WhereTranslator parse(String input) throws UnsupportedEncodingException, TokenStreamException, RecognitionException {
+    public static SqlTranslator parse(String input) throws UnsupportedEncodingException, TokenStreamException, RecognitionException {
         InputStream in = new ByteArrayInputStream(input.getBytes("UTF-8"));
         SqlLexer lexer = new SqlLexer(new DataInputStream(in));
         SqlParser parser = new SqlParser(lexer);
         parser.setASTNodeClass("com.jengine.orm.db.query.parser.SQLCommonAST");
         parser.where_condition();
 
-        WhereTranslator visitor = new WhereTranslator(input);
+        SqlTranslator visitor = new SqlTranslator(input);
         visitor.visit(parser.getAST());
 //        System.out.println("!!!!" + visitor.getResult());
 
