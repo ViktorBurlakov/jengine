@@ -33,7 +33,6 @@ public class ModelClass<T extends Model> extends ModelClassBase<T> {
                 (Boolean) options.get("cacheEnabled") : (Boolean) metaMap.get("cacheEnabled");
         this.db = DBFactory.get(dbName);
         this.provider = this.db.getProvider();
-        this.provider.setModelClass(this);
         this.manager = new ModelManager();
         this.manager.setModelClass(cls);
         this.manager.setCls(this);

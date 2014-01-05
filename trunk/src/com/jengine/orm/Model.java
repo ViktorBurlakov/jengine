@@ -173,13 +173,13 @@ public class Model {
 
     public void clearCache() throws DBException {
         if (cls.getManager().getCacheEnabled()) {
-            cls.getProvider().clearCache(this);
+            cls.clearCache(this);
         }
     }
 
     public void cache() throws DBException {
         if (cls.getManager().getCacheEnabled()) {
-            cls.getProvider().cache(this);
+            cls.cache(this);
         }
     }
 
