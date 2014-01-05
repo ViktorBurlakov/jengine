@@ -6,12 +6,12 @@ import com.jengine.orm.db.query.parser.SqlTranslator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StringSQLQuery {
+public class SQLStringExpression {
     private String query;
     private List params = new ArrayList();
     private SqlTranslator translator;
 
-    public StringSQLQuery(String source, SqlTranslator translator, List params)  {
+    public SQLStringExpression(String source, SqlTranslator translator, List params)  {
         this.query = source;
         this.translator = translator;
         this.params = params;

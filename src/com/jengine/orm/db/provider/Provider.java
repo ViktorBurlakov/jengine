@@ -25,7 +25,7 @@ import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.adapter.Adapter;
 import com.jengine.orm.db.expression.Expression;
 import com.jengine.orm.db.query.SQLQuery;
-import com.jengine.orm.db.query.StringSQLQuery;
+import com.jengine.orm.db.query.SQLStringExpression;
 import com.jengine.utils.CollectionUtil;
 
 import java.io.Serializable;
@@ -257,7 +257,7 @@ public class Provider {
     protected StringBuffer buildWhereClause(SQLQuery query) {
         StringBuffer queryString = new StringBuffer();
 
-        if (!query.getFitler().isEmpty() || !query.getStringQueries().isEmpty()) {
+        if (!query.getFitler().isEmpty() || !query.getStringExpressions().isEmpty()) {
             queryString.append(" WHERE ");
             StringBuffer expressionClause = new StringBuffer();
             if (!query.getFitler().isEmpty()) {
@@ -269,19 +269,19 @@ public class Provider {
                     expressionClause.append(makeSQLExpr(field, expression.getOperation(), expression.getValue()));
                 }
             }
-            if (!query.getStringQueries().isEmpty()) {
-                for (StringSQLQuery stringQuery : query.getStringQueries()) {
+            if (!query.getStringExpressions().isEmpty()) {
+                for (SQLStringExpression stringExpression : query.getStringExpressions()) {
                     if (expressionClause.length() > 0) {
                         expressionClause.append(" AND ");
                     }
                     // sub query building
-                    for(int paramIndex =0 ; paramIndex < stringQuery.getParams().size(); paramIndex++) {
-                        Object param = stringQuery.getParams().get(paramIndex);
+                    for(int paramIndex =0 ; paramIndex < stringExpression.getParams().size(); paramIndex++) {
+                        Object param = stringExpression.getParams().get(paramIndex);
                         if (param != null && param.getClass().equals(SQLQuery.class)) {
-                            stringQuery.putParamSQL(paramIndex, "(" + buildSelectSQL((SQLQuery) param) + ")");
+                            stringExpression.putParamSQL(paramIndex, "(" + buildSelectSQL((SQLQuery) param) + ")");
                         }
                     }
-                    expressionClause.append(stringQuery.getSQL());
+                    expressionClause.append(stringExpression.getSQL());
                 }
             }
             queryString.append(expressionClause).append(" ");
