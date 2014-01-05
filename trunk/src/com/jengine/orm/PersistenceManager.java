@@ -5,7 +5,7 @@ import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.expression.Expression;
 import com.jengine.orm.db.expression.ExpressionImpl;
 import com.jengine.orm.db.query.SQLQuery;
-import com.jengine.orm.db.query.StringSQLQuery;
+import com.jengine.orm.db.query.SQLStringExpression;
 import com.jengine.orm.field.Field;
 import com.jengine.orm.field.ForeignField;
 import com.jengine.orm.field.FunctionField;
@@ -145,18 +145,18 @@ public class PersistenceManager {
     }
 
     protected static void setStringQuery(SQLQuery query, ModelQuery modelQuery) throws DBException {
-        if (modelQuery.getStringQueries().size() > 0) {
-            for (int i=0; i < modelQuery.getStringQueries().size(); i++) {
-                ModelQuery.StringQuery stringQuery = modelQuery.getStringQueries().get(i);
-                List<Field> modelFields = stringQuery.getModelFields();
+        if (modelQuery.getStringExpressions().size() > 0) {
+            for (int i=0; i < modelQuery.getStringExpressions().size(); i++) {
+                ModelQuery.StringExpression stringExpression = modelQuery.getStringExpressions().get(i);
+                List<Field> modelFields = stringExpression.getModelFields();
                 List<String> sqlFields = new ArrayList<String>();
                 List params = new ArrayList();
 
                 for (Field field : modelFields) {
                     sqlFields.add(getSQLName(query, field));
                 }
-                stringQuery.setSQLFields(sqlFields);
-                for (Object param : stringQuery.getParams()){
+                stringExpression.setSQLFields(sqlFields);
+                for (Object param : stringExpression.getParams()){
                     if (param != null && param.getClass().equals(ModelQuery.class)) {
                         SQLQuery subSql = buildSelectSQL((ModelQuery) param);
                         for(Object subParam : subSql.getParams()) {
@@ -168,7 +168,7 @@ public class PersistenceManager {
                         params.add(param);
                     }
                 }
-                query.addStringQuery(new StringSQLQuery(stringQuery.getQuery(), stringQuery.getTranslator(), params));
+                query.addStringQuery(new SQLStringExpression(stringExpression.getQuery(), stringExpression.getTranslator(), params));
             }
         }
     }

@@ -47,7 +47,7 @@ public class ModelQuery {
     private String orderType = null;
     private Map<String, Integer> page = new HashMap<String, Integer>();
     private ModelManager manager = null;
-    private List<StringQuery> stringQueries= new ArrayList<StringQuery>();
+    private List<StringExpression> stringExpressions = new ArrayList<StringExpression>();
     private Map<String, Object> values = new LinkedHashMap<String, java.lang.Object>();
     private List<Field> valueFields = new ArrayList<Field>();
 
@@ -121,11 +121,11 @@ public class ModelQuery {
 
     public ModelQuery filter(String query, Object ... params) throws DBException {
         try{
-            StringQuery stringQuery = new StringQuery(query, params);
-            this.stringQueries.add(stringQuery);
-            for (String field : stringQuery.findModelFields()) {
+            StringExpression stringExpression = new StringExpression(query, params);
+            this.stringExpressions.add(stringExpression);
+            for (String field : stringExpression.findModelFields()) {
                 Field modelField = getField(field);
-                stringQuery.getModelFields().add(modelField);
+                stringExpression.getModelFields().add(modelField);
                 this.addToFieldMap(modelField);
             }
         } catch (Exception e) {
@@ -281,8 +281,8 @@ public class ModelQuery {
         return page;
     }
 
-    public List<StringQuery> getStringQueries() {
-        return stringQueries;
+    public List<StringExpression> getStringExpressions() {
+        return stringExpressions;
     }
 
     public ModelManager getManager() {
@@ -295,13 +295,13 @@ public class ModelQuery {
 
     /* private class */
 
-    public class StringQuery {
+    public class StringExpression {
         private String query;
         private List params = new ArrayList();
         private SqlTranslator translator;
         private List<Field> modelFields = new ArrayList<Field>();
 
-        public StringQuery(String query, Object[] params) throws TokenStreamException, RecognitionException, UnsupportedEncodingException {
+        public StringExpression(String query, Object[] params) throws TokenStreamException, RecognitionException, UnsupportedEncodingException {
             this.query = query;
             Collections.addAll(this.params, params);
             translator = SqlTranslator.parse(query);
