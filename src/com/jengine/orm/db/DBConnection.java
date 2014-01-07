@@ -1,16 +1,25 @@
 package com.jengine.orm.db;
 
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBConnection {
+public abstract class DBConnection {
     private Object nativeConnection;
     private List generatedKeys = new ArrayList();
 
     public DBConnection(Object nativeConnection) {
         this.nativeConnection = nativeConnection;
     }
+
+    abstract public void startTransaction() throws SQLException, DBException;
+
+    abstract public void commit() throws DBException;
+
+    abstract public void rollback() throws DBException;
+
+    abstract public void finishTransaction() throws DBException;
 
     public Object getNativeConnection() {
         return nativeConnection;
