@@ -30,7 +30,7 @@ public class JDBCAdapter extends Adapter {
 
     public DBConnection newConnection() throws DBException {
         try {
-            return new DBConnection(DriverManager.getConnection(this.connection, this.user, this.password));
+            return new JDBCConnection(DriverManager.getConnection(this.connection, this.user, this.password));
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DBException(e);

@@ -1,4 +1,5 @@
 import com.jengine.orm.db.DB;
+import com.jengine.orm.db.DBConnection;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.DBFactory;
 import com.jengine.orm.db.adapter.Adapter;
@@ -31,6 +32,7 @@ public class Test {
         test6();
         test7();
         test8();
+        test9();
     }
 
     /**
@@ -339,6 +341,46 @@ public class Test {
         for (Thread thread : threads) {
             thread.start();
         }
+        for (Thread thread : threads) {
+            thread.join();
+        }
+    }
+
+    /**
+     * Transaction testing
+     */
+    public static void test9() throws Exception {
+        System.out.println("** Test 9: Transaction testing");
+
+        DBConnection connection = DBFactory.get().getConnection();
+        clearData();
+        try {
+            connection.startTransaction();
+            loadData();
+            throw new Exception("test!!!");
+        } catch (Exception e) {
+            connection.rollback();
+            // checking
+            check( Author.cls.count() == 0 );
+            check( Library.cls.count() == 0 );
+            check( Book.cls.count() == 0 );
+            check( Member.cls.count() == 0 );
+            check( Transaction.cls.count() == 0 );
+        } finally {
+            connection.finishTransaction();
+        }
+
+        clearData();
+        connection.startTransaction();
+        loadData();
+        connection.commit();
+        check( Author.cls.count() > 0 );
+        check( Library.cls.count() > 0 );
+        check( Book.cls.count() > 0 );
+        check( Member.cls.count() > 0 );
+        check( Transaction.cls.count() > 0 );
+        connection.finishTransaction();
+
     }
 
     private static void check(boolean value) throws Exception {
