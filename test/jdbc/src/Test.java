@@ -381,6 +381,23 @@ public class Test {
         check( Transaction.cls.count() > 0 );
         connection.finishTransaction();
 
+
+        clearData();
+        connection.startTransaction();
+        loadData();
+        // nested transaction will be support in future
+        if (!connection.isTransaction()) {
+            connection.startTransaction();
+            Author.cls.get(1).setLastName("test1");
+            connection.finishTransaction();
+        }
+        connection.commit();
+        check( Author.cls.count() > 0 );
+        check( Library.cls.count() > 0 );
+        check( Book.cls.count() > 0 );
+        check( Member.cls.count() > 0 );
+        check( Transaction.cls.count() > 0 );
+        connection.finishTransaction();
     }
 
     private static void check(boolean value) throws Exception {

@@ -180,9 +180,7 @@ public class ModelClassBase<T extends Model> {
         provider.update(manager.getTableName(), manager.getPrimaryKey().getColumnName(),
                 obj.getPersistenceValues());
         for (Field field : manager.getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE)) {
-            ManyReferenceField manyReferenceField = ((ManyReferenceField) field);
-            manyReferenceField.remove(obj);
-            manyReferenceField.insert(obj);
+            ((ManyReferenceField) field).update(obj);
             obj.getData().remove(field.getFieldName());
         }
 

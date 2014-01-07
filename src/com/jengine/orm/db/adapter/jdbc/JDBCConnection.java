@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 
 public class JDBCConnection extends DBConnection {
-    private Boolean transactionState = null;
+    private Boolean prevTransactionState = null;
 
     public JDBCConnection(Object nativeConnection) {
         super(nativeConnection);
@@ -16,8 +16,9 @@ public class JDBCConnection extends DBConnection {
 
     public void startTransaction() throws DBException {
         try {
-            transactionState = getNativeConnection().getAutoCommit();
+            prevTransactionState = getNativeConnection().getAutoCommit();
             getNativeConnection().setAutoCommit(false);
+            System.out.println(" TRANSACTION STARTED");
         } catch (SQLException e) {
             throw new DBException(e);
         }
@@ -25,8 +26,17 @@ public class JDBCConnection extends DBConnection {
 
     public void finishTransaction() throws DBException {
         try {
-            getNativeConnection().setAutoCommit(transactionState);
-            transactionState = null;
+            getNativeConnection().setAutoCommit(prevTransactionState);
+            prevTransactionState = null;
+            System.out.println(" TRANSACTION FINISHED");
+        } catch (SQLException e) {
+            throw new DBException(e);
+        }
+    }
+
+    public boolean isTransaction() throws DBException {
+        try {
+            return getNativeConnection().getAutoCommit() == false;
         } catch (SQLException e) {
             throw new DBException(e);
         }

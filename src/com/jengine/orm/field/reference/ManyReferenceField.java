@@ -3,6 +3,7 @@ package com.jengine.orm.field.reference;
 
 import com.jengine.orm.Model;
 import com.jengine.orm.ModelClassBase;
+import com.jengine.orm.db.DBConnection;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.exception.ValidateException;
 import com.jengine.orm.field.Field;
@@ -70,6 +71,27 @@ public class ManyReferenceField extends BaseReference {
         Field middleField = getMiddleField();
         Object keyValue = obj.getData().get(getKeyFieldName());
         return middleCls.filter(middleField.eq(keyValue)).field(middleField);
+    }
+
+    public void update(Model obj) throws ValidateException, DBException {
+        DBConnection connection = manager.getCls().getProvider().getConnection();
+        // todo : use nested transaction
+        if (connection.isTransaction()) {
+            remove(obj);
+            insert(obj);
+        } else {
+            try {
+                connection.startTransaction();
+                remove(obj);
+                insert(obj);
+                connection.commit();
+            } catch (Exception e) {
+                connection.rollback();
+                throw new DBException(e);
+            } finally {
+                connection.finishTransaction();
+            }
+        }
     }
 
     public void insert(Model obj) throws ValidateException, DBException {
