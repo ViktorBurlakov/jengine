@@ -163,9 +163,10 @@ public class ModelClassBase<T extends Model> {
     }
 
     public T insert(Model obj) throws ValidateException, DBException {
-        Object id = provider.insert(manager.getTableName(), obj.getPersistenceValues());
+        boolean autoIncrement = obj.getPrimaryKey() == null && manager.getPrimaryKey().isAutoIncrement();
+        Object id = provider.insert(manager.getTableName(), obj.getPersistenceValues(), autoIncrement);
         obj.setNew(false);
-        if (manager.getPrimaryKey().isAutoIncrement()) {
+        if (autoIncrement) {
             obj.setPrimaryKey((Serializable) id);
         }
         for (Field field : manager.getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE)) {

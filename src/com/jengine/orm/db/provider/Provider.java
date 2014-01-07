@@ -65,14 +65,14 @@ public class Provider {
 
     /* general methods */
 
-    public Object insert(String table, Map<String, Object> attributes) throws DBException {
+    public Object insert(String table, Map<String, Object> attributes, boolean autoIncrement) throws DBException {
         List columns = new ArrayList();
         columns.addAll(attributes.keySet());
 
-        return insert(table, columns, CollectionUtil.values(columns, attributes));
+        return insert(table, columns, CollectionUtil.values(columns, attributes), autoIncrement);
     }
 
-    public Object insert(String table, List<String> columns, List values) throws DBException {
+    public Object insert(String table, List<String> columns, List values, boolean autoIncrement) throws DBException {
         StringBuffer sql = new StringBuffer();
         List valuesMarks = newList(values.size(), "?");
 
@@ -82,8 +82,7 @@ public class Provider {
                 .append(" VALUES ").append(" (").append(concat(valuesMarks, ", ")).append(") ");
 
         DBConnection connection = this.adapter.getConnection();
-        this.adapter.executeUpdate(connection, sql.toString(), values);
-
+        this.adapter.executeUpdate(connection, sql.toString(), values, map("return_generated_keys", autoIncrement));
         return connection.getGeneratedKeys().size() == 1 ? connection.getGeneratedKeys().get(0) : null;
     }
 

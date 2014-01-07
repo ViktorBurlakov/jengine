@@ -45,6 +45,7 @@ public class PrimaryKey extends Field {
     public PrimaryKey(Class fieldClass, Map<String, Object> options) {
         super(fieldClass, options);
         primaryKey = true;
+        autoIncrement = true;
     }
 
     public Object cast(Object value) throws DBException {
