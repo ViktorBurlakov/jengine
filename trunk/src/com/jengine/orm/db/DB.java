@@ -17,6 +17,10 @@ public class DB {
         this.provider = provider;
     }
 
+    public DBConnection getConnection() throws DBException {
+        return provider.getConnection();
+    }
+
     public Provider getProvider() {
         return provider;
     }

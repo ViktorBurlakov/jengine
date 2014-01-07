@@ -7,14 +7,16 @@ import com.jengine.orm.db.adapter.Adapter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class JDBCAdapter extends Adapter {
     private String driver;
     private String connection;
     private String user;
     private String password;
+    private ThreadLocal<DBConnection> threadConnection = new ThreadLocal<DBConnection>();
 
-    public JDBCAdapter(String driver, String dialect, String connection, String user, String password) throws DBException {
+    public JDBCAdapter(String driver, String connection, String user, String password) throws DBException {
         super();
         this.driver = driver;
         this.connection = connection;
@@ -27,35 +29,44 @@ public class JDBCAdapter extends Adapter {
         }
     }
 
-    public DBConnection getConnection() throws DBException {
+    public DBConnection newConnection() throws DBException {
         try {
-            Connection connection = DriverManager.getConnection(this.connection, this.user, this.password);
-            return new DBConnection(connection);
+            return new DBConnection(DriverManager.getConnection(this.connection, this.user, this.password));
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DBException(e);
         }
     }
 
-    public void executeUpdate(DBConnection dbConnection, String sql, List params) throws DBException {
+    public DBConnection getConnection() throws DBException {
+        if (threadConnection.get() == null) {
+            threadConnection.set(newConnection());
+        }
+        return threadConnection.get();
+    }
+
+    public void executeUpdate(DBConnection dbConnection, String sql, List params, Map<String, Object> options) throws DBException {
         Connection connection = (Connection) dbConnection.getNativeConnection();
         PreparedStatement pstmt = null;
+        Boolean returnGeneratedKeys = options.containsKey("return_generated_keys") ?
+                (Boolean) options.get("return_generated_keys") : false;
 
         try {
-            pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt = connection.prepareStatement(sql, returnGeneratedKeys ? Statement.RETURN_GENERATED_KEYS : Statement.NO_GENERATED_KEYS);
             int index = 1;
             for (Object item: params) {
                 pstmt.setObject(index++, item);
             }
             System.out.println(sql);
             pstmt.executeUpdate();
-            // set generated keys
-            List generatedKeys = new ArrayList();
-            ResultSet rs = pstmt.getGeneratedKeys();
-            while (rs.next()) {
-                generatedKeys.add(rs.getObject(1));
+            if (returnGeneratedKeys) {
+                List generatedKeys = new ArrayList();
+                ResultSet rs = pstmt.getGeneratedKeys();
+                while (rs.next()) {
+                    generatedKeys.add(rs.getObject(1));
+                }
+                dbConnection.setGeneratedKeys(generatedKeys);
             }
-            dbConnection.setGeneratedKeys(generatedKeys);
         } catch (Exception e) {
             throw new DBException(e);
         } finally {

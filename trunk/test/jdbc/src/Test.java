@@ -9,7 +9,9 @@ import com.jengine.orm.exception.ValidateException;
 import com.jengine.orm.field.FunctionField;
 import models.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static com.jengine.utils.CollectionUtil.list;
 import static com.jengine.utils.CollectionUtil.map;
@@ -17,7 +19,7 @@ import static com.jengine.utils.CollectionUtil.map;
 public class Test {
 
     public static void main(String [] args) throws Exception {
-        Adapter adapter = new JDBCAdapter("com.mysql.jdbc.Driver", "MySQL", "jdbc:mysql://localhost:3306/bookdb?", "root", "");
+        Adapter adapter = new JDBCAdapter("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/bookdb?", "root", "");
         Provider provider = new MySQLProvider(adapter);
         DBFactory.register(new DB(provider));
 
@@ -28,6 +30,7 @@ public class Test {
         test5();
         test6();
         test7();
+        test8();
     }
 
     /**
@@ -272,12 +275,12 @@ public class Test {
         clearData();
         loadData();
 
-        check( Author.cls.<Long>max(Author.id) == 3l );
-        check( Author.cls.<Long>sum(Author.id) == 6l );
-        check( Author.cls.<Long>min(Author.id) == 1l );
-        check( Book.cls.count() == 3l );
+        check(Author.cls.<Long>max(Author.id) == 3l);
+        check(Author.cls.<Long>sum(Author.id) == 6l);
+        check(Author.cls.<Long>min(Author.id) == 1l);
+        check(Book.cls.count() == 3l);
         FunctionField function1 = Book.cls.getManager().newCalcField("function1", Long.class, "%s + 1", Book.id);
-        check( Book.cls.select(function1).filter("id = ?", 1l).<Long>one() == 2l );
+        check(Book.cls.select(function1).filter("id = ?", 1l).<Long>one() == 2l);
         check( Book.cls.<Long>calc("sum", Long.class, "max(%s) + 2", Book.id) == 5l );
     }
 
@@ -300,6 +303,42 @@ public class Test {
         check( Author.cls.get(3).getBooks().list().size() == 1);
         check( Member.cls.filter("firstName = ?", "Burt").<Member>one().getAddress().getNumber().equals("742"));
         check( Address.cls.filter("member.firstName = ?", "Burt").<Address>one().getNumber().equals("742"));
+    }
+
+
+    /**
+     * ThreadLocal Connection testing
+     */
+    public static void test8() throws Exception {
+        System.out.println("** Test 8: ThreadLocal Connection testing");
+
+        clearData();
+        loadData();
+
+        List<Thread> threads = new ArrayList<Thread>();
+
+        for (int i=0; i < 10; i++) {
+            threads.add(new Thread() {
+                public void run() {
+                    try {
+                        check(Book.cls.get(1).getLibrary().equals(Library.cls.get(1)));
+                        Library globe = Library.cls.filter("name = ?", "Globe").one();
+                        check( globe.getMemberList().size() == 5 );
+                        check( globe.getMembers().list().size() == 5 );
+                        check( globe.getMembers().count() == 5 );
+                        check( globe.getMembers().filter("lastName = ?", "Simpson").count() == 2 );
+                        check( Author.cls.get(3).getBooks().list().size() == 1);
+                        check( Member.cls.filter("firstName = ?", "Burt").<Member>one().getAddress().getNumber().equals("742"));
+                        check( Address.cls.filter("member.firstName = ?", "Burt").<Address>one().getNumber().equals("742"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+        for (Thread thread : threads) {
+            thread.start();
+        }
     }
 
     private static void check(boolean value) throws Exception {
