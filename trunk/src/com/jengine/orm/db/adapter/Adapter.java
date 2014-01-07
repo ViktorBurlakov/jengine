@@ -12,9 +12,17 @@ import static com.jengine.utils.CollectionUtil.map;
 
 public class Adapter {
     private String dialect;
+    private ThreadLocal<DBConnection> threadConnection = new ThreadLocal<DBConnection>();
+
+    public DBConnection newConnection() throws DBException {
+        return null;
+    }
 
     public DBConnection getConnection() throws DBException {
-        return null;
+        if (threadConnection.get() == null) {
+            threadConnection.set(newConnection());
+        }
+        return threadConnection.get();
     }
 
     public void executeUpdate(DBConnection dbConnection, String sql, List params) throws DBException {
