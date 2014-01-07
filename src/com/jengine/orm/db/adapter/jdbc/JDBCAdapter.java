@@ -14,7 +14,6 @@ public class JDBCAdapter extends Adapter {
     private String connection;
     private String user;
     private String password;
-    private ThreadLocal<DBConnection> threadConnection = new ThreadLocal<DBConnection>();
 
     public JDBCAdapter(String driver, String connection, String user, String password) throws DBException {
         super();
@@ -36,13 +35,6 @@ public class JDBCAdapter extends Adapter {
             e.printStackTrace();
             throw new DBException(e);
         }
-    }
-
-    public DBConnection getConnection() throws DBException {
-        if (threadConnection.get() == null) {
-            threadConnection.set(newConnection());
-        }
-        return threadConnection.get();
     }
 
     public void executeUpdate(DBConnection dbConnection, String sql, List params, Map<String, Object> options) throws DBException {
