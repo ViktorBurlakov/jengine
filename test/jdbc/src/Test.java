@@ -19,17 +19,22 @@ public class Test {
     public static void main(String [] args) throws Exception {
         Adapter adapter = new JDBCAdapter("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/bookdb?", "root", "");
         Provider provider = new MySQLProvider(adapter);
-        DBFactory.register(new DB(provider));
+        DB db = DBFactory.register(new DB(provider));
+        DBConnection connection = db.getConnection();
 
-        test1();
-        test2();
-        test3();
-        test4();
-        test5();
-        test6();
-        test7();
-        test8();
-        test9();
+        try {
+            test1();
+            test2();
+            test3();
+            test4();
+            test5();
+            test6();
+            test7();
+            test8();
+            test9();
+        } finally {
+            db.closeConnection(connection);
+        }
     }
 
     /**

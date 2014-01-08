@@ -18,6 +18,14 @@ public class JDBCConnection extends DBConnection {
         }
     }
 
+    public void close() throws DBException {
+        try {
+            getNativeConnection().close();
+        } catch (SQLException e) {
+            throw new DBException(e);
+        }
+    }
+
     public void startTransaction() throws DBException {
         try {
             getNativeConnection().setAutoCommit(false);
@@ -30,7 +38,7 @@ public class JDBCConnection extends DBConnection {
     public void commit() throws DBException {
         try {
             getNativeConnection().commit();
-            System.out.println("Transaction commited!");
+            System.out.println("Transaction committed!");
         } catch (SQLException e) {
             throw new DBException(e);
         }
@@ -84,7 +92,7 @@ public class JDBCConnection extends DBConnection {
     public void rollback(DBSavePoint point) throws DBException {
         try {
             getNativeConnection().rollback((Savepoint) point.getNativeObject());
-            System.out.println("Save Point rollback : " +((Savepoint) point.getNativeObject()).getSavepointId());
+            System.out.println("Save Point rollback");
         } catch (SQLException e) {
             throw new DBException(e);
         }

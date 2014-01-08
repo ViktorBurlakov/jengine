@@ -47,6 +47,9 @@ public class Provider {
         return adapter.getConnection();
     }
 
+    public void closeConnection(DBConnection connection) throws DBException {
+        adapter.closeConnection(connection);
+    }
     /* cache methods */
 
     public void cache(String table, Map<String, Object> attributes) {
