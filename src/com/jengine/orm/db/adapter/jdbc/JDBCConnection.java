@@ -84,7 +84,7 @@ public class JDBCConnection extends DBConnection {
     public void rollback(DBSavePoint point) throws DBException {
         try {
             getNativeConnection().rollback((Savepoint) point.getNativeObject());
-            System.out.println("Save Point rollback : " +((Savepoint) point.getNativeObject()).toString());
+            System.out.println("Save Point rollback : " +((Savepoint) point.getNativeObject()).getSavepointId());
         } catch (SQLException e) {
             throw new DBException(e);
         }
