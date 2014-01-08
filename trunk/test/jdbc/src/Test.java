@@ -1,7 +1,4 @@
-import com.jengine.orm.db.DB;
-import com.jengine.orm.db.DBConnection;
-import com.jengine.orm.db.DBException;
-import com.jengine.orm.db.DBFactory;
+import com.jengine.orm.db.*;
 import com.jengine.orm.db.adapter.Adapter;
 import com.jengine.orm.db.adapter.jdbc.JDBCAdapter;
 import com.jengine.orm.db.provider.Provider;
@@ -386,10 +383,10 @@ public class Test {
         connection.startTransaction();
         loadData();
             // nested transaction
-            connection.startTransaction();
+            DBSavePoint point = connection.savePoint();
             Author.cls.get(1).setLastName("test1");
-            connection.rollback();
-            connection.finishTransaction();
+            connection.rollback(point);
+            connection.releasePoint(point);
         connection.commit();
         check( Author.cls.count() > 0 );
         check( Library.cls.count() > 0 );
