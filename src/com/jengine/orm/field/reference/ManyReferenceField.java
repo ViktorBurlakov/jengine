@@ -5,6 +5,7 @@ import com.jengine.orm.Model;
 import com.jengine.orm.ModelClassBase;
 import com.jengine.orm.db.DBConnection;
 import com.jengine.orm.db.DBException;
+import com.jengine.orm.db.DBSavePoint;
 import com.jengine.orm.exception.ValidateException;
 import com.jengine.orm.field.Field;
 import com.jengine.utils.Variant;
@@ -75,10 +76,8 @@ public class ManyReferenceField extends BaseReference {
 
     public void update(Model obj) throws ValidateException, DBException {
         DBConnection connection = manager.getCls().getProvider().getConnection();
-        if (connection.isTransactionActive()) {
-            remove(obj);
-            insert(obj);
-        } else {
+
+        if (!connection.isTransactionActive()) {
             try {
                 connection.startTransaction();
                 remove(obj);
@@ -89,6 +88,17 @@ public class ManyReferenceField extends BaseReference {
                 throw new DBException(e);
             } finally {
                 connection.finishTransaction();
+            }
+        } else {
+            DBSavePoint point = connection.savePoint();
+            try{
+                remove(obj);
+                insert(obj);
+            } catch (Exception e) {
+                connection.rollback(point);
+                throw new DBException(e);
+            } finally {
+                connection.releasePoint(point);
             }
         }
     }
