@@ -75,8 +75,7 @@ public class ManyReferenceField extends BaseReference {
 
     public void update(Model obj) throws ValidateException, DBException {
         DBConnection connection = manager.getCls().getProvider().getConnection();
-        // todo : use nested transaction
-        if (connection.isTransaction()) {
+        if (connection.isTransactionActive()) {
             remove(obj);
             insert(obj);
         } else {

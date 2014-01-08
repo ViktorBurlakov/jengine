@@ -1,26 +1,45 @@
 package com.jengine.orm.db;
 
 
+import com.jengine.orm.db.adapter.jdbc.JDBCTransaction;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class DBConnection {
     private Object nativeConnection;
     private List generatedKeys = new ArrayList();
+    protected DBTransaction transaction = null;
 
     public DBConnection(Object nativeConnection) {
         this.nativeConnection = nativeConnection;
     }
 
-    abstract public void startTransaction() throws DBException;
+    public void startTransaction() throws DBException {
+        transaction = new JDBCTransaction(transaction, this);
+        transaction.start();
+    }
 
-    abstract public void commit() throws DBException;
+    public void commit() throws DBException {
+        transaction.commit();
+    }
 
-    abstract public void rollback() throws DBException;
+    public void rollback() throws DBException {
+        transaction.rollback();
+    }
 
-    abstract public void finishTransaction() throws DBException;
+    public void finishTransaction() throws DBException {
+        transaction.finish();
+        transaction = transaction.getParent();
+    }
 
-    abstract public boolean isTransaction() throws DBException;
+    public boolean isTransactionActive() throws DBException {
+        return transaction != null;
+    }
+
+    public boolean isNestedTransactionSupport() {
+        return false;
+    }
 
     public Object getNativeConnection() {
         return nativeConnection;
@@ -32,5 +51,13 @@ public abstract class DBConnection {
 
     public List getGeneratedKeys() {
         return generatedKeys;
+    }
+
+    public DBTransaction getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(DBTransaction transaction) {
+        this.transaction = transaction;
     }
 }

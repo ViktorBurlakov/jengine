@@ -385,12 +385,11 @@ public class Test {
         clearData();
         connection.startTransaction();
         loadData();
-        // nested transaction will be support in future
-        if (!connection.isTransaction()) {
+            // nested transaction
             connection.startTransaction();
             Author.cls.get(1).setLastName("test1");
+            connection.rollback();
             connection.finishTransaction();
-        }
         connection.commit();
         check( Author.cls.count() > 0 );
         check( Library.cls.count() > 0 );
