@@ -25,6 +25,11 @@ public class Adapter {
         return threadConnection.get();
     }
 
+    public void closeConnection(DBConnection connection) throws DBException {
+        connection.close();
+    }
+
+
     public void executeUpdate(DBConnection dbConnection, String sql, List params) throws DBException {
         executeUpdate(dbConnection, sql, params, map());
     }

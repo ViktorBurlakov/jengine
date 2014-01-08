@@ -6,11 +6,13 @@ public class DBFactory {
     public static ConcurrentHashMap<String, DB> dbMap = new ConcurrentHashMap<String, DB>();
 
     public static DB register(DB db) {
-        return dbMap.put("default", db);
+        dbMap.put("default", db);
+        return db;
     }
 
     public static DB register(String name, DB db) {
-        return dbMap.put(name, db);
+        dbMap.put(name, db);
+        return db;
     }
 
     public static DB get(String name) {

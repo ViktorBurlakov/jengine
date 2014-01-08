@@ -12,6 +12,8 @@ public abstract class DBConnection {
         this.nativeConnection = nativeConnection;
     }
 
+    abstract public void close() throws DBException;
+
     abstract public void startTransaction() throws DBException ;
 
     abstract public void commit() throws DBException;

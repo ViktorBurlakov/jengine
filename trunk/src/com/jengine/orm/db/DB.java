@@ -21,6 +21,10 @@ public class DB {
         return provider.getConnection();
     }
 
+    public void closeConnection(DBConnection connection) throws DBException {
+        provider.closeConnection(connection);
+    }
+
     public Provider getProvider() {
         return provider;
     }
