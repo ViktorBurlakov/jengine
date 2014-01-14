@@ -9,6 +9,7 @@ import com.jengine.orm.field.FunctionField;
 import models.*;
 import org.apache.commons.dbcp.BasicDataSource;
 
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,18 +20,9 @@ import static com.jengine.utils.CollectionUtil.map;
 public class Test {
 
     public static void main(String [] args) throws Exception {
-        // jdbc connection pool manager
-        BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName("com.mysql.jdbc.Driver");
-        ds.setUsername("root");
-        ds.setPassword("");
-        ds.setUrl("jdbc:mysql://localhost:3306/bookdb?");
-        ds.setMaxActive(20);
-        ds.setMaxIdle(2);
-
 //        ConnectionManager connectionManager = new SingleConnectionManager("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/bookdb?", "root", "");
 //        Adapter adapter = new JDBCAdapter(connectionManager);
-        Adapter adapter = new JDBCAdapter(new DBCPConnectionPool(ds));
+        Adapter adapter = new JDBCAdapter(new DBCPConnectionPool(newDBCPDataSource()));
         Provider provider = new MySQLProvider(adapter);
         DB db = DBFactory.register(new DB(provider));
 
@@ -50,6 +42,20 @@ public class Test {
             db.closeConnection(connection);
         }
     }
+
+    public static DataSource newDBCPDataSource() {
+        // jdbc connection pool manager
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName("com.mysql.jdbc.Driver");
+        ds.setUsername("root");
+        ds.setPassword("");
+        ds.setUrl("jdbc:mysql://localhost:3306/bookdb?");
+        ds.setMaxActive(20);
+        ds.setMaxIdle(2);
+
+        return ds;
+    }
+
 
     /**
      * All data Removing
