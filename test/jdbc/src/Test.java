@@ -1,11 +1,13 @@
 import com.jengine.orm.db.*;
 import com.jengine.orm.db.adapter.Adapter;
 import com.jengine.orm.db.adapter.jdbc.JDBCAdapter;
+import com.jengine.orm.db.adapter.jdbc.connection.DBCPConnectionPool;
 import com.jengine.orm.db.provider.Provider;
 import com.jengine.orm.db.provider.mysql.MySQLProvider;
 import com.jengine.orm.exception.ValidateException;
 import com.jengine.orm.field.FunctionField;
 import models.*;
+import org.apache.commons.dbcp.BasicDataSource;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,11 +19,23 @@ import static com.jengine.utils.CollectionUtil.map;
 public class Test {
 
     public static void main(String [] args) throws Exception {
-        Adapter adapter = new JDBCAdapter("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/bookdb?", "root", "");
+        // jdbc connection pool manager
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName("com.mysql.jdbc.Driver");
+        ds.setUsername("root");
+        ds.setPassword("");
+        ds.setUrl("jdbc:mysql://localhost:3306/bookdb?");
+        ds.setMaxActive(20);
+        ds.setMaxIdle(2);
+
+//        ConnectionManager connectionManager = new SingleConnectionManager("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/bookdb?", "root", "");
+//        Adapter adapter = new JDBCAdapter(connectionManager);
+        Adapter adapter = new JDBCAdapter(new DBCPConnectionPool(ds));
         Provider provider = new MySQLProvider(adapter);
         DB db = DBFactory.register(new DB(provider));
-        DBConnection connection = db.getConnection();
 
+        // testing
+        DBConnection connection = db.getConnection();
         try {
             test1();
             test2();
@@ -325,16 +339,23 @@ public class Test {
             threads.add(new Thread() {
                 public void run() {
                     try {
-                        check(Book.cls.get(1).getLibrary().equals(Library.cls.get(1)));
-                        Library globe = Library.cls.filter("name = ?", "Globe").one();
-                        check( globe.getMemberList().size() == 5 );
-                        check( globe.getMembers().list().size() == 5 );
-                        check( globe.getMembers().count() == 5 );
-                        check( globe.getMembers().filter("lastName = ?", "Simpson").count() == 2 );
-                        check( Author.cls.get(3).getBooks().list().size() == 1);
-                        check( Member.cls.filter("firstName = ?", "Burt").<Member>one().getAddress().getNumber().equals("742"));
-                        check( Address.cls.filter("member.firstName = ?", "Burt").<Address>one().getNumber().equals("742"));
-                    } catch (Exception e) {
+                        DBConnection connection = DBFactory.get().getConnection();
+                        try {
+                            check(Book.cls.get(1).getLibrary().equals(Library.cls.get(1)));
+                            Library globe = Library.cls.filter("name = ?", "Globe").one();
+                            check( globe.getMemberList().size() == 5 );
+                            check( globe.getMembers().list().size() == 5 );
+                            check( globe.getMembers().count() == 5 );
+                            check( globe.getMembers().filter("lastName = ?", "Simpson").count() == 2 );
+                            check( Author.cls.get(3).getBooks().list().size() == 1);
+                            check( Member.cls.filter("firstName = ?", "Burt").<Member>one().getAddress().getNumber().equals("742"));
+                            check( Address.cls.filter("member.firstName = ?", "Burt").<Address>one().getNumber().equals("742"));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            DBFactory.get().closeConnection(connection);
+                        }
+                    } catch (DBException e) {
                         e.printStackTrace();
                     }
                 }
@@ -387,7 +408,7 @@ public class Test {
         clearData();
         connection.startTransaction();
         loadData();
-            // nested transaction
+            // save point
             DBSavePoint point = connection.savePoint();
             Author.cls.get(1).setLastName("test1");
             connection.rollback(point);

@@ -8,6 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="jengine" />
+    <orderEntry type="library" name="jengine.lib" level="project" />
   </component>
 </module>
 
