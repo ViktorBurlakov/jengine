@@ -8,10 +8,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="Liferay-portal-src-6.1.1-ce-ga2" />
     <orderEntry type="module" module-name="jengine" />
     <orderEntry type="library" name="liferay.tomcat.lib" level="project" />
     <orderEntry type="library" name="liferay.sdk.lib" level="project" />
-    <orderEntry type="module" module-name="Liferay-portal-src-6.1.1-ce-ga2" />
   </component>
 </module>
 

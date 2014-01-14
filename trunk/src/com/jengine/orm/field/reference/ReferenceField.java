@@ -63,7 +63,7 @@ public class ReferenceField extends BaseReference {
 
     public Object getValue(Model obj) throws DBException {
         Object key = obj.getData().get(fieldName);
-        return getReferenceClass().filter(getReferenceModelKey().eq(key)).one();
+        return key != null ? getReferenceClass().filter(getReferenceModelKey().eq(key)).one() : null;
     }
 
     public Object cast(Object value) throws DBException {
