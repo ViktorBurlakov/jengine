@@ -13,22 +13,23 @@ import static com.jengine.utils.CollectionUtil.map;
 public class Adapter {
     private String dialect;
     private ThreadLocal<DBConnection> threadConnection = new ThreadLocal<DBConnection>();
+    protected ConnectionManager connectionManager;
 
-    public DBConnection newConnection() throws DBException {
-        return null;
+    public Adapter(ConnectionManager connectionManager) throws DBException {
+        this.connectionManager = connectionManager;
     }
 
     public DBConnection getConnection() throws DBException {
         if (threadConnection.get() == null) {
-            threadConnection.set(newConnection());
+            threadConnection.set(connectionManager.getConnection());
         }
         return threadConnection.get();
     }
 
     public void closeConnection(DBConnection connection) throws DBException {
-        connection.close();
+        threadConnection.remove();
+        connectionManager.closeConnection(connection);
     }
-
 
     public void executeUpdate(DBConnection dbConnection, String sql, List params) throws DBException {
         executeUpdate(dbConnection, sql, params, map());
@@ -38,7 +39,7 @@ public class Adapter {
     }
 
     public List executeQuery(DBConnection dbConnection, String sql, List params) throws DBException {
-        return  new ArrayList();
+        return new ArrayList();
     }
 
     public String getDialect() {

@@ -3,6 +3,7 @@ package com.jengine.orm.db.adapter.jdbc;
 import com.jengine.orm.db.DBConnection;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.adapter.Adapter;
+import com.jengine.orm.db.adapter.ConnectionManager;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,31 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 public class JDBCAdapter extends Adapter {
-    private String driver;
-    private String connection;
-    private String user;
-    private String password;
 
-    public JDBCAdapter(String driver, String connection, String user, String password) throws DBException {
-        super();
-        this.driver = driver;
-        this.connection = connection;
-        this.user = user;
-        this.password = password;
-        try {
-            Class.forName(driver);
-        } catch (ClassNotFoundException e) {
-            throw new DBException(e);
-        }
-    }
-
-    public DBConnection newConnection() throws DBException {
-        try {
-            return new JDBCConnection(DriverManager.getConnection(this.connection, this.user, this.password));
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DBException(e);
-        }
+    public JDBCAdapter(ConnectionManager connectionManager) throws DBException {
+        super(connectionManager);
     }
 
     public void executeUpdate(DBConnection dbConnection, String sql, List params, Map<String, Object> options) throws DBException {
