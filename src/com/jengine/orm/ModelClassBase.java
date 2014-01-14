@@ -11,10 +11,7 @@ import com.jengine.orm.field.reference.ManyReferenceField;
 import com.jengine.orm.field.reference.ReferenceField;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ModelClassBase<T extends Model> {
@@ -232,13 +229,21 @@ public class ModelClassBase<T extends Model> {
             if (field.getType() == Field.Type.REFERENCE || field.getType() == Field.Type.SELF
                     || field.getType() == Field.Type.SINGLE_REFERENCE) {
                 ModelClassBase fieldModelClass = getModelClass(((ReferenceField)field).getReferenceModelName());
-                Model obj = fieldModelClass.newInstance();
-                obj.setNew(false);
+                Map<String, Object> values = new LinkedHashMap<String, Object>();
+                boolean empty = true;
                 for (Field objField : fieldModelClass.getManager().getFields(Field.Type.PLAIN, Field.Type.REFERENCE, Field.Type.SINGLE_REFERENCE)) {
-                    obj.setValue(objField, items[index++]);
+                    values.put(objField.getFieldName(), items[index++]);
+                    empty = empty && (values.get(objField.getFieldName()) == null);
                 }
-                obj.cache();
-                result.add(obj);
+                if (!empty) {
+                    Model obj = fieldModelClass.newInstance();
+                    obj.setNew(false);
+                    obj.setValues(values);
+                    obj.cache();
+                    result.add(obj);
+                } else {
+                    result.add(null);
+                }
             } else {
                 result.add(field.cast(items[index++]));
             }

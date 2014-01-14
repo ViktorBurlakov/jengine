@@ -32,7 +32,7 @@ import static com.jengine.utils.CollectionUtil.map;
 public class Member extends TestModel {
     public static Field firstName = new StringField("verbose", "First Name");
     public static Field lastName  = new StringField("verbose", "Last Name");
-    public static Field library   = new ReferenceField(Library.class, map("verbose", "Library"));
+    public static Field library   = new ReferenceField(Library.class, map("verbose", "Library", "required", false));
     public static ModelClass<Member> cls = new ModelClass<Member>(Member.class);
 
     public Member() throws DBException {

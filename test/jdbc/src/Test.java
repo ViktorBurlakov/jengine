@@ -150,7 +150,8 @@ public class Test {
         member3.setId(3l);
         member3.setFirstName("Gary");
         member3.setLastName("Miller");
-        member3.setLibrary(globeLibrary);
+        // required = false only for testing
+        // member3.setLibrary(globeLibrary);
         member3.save();
 
         Member member4 = new Member();
@@ -223,6 +224,8 @@ public class Test {
         check(Transaction.cls.get(1).getDate().equals(tdate));
         check(!Transaction.cls.get(1).getModificationDate().equals(modificationDate));
         check(Author.cls.count() == 3);
+        check(Member.cls.get(3).getLibrary() == null);
+        check(Member.cls.select(Member.library).filter("id = ?", 3).one() == null);
 
         try {
             Transaction transaction4 = new Transaction();
@@ -320,9 +323,9 @@ public class Test {
         check( Book.cls.get(1).getLibrary().equals(Library.cls.get(1)) );
 
         Library globe = Library.cls.filter("name = ?", "Globe").one();
-        check( globe.getMemberList().size() == 5 );
-        check( globe.getMembers().list().size() == 5 );
-        check( globe.getMembers().count() == 5 );
+        check( globe.getMemberList().size() == 4 );
+        check( globe.getMembers().list().size() == 4 );
+        check( globe.getMembers().count() == 4 );
         check( globe.getMembers().filter("lastName = ?", "Simpson").count() == 2 );
         check( Author.cls.get(3).getBooks().list().size() == 1);
         check( Member.cls.filter("firstName = ?", "Burt").<Member>one().getAddress().getNumber().equals("742"));
@@ -349,9 +352,9 @@ public class Test {
                         try {
                             check(Book.cls.get(1).getLibrary().equals(Library.cls.get(1)));
                             Library globe = Library.cls.filter("name = ?", "Globe").one();
-                            check( globe.getMemberList().size() == 5 );
-                            check( globe.getMembers().list().size() == 5 );
-                            check( globe.getMembers().count() == 5 );
+                            check( globe.getMemberList().size() == 4 );
+                            check( globe.getMembers().list().size() == 4 );
+                            check( globe.getMembers().count() == 4 );
                             check( globe.getMembers().filter("lastName = ?", "Simpson").count() == 2 );
                             check( Author.cls.get(3).getBooks().list().size() == 1);
                             check( Member.cls.filter("firstName = ?", "Burt").<Member>one().getAddress().getNumber().equals("742"));
