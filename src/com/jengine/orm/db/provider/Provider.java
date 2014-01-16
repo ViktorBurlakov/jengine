@@ -23,6 +23,7 @@ package com.jengine.orm.db.provider;
 import com.jengine.orm.db.DBConnection;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.adapter.Adapter;
+import com.jengine.orm.db.cache.CacheManager;
 import com.jengine.orm.db.expression.Expression;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.db.query.SQLStringExpression;
@@ -38,10 +39,35 @@ import static com.jengine.utils.CollectionUtil.*;
 
 public class Provider {
     private Adapter adapter;
+    private CacheManager cacheManager;
+    private List<String> tables = new ArrayList<String>();
 
     public Provider(Adapter adapter) {
         this.adapter = adapter;
     }
+
+    public Provider(Adapter adapter, CacheManager cacheManager) {
+        this.adapter = adapter;
+        this.cacheManager = cacheManager;
+    }
+
+    /* table register method*/
+
+    public void register(String table) {
+        tables.add(table);
+        if (cacheManager.getCache(table) == null) {
+            cacheManager.addCache(table);
+        }
+    }
+
+    public void unregister(String table) {
+        tables.remove(table);
+        if (cacheManager.getCache(table) != null) {
+            cacheManager.removeCache(table);
+        }
+    }
+
+    /* connection method */
 
     public DBConnection getConnection() throws DBException {
         return adapter.getConnection();
@@ -50,19 +76,31 @@ public class Provider {
     public void closeConnection(DBConnection connection) throws DBException {
         adapter.closeConnection(connection);
     }
+
     /* cache methods */
 
-    public void cache(String table, Map<String, Object> attributes) {
+    public void addCache(String table) {
+        cacheManager.addCache(table);
+    }
+
+    public void removeCache(String table) {
+        cacheManager.removeCache(table);
+    }
+
+    public void cache(String table, Object id, Map<String, Object> attributes) {
+        cacheManager.getCache(table).set(id, attributes);
     }
 
     public Map<String, Object> getCache(String table, Object id) {
-        return null;
+        return (Map<String, Object>) cacheManager.getCache(table).get(id);
     }
 
     public void clearCache(String table, Object id) {
+        cacheManager.getCache(table).remove(id);
     }
 
     public void clearCache(String table) {
+        cacheManager.getCache(table).removeAll();
     }
 
 
@@ -155,6 +193,14 @@ public class Provider {
 
     public void setAdapter(Adapter adapter) {
         this.adapter = adapter;
+    }
+
+    public CacheManager getCacheManager() {
+        return cacheManager;
+    }
+
+    public void setCacheManager(CacheManager cacheManager) {
+        this.cacheManager = cacheManager;
     }
 
     /* protected methods */

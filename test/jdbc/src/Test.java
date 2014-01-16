@@ -1,12 +1,19 @@
 import com.jengine.orm.db.*;
 import com.jengine.orm.db.adapter.Adapter;
+import com.jengine.orm.db.adapter.ConnectionManager;
 import com.jengine.orm.db.adapter.jdbc.JDBCAdapter;
 import com.jengine.orm.db.adapter.jdbc.connection.DBCPConnectionPool;
+import com.jengine.orm.db.cache.ehcache.EhcacheManager;
 import com.jengine.orm.db.provider.Provider;
 import com.jengine.orm.db.provider.mysql.MySQLProvider;
 import com.jengine.orm.exception.ValidateException;
 import com.jengine.orm.field.FunctionField;
 import models.*;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.config.CacheConfiguration;
+import net.sf.ehcache.config.PersistenceConfiguration;
+import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
 import org.apache.commons.dbcp.BasicDataSource;
 
 import javax.sql.DataSource;
@@ -20,10 +27,11 @@ import static com.jengine.utils.CollectionUtil.map;
 public class Test {
 
     public static void main(String [] args) throws Exception {
+        ConnectionManager connectionManager = new DBCPConnectionPool(newDBCPDataSource());
 //        ConnectionManager connectionManager = new SingleConnectionManager("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/bookdb?", "root", "");
-//        Adapter adapter = new JDBCAdapter(connectionManager);
-        Adapter adapter = new JDBCAdapter(new DBCPConnectionPool(newDBCPDataSource()));
-        Provider provider = new MySQLProvider(adapter);
+        Adapter adapter = new JDBCAdapter(connectionManager);
+        EhcacheManager cacheManager = new EhcacheManager(newEhcacheManager());
+        Provider provider = new MySQLProvider(adapter, cacheManager);
         DB db = DBFactory.register(new DB(provider));
 
         // testing
@@ -38,8 +46,10 @@ public class Test {
             test7();
             test8();
             test9();
+            test10();
         } finally {
             db.closeConnection(connection);
+            db.getCacheManager().shutdown();
         }
     }
 
@@ -54,6 +64,23 @@ public class Test {
         ds.setMaxIdle(2);
 
         return ds;
+    }
+
+    public static net.sf.ehcache.CacheManager newEhcacheManager() {
+        //Create a singleton CacheManager using defaults
+        CacheManager manager = CacheManager.create();
+        //Create a Cache specifying its configuration.
+        Cache testCache = new Cache(
+                new CacheConfiguration("Author", 7)
+                        .memoryStoreEvictionPolicy(MemoryStoreEvictionPolicy.LFU)
+                        .eternal(false)
+                        .timeToLiveSeconds(60)
+                        .timeToIdleSeconds(30)
+//                        .diskExpiryThreadIntervalSeconds(0)
+                        .persistence(new PersistenceConfiguration().strategy(PersistenceConfiguration.Strategy.LOCALTEMPSWAP)));
+        manager.addCache(testCache);
+
+        return manager;
     }
 
 
@@ -430,6 +457,20 @@ public class Test {
         check( Transaction.cls.count() > 0 );
         connection.finishTransaction();
     }
+
+    /**
+     * Cache testing
+     */
+    public static void test10() throws Exception {
+        System.out.println("** Test 10: Cache testing");
+
+        clearData();
+        loadData();
+
+        check( Transaction.cls.get(1) != null );
+        check( Author.cls.getProvider().getCache(Author.cls.getManager().getTableName(), 1l) != null );
+    }
+
 
     private static void check(boolean value) throws Exception {
         if (!value) {

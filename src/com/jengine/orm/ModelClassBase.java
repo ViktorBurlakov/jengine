@@ -55,7 +55,7 @@ public class ModelClassBase<T extends Model> {
     }
 
     public T get(Object id) throws DBException {
-        Model obj = getCache(id);
+        Model obj = getCache(manager.getPrimaryKey().cast(id));
         return (T) (obj != null ? obj : (Model) new ModelQuery(manager).filter(manager.getPrimaryKey().eq(id)).one());
     }
 
@@ -137,8 +137,22 @@ public class ModelClassBase<T extends Model> {
         clearCache(cls);
     }
 
+    public Model wrap(Map<String, Object> values) throws DBException {
+        Model obj = newInstance();
+        for(String columnName : values.keySet()) {
+            obj.setValue(manager.getFieldByColumn(columnName), values.get(columnName));
+        }
+        obj.setNew(false);
+        return obj;
+    }
+
     public T getCache(Object id) throws DBException {
-        return manager.getCacheEnabled() ? (T) provider.getCache(manager.getTableName(), id) : null;
+        if (manager.getCacheEnabled()) {
+            Map<String, Object> values = provider.getCache(manager.getTableName(), id);
+            return values != null ? (T) wrap(values) : null;
+        } else {
+            return null;
+        }
     }
 
     public void clearCache(Class cls) throws DBException {
@@ -155,7 +169,7 @@ public class ModelClassBase<T extends Model> {
 
     public void cache(Model obj) throws DBException {
         if (manager.getCacheEnabled()) {
-            provider.cache(manager.getTableName(), obj.getPersistenceValues());
+            provider.cache(manager.getTableName(), manager.getPrimaryKey().getPersistenceValue(obj), obj.getPersistenceValues());
         }
     }
 
