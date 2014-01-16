@@ -38,6 +38,7 @@ public class ModelManager {
     private String tableName;
     private Class modelClass;
     private Map<String, Field> fields = new LinkedHashMap<String, Field>();
+    private Map<String, Field> columns = new LinkedHashMap<String, Field>();
     private Field primaryKey = null;
     private SelfField self;
     private Boolean cacheEnabled;
@@ -112,6 +113,9 @@ public class ModelManager {
         }
         if (field.getType() == Field.Type.SELF) {
             this.self = (SelfField) field;
+        }
+        if (field.isPersistence() && field.getColumnName() != null) {
+            this.columns.put(field.getColumnName(), field);
         }
 
         return field;
@@ -278,6 +282,10 @@ public class ModelManager {
         }
 
         return  result;
+    }
+
+    public Field getFieldByColumn(String columnName) {
+        return columns.get(columnName);
     }
 
     public List<String> getFieldNames() {

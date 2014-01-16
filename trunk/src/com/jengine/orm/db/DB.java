@@ -1,6 +1,7 @@
 package com.jengine.orm.db;
 
 
+import com.jengine.orm.db.cache.CacheManager;
 import com.jengine.orm.db.provider.Provider;
 
 public class DB {
@@ -27,6 +28,10 @@ public class DB {
 
     public Provider getProvider() {
         return provider;
+    }
+
+    public CacheManager getCacheManager() {
+        return provider.getCacheManager();
     }
 
     @Override

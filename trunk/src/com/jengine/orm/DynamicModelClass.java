@@ -30,5 +30,6 @@ public class DynamicModelClass<T extends Model> extends ModelClassBase<T> {
             this.manager.addField(fieldName, field);
         }
         this.manager.addDeferredFields();
+        this.provider.register(this.manager.getTableName());
     }
 }
