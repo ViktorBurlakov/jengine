@@ -37,7 +37,7 @@ public class Model {
     protected boolean _new = true;
 
     public Model() throws DBException {
-        cls = ModelClassBase.getModelClass(getClass().getSimpleName());
+        cls = ModelClass.classMap.get(getClass().getName());
         if (cls != null) {
             setDefaultData();
         }

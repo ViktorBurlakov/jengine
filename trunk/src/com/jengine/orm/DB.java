@@ -1,13 +1,17 @@
-package com.jengine.orm.db;
+package com.jengine.orm;
 
 
+import com.jengine.orm.db.DBConnection;
+import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.cache.CacheManager;
 import com.jengine.orm.db.provider.Provider;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 public class DB {
     private String name;
     private Provider provider;
-//    public static ConcurrentHashMap<String, ModelManager> managers = new ConcurrentHashMap<String, ModelManager>();
+    public static ConcurrentHashMap<String, ModelClassBase> models = new ConcurrentHashMap<String, ModelClassBase>();
 
     public DB(Provider provider) {
         this("default", provider);
@@ -16,6 +20,15 @@ public class DB {
     public DB(String name, Provider provider) {
         this.name = name;
         this.provider = provider;
+    }
+
+    public void register(ModelClassBase modelClass) {
+        models.put(modelClass.getName(), modelClass);
+        provider.register(modelClass.getManager().getTableName());
+    }
+
+    public ModelClassBase getModelClass(String name) {
+        return models.get(name);
     }
 
     public DBConnection getConnection() throws DBException {

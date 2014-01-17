@@ -42,7 +42,7 @@ public class DynamicQueryManager {
     }
 
     public List select(Map<String, Map> context, Map<String, Object> filter, Map<String, String> order) throws SystemException, PortalException {
-        BasePersistence persistence = (BasePersistence) context.get(this.manager.getModelClass().getSimpleName()).get("persistence");
+        BasePersistence persistence = (BasePersistence) context.get(this.manager.getModel().getSimpleName()).get("persistence");
         return select(persistence, filter, order);
     }
 
@@ -51,7 +51,7 @@ public class DynamicQueryManager {
     }
 
     public long count(Map<String, Object> filter, Map<String, Map> context) throws SystemException, PortalException {
-        BasePersistence persistence = (BasePersistence) context.get(this.manager.getModelClass().getSimpleName()).get("persistence");
+        BasePersistence persistence = (BasePersistence) context.get(this.manager.getModel().getSimpleName()).get("persistence");
         return count(persistence, filter);
     }
 
@@ -60,7 +60,7 @@ public class DynamicQueryManager {
     }
 
     public DynamicQuery build(Map<String, Object> filter, Map<String, String> order) throws SystemException, PortalException {
-        DynamicQuery dq = DynamicQueryFactoryUtil.forClass(this.manager.getModelClass());
+        DynamicQuery dq = DynamicQueryFactoryUtil.forClass(this.manager.getModel());
 
         build(dq, parse(filter), order);
 
@@ -68,7 +68,7 @@ public class DynamicQueryManager {
     }
 
     public DynamicQuery build(Map<String, Object> filter) throws SystemException, PortalException {
-        DynamicQuery dq = DynamicQueryFactoryUtil.forClass(this.manager.getModelClass());
+        DynamicQuery dq = DynamicQueryFactoryUtil.forClass(this.manager.getModel());
 
         build(dq, parse(filter));
 

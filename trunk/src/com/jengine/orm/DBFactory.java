@@ -1,4 +1,6 @@
-package com.jengine.orm.db;
+package com.jengine.orm;
+
+import com.jengine.orm.DB;
 
 import java.util.concurrent.ConcurrentHashMap;
 

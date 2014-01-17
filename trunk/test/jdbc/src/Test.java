@@ -1,3 +1,5 @@
+import com.jengine.orm.DB;
+import com.jengine.orm.DBFactory;
 import com.jengine.orm.db.*;
 import com.jengine.orm.db.adapter.Adapter;
 import com.jengine.orm.db.adapter.ConnectionManager;

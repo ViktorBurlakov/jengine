@@ -47,7 +47,7 @@ abstract public class BaseReference extends Field {
     }
 
     public ModelClassBase getReferenceClass() {
-        return manager.getCls().getModelClass(referenceModelName);
+        return manager.getModelClass().getDb().getModelClass(referenceModelName);
     }
 
     public Field getReverseField() {

@@ -1,6 +1,5 @@
 package com.jengine.orm;
 
-import com.jengine.orm.db.DB;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.expression.Expression;
 import com.jengine.orm.db.provider.Provider;
@@ -15,24 +14,21 @@ import com.jengine.orm.query.PersistenceManager;
 
 import java.io.Serializable;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class ModelClassBase<T extends Model> {
-    public static Map<String, ModelClassBase> classMap = new ConcurrentHashMap<String, ModelClassBase>();
     protected DB db;
     protected Provider provider;
     protected ModelManager manager;
     protected String name;
     protected Class<T> cls;
 
-    static  public ModelClassBase getModelClass(String name) {
-        return classMap.get(name);
-    }
-
     public ModelClassBase(String name, Class<T> cls) {
         this.name = name;
         this.cls = cls;
-        this.classMap.put(name, this);
+    }
+
+    public void register() {
+        db.register(this);
     }
 
     public T newInstance(Map values) throws DBException {
@@ -290,5 +286,9 @@ public class ModelClassBase<T extends Model> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public DB getDb() {
+        return db;
     }
 }
