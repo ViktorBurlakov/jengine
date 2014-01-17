@@ -10,6 +10,8 @@ import com.jengine.orm.field.ForeignField;
 import com.jengine.orm.field.FunctionField;
 import com.jengine.orm.field.reference.BaseReference;
 import com.jengine.orm.field.reference.ManyReferenceField;
+import com.jengine.orm.query.ModelQuery;
+import com.jengine.orm.query.PersistenceManager;
 
 import java.io.Serializable;
 import java.util.*;

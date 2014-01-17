@@ -348,7 +348,7 @@ public class Provider {
         for (String alias : query.getRelations().keySet()) {
             String relation = (String) query.getRelations().get(alias).get(0);
             String expr = (String) query.getRelations().get(alias).get(1);
-            queryString.append(" LEFT JOIN ").append(relation).append(" as ").append(alias)
+            queryString.append(" LEFT JOIN ").append(relation).append(" AS ").append(alias)
                     .append(" ON ").append(expr).append(" ");
         }
         return queryString;

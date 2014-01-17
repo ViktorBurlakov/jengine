@@ -1,4 +1,4 @@
-package com.jengine.orm;
+package com.jengine.orm.query;
 
 
 import com.jengine.orm.db.DBException;
@@ -194,7 +194,8 @@ public class PersistenceManager {
             String alias = concat(((ForeignField)field).getReferenceFields(), "__").toString();
             return String.format("%s.%s", alias, field.getColumnName());
         } else {
-            return String.format("%s.%s", query.getTableAlias(), field.getColumnName());
+            return query.getRelations().size() > 0 ?
+                    String.format("%s.%s", query.getTableAlias(), field.getColumnName()) : field.getColumnName();
         }
     }
 }
