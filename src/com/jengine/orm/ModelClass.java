@@ -1,6 +1,5 @@
 package com.jengine.orm;
 
-import com.jengine.orm.db.DBFactory;
 import com.jengine.orm.field.*;
 import com.jengine.orm.field.reference.SelfField;
 import com.jengine.utils.ClassUtils;
@@ -10,11 +9,13 @@ import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.jengine.utils.CollectionUtil.map;
 
 
 public class ModelClass<T extends Model> extends ModelClassBase<T> {
+    public static Map<String, ModelClass> classMap = new ConcurrentHashMap<String, ModelClass>();
 
     public ModelClass(Class<T> cls) {
         this(cls, new HashMap());
@@ -22,6 +23,7 @@ public class ModelClass<T extends Model> extends ModelClassBase<T> {
 
     public ModelClass(Class<T> cls, Map options) {
         super(cls.getSimpleName(), cls);
+        classMap.put(cls.getName(), this);
         Meta meta = cls.getAnnotation(Meta.class);
         Map metaMap = meta == null ? ClassUtils.annotationToMap(Meta.class) : ClassUtils.annotationToMap(meta);
         String dbName = options.containsKey("dbName") ? (String) options.get("dbName") : (String) metaMap.get("dbName");
@@ -31,30 +33,30 @@ public class ModelClass<T extends Model> extends ModelClassBase<T> {
         }
         Boolean cacheEnabled = options.containsKey("cacheEnabled") ?
                 (Boolean) options.get("cacheEnabled") : (Boolean) metaMap.get("cacheEnabled");
-        this.db = DBFactory.get(dbName);
-        this.provider = this.db.getProvider();
-        this.manager = new ModelManager();
-        this.manager.setModelClass(cls);
-        this.manager.setCls(this);
-        this.manager.setName(options.containsKey("name") ? (String) options.get("name") : cls.getSimpleName());
-        this.manager.setTableName(tableName);
-        this.manager.setCacheEnabled(cacheEnabled);
+        db = DBFactory.get(dbName);
+        provider = db.getProvider();
+        manager = new ModelManager();
+        manager.setModel(cls);
+        manager.setModelClass(this);
+        manager.setName(options.containsKey("name") ? (String) options.get("name") : cls.getSimpleName());
+        manager.setTableName(tableName);
+        manager.setCacheEnabled(cacheEnabled);
         // init fields and properties
         LinkedHashMap<String, Field> fields = new LinkedHashMap<String, Field>();
         fields.put(SelfField.DEFAULT_NAME, new SelfField(cls));
         fields.putAll(collectFields(cls));
         fields.putAll(collectProperties(cls));
-        fields.put("verbose", new ModelProperty("getVerbose", String.class, map("verbose", this.manager.getName())));
+        fields.put("verbose", new ModelProperty("getVerbose", String.class, map("verbose", manager.getName())));
         Field pkField = getPrimaryKey(fields);
         if (pkField == null) {
-            this.manager.addField("id", new PrimaryKey());
+            manager.addField("id", new PrimaryKey());
         }
         for (String fieldName : fields.keySet()) {
             Field field = fields.get(fieldName);
-            this.manager.addField(fieldName, field);
+            manager.addField(fieldName, field);
         }
-        this.manager.addDeferredFields();
-        this.provider.register(tableName);
+        manager.addDeferredFields();
+        register();
     }
 
     protected Field getPrimaryKey(LinkedHashMap<String, Field> fields) {

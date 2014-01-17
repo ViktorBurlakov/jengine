@@ -74,7 +74,7 @@ public class ModelQuery {
             ForeignField foreignField = (ForeignField)field;
             if (foreignField.getActualField() instanceof ReferenceField) {
                 ReferenceField actualField = (ReferenceField) foreignField.getActualField();
-                ModelClassBase fieldModelClass = manager.getCls().getModelClass(actualField.getReferenceModelName());
+                ModelClassBase fieldModelClass = manager.getModelClass().getDb().getModelClass(actualField.getReferenceModelName());
                 for (Field field1 : fieldModelClass.getManager().getPersistenceFields()) {
                     String fullFieldName = String.format("%s.%s", foreignField.getFieldName(), field1.getFieldName());
                     fieldMap.put(fullFieldName, manager.getField(fullFieldName));
@@ -199,15 +199,15 @@ public class ModelQuery {
     }
 
     public <T extends Object> List<T> list() throws DBException {
-        return manager.getCls().select(this);
+        return manager.getModelClass().select(this);
     }
 
     public void update() throws DBException {
-        manager.getCls().update(this);
+        manager.getModelClass().update(this);
     }
 
     public void remove() throws DBException {
-        manager.getCls().remove(this);
+        manager.getModelClass().remove(this);
     }
 
     public ModelQuery page(Map<String, Object> page) {

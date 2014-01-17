@@ -36,12 +36,12 @@ public class ModelManager {
     public static Map<String, Map<String, Field>> deferredFields = new ConcurrentHashMap<String, Map<String, Field>>();
     private String name;
     private String tableName;
-    private Class modelClass;
+    private Class model;
     private Map<String, Field> fields = new LinkedHashMap<String, Field>();
     private Field primaryKey = null;
     private SelfField self;
     private Boolean cacheEnabled;
-    private ModelClassBase cls;
+    private ModelClassBase modelClass;
 
     public ModelManager() {
     }
@@ -66,8 +66,8 @@ public class ModelManager {
     public Field addField(Field field) {
         if (field.getType() == Field.Type.REFERENCE) {
             ReferenceField referenceField = (ReferenceField) field;
-            ReverseReferenceField multiReferenceField = new ReverseReferenceField(modelClass, name, referenceField.getFieldName());
-            ModelClassBase referenceModelClass = cls.getModelClass(referenceField.getReferenceModelName());
+            ReverseReferenceField multiReferenceField = new ReverseReferenceField(model, name, referenceField.getFieldName());
+            ModelClassBase referenceModelClass = modelClass.getDb().getModelClass(referenceField.getReferenceModelName());
             if (referenceModelClass != null) {
                 multiReferenceField.config(referenceField.getReverseFieldName(), referenceModelClass.getManager());
                 referenceModelClass.getManager().addField(multiReferenceField);
@@ -76,8 +76,8 @@ public class ModelManager {
             }
         } else if (field.getType() == Field.Type.SINGLE_REFERENCE) {
             ReferenceField referenceField = (ReferenceField) field;
-            ReverseSingleReferenceField reverseField = new ReverseSingleReferenceField(modelClass, name, referenceField.getFieldName());
-            ModelClassBase referenceModelClass = cls.getModelClass(referenceField.getReferenceModelName());
+            ReverseSingleReferenceField reverseField = new ReverseSingleReferenceField(model, name, referenceField.getFieldName());
+            ModelClassBase referenceModelClass = modelClass.getDb().getModelClass(referenceField.getReferenceModelName());
             if (referenceModelClass != null) {
                 reverseField.config(referenceField.getReverseFieldName(), referenceModelClass.getManager());
                 referenceModelClass.getManager().addField(reverseField);
@@ -86,8 +86,8 @@ public class ModelManager {
             }
         }  else if (field.getType() == Field.Type.MANY_REFERENCE) {
             ManyReferenceField manyField = (ManyReferenceField) field;
-            ModelClassBase referenceModelClass = cls.getModelClass(manyField.getReferenceModelName());
-            ReverseManyReferenceField reverseField =  new ReverseManyReferenceField(modelClass, name, map(
+            ModelClassBase referenceModelClass = modelClass.getDb().getModelClass(manyField.getReferenceModelName());
+            ReverseManyReferenceField reverseField =  new ReverseManyReferenceField(model, name, map(
                         "keyFieldName", manyField.getReferenceKeyFieldName(),
                         "reverseFieldName", manyField.getFieldName(),
                         "referenceKeyFieldName", manyField.getKeyFieldName(),
@@ -141,14 +141,14 @@ public class ModelManager {
             );
             middleModelClass.getManager().addField(
                     referenceField.getMiddleModelFieldName(),
-                    new ReferenceField(referenceModelClass.getManager().getModelClass(), map(
+                    new ReferenceField(referenceModelClass.getManager().getModel(), map(
                             "referenceModelName", referenceModelClass.getName(),
                             "referenceModelKeyName", referenceField.getKeyFieldName(),
                             "columnName", referenceModelClass.getManager().getTableName().toLowerCase()))
             );
             middleModelClass.getManager().addField(
                     manyField.getMiddleModelFieldName(),
-                    new ReferenceField(modelClass, map(
+                    new ReferenceField(model, map(
                             "referenceModelName", name,
                             "referenceModelKeyName", manyField.getKeyFieldName(),
                             "columnName", tableName.toLowerCase()))
@@ -237,7 +237,7 @@ public class ModelManager {
         if (fieldName.contains(".")) {
             List<String> parts = Arrays.asList(fieldName.split("\\."));
             ReferenceField referenceField = (ReferenceField) fields.get(parts.get(0));
-            ModelManager manager = cls.getModelClass(referenceField.getReferenceModelName()).getManager();
+            ModelManager manager = modelClass.getDb().getModelClass(referenceField.getReferenceModelName()).getManager();
             String tail = concat(parts.subList(1, parts.size()), ".").toString();
             ForeignField foreignField = new ForeignField(referenceField,  manager.getField(tail));
             foreignField.config(fieldName, this);
@@ -299,12 +299,12 @@ public class ModelManager {
 
     /* getters and setters */
 
-    public ModelClassBase getCls() {
-        return cls;
+    public ModelClassBase getModelClass() {
+        return modelClass;
     }
 
-    public void setCls(ModelClassBase cls) {
-        this.cls = cls;
+    public void setModelClass(ModelClassBase modelClass) {
+        this.modelClass = modelClass;
     }
 
     public SelfField getSelf() {
@@ -327,12 +327,12 @@ public class ModelManager {
         this.cacheEnabled = cacheEnabled;
     }
 
-    public Class getModelClass() {
-        return modelClass;
+    public Class getModel() {
+        return model;
     }
 
-    public void setModelClass(Class modelClass) {
-        this.modelClass = modelClass;
+    public void setModel(Class model) {
+        this.model = model;
     }
 
     public Field getPrimaryKey() {
@@ -348,7 +348,7 @@ public class ModelManager {
     }
 
     public String getModelAlias() {
-        return modelClass.getSimpleName().toLowerCase();
+        return model.getSimpleName().toLowerCase();
     }
 
     public void setTableName(String tableName) {

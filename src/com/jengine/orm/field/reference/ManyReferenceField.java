@@ -75,7 +75,7 @@ public class ManyReferenceField extends BaseReference {
     }
 
     public void update(Model obj) throws ValidateException, DBException {
-        DBConnection connection = manager.getCls().getProvider().getConnection();
+        DBConnection connection = manager.getModelClass().getProvider().getConnection();
 
         if (!connection.isTransactionActive()) {
             try {
@@ -127,7 +127,7 @@ public class ManyReferenceField extends BaseReference {
     }
 
     public ModelClassBase getMiddleClass() {
-        return manager.getCls().getModelClass(getMiddleModelName());
+        return manager.getModelClass().getDb().getModelClass(getMiddleModelName());
     }
 
     public Field getMiddleField() {
