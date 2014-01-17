@@ -37,8 +37,8 @@ public class Test {
         // testing
         DBConnection connection = db.getConnection();
         try {
-            test1();
-            test2();
+//            test1();
+//            test2();
             test3();
             test4();
             test5();

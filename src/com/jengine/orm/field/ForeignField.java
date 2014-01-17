@@ -66,6 +66,10 @@ public class ForeignField extends Field {
         return CollectionUtil.<Field>toList(fieldMap.values()).get(fieldMap.size()-1).getColumnName();
     }
 
+    public boolean isPrimaryKey() {
+        return getActualField().isPrimaryKey();
+    }
+
     public Integer getColumnType() {
         return getActualField().getColumnType();
     }

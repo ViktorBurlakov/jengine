@@ -6,9 +6,10 @@ import com.jengine.orm.db.expression.Expression;
 import com.jengine.orm.db.provider.Provider;
 import com.jengine.orm.exception.ValidateException;
 import com.jengine.orm.field.Field;
+import com.jengine.orm.field.ForeignField;
 import com.jengine.orm.field.FunctionField;
+import com.jengine.orm.field.reference.BaseReference;
 import com.jengine.orm.field.reference.ManyReferenceField;
-import com.jengine.orm.field.reference.ReferenceField;
 
 import java.io.Serializable;
 import java.util.*;
@@ -236,31 +237,31 @@ public class ModelClassBase<T extends Model> {
         List result = new ArrayList();
         List<Field> fields = modelQuery.getFields();
         int index=0;
-        if (fields.size() == 0) {
-            fields.add(modelQuery.getManager().getSelf());
-        }
         for (Field field : fields) {
-            if (field.getType() == Field.Type.REFERENCE || field.getType() == Field.Type.SELF
-                    || field.getType() == Field.Type.SINGLE_REFERENCE) {
-                ModelClassBase fieldModelClass = getModelClass(((ReferenceField)field).getReferenceModelName());
-                Map<String, Object> values = new LinkedHashMap<String, Object>();
-                boolean empty = true;
-                for (Field objField : fieldModelClass.getManager().getFields(Field.Type.PLAIN, Field.Type.REFERENCE, Field.Type.SINGLE_REFERENCE)) {
-                    values.put(objField.getFieldName(), items[index++]);
-                    empty = empty && (values.get(objField.getFieldName()) == null);
-                }
-                if (!empty) {
-                    Model obj = fieldModelClass.newInstance();
-                    obj.setNew(false);
-                    obj.setValues(values);
-                    obj.cache();
-                    result.add(obj);
+                if (field instanceof BaseReference) {
+                    BaseReference reference = (BaseReference) field;
+                    Map<String, Object> values = new LinkedHashMap<String, Object>();
+                    boolean empty = false;
+                    for (Field targetField : modelQuery.getTargets(field.getFieldName())) {
+                        String fieldName = targetField instanceof ForeignField ?
+                                ((ForeignField) targetField).getActualField().getFieldName() : targetField.getFieldName();
+                        values.put(fieldName, items[index++]);
+                        if (targetField.isPrimaryKey() && values.get(fieldName) == null) {
+                            empty = true;
+                        }
+                    }
+                    if (!empty) {
+                        Model obj = reference.getReferenceClass().newInstance();
+                        obj.setNew(false);
+                        obj.setValues(values);
+                        obj.cache();
+                        result.add(obj);
+                    } else {
+                        result.add(null);
+                    }
                 } else {
-                    result.add(null);
+                    result.add(field.cast(items[index++]));
                 }
-            } else {
-                result.add(field.cast(items[index++]));
-            }
         }
 
         return result;

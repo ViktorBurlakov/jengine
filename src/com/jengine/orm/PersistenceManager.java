@@ -100,7 +100,7 @@ public class PersistenceManager {
     }
 
     protected static void setTargets(SQLQuery query, ModelQuery modelQuery) {
-        for (Field field : modelQuery.getFullFields()) {
+        for (Field field : modelQuery.getTargetFields()) {
             addTarget(field, query);
         }
     }
