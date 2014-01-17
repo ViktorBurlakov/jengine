@@ -37,8 +37,8 @@ public class Test {
         // testing
         DBConnection connection = db.getConnection();
         try {
-//            test1();
-//            test2();
+            test1();
+            test2();
             test3();
             test4();
             test5();
@@ -284,6 +284,9 @@ public class Test {
         check( Book.cls.filter(Book.library.eq(Library.cls.get(1))).list().size() == 3 );
         check( Book.cls.filter(map("library.name__like", "%Globe")).list().size() == 3 );
         check( Book.cls.filter(map("library.id", 101)).<Book>list().size() == 0 );
+
+        //with fields
+        check( Transaction.cls.select("member.library").<Library>list().get(0).getId() != null);
     }
 
     /**

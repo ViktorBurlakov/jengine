@@ -66,24 +66,24 @@ public class ModelQuery {
                 fieldMap.put(attributeField.getFieldName(), attributeField);
                 fieldTargets.put(attributeField.getFieldName(), CollectionUtil.list(attributeField));
             }
-        } if (field instanceof ForeignField) {
+        } else if (field instanceof ForeignField) {
             fieldMap.put(field.getFieldName(), field);
             fieldTargets.put(field.getFieldName(), new ArrayList<Field>());
             ForeignField foreignField = (ForeignField)field;
             if (foreignField.getActualField() instanceof ReferenceField) {
                 ReferenceField actualField = (ReferenceField) foreignField.getActualField();
                 ModelClassBase fieldModelClass = manager.getCls().getModelClass(actualField.getReferenceModelName());
-                for (Field field1 : fieldModelClass.getManager().getFields(Field.Type.PLAIN, Field.Type.REFERENCE, Field.Type.SINGLE_REFERENCE)) {
+                for (Field field1 : fieldModelClass.getManager().getPersistenceFields()) {
                     String fullFieldName = String.format("%s.%s", foreignField.getFieldName(), field1.getFieldName());
                     fieldMap.put(fullFieldName, manager.getField(fullFieldName));
                     fieldTargets.get(field.getFieldName()).add(fieldMap.get(fullFieldName));
                 }
             }
-        } if (field instanceof ReferenceField) {
+        } else if (field instanceof ReferenceField) {
             fieldMap.put(field.getFieldName(), field);
             fieldTargets.put(field.getFieldName(), new ArrayList<Field>());
             ReferenceField referenceField = (ReferenceField)field;
-            for (Field field1 : referenceField.getReferenceClass().getManager().getFields(Field.Type.PLAIN, Field.Type.REFERENCE, Field.Type.SINGLE_REFERENCE)) {
+            for (Field field1 : referenceField.getReferenceClass().getManager().getPersistenceFields()) {
                 String fullFieldName = String.format("%s.%s", referenceField.getFieldName(), field1.getFieldName());
                 fieldMap.put(fullFieldName, manager.getField(fullFieldName));
                 fieldTargets.get(field.getFieldName()).add(fieldMap.get(fullFieldName));
