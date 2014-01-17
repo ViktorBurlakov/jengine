@@ -39,7 +39,7 @@ import java.util.*;
 public class ModelQuery {
     private Map<String, Field> fieldMap = new LinkedHashMap<String, Field>();
     private List<Field> fields = new ArrayList<Field>();
-    private Map<String, List<Field>> multiFieldMap = new HashMap<String, List<Field>>();
+    private Map<String, List<Field>> fieldTargets = new LinkedHashMap<String, List<Field>>();
     private List<Field> filterFields = new ArrayList<Field>();
     private List<Expression> filter = new ArrayList<Expression>();
     private Field orderField = null;
@@ -64,11 +64,11 @@ public class ModelQuery {
             for (Object attribute : functionField.getAttributes()) {
                 Field attributeField  = getField(attribute);
                 fieldMap.put(attributeField.getFieldName(), attributeField);
-                multiFieldMap.put(attributeField.getFieldName(), CollectionUtil.list(attributeField));
+                fieldTargets.put(attributeField.getFieldName(), CollectionUtil.list(attributeField));
             }
         } if (field instanceof ForeignField) {
             fieldMap.put(field.getFieldName(), field);
-            multiFieldMap.put(field.getFieldName(), new ArrayList<Field>());
+            fieldTargets.put(field.getFieldName(), new ArrayList<Field>());
             ForeignField foreignField = (ForeignField)field;
             if (foreignField.getActualField() instanceof ReferenceField) {
                 ReferenceField actualField = (ReferenceField) foreignField.getActualField();
@@ -76,21 +76,21 @@ public class ModelQuery {
                 for (Field field1 : fieldModelClass.getManager().getFields(Field.Type.PLAIN, Field.Type.REFERENCE, Field.Type.SINGLE_REFERENCE)) {
                     String fullFieldName = String.format("%s.%s", foreignField.getFieldName(), field1.getFieldName());
                     fieldMap.put(fullFieldName, manager.getField(fullFieldName));
-                    multiFieldMap.get(field.getFieldName()).add(fieldMap.get(fullFieldName));
+                    fieldTargets.get(field.getFieldName()).add(fieldMap.get(fullFieldName));
                 }
             }
         } if (field instanceof ReferenceField) {
             fieldMap.put(field.getFieldName(), field);
-            multiFieldMap.put(field.getFieldName(), new ArrayList<Field>());
+            fieldTargets.put(field.getFieldName(), new ArrayList<Field>());
             ReferenceField referenceField = (ReferenceField)field;
             for (Field field1 : referenceField.getReferenceClass().getManager().getFields(Field.Type.PLAIN, Field.Type.REFERENCE, Field.Type.SINGLE_REFERENCE)) {
                 String fullFieldName = String.format("%s.%s", referenceField.getFieldName(), field1.getFieldName());
                 fieldMap.put(fullFieldName, manager.getField(fullFieldName));
-                multiFieldMap.get(field.getFieldName()).add(fieldMap.get(fullFieldName));
+                fieldTargets.get(field.getFieldName()).add(fieldMap.get(fullFieldName));
             }
         } else {
             fieldMap.put(field.getFieldName(), field);
-            multiFieldMap.put(field.getFieldName(), CollectionUtil.list(field));
+            fieldTargets.put(field.getFieldName(), CollectionUtil.list(field));
         }
     }
 
@@ -242,19 +242,23 @@ public class ModelQuery {
         return fieldMap;
     }
 
-    public List<Field> getFullFields() {
+    public List<Field> getTargetFields() {
         List<Field> result = new ArrayList<Field>();
 
         for (Field field : getFields()) {
-            if (multiFieldMap.containsKey(field.getFieldName()) &&
-                    multiFieldMap.get(field.getFieldName()).size() > 0) {
-                result.addAll(multiFieldMap.get(field.getFieldName()));
+            if (fieldTargets.containsKey(field.getFieldName()) &&
+                    fieldTargets.get(field.getFieldName()).size() > 0) {
+                result.addAll(fieldTargets.get(field.getFieldName()));
             } else {
                 result.add(field);
             }
         }
 
         return result;
+    }
+
+    public List<Field> getTargets(String fieldName) {
+        return fieldTargets.get(fieldName);
     }
 
     public List<Field> getFields() {
