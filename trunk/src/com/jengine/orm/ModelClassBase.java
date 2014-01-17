@@ -238,19 +238,22 @@ public class ModelClassBase<T extends Model> {
         List<Field> fields = modelQuery.getFields();
         int index=0;
         for (Field field : fields) {
-                if (field instanceof BaseReference) {
-                    BaseReference reference = (BaseReference) field;
+                if (field instanceof BaseReference ||
+                     (field instanceof ForeignField && ((ForeignField) field).getActualField() instanceof BaseReference)) {
                     Map<String, Object> values = new LinkedHashMap<String, Object>();
                     boolean empty = false;
                     for (Field targetField : modelQuery.getTargets(field.getFieldName())) {
-                        String fieldName = targetField instanceof ForeignField ?
-                                ((ForeignField) targetField).getActualField().getFieldName() : targetField.getFieldName();
-                        values.put(fieldName, items[index++]);
-                        if (targetField.isPrimaryKey() && values.get(fieldName) == null) {
+                        ForeignField foreignField = (ForeignField) targetField;
+                        String fieldName = foreignField.getActualField().getFieldName();
+                        Object value = items[index++];
+                        values.put(fieldName, value);
+                        if (targetField.isPrimaryKey() && value == null) {
                             empty = true;
                         }
                     }
                     if (!empty) {
+                        BaseReference reference = field instanceof ForeignField ?
+                                (BaseReference) ((ForeignField) field).getActualField() : (BaseReference) field;
                         Model obj = reference.getReferenceClass().newInstance();
                         obj.setNew(false);
                         obj.setValues(values);
