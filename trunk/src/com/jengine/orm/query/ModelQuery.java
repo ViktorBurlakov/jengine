@@ -17,11 +17,13 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.orm;
+package com.jengine.orm.query;
 
 
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
+import com.jengine.orm.ModelClassBase;
+import com.jengine.orm.ModelManager;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.expression.Expression;
 import com.jengine.orm.db.expression.ExpressionImpl;
@@ -53,12 +55,12 @@ public class ModelQuery {
 
     public ModelQuery(ModelManager manager) {
         this.manager = manager;
-        this.addToFieldMap(manager.getSelf());
+        this.addToFieldMap(manager.getSelf(), true);
         this.page.put("start", QueryUtil.ALL_POS);
         this.page.put("end", QueryUtil.ALL_POS);
     }
 
-    protected void addToFieldMap(Field field) {
+    protected void addToFieldMap(Field field, boolean referenceAsObject) {
         if (field instanceof FunctionField) {
             FunctionField functionField = (FunctionField) field;
             for (Object attribute : functionField.getAttributes()) {
@@ -82,11 +84,13 @@ public class ModelQuery {
         } else if (field instanceof ReferenceField) {
             fieldMap.put(field.getFieldName(), field);
             fieldTargets.put(field.getFieldName(), new ArrayList<Field>());
-            ReferenceField referenceField = (ReferenceField)field;
-            for (Field field1 : referenceField.getReferenceClass().getManager().getPersistenceFields()) {
-                String fullFieldName = String.format("%s.%s", referenceField.getFieldName(), field1.getFieldName());
-                fieldMap.put(fullFieldName, manager.getField(fullFieldName));
-                fieldTargets.get(field.getFieldName()).add(fieldMap.get(fullFieldName));
+            if (referenceAsObject) {
+                ReferenceField referenceField = (ReferenceField)field;
+                for (Field field1 : referenceField.getReferenceClass().getManager().getPersistenceFields()) {
+                    String fullFieldName = String.format("%s.%s", referenceField.getFieldName(), field1.getFieldName());
+                    fieldMap.put(fullFieldName, manager.getField(fullFieldName));
+                    fieldTargets.get(field.getFieldName()).add(fieldMap.get(fullFieldName));
+                }
             }
         } else {
             fieldMap.put(field.getFieldName(), field);
@@ -96,7 +100,7 @@ public class ModelQuery {
 
     public ModelQuery field(Field field) {
         this.fields.add(field);
-        this.addToFieldMap(field);
+        this.addToFieldMap(field, true);
         return this;
     }
 
@@ -126,7 +130,7 @@ public class ModelQuery {
             for (String field : stringExpression.findModelFields()) {
                 Field modelField = getField(field);
                 stringExpression.getModelFields().add(modelField);
-                this.addToFieldMap(modelField);
+                this.addToFieldMap(modelField, false);
             }
         } catch (Exception e) {
             throw new DBException(e);
@@ -144,7 +148,7 @@ public class ModelQuery {
         for (Expression expression : filter) {
             Field modelField = getField(expression.getField());
             filterFields.add(modelField);
-            this.addToFieldMap(modelField);
+            this.addToFieldMap(modelField, false);
         }
 
         return this;
@@ -158,7 +162,7 @@ public class ModelQuery {
         if (order != null && order.size() > 0 && order.containsKey("field")) {
             this.orderFieldName = order.get("field");
             orderField = getField(orderFieldName);
-            this.addToFieldMap(orderField);
+            this.addToFieldMap(orderField, false);
             if (order.containsKey("orderType")) {
                 this.orderType = order.get("orderType");
             }
@@ -181,7 +185,7 @@ public class ModelQuery {
         Field modelField = getField(name);
         this.values.put(name, modelField.cast(value));
         valueFields.add(modelField);
-        this.addToFieldMap(modelField);
+        this.addToFieldMap(modelField, false);
         return this;
     }
 
