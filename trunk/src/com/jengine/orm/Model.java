@@ -27,15 +27,20 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static com.jengine.utils.CollectionUtil.map;
+
 
 public class Model {
     protected ModelClassBase cls;
     protected Map<String, Object> data = new LinkedHashMap<String, Object>();
+    protected Map<String, Object> oldData = new LinkedHashMap<String, Object>();
     protected boolean _new = true;
 
     public Model() throws DBException {
         cls = ModelClassBase.getModelClass(getClass().getSimpleName());
-        _init();
+        if (cls != null) {
+            setDefaultData();
+        }
     }
 
     public String getVerbose() throws DBException {
@@ -44,15 +49,6 @@ public class Model {
 
     public String format(String field) throws DBException {
         return cls.getManager().getField(field).format(this.getValue(field));
-    }
-
-    protected void _init() {
-        if (cls == null) {
-            return;
-        }
-        for (Field field : cls.getManager().getPersistenceFields()) {
-            data.put(field.getFieldName(), field.getDefaultValue());
-        }
     }
 
     /* get & set field values */
@@ -69,9 +65,9 @@ public class Model {
         return cls;
     }
 
-    public void setModelClass(ModelClassBase cls) {
+    public void setModelClass(ModelClassBase cls) throws DBException {
         this.cls = cls;
-        _init();
+        setDefaultData();
     }
 
     public void setPrimaryKey(Serializable value) throws DBException {
@@ -99,6 +95,9 @@ public class Model {
     }
 
     public void setValue(Field field, Object value) throws DBException {
+        if (!oldData.containsKey(field.getFieldName())) {
+            oldData.put(field.getFieldName(), data.get(field.getFieldName()));
+        }
         data.put(field.getFieldName(), field.cast(value));
     }
 
@@ -126,11 +125,37 @@ public class Model {
         return data;
     }
 
+    public void setDefaultData() throws DBException {
+        setData(map());
+    }
+
+    public void setData(LinkedHashMap<String, Object> values) throws DBException {
+        oldData.clear();
+        for (Field field : cls.getManager().getPersistenceFields()){
+            Object value = values.containsKey(field.getFieldName()) ?
+                    field.cast(values.get(field.getFieldName())) : field.getDefaultValue();
+            data.put(field.getFieldName(), value);
+        }
+    }
+
     protected Map<String, Object> getPersistenceValues() throws DBException {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 
         for (Field field : cls.getManager().getPersistenceFields()) {
             result.put(field.getColumnName(), field.getPersistenceValue(this));
+        }
+
+        return result;
+    }
+
+    protected Map<String, Object> getChangedPersistenceValues() throws DBException {
+        Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+        for (String fieldName : oldData.keySet()) {
+            Field field = cls.getManager().getField(fieldName);
+            if (field.isPersistence()) {
+                result.put(field.getColumnName(), field.getPersistenceValue(this));
+            }
         }
 
         return result;
@@ -155,6 +180,7 @@ public class Model {
     public Model insert() throws ValidateException, DBException {
         this.validate();
         cls.insert(this);
+        oldData.clear();
         this.cache();
         return this;
     }
@@ -162,12 +188,14 @@ public class Model {
     public Model update() throws ValidateException, DBException {
         this.validate();
         cls.update(this);
+        oldData.clear();
         this.cache();
         return this;
     }
 
     public void remove() throws DBException {
         cls.remove(this);
+        oldData.clear();
         clearCache();
     }
 

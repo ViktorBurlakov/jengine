@@ -191,8 +191,10 @@ public class ModelClassBase<T extends Model> {
     }
 
     public Model update(Model obj) throws ValidateException, DBException {
-        provider.update(manager.getTableName(), manager.getPrimaryKey().getColumnName(),
-                obj.getPersistenceValues());
+        Map<String, Object> changes = obj.getChangedPersistenceValues();
+        if (changes.size() > 0) {
+            provider.update(manager.getTableName(), manager.getPrimaryKey().getColumnName(), changes);
+        }
         for (Field field : manager.getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE)) {
             ((ManyReferenceField) field).update(obj);
             obj.getData().remove(field.getFieldName());
@@ -242,7 +244,7 @@ public class ModelClassBase<T extends Model> {
         for (Field field : fields) {
                 if (field instanceof BaseReference ||
                      (field instanceof ForeignField && ((ForeignField) field).getActualField() instanceof BaseReference)) {
-                    Map<String, Object> values = new LinkedHashMap<String, Object>();
+                    LinkedHashMap<String, Object> values = new LinkedHashMap<String, Object>();
                     boolean empty = false;
                     for (Field targetField : modelQuery.getTargets(field.getFieldName())) {
                         ForeignField foreignField = (ForeignField) targetField;
@@ -258,7 +260,7 @@ public class ModelClassBase<T extends Model> {
                                 (BaseReference) ((ForeignField) field).getActualField() : (BaseReference) field;
                         Model obj = reference.getReferenceClass().newInstance();
                         obj.setNew(false);
-                        obj.setValues(values);
+                        obj.setData(values);
                         obj.cache();
                         result.add(obj);
                     } else {
