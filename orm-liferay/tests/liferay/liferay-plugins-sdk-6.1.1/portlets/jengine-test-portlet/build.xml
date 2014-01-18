@@ -21,5 +21,9 @@
 <!DOCTYPE project>
 
 <project name="jengine-test-portlet" basedir="." default="deploy">
+	<copy todir="./docroot/WEB-INF/lib">
+	    <fileset dir="../../../../../../.dist"/>
+	</copy>
+
 	<import file="../build-common-portlet.xml" />
 </project>

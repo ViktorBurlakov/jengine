@@ -5,6 +5,7 @@
 	<ant antfile="utils/build.xml" target="dist" inheritAll="false"/>
 	<ant antfile="orm/build.xml" target="dist" inheritAll="false"/>
 	<ant antfile="ui/build.xml" target="dist" inheritAll="false"/>
+	<ant antfile="orm-liferay/build.xml" target="dist" inheritAll="false"/>
     </target>
 
     <target name="clean">
@@ -12,6 +13,7 @@
 	<ant antfile="utils/build.xml" target="clean" inheritAll="false"/>
 	<ant antfile="orm/build.xml" target="clean" inheritAll="false"/>
 	<ant antfile="ui/build.xml" target="clean" inheritAll="false"/>
+	<ant antfile="orm-liferay/build.xml" target="clean" inheritAll="false"/>
     </target>
     
 </project>
