@@ -33,7 +33,6 @@ import com.jengine.orm.field.ForeignField;
 import com.jengine.orm.field.FunctionField;
 import com.jengine.orm.field.reference.ReferenceField;
 import com.jengine.utils.CollectionUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
@@ -56,8 +55,8 @@ public class ModelQuery {
     public ModelQuery(ModelManager manager) {
         this.manager = manager;
         this.addToFieldMap(manager.getSelf(), true);
-        this.page.put("start", QueryUtil.ALL_POS);
-        this.page.put("end", QueryUtil.ALL_POS);
+        this.page.put("start", null);
+        this.page.put("end", null);
     }
 
     protected void addToFieldMap(Field field, boolean referenceAsObject) {
@@ -212,8 +211,8 @@ public class ModelQuery {
 
     public ModelQuery page(Map<String, Object> page) {
         if (page != null) {
-            this.page.put("start", page.containsKey("start") ? (Integer) page.get("start") : QueryUtil.ALL_POS);
-            this.page.put("end", page.containsKey("end") ? (Integer) page.get("end") : QueryUtil.ALL_POS);
+            this.page.put("start", page.containsKey("start") ? (Integer) page.get("start") : null);
+            this.page.put("end", page.containsKey("end") ? (Integer) page.get("end") : null);
         }
 
         return this;

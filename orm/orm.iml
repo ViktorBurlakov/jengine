@@ -10,7 +10,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Utils" />
-    <orderEntry type="library" name="jengine.lib.tomcat" level="project" />
     <orderEntry type="library" name="jengine.lib.antlr2" level="project" />
     <orderEntry type="library" name="jengine.lib.ehcache" level="project" />
     <orderEntry type="library" name="jengine.lib.dbcp" level="project" />
