@@ -1,63 +1,17 @@
 <project name="jengine" default="dist" basedir=".">
     <description>build file</description>
 
-    <!-- set global properties for this build -->
-    <property name="src" location="./src"/>
-    <property name="build" location="./.build"/>
-    <property name="dist"  location="./.dist"/>
-    <property name="lib_path"  location="./lib"/>
-    <!--property name="test_portlet_lib_path"  location="./test/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/lib"/-->
-    <property name="version-number" value="0.1.1" />
-    <property name="antlr_grammar_path" value="src/com/jengine/db/query/parser" />
+    <target name="dist">
+	<ant antfile="utils/build.xml" target="dist" inheritAll="false"/>
+	<ant antfile="orm/build.xml" target="dist" inheritAll="false"/>
+	<ant antfile="ui/build.xml" target="dist" inheritAll="false"/>
+    </target>
+
+    <target name="clean">
+	<delete dir="./dist"/>
+	<ant antfile="utils/build.xml" target="clean" inheritAll="false"/>
+	<ant antfile="orm/build.xml" target="clean" inheritAll="false"/>
+	<ant antfile="ui/build.xml" target="clean" inheritAll="false"/>
+    </target>
     
-
-    <path id="project.class.path">
-	<!--pathelement path="${lib_path}/"/-->
-	<fileset dir="${lib_path}">
-	    <include name="**/*.jar"/>
-	</fileset>
-    </path>
-
-    <target name="antlr">
-	<java classname="antlr.Tool" classpath="${lib_path}/antlr2.jar" failonerror="true">
-	    <arg value="-o"/>
-	    <arg path="${antlr_grammar_path}"/>
-	    <arg path="${antlr_grammar_path}/sql.g"/>
-	</java>
-    </target>
-
-    <target name="init">
-	<!-- Create the time stamp -->
-	<tstamp/>
-	<!-- Create the build directory structure used by compile -->
-	<mkdir dir="${build}"/>
-	<!-- Create the distribution directory -->
-	<mkdir dir="${dist}"/>
-    </target>
-
-    <target name="compile" depends="init"  description="compile the source " >
-	<!-- Compile the java code from ${src} into ${build} -->
-	<javac srcdir="${src}" destdir="${build}">
-	    <classpath refid="project.class.path"/>
-	</javac>
-     </target>
-
-    <target name="src" description="generate the source" >
-	<zip destfile="${dist}/jengine.${version-number}-src.jar" basedir="${src}" includes="**"/>
-    </target>
-
-    <target name="dist" depends="compile, src" description="generate the distribution" >
-	<!-- Put everything in ${build} into the jengine-${DSTAMP}.jar file -->
-	<jar jarfile="${dist}/jengine.${version-number}.jar" basedir="${build}"/>
-    </target>
-
-    <!--target name="test_deploy" depends="dist,src" description="copy to test jengine portlet" >
-	 <copy file="${dist}/jengine.jar" todir="${test_portlet_lib_path}"/>
-    </target-->
-
-    <target name="clean" description="clean up">
-	<!-- Delete the ${build} and ${dist} directory trees -->
-	<delete dir="${build}"/>
-	<delete dir="${dist}"/>
-    </target>
 </project>
