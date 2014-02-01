@@ -69,6 +69,14 @@ public class CollectionUtil {
         return result;
     }
 
+    public static <T> List<T> toList(T[] items) {
+        List<T> list = new ArrayList<T>();
+        for (T item : items) {
+            list.add(item);
+        }
+        return list;
+    }
+
     public static <T> List<T> toList(Collection<T> collection) {
         List<T> list = new ArrayList<T>();
         list.addAll(collection);

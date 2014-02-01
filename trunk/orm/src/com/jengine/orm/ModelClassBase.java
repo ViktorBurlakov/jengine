@@ -1,19 +1,18 @@
 package com.jengine.orm;
 
 import com.jengine.orm.db.DBException;
-import com.jengine.orm.db.expression.Expression;
 import com.jengine.orm.db.provider.Provider;
 import com.jengine.orm.exception.ValidateException;
 import com.jengine.orm.field.Field;
-import com.jengine.orm.field.ForeignField;
 import com.jengine.orm.field.FunctionField;
-import com.jengine.orm.field.reference.BaseReference;
 import com.jengine.orm.field.reference.ManyReferenceField;
 import com.jengine.orm.query.ModelQuery;
-import com.jengine.orm.query.PersistenceManager;
+import com.jengine.orm.query.filter.Filter;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class ModelClassBase<T extends Model> {
     protected DB db;
@@ -74,11 +73,11 @@ public class ModelClassBase<T extends Model> {
         return new ModelQuery(manager).filter(filter);
     }
 
-    public ModelQuery filter(Expression... filters) throws DBException {
+    public ModelQuery filter(Filter... filters) throws DBException {
         return filter(Arrays.asList(filters));
     }
 
-    public ModelQuery filter(List<Expression> filter) throws DBException {
+    public ModelQuery filter(List<Filter> filter) throws DBException {
         return new ModelQuery(manager).filter(filter);
     }
 
@@ -145,6 +144,8 @@ public class ModelClassBase<T extends Model> {
         return obj;
     }
 
+    /* Cache methods  */
+
     public T getCache(Object id) throws DBException {
         if (manager.getCacheEnabled()) {
             Map<String, Object> values = provider.getCache(manager.getTableName(), id);
@@ -171,6 +172,9 @@ public class ModelClassBase<T extends Model> {
             provider.cache(manager.getTableName(), manager.getPrimaryKey().getPersistenceValue(obj), obj.getPersistenceValues());
         }
     }
+
+
+    /* Model object methods  */
 
     public T insert(Model obj) throws ValidateException, DBException {
         boolean autoIncrement = obj.getPrimaryKey() == null && manager.getPrimaryKey().isAutoIncrement();
@@ -204,73 +208,7 @@ public class ModelClassBase<T extends Model> {
     }
 
 
-    public void insert(ModelQuery modelQuery) throws DBException {
-        provider.insert(PersistenceManager.buildInsertSQL(modelQuery));
-    }
-
-    public void update(ModelQuery modelQuery) throws DBException {
-        provider.update(PersistenceManager.buildUpdateSQL(modelQuery));
-    }
-
-    public void remove(ModelQuery modelQuery) throws DBException {
-        provider.remove(PersistenceManager.buildRemoveSQL(modelQuery));
-    }
-
-    public List select(ModelQuery modelQuery) throws DBException {
-        List values = provider.select(PersistenceManager.buildSelectSQL(modelQuery));
-        return processResult(modelQuery, values);
-    }
-
-    protected List processResult(ModelQuery modelQuery, List values) throws DBException {
-        List result = new ArrayList();
-
-        for (Object value : values) {
-            Object[] items = value.getClass().isArray() ? (Object[]) value : new Object[]{value};
-            List resultItem = processResultItem(modelQuery, items);
-            result.add(resultItem.size() == 1 ? resultItem.get(0) : resultItem);
-        }
-
-        return result;
-    }
-
-    protected List processResultItem(ModelQuery modelQuery, Object[] items) throws DBException {
-        List result = new ArrayList();
-        List<Field> fields = modelQuery.getFields();
-        int index=0;
-        for (Field field : fields) {
-                if (field instanceof BaseReference ||
-                     (field instanceof ForeignField && ((ForeignField) field).getActualField() instanceof BaseReference)) {
-                    LinkedHashMap<String, Object> values = new LinkedHashMap<String, Object>();
-                    boolean empty = false;
-                    for (Field targetField : modelQuery.getTargets(field.getFieldName())) {
-                        ForeignField foreignField = (ForeignField) targetField;
-                        String fieldName = foreignField.getActualField().getFieldName();
-                        Object value = items[index++];
-                        values.put(fieldName, value);
-                        if (targetField.isPrimaryKey() && value == null) {
-                            empty = true;
-                        }
-                    }
-                    if (!empty) {
-                        BaseReference reference = field instanceof ForeignField ?
-                                (BaseReference) ((ForeignField) field).getActualField() : (BaseReference) field;
-                        Model obj = reference.getReferenceClass().newInstance();
-                        obj.setNew(false);
-                        obj.setData(values);
-                        obj.cache();
-                        result.add(obj);
-                    } else {
-                        result.add(null);
-                    }
-                } else {
-                    result.add(field.cast(items[index++]));
-                }
-        }
-
-        return result;
-    }
-
-    /* getters */
+    /* getters and setters */
 
     public Provider getProvider() {
         return provider;
@@ -282,10 +220,6 @@ public class ModelClassBase<T extends Model> {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public DB getDb() {

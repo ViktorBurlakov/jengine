@@ -23,9 +23,8 @@ package com.jengine.orm.field;
 import com.jengine.orm.Model;
 import com.jengine.orm.ModelManager;
 import com.jengine.orm.db.DBException;
-import com.jengine.orm.db.expression.Expression;
-import com.jengine.orm.db.expression.ExpressionImpl;
 import com.jengine.orm.exception.ValidateException;
+import com.jengine.orm.query.filter.Filter;
 import com.jengine.utils.Variant;
 
 import java.sql.Time;
@@ -122,15 +121,15 @@ public class Field {
         return new Variant(value).convertTo(getFieldClass());
     }
 
-    public String format(Object value) throws DBException {
-        return String.valueOf(value);
-    }
-
     public void validate(Model obj) throws ValidateException, DBException {
         Object value = getPersistenceValue(obj);
         if (required && value == null) {
             throw new ValidateException("'%s' field validation error: required field is empty");
         }
+    }
+
+    public String format(Object value) throws DBException {
+        return String.valueOf(value);
     }
 
     public boolean isKey() {
@@ -251,43 +250,43 @@ public class Field {
 
     /* operation methods */
 
-    public Expression eq(Object value) {
-        return new ExpressionImpl(fieldName, "eq", value);
+    public Filter eq(Object value) {
+        return new Filter(fieldName, "eq", value);
     }
 
-    public Expression ge(Object value) {
-        return new ExpressionImpl(fieldName, "ge", value);
+    public Filter ge(Object value) {
+        return new Filter(fieldName, "ge", value);
     }
 
-    public Expression gt(Object value) {
-        return new ExpressionImpl(fieldName, "gt", value);
+    public Filter gt(Object value) {
+        return new Filter(fieldName, "gt", value);
     }
 
-    public Expression le(Object value) {
-        return new ExpressionImpl(fieldName, "le", value);
+    public Filter le(Object value) {
+        return new Filter(fieldName, "le", value);
     }
 
-    public Expression lt(Object value) {
-        return new ExpressionImpl(fieldName, "lt", value);
+    public Filter lt(Object value) {
+        return new Filter(fieldName, "lt", value);
     }
 
-    public Expression like(Object value) {
-        return new ExpressionImpl(fieldName, "like", value);
+    public Filter like(Object value) {
+        return new Filter(fieldName, "like", value);
     }
 
-    public Expression ne(Object value) {
-        return new ExpressionImpl(fieldName, "ne", value);
+    public Filter ne(Object value) {
+        return new Filter(fieldName, "ne", value);
     }
 
-    public Expression is_null(Object value) {
-        return new ExpressionImpl(fieldName, "isnull", value);
+    public Filter is_null(Object value) {
+        return new Filter(fieldName, "isnull", value);
     }
 
-    public Expression is_empty(Object value) {
-        return new ExpressionImpl(fieldName, "isempty", value);
+    public Filter is_empty(Object value) {
+        return new Filter(fieldName, "isempty", value);
     }
 
-    public Expression op(String op, Object value) {
-        return new ExpressionImpl(fieldName, op, value);
+    public Filter op(String op, Object value) {
+        return new Filter(fieldName, op, value);
     }
 }
