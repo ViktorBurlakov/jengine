@@ -1,6 +1,7 @@
 package com.jengine.orm.query.target;
 
 
+import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.field.Field;
 import com.jengine.orm.field.ForeignField;
@@ -8,6 +9,7 @@ import com.jengine.orm.field.FunctionField;
 import com.jengine.orm.multi.MultiModelField;
 import com.jengine.orm.query.ModelQuery;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import static com.jengine.utils.CollectionUtil.toList;
@@ -34,6 +36,10 @@ public class FunctionTarget extends Target {
 
     public void setSQL(SQLQuery query) {
         query.addTarget(field.render(toList(sqlAttributes.keySet())), field.getFieldName());
+    }
+
+    public Object processResult(Iterator itr) throws DBException {
+        return field.cast(super.processResult(itr));
     }
 
 }

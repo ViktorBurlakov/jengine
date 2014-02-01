@@ -25,12 +25,11 @@ import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.adapter.Adapter;
 import com.jengine.orm.db.cache.CacheManager;
 import com.jengine.orm.db.filter.SQLFilter;
-import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.db.filter.SQLStringFilter;
+import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.utils.CollectionUtil;
 import com.jengine.utils.expression.ExpressionData;
 import com.jengine.utils.expression.ExpressionNode;
-import com.jengine.utils.expression.ExpressionOperation;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -363,23 +362,14 @@ public class Provider {
                 sql.append("(").append(build(group.getChild())).append(")");
             } else if (node instanceof SQLQuery.Join) {
                 SQLQuery.Join join = (SQLQuery.Join) node;
-                ExpressionNode childNode = join.getJoinNode();
-                if (childNode instanceof ExpressionOperation) {
-                    sql.append(build(childNode));
-                } else if (childNode instanceof ExpressionData) {
-                    SQLQuery.TableItem item = (SQLQuery.TableItem) ((ExpressionData) childNode).getData();
-                    String joinKeyword = "JOIN";
-                    if (node instanceof SQLQuery.LeftJoin) {
-                        joinKeyword = "JOIN LEFT";
-                    } else if (node instanceof SQLQuery.RightJoin) {
-                       joinKeyword = "RIGHT JOIN";
-                    }
-                    sql.append(joinKeyword).append(item.getTable());
-                    if (item.getAlias() != null && item.getAlias().length() > 0) {
-                        sql.append(" AS ").append(item.getAlias());
-                    }
-                    sql.append(" ON ").append(item.getRestriction()).append(" ");
+                sql.append(build(join.getLeftNode()));
+                String joinKeyword = "JOIN";
+                if (node instanceof SQLQuery.LeftJoin) {
+                    joinKeyword = "LEFT JOIN";
+                } else if (node instanceof SQLQuery.RightJoin) {
+                    joinKeyword = "RIGHT JOIN";
                 }
+                sql.append(" ").append(joinKeyword).append(" ").append(build(join.getJoinNode()));
             } else if (node instanceof SQLQuery.And) {
                 SQLQuery.And and = (SQLQuery.And) node;
                 sql.append(build(and.getNodes().get(0))).append(" AND ").append(and.getNodes().get(1));
@@ -388,6 +378,9 @@ public class Provider {
                 sql.append(item.getTable());
                 if (item.getAlias() != null && item.getAlias().length() > 0) {
                     sql.append(" AS ").append(item.getAlias());
+                }
+                if (item.getRestriction() != null) {
+                    sql.append(" ON ").append(item.getRestriction()).append(" ");
                 }
                 sql.append(" ");
             }

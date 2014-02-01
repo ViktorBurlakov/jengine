@@ -59,7 +59,7 @@ public class ForeignField extends Field {
     }
 
     public List<String> getReferencePath() {
-        return fieldMap.get(fieldMap.size()-1) instanceof ReferenceField ? fields : fields.subList(0, fields.size()-1);
+        return getActualField() instanceof ReferenceField ? fields : fields.subList(0, fields.size()-1);
     }
 
     public String getColumnName() {

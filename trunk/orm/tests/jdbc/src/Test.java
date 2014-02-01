@@ -1,6 +1,8 @@
 import com.jengine.orm.DB;
 import com.jengine.orm.DBFactory;
-import com.jengine.orm.db.*;
+import com.jengine.orm.db.DBConnection;
+import com.jengine.orm.db.DBException;
+import com.jengine.orm.db.DBSavePoint;
 import com.jengine.orm.db.adapter.Adapter;
 import com.jengine.orm.db.adapter.ConnectionManager;
 import com.jengine.orm.db.adapter.jdbc.JDBCAdapter;
@@ -288,7 +290,7 @@ public class Test {
         check( Book.cls.filter(map("library.id", 101)).<Book>list().size() == 0 );
 
         //with fields
-        check( Transaction.cls.select("member.library").<Library>list().get(0).getId() != null);
+        check( Transaction.cls.select("member.library").<Library>list().get(0).getId() != null );
     }
 
     /**
@@ -344,7 +346,7 @@ public class Test {
     }
 
     /**
-     * Model relation testing
+     * Model multi testing
      */
     public static void test7() throws Exception {
         System.out.println("** Test 7: Model relation testing");

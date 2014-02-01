@@ -15,7 +15,7 @@ public class ForeignTarget extends Target {
     public ForeignTarget(ModelQuery modelQuery, ForeignField field) {
         super(modelQuery);
         modelQuery.addPath(field.getReferencePath());
-        MultiModelItem item = modelQuery.getMultiModel().getItems().get(field.getActualField().getFieldName());
+        MultiModelItem item = modelQuery.getMultiModel().getItems().get(field.getFieldName());
         this.target = (field.getActualField() instanceof ReferenceField) ?
                 new ModelTarget(modelQuery, item):
                 new FieldTarget(modelQuery, modelQuery.getMultiModelField(field));

@@ -86,7 +86,11 @@ public class SQLQuery {
     public List getParams() {
         List result = new ArrayList();
         for (Object param: params) {
-            result.add(param instanceof SQLQuery ? ((SQLQuery) param).getParams() : param);
+            if (param instanceof SQLQuery) {
+                result.addAll(((SQLQuery) param).getParams());
+            } else {
+                result.add(param);
+            }
         }
         return result;
     }
@@ -280,6 +284,10 @@ public class SQLQuery {
         public String getRestriction() {
             return restriction;
         }
+
+        public void setRestriction(String restriction) {
+            this.restriction = restriction;
+        }
     }
 
 
@@ -298,6 +306,10 @@ public class SQLQuery {
 
         public Join(ExpressionNode operand1, ExpressionNode operand2) {
             super(operand1, operand2);
+        }
+
+        public ExpressionNode getLeftNode() {
+            return nodes.get(0);
         }
 
         public ExpressionNode getJoinNode() {

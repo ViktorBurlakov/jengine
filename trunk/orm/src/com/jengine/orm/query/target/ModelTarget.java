@@ -37,7 +37,7 @@ public class ModelTarget extends Target {
     protected Object processItem(Iterator itr, MultiModelItem item) throws DBException {
         LinkedHashMap<String, Object> values = new LinkedHashMap<String, Object>();
         for (MultiModelField field : item.getFieldList()) {
-            values.put(field.getModelField().getFieldName(), itr.next());
+            values.put(field.getModelField().getFieldName(), field.getModelField().cast(itr.next()));
         }
         Field pk = item.getPrimaryKey().getModelField();
         if (values.containsKey(pk.getFieldName()) && values.get(pk.getFieldName()) != null) {

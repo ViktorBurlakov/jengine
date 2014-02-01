@@ -101,7 +101,14 @@ public class ModelQuery {
     }
 
     public ModelQuery field(Field field) {
-        this.targets.add(new FieldTarget(this, getMultiModelField(field)));
+        if (field instanceof ForeignField) {
+            field((ForeignField) field);
+        } else if (field instanceof FunctionField) {
+            field((FunctionField) field);
+        } else {
+            this.targets.add(new FieldTarget(this, getMultiModelField(field)));
+        }
+
         return this;
     }
 

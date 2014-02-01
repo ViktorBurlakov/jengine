@@ -14,7 +14,7 @@ public class MultiModelItem {
     private MultiModel multiModel;
     private ModelClassBase modelClass;
     private String name;
-    private String tableItemName;
+    private SQLQuery.TableItem tableItem;
     private MultiModelField primaryKey = null;
     private LinkedHashMap<String, MultiModelField> fields = new LinkedHashMap<String, MultiModelField>();
 
@@ -31,22 +31,12 @@ public class MultiModelItem {
         }
     }
 
-    public MultiModelItem(MultiModel multiModel, ModelClassBase modelClass, String name, String tableItemName) {
-        this.multiModel = multiModel;
-        this.modelClass = modelClass;
-        this.name = name;
-        this.tableItemName = tableItemName;
-        for(Field field: modelClass.getManager().getPersistenceFields()) {
-            MultiModelField multiModelField = new MultiModelField(this, field);
-            fields.put(multiModelField.getName(), multiModelField);
-            if (field.isPrimaryKey()) {
-                primaryKey = multiModelField;
-            }
-        }
+    public void setTableItem(SQLQuery.TableItem tableItem) {
+        this.tableItem = tableItem;
     }
 
     public SQLQuery.TableItem getTableItem() {
-        return multiModel.getTable().getItems().get(tableItemName);
+        return tableItem;
     }
 
     public MultiModel getMultiModel() {
