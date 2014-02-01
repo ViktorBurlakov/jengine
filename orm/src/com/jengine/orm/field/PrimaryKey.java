@@ -49,7 +49,7 @@ public class PrimaryKey extends Field {
     }
 
     public Object cast(Object value) throws DBException {
-        return value instanceof Model ? ((Model) value).getPrimaryKey() : new Long(String.valueOf(value));
+        return value instanceof Model ? ((Model) value).getPrimaryKey() : super.cast(value);
     }
 
     public boolean isKey() {
