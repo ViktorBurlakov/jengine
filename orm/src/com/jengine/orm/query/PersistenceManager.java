@@ -1,26 +1,9 @@
 package com.jengine.orm.query;
 
 
-import com.jengine.orm.db.DBException;
-import com.jengine.orm.db.expression.Expression;
-import com.jengine.orm.db.expression.ExpressionImpl;
-import com.jengine.orm.db.query.SQLQuery;
-import com.jengine.orm.db.query.SQLStringExpression;
-import com.jengine.orm.field.Field;
-import com.jengine.orm.field.ForeignField;
-import com.jengine.orm.field.FunctionField;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.jengine.utils.CollectionUtil.concat;
-import static com.jengine.utils.CollectionUtil.list;
-
 public class PersistenceManager {
 
-    public static SQLQuery buildInsertSQL(ModelQuery modelQuery) throws DBException {
+    /*public static SQLQuery buildInsertSQL(ModelQuery modelQuery) throws DBException {
         SQLQuery query = new SQLQuery();
 
         setModels(query, modelQuery);
@@ -123,21 +106,21 @@ public class PersistenceManager {
     }
 
     protected static void setFilters(SQLQuery query, ModelQuery modelQuery) throws DBException {
-        if (modelQuery.getFilter().size() > 0) {
-            for (int i=0; i < modelQuery.getFilter().size(); i++) {
-                Expression expression = modelQuery.getFilter().get(i);
+        if (modelQuery.getFilters().size() > 0) {
+            for (int i=0; i < modelQuery.getFilters().size(); i++) {
+                IFilter filter = modelQuery.getFilters().get(i);
                 Field field = modelQuery.getFilterFields().get(i);
                 String sqlName = getSQLName(query, field);
 
-                if (expression.getValue() != null && expression.getValue().getClass().equals(ModelQuery.class)) {
-                    SQLQuery subSql = buildSelectSQL((ModelQuery) expression.getValue());
-                    query.getFitler().put(sqlName, new ExpressionImpl(sqlName, expression.getOperation(), subSql));
+                if (filter.getValue() != null && filter.getValue().getClass().equals(ModelQuery.class)) {
+                    SQLQuery subSql = buildSelectSQL((ModelQuery) filter.getValue());
+                    query.getFilters().put(sqlName, new SQLFilter(sqlName, filter.getOperation(), subSql));
                     for(Object param : subSql.getParams()) {
                         query.getParams().add(param);
                     }
                 } else {
-                    Object value = field.cast(expression.getValue());
-                    query.getFitler().put(sqlName, new ExpressionImpl(sqlName, expression.getOperation(), value));
+                    Object value = field.cast(filter.getValue());
+                    query.getFilters().put(sqlName, new SQLFilter(sqlName, filter.getOperation(), value));
                     query.getParams().add(value);
                 }
             }
@@ -168,7 +151,7 @@ public class PersistenceManager {
                         params.add(param);
                     }
                 }
-                query.addStringQuery(new SQLStringExpression(stringExpression.getQuery(), stringExpression.getTranslator(), params));
+                query.addStringFilter(new SQLStringFilter(stringExpression.getQuery(), stringExpression.getTranslator(), params));
             }
         }
     }
@@ -191,11 +174,11 @@ public class PersistenceManager {
 
     protected static String getSQLName(SQLQuery query, Field field) {
         if (field.getType() == Field.Type.FOREIGN) {
-            String alias = concat(((ForeignField)field).getReferenceFields(), "__").toString();
+            String alias = concat(((ForeignField)field).getReferencePath(), "__").toString();
             return String.format("%s.%s", alias, field.getColumnName());
         } else {
             return query.getRelations().size() > 0 ?
                     String.format("%s.%s", query.getTableAlias(), field.getColumnName()) : field.getColumnName();
         }
-    }
+    }*/
 }

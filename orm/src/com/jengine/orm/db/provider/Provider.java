@@ -24,10 +24,13 @@ import com.jengine.orm.db.DBConnection;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.adapter.Adapter;
 import com.jengine.orm.db.cache.CacheManager;
-import com.jengine.orm.db.expression.Expression;
+import com.jengine.orm.db.filter.SQLFilter;
 import com.jengine.orm.db.query.SQLQuery;
-import com.jengine.orm.db.query.SQLStringExpression;
+import com.jengine.orm.db.filter.SQLStringFilter;
 import com.jengine.utils.CollectionUtil;
+import com.jengine.utils.expression.ExpressionData;
+import com.jengine.utils.expression.ExpressionNode;
+import com.jengine.utils.expression.ExpressionOperation;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -210,7 +213,7 @@ public class Provider {
         StringBuffer fieldClause = new StringBuffer();
         StringBuffer valueClause = new StringBuffer();
 
-        sql.append(" INSERT INTO ").append(query.getTableName());
+        sql.append(" INSERT INTO ").append(query.getTable().getItemList().get(0).getTable());
         for (String param :query.getValues().keySet()) {
             if (fieldClause.length() > 0) {
                 fieldClause.append(", ");
@@ -234,15 +237,19 @@ public class Provider {
     protected String buildRemoveSQL(SQLQuery query)  {
         StringBuffer sql = new StringBuffer();
 
-        // todo: design new classes for sql query to do better
-        if (query.getRelations().size() == 0) {
-            query.setTableAlias(null);
-        }
         sql.append(" DELETE ");
-        if (query.getRelations().size() != 0) {
-            sql.append(query.getTableAlias()).append(".*");
+        if (query.getTable().getItemList().size() > 1) {
+            sql.append(query.getTable().getItemList().get(0).getAlias()).append(".*");
         }
-        sql.append(" FROM ").append(buildTableClause(query)).append(" ").append(buildWhereClause(query));
+        sql.append(" FROM ");
+        if (query.getTable().getItemList().size() == 1) {
+            sql.append(query.getTable().getItemList().get(0).getTable());
+        } else {
+            sql.append(TableClause.build(query));
+        }
+        if (!query.isEmptyFilter()) {
+            sql.append(" WHERE ").append(WhereClause.build(this, query));
+        }
 
         return sql.toString();
     }
@@ -252,7 +259,7 @@ public class Provider {
         StringBuffer setClause = new StringBuffer();
         StringBuffer whereClause = new StringBuffer();
 
-        sql.append(" UPDATE ").append(buildTableClause(query)).append(" ");
+        sql.append(" UPDATE ").append(TableClause.build(query)).append(" ");
 
         // set clause
         for (Object param :query.getValues().keySet()) {
@@ -264,13 +271,14 @@ public class Provider {
         if (setClause.length() > 0) {
             sql.append(" SET ").append(setClause);
         }
-
-        sql.append(buildWhereClause(query));
+        if (!query.isEmptyFilter()) {
+            sql.append(" WHERE ").append(WhereClause.build(this, query));
+        }
 
         return sql.toString();
     }
 
-    protected String buildSelectSQL(SQLQuery query) {
+    public String buildSelectSQL(SQLQuery query) {
         StringBuffer queryString = new StringBuffer();
 
         // select clause
@@ -285,10 +293,12 @@ public class Provider {
         queryString.append(" SELECT ").append(concat(targets, ", ")).append(" ");
 
         // from clause
-        queryString.append(" FROM ").append(buildTableClause(query));
+        queryString.append(" FROM ").append(TableClause.build(query));
 
         // where clause
-        queryString.append(buildWhereClause(query));
+        if (!query.isEmptyFilter()) {
+            queryString.append(" WHERE ").append(WhereClause.build(this, query));
+        }
 
         // order clause
         if(!query.getOrder().isEmpty()) {
@@ -302,93 +312,93 @@ public class Provider {
         return queryString.toString();
     }
 
-    protected StringBuffer buildWhereClause(SQLQuery query) {
-        StringBuffer queryString = new StringBuffer();
 
-        if (!query.getFitler().isEmpty() || !query.getStringExpressions().isEmpty()) {
-            queryString.append(" WHERE ");
-            StringBuffer expressionClause = new StringBuffer();
-            if (!query.getFitler().isEmpty()) {
-                for (String field : query.getFitler().keySet()) {
-                    Expression expression = query.getFitler().get(field);
-                    if (expressionClause.length() > 0) {
-                        expressionClause.append(" AND ");
-                    }
-                    expressionClause.append(makeSQLExpr(field, expression.getOperation(), expression.getValue()));
-                }
-            }
-            if (!query.getStringExpressions().isEmpty()) {
-                for (SQLStringExpression stringExpression : query.getStringExpressions()) {
-                    if (expressionClause.length() > 0) {
-                        expressionClause.append(" AND ");
-                    }
-                    // sub query building
-                    for(int paramIndex =0 ; paramIndex < stringExpression.getParams().size(); paramIndex++) {
-                        Object param = stringExpression.getParams().get(paramIndex);
-                        if (param != null && param.getClass().equals(SQLQuery.class)) {
-                            stringExpression.putParamSQL(paramIndex, "(" + buildSelectSQL((SQLQuery) param) + ")");
+    public static class WhereClause {
+
+        public static StringBuffer build(Provider provider, SQLQuery query) {
+            StringBuffer queryString = new StringBuffer();
+
+            if (!query.isEmptyFilter()) {
+                StringBuffer expressionClause = new StringBuffer();
+                if (!query.getFilters().isEmpty()) {
+                    for (String field : query.getFilters().keySet()) {
+                        SQLFilter filter = query.getFilters().get(field);
+                        if (expressionClause.length() > 0) {
+                            expressionClause.append(" AND ");
                         }
+                        Object value = filter.getValue() instanceof SQLQuery ?
+                                String.format("(%s)", provider.buildSelectSQL((SQLQuery) filter.getValue())) : "?";
+                        expressionClause.append(filter.getOperation().getSQL(field, value));
                     }
-                    expressionClause.append(stringExpression.getSQL());
                 }
+                if (!query.getStringFilters().isEmpty()) {
+                    for (SQLStringFilter stringFilter : query.getStringFilters()) {
+                        if (expressionClause.length() > 0) {
+                            expressionClause.append(" AND ");
+                        }
+                        // sub query building
+                        for(int paramIndex = 0; paramIndex < stringFilter.getParams().size(); paramIndex++) {
+                            Object param = stringFilter.getParams().get(paramIndex);
+                            if (param != null && param.getClass().equals(SQLQuery.class)) {
+                                stringFilter.putSQL(paramIndex, "(" + provider.buildSelectSQL((SQLQuery) param) + ")");
+                            }
+                        }
+                        expressionClause.append(stringFilter.renderSQL());
+                    }
+                }
+                queryString.append(expressionClause).append(" ");
             }
-            queryString.append(expressionClause).append(" ");
-        }
 
-        return queryString;
+            return queryString;
+        }
     }
 
-    protected StringBuffer buildTableClause(SQLQuery query) {
-        StringBuffer queryString = new StringBuffer();
+    public static class TableClause {
 
-        queryString.append(query.getTableName());
-        if (query.getTableAlias() != null && query.getTableAlias().length() > 0) {
-            queryString.append(" AS ").append(query.getTableAlias()).append(" ");
+        public static StringBuffer build(ExpressionNode node) {
+            StringBuffer sql = new StringBuffer();
+
+            if (node instanceof SQLQuery.Group) {
+                SQLQuery.Group group = (SQLQuery.Group) node;
+                sql.append("(").append(build(group.getChild())).append(")");
+            } else if (node instanceof SQLQuery.Join) {
+                SQLQuery.Join join = (SQLQuery.Join) node;
+                ExpressionNode childNode = join.getJoinNode();
+                if (childNode instanceof ExpressionOperation) {
+                    sql.append(build(childNode));
+                } else if (childNode instanceof ExpressionData) {
+                    SQLQuery.TableItem item = (SQLQuery.TableItem) ((ExpressionData) childNode).getData();
+                    String joinKeyword = "JOIN";
+                    if (node instanceof SQLQuery.LeftJoin) {
+                        joinKeyword = "JOIN LEFT";
+                    } else if (node instanceof SQLQuery.RightJoin) {
+                       joinKeyword = "RIGHT JOIN";
+                    }
+                    sql.append(joinKeyword).append(item.getTable());
+                    if (item.getAlias() != null && item.getAlias().length() > 0) {
+                        sql.append(" AS ").append(item.getAlias());
+                    }
+                    sql.append(" ON ").append(item.getRestriction()).append(" ");
+                }
+            } else if (node instanceof SQLQuery.And) {
+                SQLQuery.And and = (SQLQuery.And) node;
+                sql.append(build(and.getNodes().get(0))).append(" AND ").append(and.getNodes().get(1));
+            } else if (node instanceof ExpressionData){
+                SQLQuery.TableItem item = (SQLQuery.TableItem) ((ExpressionData) node).getData();
+                sql.append(item.getTable());
+                if (item.getAlias() != null && item.getAlias().length() > 0) {
+                    sql.append(" AS ").append(item.getAlias());
+                }
+                sql.append(" ");
+            }
+
+            return sql;
         }
-        for (String alias : query.getRelations().keySet()) {
-            String relation = (String) query.getRelations().get(alias).get(0);
-            String expr = (String) query.getRelations().get(alias).get(1);
-            queryString.append(" LEFT JOIN ").append(relation).append(" AS ").append(alias)
-                    .append(" ON ").append(expr).append(" ");
+
+        public static StringBuffer build(SQLQuery query) {
+            return build(query.getTable().getExpression());
         }
-        return queryString;
     }
 
-    protected String makeSQLExpr(String field, String operation, Object value) {
-        StringBuffer expr = new StringBuffer();
-        Object param = value.getClass().equals(SQLQuery.class) ?
-                String.format("(%s)", buildSelectSQL((SQLQuery) value)) : "?";
 
-        if ("eq".equals(operation)) {
-            expr.append(field).append("=").append(param);
-        } else if ("ge".equals(operation)) {
-            expr.append(field).append( ">=").append(param);
-        } else  if ("gt".equals(operation)) {
-            expr.append(field).append(">").append(param);
-        } else if ("le".equals(operation)) {
-            expr.append(field).append("<=").append(param);
-        } else  if ("lt".equals(operation)) {
-            expr.append(field).append("<").append(param);
-        } else if ("like".equals(operation)) {
-            expr.append(field).append(" ").append("like").append(" ").append(param);
-        } else if ("ne".equals(operation)) {
-            expr.append(field).append("<>").append(param);
-        } else if ("isnull".equals(operation)) {
-            if ((Boolean) value) {
-                expr.append(field).append(" ").append("is null").append(" ");
-            } else  {
-                expr.append(field).append(" ").append("is not null").append(" ");
-            }
-        } else if ("isempty".equals(operation)) {
-            if ((Boolean) value) {
-                expr.append(field).append("=").append("''");
-            } else  {
-                expr.append(field).append("<>").append("''");
-            }
-        } else {
-            expr.append(field).append(operation).append(param);
-        }
-
-        return expr.toString();
-    }
 }

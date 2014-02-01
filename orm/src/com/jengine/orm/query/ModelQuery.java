@@ -20,86 +20,79 @@
 package com.jengine.orm.query;
 
 
-import antlr.RecognitionException;
-import antlr.TokenStreamException;
 import com.jengine.orm.ModelClassBase;
 import com.jengine.orm.ModelManager;
 import com.jengine.orm.db.DBException;
-import com.jengine.orm.db.expression.Expression;
-import com.jengine.orm.db.expression.ExpressionImpl;
-import com.jengine.orm.db.query.parser.SqlTranslator;
+import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.field.Field;
 import com.jengine.orm.field.ForeignField;
 import com.jengine.orm.field.FunctionField;
 import com.jengine.orm.field.reference.ReferenceField;
+import com.jengine.orm.multi.MultiModel;
+import com.jengine.orm.multi.MultiModelField;
+import com.jengine.orm.multi.MultiModelItem;
+import com.jengine.orm.query.filter.Filter;
+import com.jengine.orm.query.filter.StringFilter;
+import com.jengine.orm.query.target.*;
 import com.jengine.utils.CollectionUtil;
 
-import java.io.UnsupportedEncodingException;
 import java.util.*;
 
+import static com.jengine.utils.CollectionUtil.concat;
+import static com.jengine.utils.CollectionUtil.map;
+
 public class ModelQuery {
-    private Map<String, Field> fieldMap = new LinkedHashMap<String, Field>();
-    private List<Field> fields = new ArrayList<Field>();
-    private Map<String, List<Field>> fieldTargets = new LinkedHashMap<String, List<Field>>();
-    private List<Field> filterFields = new ArrayList<Field>();
-    private List<Expression> filter = new ArrayList<Expression>();
-    private Field orderField = null;
-    private String orderFieldName = null;
-    private String orderType = null;
-    private Map<String, Integer> page = new HashMap<String, Integer>();
+    private List<Target> targets = new ArrayList<Target>();
+    private Target defaultTarget;
+    private MultiModel multiModel;
+    private List<Filter> filters = new ArrayList<Filter>();
+    private List<StringFilter> stringFilters = new ArrayList<StringFilter>();
+    private List<OrderItem> orderList = new ArrayList<OrderItem>();
+    private Map<String, Integer> page = map("start", null, "end", null);
+    private Map<String, Object> values = new LinkedHashMap<String, Object>();
     private ModelManager manager = null;
-    private List<StringExpression> stringExpressions = new ArrayList<StringExpression>();
-    private Map<String, Object> values = new LinkedHashMap<String, java.lang.Object>();
-    private List<Field> valueFields = new ArrayList<Field>();
 
     public ModelQuery(ModelManager manager) {
         this.manager = manager;
-        this.addToFieldMap(manager.getSelf(), true);
-        this.page.put("start", null);
-        this.page.put("end", null);
+        this.multiModel = new MultiModel(manager.getModelClass());
+        this.defaultTarget = new ModelTarget(this, multiModel.getItemList().get(0));
     }
 
-    protected void addToFieldMap(Field field, boolean referenceAsObject) {
-        if (field instanceof FunctionField) {
-            FunctionField functionField = (FunctionField) field;
-            for (Object attribute : functionField.getAttributes()) {
-                Field attributeField  = getField(attribute);
-                fieldMap.put(attributeField.getFieldName(), attributeField);
-                fieldTargets.put(attributeField.getFieldName(), CollectionUtil.list(attributeField));
+    public MultiModelField getMultiModelField(Field modelField) {
+        return  modelField instanceof ForeignField ?
+            multiModel.getFields().get(modelField.getFieldName()) :
+            multiModel.getItems().get(manager.getModelClass().getName())
+                    .getFields().get(manager.getModelClass().getName() + "." + modelField.getFieldName());
+    }
+
+    public void addPath(List<String> path) {
+        List<String> currentPath = new ArrayList<String>();
+        MultiModelItem currentItem = this.multiModel.getItemList().get(0);
+        ReferenceField currentField;
+
+        for (String fieldName : path) {
+            currentField = (ReferenceField) currentItem.getModelClass().getManager().getField(fieldName);
+            ModelClassBase referenceClass = currentField.getReferenceClass();
+            currentPath.add(fieldName);
+            String referenceItemName = concat(currentPath, ".").toString();
+            if (!this.multiModel.getItems().containsKey(referenceItemName)) {
+                this.multiModel.ljoin(referenceClass, referenceItemName,
+                        String.format("%s.%s", referenceItemName, currentField.getReferenceModelKey().getFieldName()),
+                        String.format("%s.%s", currentItem.getName(), fieldName));
             }
-        } else if (field instanceof ForeignField) {
-            fieldMap.put(field.getFieldName(), field);
-            fieldTargets.put(field.getFieldName(), new ArrayList<Field>());
-            ForeignField foreignField = (ForeignField)field;
-            if (foreignField.getActualField() instanceof ReferenceField) {
-                ReferenceField actualField = (ReferenceField) foreignField.getActualField();
-                ModelClassBase fieldModelClass = manager.getModelClass().getDb().getModelClass(actualField.getReferenceModelName());
-                for (Field field1 : fieldModelClass.getManager().getPersistenceFields()) {
-                    String fullFieldName = String.format("%s.%s", foreignField.getFieldName(), field1.getFieldName());
-                    fieldMap.put(fullFieldName, manager.getField(fullFieldName));
-                    fieldTargets.get(field.getFieldName()).add(fieldMap.get(fullFieldName));
-                }
-            }
-        } else if (field instanceof ReferenceField) {
-            fieldMap.put(field.getFieldName(), field);
-            fieldTargets.put(field.getFieldName(), new ArrayList<Field>());
-            if (referenceAsObject) {
-                ReferenceField referenceField = (ReferenceField)field;
-                for (Field field1 : referenceField.getReferenceClass().getManager().getPersistenceFields()) {
-                    String fullFieldName = String.format("%s.%s", referenceField.getFieldName(), field1.getFieldName());
-                    fieldMap.put(fullFieldName, manager.getField(fullFieldName));
-                    fieldTargets.get(field.getFieldName()).add(fieldMap.get(fullFieldName));
-                }
-            }
-        } else {
-            fieldMap.put(field.getFieldName(), field);
-            fieldTargets.put(field.getFieldName(), CollectionUtil.list(field));
+            currentItem = this.multiModel.getItems().get(referenceItemName);
         }
     }
 
-    public ModelQuery field(Field field) {
-        this.fields.add(field);
-        this.addToFieldMap(field, true);
+    /* field methods */
+
+    public ModelQuery field(Object field) {
+        if (String.class.equals(field.getClass())) {
+            this.field((String) field);
+        } else  {
+            this.field((Field) field);
+        }
+
         return this;
     }
 
@@ -107,30 +100,44 @@ public class ModelQuery {
         return this.field(manager.getField(field));
     }
 
+    public ModelQuery field(Field field) {
+        this.targets.add(new FieldTarget(this, getMultiModelField(field)));
+        return this;
+    }
+
+    public ModelQuery field(ForeignField field) {
+        this.targets.add(new ForeignTarget(this, field));
+        return this;
+    }
+
+    public ModelQuery field(FunctionField field) {
+        this.targets.add(new FunctionTarget(this, field));
+        return this;
+    }
+
     public ModelQuery fields(Object ... fields) {
         for(Object field : fields) {
-            field(getField(field));
+            this.field(field);
         }
         return this;
     }
 
     public ModelQuery fields(List fields) {
         for(Object field : fields) {
-            field(getField(field));
+            this.field(field);
         }
 
         return this;
     }
 
+
+    /* filter methods */
+
     public ModelQuery filter(String query, Object ... params) throws DBException {
-        try{
-            StringExpression stringExpression = new StringExpression(query, params);
-            this.stringExpressions.add(stringExpression);
-            for (String field : stringExpression.findModelFields()) {
-                Field modelField = getField(field);
-                stringExpression.getModelFields().add(modelField);
-                this.addToFieldMap(modelField, false);
-            }
+        try {
+            StringFilter stringFilter = new StringFilter(query, params);
+            stringFilter.config(this);
+            this.stringFilters.add(stringFilter);
         } catch (Exception e) {
             throw new DBException(e);
         }
@@ -138,37 +145,52 @@ public class ModelQuery {
         return this;
     }
 
-    public ModelQuery filter(Map<String, Object> filter) {
-        return filter(parse(filter));
+    public ModelQuery filter(Map<String, Object> filter) throws DBException {
+        return filter(Filter.parse(filter));
     }
 
-    public ModelQuery filter(List<Expression> filter) {
-        this.filter.addAll(filter);
-        for (Expression expression : filter) {
-            Field modelField = getField(expression.getField());
-            filterFields.add(modelField);
-            this.addToFieldMap(modelField, false);
+    public ModelQuery filter(List<Filter> filters) throws DBException {
+        for (Filter filter : filters) {
+            filter.config(this);
+            this.filters.add(filter);
         }
 
         return this;
     }
 
-    public ModelQuery filter(Expression ... filter) {
+    public ModelQuery filter(Filter ... filter) throws DBException {
         return this.filter(Arrays.asList(filter));
     }
 
+
+    /* order methods */
+
     public ModelQuery order(Map<String, String> order) {
         if (order != null && order.size() > 0 && order.containsKey("field")) {
-            this.orderFieldName = order.get("field");
-            orderField = getField(orderFieldName);
-            this.addToFieldMap(orderField, false);
-            if (order.containsKey("orderType")) {
-                this.orderType = order.get("orderType");
-            }
+            OrderItem orderItem = new OrderItem(order);
+            orderItem.config(this);
+            orderList.add(orderItem);
         }
 
         return this;
     }
+
+    public ModelQuery order(String field) {
+        OrderItem orderItem = new OrderItem(field, null);
+        orderItem.config(this);
+        orderList.add(orderItem);
+        return this;
+    }
+
+    public ModelQuery order(Field field) {
+        OrderItem orderItem = new OrderItem(field.getFieldName(), null);
+        orderItem.config(this);
+        orderList.add(orderItem);
+        return this;
+    }
+
+
+    /* value methods */
 
     public ModelQuery values(Map<String, Object> values) throws DBException {
         if (values != null && values.size() > 0) {
@@ -181,12 +203,23 @@ public class ModelQuery {
     }
 
     public ModelQuery value(String name, Object value) throws DBException {
-        Field modelField = getField(name);
-        this.values.put(name, modelField.cast(value));
-        valueFields.add(modelField);
-        this.addToFieldMap(modelField, false);
+        MultiModelField multiModelField = getMultiModelField(manager.getField(name));
+        this.values.put(multiModelField.getName(), value);
         return this;
     }
+
+    /* page methods */
+
+    public ModelQuery page(Map<String, Object> page) {
+        if (page != null) {
+            this.page.put("start", page.containsKey("start") ? (Integer) page.get("start") : null);
+            this.page.put("end", page.containsKey("end") ? (Integer) page.get("end") : null);
+        }
+
+        return this;
+    }
+
+    /* exec query methods */
 
     public <T extends Object> T one() throws DBException {
         List values = list();
@@ -198,158 +231,72 @@ public class ModelQuery {
     }
 
     public <T extends Object> List<T> list() throws DBException {
-        return manager.getModelClass().select(this);
+        SQLQuery sqlQuery = toSQL();
+        List result = manager.getModelClass().getProvider().select(sqlQuery);
+        return processResult(result);
     }
 
     public void update() throws DBException {
-        manager.getModelClass().update(this);
+        manager.getModelClass().getProvider().update(toSQL());
     }
 
     public void remove() throws DBException {
-        manager.getModelClass().remove(this);
+        manager.getModelClass().getProvider().remove(toSQL());
     }
 
-    public ModelQuery page(Map<String, Object> page) {
-        if (page != null) {
-            this.page.put("start", page.containsKey("start") ? (Integer) page.get("start") : null);
-            this.page.put("end", page.containsKey("end") ? (Integer) page.get("end") : null);
-        }
+    protected List processResult(List values) throws DBException {
+        List result = new ArrayList();
+        List<Target> targets = this.targets.size() > 0 ? this.targets : CollectionUtil.list(defaultTarget);
 
-        return this;
-    }
-
-    protected Field getField(Object field) {
-        return field.getClass().equals(String.class) ? getField((String) field) : (Field) field;
-    }
-
-    protected  Field getField(String fieldName) {
-        return fieldMap.containsKey(fieldName) ? fieldMap.get(fieldName) : manager.getField(fieldName);
-    }
-
-    public List<Expression> parse(Map<String, Object> filter) {
-        List<Expression> expressionMap = new ArrayList<Expression>();
-
-        for (String key : filter.keySet()) {
-            String name = key.contains("__") ? key.split("__")[0] : key;
-            String operation = key.contains("__") ? key.split("__")[1] : "eq";
-            Object value = filter.get(key);
-            expressionMap.add(new ExpressionImpl(name, operation, value));
-        }
-
-        return expressionMap;
-    }
-
-    /* setters and getters */
-
-    public Map<String, Field> getFieldMap() {
-        return fieldMap;
-    }
-
-    public List<Field> getTargetFields() {
-        List<Field> result = new ArrayList<Field>();
-
-        for (Field field : getFields()) {
-            if (fieldTargets.containsKey(field.getFieldName()) &&
-                    fieldTargets.get(field.getFieldName()).size() > 0) {
-                result.addAll(fieldTargets.get(field.getFieldName()));
-            } else {
-                result.add(field);
+        for (Object value : values) {
+            Object[] items = value.getClass().isArray() ? (Object[]) value : new Object[]{value};
+            List resultItem = new ArrayList();
+            Iterator itemIterator =  Arrays.asList(items).iterator();
+            for (Target target : targets) {
+                resultItem.add(target.processResult(itemIterator));
             }
+            result.add(resultItem.size() == 1 ? resultItem.get(0) : resultItem);
         }
 
         return result;
     }
 
-    public List<Field> getTargets(String fieldName) {
-        return fieldTargets.get(fieldName);
+    public SQLQuery toSQL() {
+        SQLQuery query = new SQLQuery(multiModel.getTable());
+
+        if (targets.size() > 0) {
+            for (Target target : targets) {
+                target.setSQL(query);
+            }
+        } else {
+            defaultTarget.setSQL(query);
+        }
+        for (Filter filter : filters) {
+            filter.setSQL(query);
+        }
+        for (StringFilter stringFilter : stringFilters) {
+            stringFilter.setSQL(query);
+        }
+        for (OrderItem orderItem : orderList) {
+            orderItem.setSQL(query);
+        }
+        for (String fieldName : values.keySet()) {
+            Field field = manager.getField(fieldName);
+            query.addValue(field.getColumnName(), values.get(fieldName));
+        }
+        query.setStart(page.get("start"));
+        query.setEnd(page.get("end"));
+
+        return query;
     }
 
-    public List<Field> getFields() {
-        return fields.size() == 0 ? CollectionUtil.list(manager.getSelf()) : fields;
-    }
-
-    public List<Field> getFilterFields() {
-        return filterFields;
-    }
-
-    public List<Expression> getFilter() {
-        return filter;
-    }
-
-    public Field getOrderField() {
-        return orderField;
-    }
-
-    public String getOrderType() {
-        return orderType;
-    }
-
-    public Map<String, Integer> getPage() {
-        return page;
-    }
-
-    public List<StringExpression> getStringExpressions() {
-        return stringExpressions;
-    }
+    /* getters and setters */
 
     public ModelManager getManager() {
         return manager;
     }
 
-    public Map<String, Object> getValues() {
-        return values;
-    }
-
-    /* private class */
-
-    public class StringExpression {
-        private String query;
-        private List params = new ArrayList();
-        private SqlTranslator translator;
-        private List<Field> modelFields = new ArrayList<Field>();
-
-        public StringExpression(String query, Object[] params) throws TokenStreamException, RecognitionException, UnsupportedEncodingException {
-            this.query = query;
-            Collections.addAll(this.params, params);
-            translator = SqlTranslator.parse(query);
-        }
-
-        public List<Field> getModelFields() {
-            return modelFields;
-        }
-
-        public void setModelFields(List<Field> modelFields) {
-            this.modelFields = modelFields;
-        }
-
-        public String getQuery() {
-            return query;
-        }
-
-        public List getParams() {
-            return params;
-        }
-
-        public SqlTranslator getTranslator() {
-            return translator;
-        }
-
-        public void setSQLFields(List<String> sqlFields) {
-            for (int i=0; i < sqlFields.size(); i++) {
-                translator.getColumns().get(i).setText(sqlFields.get(i));
-            }
-        }
-
-        public List<String> findModelFields() {
-            List<String> fields = new ArrayList<String>();
-
-            for(SqlTranslator.Column column : translator.getColumns()) {
-                fields.add(column.getText());
-            }
-
-            return fields;
-        }
-
-
+    public MultiModel getMultiModel() {
+        return multiModel;
     }
 }

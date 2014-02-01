@@ -121,6 +121,8 @@ public class Model {
         return result;
     }
 
+    /*  data methods */
+
     public Map<String, Object> getData() throws DBException {
         return data;
     }
@@ -133,7 +135,7 @@ public class Model {
         oldData.clear();
         for (Field field : cls.getManager().getPersistenceFields()){
             Object value = values.containsKey(field.getFieldName()) ?
-                    field.cast(values.get(field.getFieldName())) : field.getDefaultValue();
+                    values.get(field.getFieldName()) : field.getDefaultValue();
             data.put(field.getFieldName(), value);
         }
     }
