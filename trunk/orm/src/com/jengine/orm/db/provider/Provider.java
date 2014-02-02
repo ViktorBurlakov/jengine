@@ -289,7 +289,11 @@ public class Provider {
                 targets.add((String) target[0]);
             }
         }
-        queryString.append(" SELECT ").append(concat(targets, ", ")).append(" ");
+        queryString.append("SELECT ");
+        if(query.getDistinct()) {
+            queryString.append("DISTINCT ");
+        }
+        queryString.append(concat(targets, ", ")).append(" ");
 
         // from clause
         queryString.append(" FROM ").append(TableClause.build(query));
