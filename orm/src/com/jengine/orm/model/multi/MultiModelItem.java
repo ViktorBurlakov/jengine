@@ -3,7 +3,7 @@ package com.jengine.orm.model.multi;
 
 import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.db.query.SQLQuery;
-import com.jengine.orm.field.Field;
+import com.jengine.orm.model.field.Field;
 
 import java.util.LinkedHashMap;
 import java.util.List;

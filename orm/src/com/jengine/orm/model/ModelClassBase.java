@@ -4,11 +4,11 @@ import com.jengine.orm.DB;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.provider.Provider;
 import com.jengine.orm.exception.ValidateException;
-import com.jengine.orm.field.Field;
-import com.jengine.orm.field.FunctionField;
-import com.jengine.orm.field.reference.ManyReferenceField;
-import com.jengine.orm.query.ModelQuery;
-import com.jengine.orm.query.filter.Filter;
+import com.jengine.orm.model.field.Field;
+import com.jengine.orm.model.field.FunctionField;
+import com.jengine.orm.model.field.reference.ManyReferenceField;
+import com.jengine.orm.model.query.ModelQuery;
+import com.jengine.orm.model.query.filter.Filter;
 
 import java.io.Serializable;
 import java.util.Arrays;

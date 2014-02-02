@@ -2,8 +2,8 @@ package com.jengine.orm.model;
 
 
 import com.jengine.orm.DBFactory;
-import com.jengine.orm.field.Field;
-import com.jengine.orm.field.reference.SelfField;
+import com.jengine.orm.model.field.Field;
+import com.jengine.orm.model.field.reference.SelfField;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

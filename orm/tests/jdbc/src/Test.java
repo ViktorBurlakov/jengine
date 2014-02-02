@@ -11,7 +11,7 @@ import com.jengine.orm.db.cache.ehcache.EhcacheManager;
 import com.jengine.orm.db.provider.Provider;
 import com.jengine.orm.db.provider.mysql.MySQLProvider;
 import com.jengine.orm.exception.ValidateException;
-import com.jengine.orm.field.FunctionField;
+import com.jengine.orm.model.field.FunctionField;
 import models.*;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;

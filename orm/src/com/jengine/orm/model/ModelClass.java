@@ -1,8 +1,8 @@
 package com.jengine.orm.model;
 
 import com.jengine.orm.DBFactory;
-import com.jengine.orm.field.*;
-import com.jengine.orm.field.reference.SelfField;
+import com.jengine.orm.model.field.*;
+import com.jengine.orm.model.field.reference.SelfField;
 import com.jengine.utils.ClassUtils;
 
 import java.lang.reflect.Method;

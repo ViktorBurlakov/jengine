@@ -21,7 +21,7 @@ package com.jengine.orm.model;
 
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.exception.ValidateException;
-import com.jengine.orm.field.Field;
+import com.jengine.orm.model.field.Field;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
