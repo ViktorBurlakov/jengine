@@ -1,8 +1,8 @@
 package com.jengine.orm.field.reference;
 
 
-import com.jengine.orm.Model;
-import com.jengine.orm.ModelClassBase;
+import com.jengine.orm.model.Model;
+import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.db.DBConnection;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.DBSavePoint;

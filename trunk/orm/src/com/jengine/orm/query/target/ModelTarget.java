@@ -1,11 +1,11 @@
 package com.jengine.orm.query.target;
 
-import com.jengine.orm.Model;
+import com.jengine.orm.model.Model;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.field.Field;
-import com.jengine.orm.multi.MultiModelField;
-import com.jengine.orm.multi.MultiModelItem;
+import com.jengine.orm.model.multi.MultiModelField;
+import com.jengine.orm.model.multi.MultiModelItem;
 import com.jengine.orm.query.ModelQuery;
 
 import java.util.Iterator;

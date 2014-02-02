@@ -4,7 +4,7 @@ package com.jengine.orm.query;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.field.Field;
 import com.jengine.orm.field.ForeignField;
-import com.jengine.orm.multi.MultiModelField;
+import com.jengine.orm.model.multi.MultiModelField;
 import com.jengine.utils.CollectionUtil;
 
 import java.util.Map;

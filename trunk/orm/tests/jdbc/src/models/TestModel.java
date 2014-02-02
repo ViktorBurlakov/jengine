@@ -20,7 +20,7 @@
 package models;
 
 
-import com.jengine.orm.Model;
+import com.jengine.orm.model.Model;
 import com.jengine.orm.db.DBException;
 
 public class TestModel extends Model {

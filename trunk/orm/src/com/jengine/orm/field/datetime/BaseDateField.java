@@ -1,6 +1,6 @@
 package com.jengine.orm.field.datetime;
 
-import com.jengine.orm.Model;
+import com.jengine.orm.model.Model;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.Field;
 

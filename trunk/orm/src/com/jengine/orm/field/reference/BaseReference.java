@@ -1,8 +1,8 @@
 package com.jengine.orm.field.reference;
 
 
-import com.jengine.orm.ModelClassBase;
-import com.jengine.orm.ModelManager;
+import com.jengine.orm.model.ModelClassBase;
+import com.jengine.orm.model.ModelManager;
 import com.jengine.orm.field.Field;
 
 import java.util.HashMap;

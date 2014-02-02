@@ -1,7 +1,7 @@
 package com.jengine.orm.field.reference;
 
-import com.jengine.orm.Model;
-import com.jengine.orm.ModelClassBase;
+import com.jengine.orm.model.Model;
+import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.db.DBException;
 
 import static com.jengine.utils.CollectionUtil.map;

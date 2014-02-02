@@ -20,17 +20,17 @@
 package com.jengine.orm.query;
 
 
-import com.jengine.orm.ModelClassBase;
-import com.jengine.orm.ModelManager;
+import com.jengine.orm.model.ModelClassBase;
+import com.jengine.orm.model.ModelManager;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.field.Field;
 import com.jengine.orm.field.ForeignField;
 import com.jengine.orm.field.FunctionField;
 import com.jengine.orm.field.reference.ReferenceField;
-import com.jengine.orm.multi.MultiModel;
-import com.jengine.orm.multi.MultiModelField;
-import com.jengine.orm.multi.MultiModelItem;
+import com.jengine.orm.model.multi.MultiModel;
+import com.jengine.orm.model.multi.MultiModelField;
+import com.jengine.orm.model.multi.MultiModelItem;
 import com.jengine.orm.query.filter.Filter;
 import com.jengine.orm.query.filter.StringFilter;
 import com.jengine.orm.query.target.*;
