@@ -1,7 +1,7 @@
 package com.jengine.orm.model.multi;
 
 
-import com.jengine.orm.field.Field;
+import com.jengine.orm.model.field.Field;
 
 public class MultiModelField {
     private String name;

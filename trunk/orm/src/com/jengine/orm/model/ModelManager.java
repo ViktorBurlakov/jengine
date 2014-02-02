@@ -21,8 +21,8 @@ package com.jengine.orm.model;
 
 
 import com.jengine.orm.db.DBException;
-import com.jengine.orm.field.*;
-import com.jengine.orm.field.reference.*;
+import com.jengine.orm.model.field.*;
+import com.jengine.orm.model.field.reference.*;
 
 import java.sql.Types;
 import java.util.*;

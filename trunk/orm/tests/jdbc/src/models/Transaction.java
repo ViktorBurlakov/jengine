@@ -22,9 +22,9 @@ package models;
 
 import com.jengine.orm.model.ModelClass;
 import com.jengine.orm.db.DBException;
-import com.jengine.orm.field.datetime.DateField;
-import com.jengine.orm.field.Field;
-import com.jengine.orm.field.reference.ReferenceField;
+import com.jengine.orm.model.field.datetime.DateField;
+import com.jengine.orm.model.field.Field;
+import com.jengine.orm.model.field.reference.ReferenceField;
 
 import java.util.Date;
 

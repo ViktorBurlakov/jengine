@@ -40,10 +40,10 @@ package models;
 
 
 import com.jengine.orm.model.ModelClass;
-import com.jengine.orm.query.ModelQuery;
+import com.jengine.orm.model.query.ModelQuery;
 import com.jengine.orm.db.DBException;
-import com.jengine.orm.field.Field;
-import com.jengine.orm.field.StringField;
+import com.jengine.orm.model.field.Field;
+import com.jengine.orm.model.field.StringField;
 
 import java.util.List;
 

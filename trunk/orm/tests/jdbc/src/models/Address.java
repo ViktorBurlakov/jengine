@@ -2,9 +2,9 @@ package models;
 
 import com.jengine.orm.model.ModelClass;
 import com.jengine.orm.db.DBException;
-import com.jengine.orm.field.Field;
-import com.jengine.orm.field.StringField;
-import com.jengine.orm.field.reference.SingleReferenceField;
+import com.jengine.orm.model.field.Field;
+import com.jengine.orm.model.field.StringField;
+import com.jengine.orm.model.field.reference.SingleReferenceField;
 
 import static com.jengine.utils.CollectionUtil.map;
 
