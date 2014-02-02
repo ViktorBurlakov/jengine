@@ -41,6 +41,7 @@ public class SQLQuery {
     private Map<String, Object> values = new LinkedHashMap<String, Object>();
     private Integer start;
     private Integer end;
+    private Boolean distinct;
 
     public SQLQuery(Table table) {
         this.table = table;
@@ -62,6 +63,14 @@ public class SQLQuery {
     }
 
     /* setter an getters */
+
+    public Boolean getDistinct() {
+        return distinct;
+    }
+
+    public void setDistinct(Boolean distinct) {
+        this.distinct = distinct;
+    }
 
     public Table getTable() {
         return table;

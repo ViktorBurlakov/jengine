@@ -291,6 +291,8 @@ public class Test {
 
         //with fields
         check( Transaction.cls.select("member.library").<Library>list().get(0).getId() != null );
+        // distinct test
+        check( Transaction.cls.select("member.library").distinct().<Library>list().size() == 1 );
     }
 
     /**

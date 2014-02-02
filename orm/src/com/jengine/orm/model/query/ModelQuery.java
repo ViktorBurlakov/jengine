@@ -51,6 +51,7 @@ public class ModelQuery {
     private Map<String, Integer> page = map("start", null, "end", null);
     private Map<String, Object> values = new LinkedHashMap<String, Object>();
     private ModelManager manager = null;
+    private Boolean distinct = false;
 
     public ModelQuery(ModelManager manager) {
         this.manager = manager;
@@ -85,6 +86,29 @@ public class ModelQuery {
     }
 
     /* field methods */
+
+    public ModelQuery distinct() {
+        this.distinct = true;
+        return this;
+    }
+
+    public ModelQuery distinct(Object ... fields) {
+        this.distinct = true;
+        this.fields(fields);
+        return this;
+    }
+
+    public ModelQuery distinct(List fields) {
+        this.distinct = true;
+        this.fields(fields);
+        return this;
+    }
+
+    public ModelQuery distinct(Object field) {
+        this.distinct = true;
+        this.field(field);
+        return this;
+    }
 
     public ModelQuery field(Object field) {
         if (String.class.equals(field.getClass())) {
@@ -278,6 +302,7 @@ public class ModelQuery {
         } else {
             defaultTarget.setSQL(query);
         }
+        query.setDistinct(distinct);
         for (Filter filter : filters) {
             filter.setSQL(query);
         }
