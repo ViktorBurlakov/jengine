@@ -1,6 +1,7 @@
-package com.jengine.orm;
+package com.jengine.orm.model;
 
 
+import com.jengine.orm.DBFactory;
 import com.jengine.orm.field.Field;
 import com.jengine.orm.field.reference.SelfField;
 

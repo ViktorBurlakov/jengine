@@ -5,6 +5,7 @@ import com.jengine.orm.db.DBConnection;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.cache.CacheManager;
 import com.jengine.orm.db.provider.Provider;
+import com.jengine.orm.model.ModelClassBase;
 
 import java.util.concurrent.ConcurrentHashMap;
 

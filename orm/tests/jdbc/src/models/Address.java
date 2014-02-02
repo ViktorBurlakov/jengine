@@ -1,6 +1,6 @@
 package models;
 
-import com.jengine.orm.ModelClass;
+import com.jengine.orm.model.ModelClass;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.Field;
 import com.jengine.orm.field.StringField;

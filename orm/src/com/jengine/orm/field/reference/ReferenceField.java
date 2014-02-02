@@ -20,7 +20,7 @@
 package com.jengine.orm.field.reference;
 
 
-import com.jengine.orm.Model;
+import com.jengine.orm.model.Model;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.field.Field;
 import com.jengine.utils.Variant;

@@ -1,7 +1,7 @@
-package com.jengine.orm.multi;
+package com.jengine.orm.model.multi;
 
 
-import com.jengine.orm.ModelClassBase;
+import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.db.query.SQLQuery;
 
 import java.util.LinkedHashMap;

@@ -1,4 +1,4 @@
-package com.jengine.orm.multi;
+package com.jengine.orm.model.multi;
 
 
 import com.jengine.orm.field.Field;

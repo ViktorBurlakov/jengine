@@ -20,8 +20,8 @@
 package com.jengine.orm.field;
 
 
-import com.jengine.orm.Model;
-import com.jengine.orm.ModelManager;
+import com.jengine.orm.model.Model;
+import com.jengine.orm.model.ModelManager;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.exception.ValidateException;
 import com.jengine.orm.query.filter.Filter;

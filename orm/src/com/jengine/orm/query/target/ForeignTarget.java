@@ -4,7 +4,7 @@ import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.field.ForeignField;
 import com.jengine.orm.field.reference.ReferenceField;
-import com.jengine.orm.multi.MultiModelItem;
+import com.jengine.orm.model.multi.MultiModelItem;
 import com.jengine.orm.query.ModelQuery;
 
 import java.util.Iterator;

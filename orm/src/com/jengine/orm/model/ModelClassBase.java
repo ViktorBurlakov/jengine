@@ -1,5 +1,6 @@
-package com.jengine.orm;
+package com.jengine.orm.model;
 
+import com.jengine.orm.DB;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.provider.Provider;
 import com.jengine.orm.exception.ValidateException;

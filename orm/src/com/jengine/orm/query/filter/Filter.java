@@ -6,7 +6,7 @@ import com.jengine.orm.db.filter.SQLFilter;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.field.Field;
 import com.jengine.orm.field.ForeignField;
-import com.jengine.orm.multi.MultiModelField;
+import com.jengine.orm.model.multi.MultiModelField;
 import com.jengine.orm.query.ModelQuery;
 
 import java.util.ArrayList;
