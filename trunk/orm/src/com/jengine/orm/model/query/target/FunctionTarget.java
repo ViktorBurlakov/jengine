@@ -20,7 +20,11 @@ public class FunctionTarget extends Target {
     private LinkedHashMap<String, MultiModelField> sqlAttributes = new LinkedHashMap<String, MultiModelField>();
 
     public FunctionTarget(ModelQuery modelQuery, FunctionField field) {
-        super(modelQuery);
+        this(modelQuery, field.getFieldName(), field);
+    }
+
+    public FunctionTarget(ModelQuery modelQuery, String name, FunctionField field) {
+        super(modelQuery, name);
         this.field = field;
         for (Object attribute : field.getAttributes()) {
             Field attributeField  =  attribute.getClass().equals(String.class) ?
@@ -32,6 +36,10 @@ public class FunctionTarget extends Target {
             attributeFields.put(multiModelField.getName(), multiModelField);
             sqlAttributes.put(multiModelField.getSQLName(), multiModelField);
         }
+    }
+
+    public String getSQLName() {
+        return field.getFieldName();
     }
 
     public void setSQL(SQLQuery query) {

@@ -11,13 +11,22 @@ public class FieldTarget extends Target {
     protected MultiModelField multiModelField;
 
 
-    public FieldTarget(ModelQuery modelQuery) {
-        super(modelQuery);
+    public FieldTarget(ModelQuery modelQuery, String name) {
+        super(modelQuery, name);
     }
 
     public FieldTarget(ModelQuery modelQuery, MultiModelField multiModelField) {
-        super(modelQuery);
+        super(modelQuery, multiModelField.getName());
         this.multiModelField = multiModelField;
+    }
+
+    public FieldTarget(ModelQuery modelQuery, String name, MultiModelField multiModelField) {
+        super(modelQuery, name);
+        this.multiModelField = multiModelField;
+    }
+
+    public String getSQLName() {
+        return multiModelField.getSQLName();
     }
 
     public void setSQL(SQLQuery query) {

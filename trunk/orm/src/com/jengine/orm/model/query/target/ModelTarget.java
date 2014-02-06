@@ -15,13 +15,21 @@ import java.util.LinkedHashMap;
 public class ModelTarget extends Target {
     protected MultiModelItem item;
 
-    public ModelTarget(ModelQuery modelQuery) {
-        super(modelQuery);
+    public ModelTarget(ModelQuery modelQuery, String name) {
+        super(modelQuery, name);
     }
 
     public ModelTarget(ModelQuery modelQuery, MultiModelItem item) {
-        super(modelQuery);
+        this(modelQuery, item.getName(), item);
+    }
+
+    public ModelTarget(ModelQuery modelQuery, String name, MultiModelItem item) {
+        super(modelQuery, name);
         this.item = item;
+    }
+
+    public String getSQLName() {
+        return item.getName();
     }
 
     public Object processResult(Iterator itr) throws DBException {

@@ -9,7 +9,11 @@ import static com.jengine.utils.CollectionUtil.list;
 public class ReferenceTarget extends ModelTarget {
 
     public ReferenceTarget(ModelQuery modelQuery, BaseReference field) {
-        super(modelQuery);
+        this(modelQuery, field.getFieldName(), field);
+    }
+
+    public ReferenceTarget(ModelQuery modelQuery, String name, BaseReference field) {
+        super(modelQuery, name);
         modelQuery.addPath(list(field.getFieldName()));
         this.item = modelQuery.getMultiModel().getItems().get(field.getFieldName());
     }

@@ -40,9 +40,10 @@ import java.util.*;
 
 import static com.jengine.utils.CollectionUtil.concat;
 import static com.jengine.utils.CollectionUtil.map;
+import static com.jengine.utils.CollectionUtil.toList;
 
 public class ModelQuery {
-    private List<Target> targets = new ArrayList<Target>();
+    private LinkedHashMap<String, Target> targets = new LinkedHashMap<String, Target>();
     private Target defaultTarget;
     private MultiModel multiModel;
     private List<Filter> filters = new ArrayList<Filter>();
@@ -50,6 +51,7 @@ public class ModelQuery {
     private List<OrderItem> orderList = new ArrayList<OrderItem>();
     private Map<String, Integer> page = map("start", null, "end", null);
     private Map<String, Object> values = new LinkedHashMap<String, Object>();
+    private LinkedHashMap<String, Target> group = new LinkedHashMap<String, Target>();
     private ModelManager manager = null;
     private Boolean distinct = false;
 
@@ -130,19 +132,22 @@ public class ModelQuery {
         } else if (field instanceof FunctionField) {
             field((FunctionField) field);
         } else {
-            this.targets.add(new FieldTarget(this, getMultiModelField(field)));
+            Target target = new FieldTarget(this, field.getFieldName(), getMultiModelField(field));
+            this.targets.put(target.getName(), target);
         }
 
         return this;
     }
 
     public ModelQuery field(ForeignField field) {
-        this.targets.add(new ForeignTarget(this, field));
+        Target target = new ForeignTarget(this, field);
+        this.targets.put(target.getName(), target);
         return this;
     }
 
     public ModelQuery field(FunctionField field) {
-        this.targets.add(new FunctionTarget(this, field));
+       Target target = new FunctionTarget(this, field);
+        this.targets.put(target.getName(), target);
         return this;
     }
 
@@ -221,6 +226,13 @@ public class ModelQuery {
     }
 
 
+    /* group by methods */
+
+    public ModelQuery group(String targetName) {
+        group.put(targetName, targets.get(targetName));
+        return this;
+    }
+
     /* value methods */
 
     public ModelQuery values(Map<String, Object> values) throws DBException {
@@ -244,11 +256,12 @@ public class ModelQuery {
     public ModelQuery page(Map<String, Object> page) {
         if (page != null) {
             this.page.put("start", page.containsKey("start") ? (Integer) page.get("start") : null);
-            this.page.put("end", page.containsKey("end") ? (Integer) page.get("end") : null);
+        this.page.put("end", page.containsKey("end") ? (Integer) page.get("end") : null);
         }
 
-        return this;
-    }
+    return this;
+}
+
 
     /* exec query methods */
 
@@ -277,7 +290,7 @@ public class ModelQuery {
 
     protected List processResult(List values) throws DBException {
         List result = new ArrayList();
-        List<Target> targets = this.targets.size() > 0 ? this.targets : CollectionUtil.list(defaultTarget);
+        List<Target> targets = this.targets.size() > 0 ? toList(this.targets.values()) : CollectionUtil.list(defaultTarget);
 
         for (Object value : values) {
             Object[] items = value.getClass().isArray() ? (Object[]) value : new Object[]{value};
@@ -296,7 +309,7 @@ public class ModelQuery {
         SQLQuery query = new SQLQuery(multiModel.getTable());
 
         if (targets.size() > 0) {
-            for (Target target : targets) {
+            for (Target target : targets.values()) {
                 target.setSQL(query);
             }
         } else {
@@ -308,6 +321,9 @@ public class ModelQuery {
         }
         for (StringFilter stringFilter : stringFilters) {
             stringFilter.setSQL(query);
+        }
+        for (Target target : group.values()) {
+            query.group(target.getSQLName());
         }
         for (OrderItem orderItem : orderList) {
             orderItem.setSQL(query);
