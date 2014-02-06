@@ -36,6 +36,7 @@ public class SQLQuery {
     private List<SQLStringFilter> stringFilters = new ArrayList<SQLStringFilter>();
     private List params = new ArrayList();
     private List<Object[]> targets = new ArrayList<Object[]>();
+    private List<String> group = new ArrayList<String>();
     private LinkedHashMap<String, Integer> targetTypes = new LinkedHashMap<String, Integer>();
     private Map<String, String> order = new HashMap<String, String>();
     private Map<String, Object> values = new LinkedHashMap<String, Object>();
@@ -60,6 +61,10 @@ public class SQLQuery {
 
     public void addParam(Object param) {
         this.params.add(param);
+    }
+
+    public void group(String field) {
+        this.group.add(field);
     }
 
     /* setter an getters */
@@ -177,6 +182,13 @@ public class SQLQuery {
         this.targetTypes = targetTypes;
     }
 
+    public List<String> getGroup() {
+        return group;
+    }
+
+    public void setGroup(List<String> group) {
+        this.group = group;
+    }
 
     /* nested classes  */
 

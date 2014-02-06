@@ -338,12 +338,13 @@ public class Test {
         clearData();
         loadData();
 
-        check(Author.cls.<Long>max(Author.id) == 3l);
-        check(Author.cls.<Long>sum(Author.id) == 6l);
-        check(Author.cls.<Long>min(Author.id) == 1l);
-        check(Book.cls.count() == 3l);
+        check( Author.cls.<Long>max(Author.id) == 3l );
+        check( Author.cls.<Long>sum(Author.id) == 6l );
+        check( Author.cls.<Long>min(Author.id) == 1l );
+        check( Book.cls.count() == 3l );
         FunctionField function1 = Book.cls.getManager().newCalcField("function1", Long.class, "%s + 1", Book.id);
-        check(Book.cls.select(function1).filter("id = ?", 1l).<Long>one() == 2l);
+        check( Book.cls.select(function1).filter("id = ?", 1l).<Long>one() == 2l );
+        Book.cls.select("id", Book.cls.getManager().newMaxField("id")).filter("id = ?", 1l).group("id").one();
         check( Book.cls.<Long>calc("sum", Long.class, "max(%s) + 2", Book.id) == 5l );
     }
 

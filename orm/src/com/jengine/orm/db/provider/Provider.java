@@ -296,16 +296,20 @@ public class Provider {
         queryString.append(concat(targets, ", ")).append(" ");
 
         // from clause
-        queryString.append(" FROM ").append(TableClause.build(query));
+        queryString.append("FROM ").append(TableClause.build(query)).append(" ");
 
         // where clause
         if (!query.isEmptyFilter()) {
-            queryString.append(" WHERE ").append(WhereClause.build(this, query));
+            queryString.append("WHERE ").append(WhereClause.build(this, query)).append(" ");
         }
 
+        // group clause
+        if (query.getGroup().size() > 0) {
+            queryString.append("GROUP BY ").append(concat(query.getGroup(), ", ")).append(" ");
+        }
         // order clause
         if(!query.getOrder().isEmpty()) {
-            queryString.append(" ORDER BY ").append(query.getOrder().get("orderByCol"));
+            queryString.append("ORDER BY ").append(query.getOrder().get("orderByCol"));
             if (query.getOrder().containsKey("orderByType")) {
                 queryString.append(" ").append(query.getOrder().get("orderByType"));
             }
