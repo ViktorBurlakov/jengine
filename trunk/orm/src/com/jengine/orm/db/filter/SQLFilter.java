@@ -27,14 +27,13 @@ import java.util.Map;
 import static com.jengine.utils.CollectionUtil.list;
 
 public class SQLFilter {
-
-    public static Map<String, Operation> operationMap = new HashMap<String, Operation>();
+    public static Map<String, Operation> OPERATIONS = new HashMap<String, Operation>();
     static {
         List<Class> operations = list(EQ.class, GE.class, GT.class, LE.class, LT.class, Like.class, NE.class, ISNULL.class, ISEMPTY.class);
         for (Class operationClass : operations) {
             try {
                 Operation operation = (Operation) operationClass.newInstance();
-                operationMap.put(operation.getName(), operation);
+                OPERATIONS.put(operation.getName(), operation);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -47,7 +46,7 @@ public class SQLFilter {
 
     public SQLFilter(String field, String operation, Object value) {
         this.field = field;
-        this.operation = operationMap.get(operation);
+        this.operation = OPERATIONS.containsKey(operation) ? OPERATIONS.get(operation) : new Operation(operation);
         this.value = value;
     }
 
@@ -91,7 +90,7 @@ public class SQLFilter {
 
     /* Operation classes */
 
-    public static abstract class Operation {
+    public static class Operation {
         private String name;
 
         public Operation(String name) {

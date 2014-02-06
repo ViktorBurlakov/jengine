@@ -3,6 +3,7 @@ package com.jengine.orm.db.filter;
 
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
+import com.jengine.orm.db.query.parser.SqlParser;
 import com.jengine.orm.db.query.parser.SqlTranslator;
 
 import java.io.UnsupportedEncodingException;
@@ -23,7 +24,10 @@ public class SQLStringFilter {
     public SQLStringFilter(String query, List params) throws TokenStreamException, RecognitionException, UnsupportedEncodingException {
         this.query = query;
         this.params = params;
-        this.translator = SqlTranslator.parse(query);
+        SqlParser parser = SqlTranslator.getParser(query);
+        parser.where_condition();
+        this.translator = new SqlTranslator(query);
+        this.translator.visit(parser.getAST());
     }
 
     public void setColumnSQLName(int index, String sqlName) {

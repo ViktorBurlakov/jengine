@@ -45,24 +45,22 @@ public class SqlTranslator implements ASTVisitor {
 
     public static void main(String[] args) {
         try {
-            SqlTranslator.parse("(a.b.c = 1 AND c.s.c = ? ) OR (ab.c in (1,23,3))");
+            String input = "(a.b.c = 1 AND c.s.c = ? ) OR (ab.c in (1,23,3))";
+            SqlParser parser = getParser(input);
+            parser.where_condition();
+            SqlTranslator sqlTranslator = new SqlTranslator(input);
+            sqlTranslator.visit(parser.getAST());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static SqlTranslator parse(String input) throws UnsupportedEncodingException, TokenStreamException, RecognitionException {
+    public static SqlParser getParser(String input) throws UnsupportedEncodingException, TokenStreamException, RecognitionException {
         InputStream in = new ByteArrayInputStream(input.getBytes("UTF-8"));
         SqlLexer lexer = new SqlLexer(new DataInputStream(in));
         SqlParser parser = new SqlParser(lexer);
         parser.setASTNodeClass("com.jengine.orm.db.query.parser.SQLCommonAST");
-        parser.where_condition();
-
-        SqlTranslator visitor = new SqlTranslator(input);
-        visitor.visit(parser.getAST());
-//        System.out.println("!!!!" + visitor.getResult());
-
-        return visitor;
+        return parser;
     }
 
     public void visit(AST node) {
