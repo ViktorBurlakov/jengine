@@ -27,6 +27,7 @@ import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.ForeignField;
 import com.jengine.orm.model.field.FunctionField;
+import com.jengine.orm.model.field.aggregation.Count;
 import com.jengine.orm.model.field.reference.ReferenceField;
 import com.jengine.orm.model.multi.MultiModel;
 import com.jengine.orm.model.multi.MultiModelField;
@@ -271,7 +272,7 @@ public class ModelQuery {
     }
 
     public long count() throws DBException {
-        return this.field(manager.newCountAllField()).<Long>one();
+        return this.field(new Count(this.manager.getModelClass())).<Long>one();
     }
 
     public <T extends Object> List<T> list() throws DBException {
