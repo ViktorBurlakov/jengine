@@ -20,11 +20,11 @@
 package com.jengine.orm.model;
 
 
-import com.jengine.orm.db.DBException;
-import com.jengine.orm.model.field.*;
+import com.jengine.orm.model.field.Field;
+import com.jengine.orm.model.field.ForeignField;
+import com.jengine.orm.model.field.PrimaryKey;
 import com.jengine.orm.model.field.reference.*;
 
-import java.sql.Types;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -44,18 +44,6 @@ public class ModelManager {
     private ModelClassBase modelClass;
 
     public ModelManager() {
-    }
-
-    public void addProperties(List<ModelProperty> properties) {
-        for (ModelProperty property: properties) {
-            addField(property);
-        }
-    }
-
-    public void addFields(List<Field> fields) {
-        for (Field field: fields) {
-            addField(field);
-        }
     }
 
     public Field addField(String name, Field field) {
@@ -164,75 +152,6 @@ public class ModelManager {
         deferredFields.get(modelName).put(fieldName, field);
     }
 
-    /* aggregation function fields */
-
-    public FunctionField newCalcField(String name, Class type, String expr, Field ... fields) {
-        FunctionField functionField = new FunctionField(type, map(), expr, (Field[]) fields);
-        functionField.config(name, this);
-        return functionField;
-    }
-
-    public FunctionField newCountField(String field) {
-        return newCountField(getField(field));
-    }
-
-    public FunctionField newCountAllField() {
-        FunctionField field = new FunctionField(Long.class, "count(*)");
-        field.config("_count_", this);
-        return field;
-    }
-
-    public FunctionField newCountField(Field modelField) {
-        String name = String.format("count_%s", modelField.getFieldName().replaceAll("\\.", "__"));
-        FunctionField field = new FunctionField(modelField.getFieldClass(), map("columnType", Types.DECIMAL), "count(%s)", modelField);
-        field.config(name, this);
-        return field;
-    }
-
-    public FunctionField newMaxField(String field) {
-        return newMaxField(getField(field));
-    }
-
-    public FunctionField newMaxField(Field modelField) {
-        String name = String.format("max_%s", modelField.getFieldName().replaceAll("\\.", "__"));
-        FunctionField field = new FunctionField(modelField.getFieldClass(), map("columnType", modelField.getColumnType()), "max(%s)", modelField);
-        field.config(name, this);
-        return field;
-    }
-
-    public FunctionField newMinField(String field) throws DBException {
-        return newMinField(getField(field));
-    }
-
-    public FunctionField newMinField(Field modelField) {
-        String name = String.format("min_%s", modelField.getFieldName().replaceAll("\\.", "__"));
-        FunctionField field = new FunctionField(modelField.getFieldClass(), map("columnType", modelField.getColumnType()), "min(%s)", modelField);
-        field.config(name, this);
-        return field;
-    }
-
-    public FunctionField newAvgField(String field) {
-        return newAvgField(getField(field));
-    }
-
-    public FunctionField newAvgField(Field modelField) {
-        String name = String.format("avg_%s", modelField.getFieldName().replaceAll("\\.", "__"));
-        FunctionField field = new FunctionField(modelField.getFieldClass(), map("columnType", Types.DOUBLE), "avg(%s)", modelField);
-        field.config(name, this);
-        return field;
-    }
-
-    public FunctionField newSumField(String field) {
-        return newSumField(getField(field));
-    }
-
-    public FunctionField newSumField(Field modelField) {
-        String name = String.format("sum_%s", modelField.getFieldName().replaceAll("\\.", "__"));
-        FunctionField field = new FunctionField(modelField.getFieldClass(), map("columnType", modelField.getColumnType()), "sum(%s)", modelField);
-        field.config(name, this);
-        return field;
-    }
-
     public Field getField(String fieldName) {
         if (fieldName.contains(".")) {
             List<String> parts = Arrays.asList(fieldName.split("\\."));
@@ -287,14 +206,6 @@ public class ModelManager {
             }
         }
         return null;
-    }
-
-    public List<String> getFieldNames() {
-        List<String> result = new ArrayList<String>();
-
-        result.addAll(this.fields.keySet());
-
-        return  result;
     }
 
     /* getters and setters */

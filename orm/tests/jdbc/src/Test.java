@@ -11,7 +11,8 @@ import com.jengine.orm.db.cache.ehcache.EhcacheManager;
 import com.jengine.orm.db.provider.Provider;
 import com.jengine.orm.db.provider.mysql.MySQLProvider;
 import com.jengine.orm.exception.ValidateException;
-import com.jengine.orm.model.field.FunctionField;
+import com.jengine.orm.model.field.aggregation.Calc;
+import com.jengine.orm.model.field.aggregation.Max;
 import models.*;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
@@ -342,9 +343,8 @@ public class Test {
         check( Author.cls.<Long>sum(Author.id) == 6l );
         check( Author.cls.<Long>min(Author.id) == 1l );
         check( Book.cls.count() == 3l );
-        FunctionField function1 = Book.cls.getManager().newCalcField("function1", Long.class, "%s + 1", Book.id);
-        check( Book.cls.select(function1).filter("id = ?", 1l).<Long>one() == 2l );
-        Book.cls.select("id", Book.cls.getManager().newMaxField("id")).filter("id = ?", 1l).group("id").one();
+        check( Book.cls.select(new Calc(Book.cls, "counter", Long.class, "id + 1", Book.id)).filter("id = ?", 1l).<Long>one() == 2l );
+        Book.cls.select("id", new Max(Book.cls, "id")).filter("id = ?", 1l).group("id").one();
         check( Book.cls.<Long>calc("sum", Long.class, "max(%s) + 2", Book.id) == 5l );
     }
 
