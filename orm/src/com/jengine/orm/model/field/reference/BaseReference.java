@@ -38,6 +38,10 @@ abstract public class BaseReference extends Field {
         }
     }
 
+    public Field newReverseField() {
+        return null;
+    }
+
     public boolean isKey() {
         return true;
     }

@@ -25,18 +25,18 @@ import com.jengine.orm.db.DBException;
 
 import static com.jengine.utils.CollectionUtil.map;
 
-public class ReverseReferenceField extends BaseReference {
+public class MultiReferenceField extends BaseReference {
 
-    public ReverseReferenceField(Class fieldClass, String reverseFieldName) {
+    public MultiReferenceField(Class fieldClass, String reverseFieldName) {
         this(fieldClass, fieldClass.getSimpleName(), reverseFieldName);
     }
 
-    public ReverseReferenceField(Class fieldClass, String referenceModelName, String reverseFieldName) {
+    public MultiReferenceField(Class fieldClass, String referenceModelName, String reverseFieldName) {
         super(fieldClass, referenceModelName, map("reverseFieldName", reverseFieldName));
     }
 
     public Type getType() {
-        return Type.REVERSE_REFERENCE;
+        return Type.MULTI_REFERENCE;
     }
 
     public Object getValue(Model obj) throws DBException {

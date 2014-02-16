@@ -48,6 +48,11 @@ public class SelfField extends ReferenceField {
         if (!options.containsKey("referenceModelKeyName")) {
             referenceModelKeyName = null;
         }
+        reverseFieldName = null;
+    }
+
+    public String getReverseFieldName() {
+        return reverseFieldName;
     }
 
     public Field.Type getType() {
