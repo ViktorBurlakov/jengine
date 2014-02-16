@@ -1,16 +1,20 @@
 package com.jengine.orm.model.field.reference;
 
 
-import com.jengine.orm.model.Model;
-import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.db.DBConnection;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.DBSavePoint;
 import com.jengine.orm.exception.ValidateException;
+import com.jengine.orm.model.DynamicModelClass;
+import com.jengine.orm.model.Model;
+import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.model.field.Field;
+import com.jengine.orm.model.field.PrimaryKey;
 import com.jengine.utils.Variant;
 
 import java.util.*;
+
+import static com.jengine.utils.CollectionUtil.map;
 
 public class ManyReferenceField extends BaseReference {
     private String keyFieldName;
@@ -50,6 +54,18 @@ public class ManyReferenceField extends BaseReference {
         }
     }
 
+    public Field newReverseField() {
+        return new ReverseManyReferenceField(fieldClass, manager.getName(), map(
+                "keyFieldName", getReferenceKeyFieldName(),
+                "reverseFieldName", fieldName,
+                "referenceKeyFieldName", getKeyFieldName(),
+                "middleModelName", getMiddleModelName(),
+                "middleModelTableName", getMiddleModelTableName(),
+                "middleModelFieldName", getMiddleModelReferenceFieldName(),
+                "middleModelReferenceFieldName", getMiddleModelFieldName()
+        ));
+    }
+
     public Object cast(Object value) throws DBException {
         List result = new ArrayList();
         List values = value instanceof List ? (List) value : Arrays.asList(value);
@@ -72,6 +88,34 @@ public class ManyReferenceField extends BaseReference {
         Field middleField = getMiddleField();
         Object keyValue = obj.getData().get(getKeyFieldName());
         return middleCls.filter(middleField.eq(keyValue)).field(middleField);
+    }
+
+    public void createMiddleClass() {
+        ModelClassBase referenceModelClass = getReferenceClass();
+        ModelClassBase middleModelClass = getMiddleClass();
+        ManyReferenceField referenceField = getReverseField();
+        if (middleModelClass == null) {
+            middleModelClass = new DynamicModelClass(getMiddleModelName(), Model.class, map("table", getMiddleModelTableName()));
+            middleModelClass.getManager().addField(
+                    referenceField.getMiddleModelFieldName(),
+                    new ReferenceField(referenceModelClass.getManager().getModel(), map(
+                            "referenceModelName", referenceModelClass.getName(),
+                            "referenceModelKeyName", referenceField.getKeyFieldName(),
+                            "columnName", referenceModelClass.getManager().getTableName().toLowerCase()))
+            );
+            middleModelClass.getManager().addField(
+                    getMiddleModelFieldName(),
+                    new ReferenceField(fieldClass, map(
+                            "referenceModelName", manager.getName(),
+                            "referenceModelKeyName", getKeyFieldName(),
+                            "columnName", manager.getTableName().toLowerCase()))
+            );
+            middleModelClass.getManager().addField("id", new PrimaryKey());
+        }
+    }
+
+    public void remove() throws DBException {
+        getMiddleClass().remove();
     }
 
     public void update(Model obj) throws ValidateException, DBException {
@@ -130,7 +174,7 @@ public class ManyReferenceField extends BaseReference {
         return manager.getModelClass().getDb().getModelClass(getMiddleModelName());
     }
 
-    public Field getMiddleField() {
+    public Field getMiddleField() throws DBException {
         return getMiddleClass().getManager().getField(getMiddleModelFieldName());
     }
 
@@ -138,7 +182,7 @@ public class ManyReferenceField extends BaseReference {
         return (ManyReferenceField) super.getReverseField();
     }
 
-    public Field getKeyField() {
+    public Field getKeyField() throws DBException {
         return manager.getField(getKeyFieldName());
     }
 

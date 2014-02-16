@@ -20,8 +20,8 @@
 package com.jengine.orm.model.field.reference;
 
 
-import com.jengine.orm.model.Model;
 import com.jengine.orm.db.DBException;
+import com.jengine.orm.model.Model;
 import com.jengine.orm.model.field.Field;
 import com.jengine.utils.Variant;
 
@@ -55,6 +55,10 @@ public class ReferenceField extends BaseReference {
 
     public Type getType() {
         return Type.REFERENCE;
+    }
+
+    public Field newReverseField() {
+        return new MultiReferenceField(fieldClass, manager.getName(), fieldName);
     }
 
     public boolean isPersistence() {

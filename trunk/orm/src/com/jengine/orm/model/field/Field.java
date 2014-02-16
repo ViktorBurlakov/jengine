@@ -38,8 +38,8 @@ import static com.jengine.utils.CollectionUtil.map;
 
 
 public class Field {
-    public enum Type { PLAIN, SELF, REVERSE_REFERENCE, MANY_REFERENCE, REVERSE_MANY_REFERENCE, REFERENCE,
-        SINGLE_REFERENCE, REVERSE_SINGLE_REFERENCE, FOREIGN, FUNCTION, PROPERTY }
+    public enum Type { PLAIN, REFERENCE, SINGLE_REFERENCE, SELF, MULTI_REFERENCE, MANY_REFERENCE, REVERSE_MANY_REFERENCE,
+         REVERSE_SINGLE_REFERENCE, FOREIGN, FUNCTION, PROPERTY }
     protected String fieldName;
     protected Class fieldClass;
     protected String columnName;
@@ -242,7 +242,8 @@ public class Field {
         result.put("primaryKey" , primaryKey);
         result.put("verbose" , verbose);
         result.put("visible" , visible);
-        result.put("type" , getType().name());
+        result.put("type", getType());
+        result.put("class", getClass().getSimpleName());
         result.put("columnType" , columnType);
 
         return result;

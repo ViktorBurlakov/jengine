@@ -24,12 +24,10 @@ public class DynamicModelClass<T extends Model> extends ModelClassBase<T> {
         // init fields and properties
         Map<String, Field> fields = new LinkedHashMap<String, Field>();
         fields.put(SelfField.DEFAULT_NAME, new SelfField(cls, name));
-//        fields.put("verbose", new ModelProperty("getVerbose", String.class, map("verbose", this.manager.getName())));
         for (String fieldName : fields.keySet()) {
             Field field = fields.get(fieldName);
             manager.addField(fieldName, field);
         }
-        manager.addDeferredFields();
         register();
     }
 }

@@ -22,26 +22,23 @@ package com.jengine.orm.model;
 
 import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.ForeignField;
-import com.jengine.orm.model.field.PrimaryKey;
-import com.jengine.orm.model.field.reference.*;
+import com.jengine.orm.model.field.reference.ReferenceField;
+import com.jengine.orm.model.field.reference.SelfField;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static com.jengine.utils.CollectionUtil.concat;
-import static com.jengine.utils.CollectionUtil.map;
 
 
 public class ModelManager {
-    public static Map<String, Map<String, Field>> deferredFields = new ConcurrentHashMap<String, Map<String, Field>>();
     private String name;
     private String tableName;
     private Class model;
-    private Map<String, Field> fields = new LinkedHashMap<String, Field>();
+    private ModelClassBase modelClass;
+    private LinkedHashMap<String, Field> fields = new LinkedHashMap<String, Field>();
     private Field primaryKey = null;
     private SelfField self;
     private Boolean cacheEnabled;
-    private ModelClassBase modelClass;
 
     public ModelManager() {
     }
@@ -52,48 +49,6 @@ public class ModelManager {
     }
 
     public Field addField(Field field) {
-        if (field.getType() == Field.Type.REFERENCE) {
-            ReferenceField referenceField = (ReferenceField) field;
-            ReverseReferenceField multiReferenceField = new ReverseReferenceField(model, name, referenceField.getFieldName());
-            ModelClassBase referenceModelClass = modelClass.getDb().getModelClass(referenceField.getReferenceModelName());
-            if (referenceModelClass != null) {
-                multiReferenceField.config(referenceField.getReverseFieldName(), referenceModelClass.getManager());
-                referenceModelClass.getManager().addField(multiReferenceField);
-            } else {
-                putDeferredField(referenceField.getReferenceModelName(), referenceField.getReverseFieldName(), multiReferenceField);
-            }
-        } else if (field.getType() == Field.Type.SINGLE_REFERENCE) {
-            ReferenceField referenceField = (ReferenceField) field;
-            ReverseSingleReferenceField reverseField = new ReverseSingleReferenceField(model, name, referenceField.getFieldName());
-            ModelClassBase referenceModelClass = modelClass.getDb().getModelClass(referenceField.getReferenceModelName());
-            if (referenceModelClass != null) {
-                reverseField.config(referenceField.getReverseFieldName(), referenceModelClass.getManager());
-                referenceModelClass.getManager().addField(reverseField);
-            } else {
-                putDeferredField(referenceField.getReferenceModelName(), referenceField.getReverseFieldName(), reverseField);
-            }
-        }  else if (field.getType() == Field.Type.MANY_REFERENCE) {
-            ManyReferenceField manyField = (ManyReferenceField) field;
-            ModelClassBase referenceModelClass = modelClass.getDb().getModelClass(manyField.getReferenceModelName());
-            ReverseManyReferenceField reverseField =  new ReverseManyReferenceField(model, name, map(
-                        "keyFieldName", manyField.getReferenceKeyFieldName(),
-                        "reverseFieldName", manyField.getFieldName(),
-                        "referenceKeyFieldName", manyField.getKeyFieldName(),
-                        "middleModelName", manyField.getMiddleModelName(),
-                        "middleModelTableName", manyField.getMiddleModelTableName(),
-                        "middleModelFieldName", manyField.getMiddleModelReferenceFieldName(),
-                        "middleModelReferenceFieldName", manyField.getMiddleModelFieldName()
-                ));
-            if (referenceModelClass != null) {
-                referenceModelClass.getManager().addField(manyField.getReverseFieldName(), reverseField);
-            } else {
-                putDeferredField(manyField.getReferenceModelName(), manyField.getReverseFieldName(), reverseField);
-            }
-        }  else if (field.getType() == Field.Type.REVERSE_MANY_REFERENCE) {
-            createMiddleClass((ManyReferenceField) field);
-        }
-
-        // register field
         this.fields.put(field.getFieldName(), field);
         if (field.isPrimaryKey()) {
             this.primaryKey = field;
@@ -103,53 +58,6 @@ public class ModelManager {
         }
 
         return field;
-    }
-
-    public void addDeferredFields() {
-        if (deferredFields.containsKey(name)) {
-            for (String fieldName: deferredFields.get(name).keySet()){
-                Field field = deferredFields.get(name).get(fieldName);
-                field.config(fieldName, this);
-                if (!fields.containsKey(fieldName)) {
-                    addField(field);
-                }
-            }
-        }
-    }
-
-    protected void createMiddleClass(ManyReferenceField manyField) {
-        ModelClassBase referenceModelClass = manyField.getReferenceClass();
-        ModelClassBase middleModelClass = manyField.getMiddleClass();
-        ManyReferenceField referenceField = manyField.getReverseField();
-        if (middleModelClass == null) {
-            middleModelClass = new DynamicModelClass(
-                    manyField.getMiddleModelName(),
-                    Model.class,
-                    map("table", manyField.getMiddleModelTableName())
-            );
-            middleModelClass.getManager().addField(
-                    referenceField.getMiddleModelFieldName(),
-                    new ReferenceField(referenceModelClass.getManager().getModel(), map(
-                            "referenceModelName", referenceModelClass.getName(),
-                            "referenceModelKeyName", referenceField.getKeyFieldName(),
-                            "columnName", referenceModelClass.getManager().getTableName().toLowerCase()))
-            );
-            middleModelClass.getManager().addField(
-                    manyField.getMiddleModelFieldName(),
-                    new ReferenceField(model, map(
-                            "referenceModelName", name,
-                            "referenceModelKeyName", manyField.getKeyFieldName(),
-                            "columnName", tableName.toLowerCase()))
-            );
-            middleModelClass.getManager().addField("id", new PrimaryKey());
-        }
-    }
-
-    protected void putDeferredField(String modelName, String fieldName, Field field) {
-        if (!deferredFields.containsKey(modelName)) {
-            deferredFields.put(modelName, new LinkedHashMap<String, Field>());
-        }
-        deferredFields.get(modelName).put(fieldName, field);
     }
 
     public Field getField(String fieldName) {
@@ -210,6 +118,10 @@ public class ModelManager {
 
     /* getters and setters */
 
+    public LinkedHashMap<String, Field> getFieldMap() {
+        return fields;
+    }
+
     public ModelClassBase getModelClass() {
         return modelClass;
     }
@@ -265,6 +177,5 @@ public class ModelManager {
     public void setTableName(String tableName) {
         this.tableName = tableName;
     }
-
 
 }

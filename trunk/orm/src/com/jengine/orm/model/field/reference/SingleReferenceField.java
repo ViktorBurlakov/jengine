@@ -1,5 +1,7 @@
 package com.jengine.orm.model.field.reference;
 
+import com.jengine.orm.model.field.Field;
+
 import java.util.Map;
 
 public class SingleReferenceField extends ReferenceField {
@@ -14,6 +16,10 @@ public class SingleReferenceField extends ReferenceField {
 
     public SingleReferenceField(Class fieldClass, Map<String, Object> options) {
         super(fieldClass, options);
+    }
+
+    public Field newReverseField() {
+        return new ReverseSingleReferenceField(fieldClass, manager.getName(), fieldName);
     }
 
     public Type getType() {

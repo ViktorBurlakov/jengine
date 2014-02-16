@@ -56,7 +56,6 @@ public class ModelClass<T extends Model> extends ModelClassBase<T> {
             Field field = fields.get(fieldName);
             manager.addField(fieldName, field);
         }
-        manager.addDeferredFields();
         register();
     }
 

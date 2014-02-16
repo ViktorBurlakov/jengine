@@ -100,7 +100,7 @@ public class Test {
         Member.cls.remove();
         Transaction.cls.remove();
         Address.cls.remove();
-        Author.books.getMiddleClass().remove();
+        Author.books.remove();
 
     }
 
