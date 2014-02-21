@@ -13,6 +13,7 @@ import com.jengine.orm.db.provider.mysql.MySQLProvider;
 import com.jengine.orm.exception.ValidateException;
 import com.jengine.orm.model.field.aggregation.Calc;
 import com.jengine.orm.model.field.aggregation.Max;
+import com.jengine.utils.CollectionUtil;
 import models.*;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
@@ -294,6 +295,9 @@ public class Test {
         check( Transaction.cls.select("member.library").<Library>list().get(0).getId() != null );
         // distinct test
         check( Transaction.cls.select("member.library").distinct().<Library>list().size() == 1 );
+
+        //order testing
+        check( CollectionUtil.equals(Author.cls.select("id").order("lastName").<Author>list(), list(2l, 3l, 1l)) );
     }
 
     /**
