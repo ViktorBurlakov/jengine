@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class OrderItem {
     private String name;
-    private String orderType;
+    private String orderType = "ASC";
     private Field modelField;
     private MultiModelField multiModelField;
     private ModelQuery modelQuery;
@@ -23,6 +23,10 @@ public class OrderItem {
     public OrderItem(String name, String orderType) {
         this.name = name;
         this.orderType = orderType;
+    }
+
+    public OrderItem(String name) {
+        this.name = name;
     }
 
     public void config(ModelQuery modelQuery) {

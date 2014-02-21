@@ -24,6 +24,20 @@ import java.util.*;
 
 public class CollectionUtil {
 
+    public static boolean equals(List l1, List l2) {
+        if (l1.size() != l2.size()) {
+            return false;
+        }
+        for (int i=0; i < l1.size(); i++) {
+            if (!l1.get(i).equals(l2.get(i))) {
+                return false;
+            }
+        }
+
+        return true;
+
+    }
+
     public static List values(List keys, Map map) {
         List result = new ArrayList();
 

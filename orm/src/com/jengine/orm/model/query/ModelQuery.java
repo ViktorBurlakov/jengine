@@ -213,14 +213,14 @@ public class ModelQuery {
     }
 
     public ModelQuery order(String field) {
-        OrderItem orderItem = new OrderItem(field, null);
+        OrderItem orderItem = new OrderItem(field);
         orderItem.config(this);
         orderList.add(orderItem);
         return this;
     }
 
     public ModelQuery order(Field field) {
-        OrderItem orderItem = new OrderItem(field.getFieldName(), null);
+        OrderItem orderItem = new OrderItem(field.getFieldName());
         orderItem.config(this);
         orderList.add(orderItem);
         return this;
