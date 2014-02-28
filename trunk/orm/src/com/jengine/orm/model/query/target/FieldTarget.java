@@ -3,25 +3,23 @@ package com.jengine.orm.model.query.target;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.model.multi.MultiModelField;
-import com.jengine.orm.model.query.ModelQuery;
 
 import java.util.Iterator;
 
 public class FieldTarget extends Target {
     protected MultiModelField multiModelField;
 
-
-    public FieldTarget(ModelQuery modelQuery, String name) {
-        super(modelQuery, name);
+    public FieldTarget(String name) {
+        super(name);
     }
 
-    public FieldTarget(ModelQuery modelQuery, MultiModelField multiModelField) {
-        super(modelQuery, multiModelField.getName());
+    public FieldTarget(MultiModelField multiModelField) {
+        super(multiModelField.getName());
         this.multiModelField = multiModelField;
     }
 
-    public FieldTarget(ModelQuery modelQuery, String name, MultiModelField multiModelField) {
-        super(modelQuery, name);
+    public FieldTarget(String name, MultiModelField multiModelField) {
+        super(name);
         this.multiModelField = multiModelField;
     }
 

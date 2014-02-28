@@ -4,6 +4,7 @@ import com.jengine.orm.DB;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.provider.Provider;
 import com.jengine.orm.exception.ValidateException;
+import com.jengine.orm.model.field.Calc;
 import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.aggregation.*;
 import com.jengine.orm.model.field.reference.ManyReferenceField;

@@ -7,14 +7,20 @@ import com.jengine.orm.model.query.ModelQuery;
 import static com.jengine.utils.CollectionUtil.list;
 
 public class ReferenceTarget extends ModelTarget {
+    private BaseReference reference;
 
-    public ReferenceTarget(ModelQuery modelQuery, BaseReference field) {
-        this(modelQuery, field.getFieldName(), field);
+    public ReferenceTarget(BaseReference field) {
+        this(field.getFieldName(), field);
     }
 
-    public ReferenceTarget(ModelQuery modelQuery, String name, BaseReference field) {
-        super(modelQuery, name);
-        modelQuery.addPath(list(field.getFieldName()));
-        this.item = modelQuery.getMultiModel().getItems().get(field.getFieldName());
+    public ReferenceTarget(String name, BaseReference field) {
+        super(name);
+        this.reference = field;
+    }
+
+    public void config(ModelQuery modelQuery) {
+        super.config(modelQuery);
+        modelQuery._addPath(list(reference.getFieldName()));
+        this.item = modelQuery.getMultiModel().getItems().get(reference.getFieldName());
     }
 }

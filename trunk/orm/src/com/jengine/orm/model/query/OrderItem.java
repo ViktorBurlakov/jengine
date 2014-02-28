@@ -2,52 +2,24 @@ package com.jengine.orm.model.query;
 
 
 import com.jengine.orm.db.query.SQLQuery;
-import com.jengine.orm.model.field.Field;
-import com.jengine.orm.model.field.ForeignField;
 import com.jengine.orm.model.multi.MultiModelField;
 import com.jengine.utils.CollectionUtil;
 
-import java.util.Map;
-
 public class OrderItem {
-    private String name;
-    private String orderType = "ASC";
-    private Field modelField;
+    private String orderType;
     private MultiModelField multiModelField;
-    private ModelQuery modelQuery;
 
-    public OrderItem(Map<String, String> order) {
-        this(order.get("field"), order.get("orderType"));
-    }
-
-    public OrderItem(String name, String orderType) {
-        this.name = name;
+    public OrderItem(MultiModelField multiModelField, String orderType) {
+        this.multiModelField = multiModelField;
         this.orderType = orderType;
     }
 
-    public OrderItem(String name) {
-        this.name = name;
-    }
-
-    public void config(ModelQuery modelQuery) {
-        this.modelQuery = modelQuery;
-        this.modelField = modelQuery.getManager().getField(this.name);
-        if (this.modelField instanceof ForeignField) {
-            modelQuery.addPath(((ForeignField) this.modelField).getReferencePath());
-        }
-        this.multiModelField = modelQuery.getMultiModelField(this.modelField);
+    public OrderItem(MultiModelField multiModelField) {
+        this.multiModelField = multiModelField;
     }
 
     public void setSQL(SQLQuery query) {
         query.setOrder(CollectionUtil.<String>map("orderByCol", this.multiModelField.getSQLName(), "orderByType", this.orderType));
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getOrderType() {
@@ -58,11 +30,11 @@ public class OrderItem {
         this.orderType = orderType;
     }
 
-    public Field getModelField() {
-        return modelField;
+    public MultiModelField getMultiModelField() {
+        return multiModelField;
     }
 
-    public void setModelField(Field modelField) {
-        this.modelField = modelField;
+    public void setMultiModelField(MultiModelField multiModelField) {
+        this.multiModelField = multiModelField;
     }
 }

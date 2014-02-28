@@ -34,6 +34,7 @@ public class ForeignField extends Field {
     private List<String> fields = new ArrayList<String>();
     private ReferenceField currentField;
     private Field nextField;
+    private List<String> parentFields = new ArrayList<String>();
 
     public ForeignField(ReferenceField currentField, Field nextField) {
         super(nextField.getFieldClass());
@@ -47,10 +48,19 @@ public class ForeignField extends Field {
             this.fieldMap.put(nextField.getFieldName(), nextField);
         }
         this.fields.addAll(this.fieldMap.keySet());
+        this.parentFields.addAll(fields.subList(0, fields.size() - 1));
     }
 
     public Type getType() {
         return Type.FOREIGN;
+    }
+
+    public List<String> getParentFields() {
+        return parentFields;
+    }
+
+    public String getParentName() {
+        return fieldName.substring(0, fieldName.lastIndexOf("."));
     }
 
     public Object getValue(Model obj) throws DBException {

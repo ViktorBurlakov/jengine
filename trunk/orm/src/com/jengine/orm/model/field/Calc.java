@@ -1,11 +1,14 @@
-package com.jengine.orm.model.field.aggregation;
+package com.jengine.orm.model.field;
 
 
 import com.jengine.orm.model.ModelClassBase;
-import com.jengine.orm.model.field.Field;
-import com.jengine.orm.model.field.FunctionField;
 
 public class Calc extends FunctionField {
+
+    public Calc(String name, Class type, String expr, Field ... fields) {
+        super(type, expr, (Field[]) fields);
+        this.fieldName = name;
+    }
 
     public Calc(ModelClassBase modelClass, String name, Class type, String expr, Field ... fields) {
         super(type, expr, (Field[]) fields);

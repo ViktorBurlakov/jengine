@@ -5,8 +5,6 @@ import antlr.RecognitionException;
 import antlr.TokenStreamException;
 import com.jengine.orm.db.filter.SQLStringFilter;
 import com.jengine.orm.db.query.SQLQuery;
-import com.jengine.orm.model.field.Field;
-import com.jengine.orm.model.field.ForeignField;
 import com.jengine.orm.model.multi.MultiModelField;
 import com.jengine.orm.model.query.ModelQuery;
 
@@ -37,11 +35,7 @@ public class StringFilter {
         stringFilter = new SQLStringFilter(this.query, sqlParams);
         List<String> columns = stringFilter.findColumns();
         for (int index = 0; index < columns.size(); index++) {
-            Field modelField = modelQuery.getManager().getField(columns.get(index));
-            if (modelField instanceof ForeignField) {
-                modelQuery.addPath(((ForeignField) modelField).getReferencePath());
-            }
-            MultiModelField multiModelField = modelQuery.getMultiModelField(modelField);
+            MultiModelField multiModelField = modelQuery._registerField(columns.get(index));
             multiModelFields.add(multiModelField);
             stringFilter.setColumnSQLName(index, multiModelField.getSQLName());
         }

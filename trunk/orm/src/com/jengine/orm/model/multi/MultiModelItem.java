@@ -23,12 +23,17 @@ public class MultiModelItem {
         this.modelClass = modelClass;
         this.name = name;
         for(Field field: modelClass.getManager().getPersistenceFields()) {
-            MultiModelField multiModelField = new MultiModelField(this, field);
-            fields.put(multiModelField.getName(), multiModelField);
-            if (field.isPrimaryKey()) {
-                primaryKey = multiModelField;
-            }
+            addField(field);
         }
+    }
+
+    public MultiModelField addField(Field field) {
+        MultiModelField multiModelField = new MultiModelField(this, field);
+        fields.put(multiModelField.getName(), multiModelField);
+        if (field.isPrimaryKey()) {
+            primaryKey = multiModelField;
+        }
+        return multiModelField;
     }
 
     public void setTableItem(SQLQuery.TableItem tableItem) {

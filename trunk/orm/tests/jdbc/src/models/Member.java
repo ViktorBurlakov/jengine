@@ -23,6 +23,7 @@ package models;
 import com.jengine.orm.model.ModelClass;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.model.field.Field;
+import com.jengine.orm.model.field.PrimaryKey;
 import com.jengine.orm.model.field.reference.ReferenceField;
 import com.jengine.orm.model.field.StringField;
 
@@ -30,6 +31,7 @@ import static com.jengine.utils.CollectionUtil.map;
 
 
 public class Member extends TestModel {
+    public static Field id = new PrimaryKey();
     public static Field firstName = new StringField("verbose", "First Name");
     public static Field lastName  = new StringField("verbose", "Last Name");
     public static Field library   = new ReferenceField(Library.class, map("verbose", "Library", "required", false));

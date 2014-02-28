@@ -4,8 +4,6 @@ package com.jengine.orm.model.query.filter;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.filter.SQLFilter;
 import com.jengine.orm.db.query.SQLQuery;
-import com.jengine.orm.model.field.Field;
-import com.jengine.orm.model.field.ForeignField;
 import com.jengine.orm.model.multi.MultiModelField;
 import com.jengine.orm.model.query.ModelQuery;
 
@@ -15,7 +13,6 @@ import java.util.Map;
 
 public class Filter {
     private ModelQuery modelQuery;
-    private Field modelField;
     private MultiModelField multiModelField;
     private String field;
     private String operation;
@@ -29,12 +26,8 @@ public class Filter {
 
     public void config(ModelQuery modelQuery) throws DBException {
         this.modelQuery = modelQuery;
-        this.modelField = modelQuery.getManager().getField(field);
-        if (this.modelField instanceof ForeignField) {
-            this.modelQuery.addPath(((ForeignField) this.modelField).getReferencePath());
-        }
-        this.multiModelField = modelQuery.getMultiModelField(this.modelField);
-        this.value = modelField.cast(this.value);
+        this.multiModelField = modelQuery._registerField(field);
+        this.value = this.multiModelField.getModelField().cast(this.value);
     }
 
     public void setSQL(SQLQuery query) {

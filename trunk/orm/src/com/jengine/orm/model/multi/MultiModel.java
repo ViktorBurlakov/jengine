@@ -93,4 +93,8 @@ public class MultiModel {
     public LinkedHashMap<String, MultiModelField> getFields() {
         return fields;
     }
+
+    public List<MultiModelField> getFieldList() {
+        return toList(fields.values());
+    }
 }

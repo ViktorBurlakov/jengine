@@ -49,10 +49,6 @@ public class FunctionField extends Field {
         this.expression = expression;
     }
 
-    public void setAttributes(List attributes) {
-        this.attributes = attributes;
-    }
-
     public List getAttributes() {
         return attributes;
     }

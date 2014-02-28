@@ -310,7 +310,7 @@ public class Provider {
         // order clause
         if(!query.getOrder().isEmpty()) {
             queryString.append("ORDER BY ").append(query.getOrder().get("orderByCol"));
-            if (query.getOrder().containsKey("orderByType")) {
+            if (query.getOrder().containsKey("orderByType") && query.getOrder().get("orderByType") != null) {
                 queryString.append(" ").append(query.getOrder().get("orderByType"));
             }
             queryString.append("");
