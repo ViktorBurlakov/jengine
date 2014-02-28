@@ -4,26 +4,31 @@ import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.model.field.ForeignField;
 import com.jengine.orm.model.field.reference.ReferenceField;
-import com.jengine.orm.model.multi.MultiModelItem;
+import com.jengine.orm.model.multi.MultiModelField;
 import com.jengine.orm.model.query.ModelQuery;
 
 import java.util.Iterator;
 
 public class ForeignTarget extends Target {
     private Target target;
+    private ForeignField field;
 
-    public ForeignTarget(ModelQuery modelQuery, ForeignField field) {
-        this(modelQuery, field.getFieldName(), field);
+    public ForeignTarget(ForeignField field) {
+        this(field.getFieldName(), field);
     }
 
-    public ForeignTarget(ModelQuery modelQuery, String name, ForeignField field) {
-        super(modelQuery);
-        modelQuery.addPath(field.getReferencePath());
-        MultiModelItem item = modelQuery.getMultiModel().getItems().get(field.getFieldName());
+    public ForeignTarget(String name, ForeignField field) {
+        super(name);
+        this.field = field;
+    }
+
+    public void config(ModelQuery modelQuery) {
+        super.config(modelQuery);
+        MultiModelField multiModelField = modelQuery._registerField(field);
         this.target = (field.getActualField() instanceof ReferenceField) ?
-                new ModelTarget(modelQuery, name, item):
-                new FieldTarget(modelQuery, name, modelQuery.getMultiModelField(field));
-        this.name = target.getName();
+                new ModelTarget(name, modelQuery.getMultiModel().getItems().get(field.getFieldName())):
+                new FieldTarget(name, multiModelField);
+        this.target.config(modelQuery);
     }
 
     public Object processResult(Iterator itr) throws DBException {

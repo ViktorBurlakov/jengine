@@ -28,6 +28,7 @@ import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.ForeignField;
 import com.jengine.orm.model.field.FunctionField;
 import com.jengine.orm.model.field.aggregation.Count;
+import com.jengine.orm.model.field.reference.BaseReference;
 import com.jengine.orm.model.field.reference.ReferenceField;
 import com.jengine.orm.model.multi.MultiModel;
 import com.jengine.orm.model.multi.MultiModelField;
@@ -59,17 +60,38 @@ public class ModelQuery {
     public ModelQuery(ModelManager manager) {
         this.manager = manager;
         this.multiModel = new MultiModel(manager.getModelClass());
-        this.defaultTarget = new ModelTarget(this, multiModel.getItemList().get(0));
+        for (MultiModelField field : this.multiModel.getFieldList()) {
+            if (!(field.getModelField() instanceof BaseReference)) {
+                multiModel.getFields().put(field.getModelField().getFieldName(), field);
+            }
+        }
+        this.defaultTarget = new ModelTarget(multiModel.getItemList().get(0));
+        this.defaultTarget.config(this);
     }
 
-    public MultiModelField getMultiModelField(Field modelField) {
-        return  modelField instanceof ForeignField ?
-            multiModel.getFields().get(modelField.getFieldName()) :
-            multiModel.getItems().get(manager.getModelClass().getName())
-                    .getFields().get(manager.getModelClass().getName() + "." + modelField.getFieldName());
+    public MultiModelField _registerField(String field) {
+        return multiModel.getFields().containsKey(field) ?
+                multiModel.getFields().get(field) :
+                _registerField(manager.getField(field));
     }
 
-    public void addPath(List<String> path) {
+    public MultiModelField _registerField(Field modelField) {
+        return _registerField(modelField.getFieldName(), modelField);
+    }
+
+    public MultiModelField _registerField(String name, Field modelField) {
+        if (modelField instanceof ForeignField) {
+            _addPath(((ForeignField) modelField).getReferencePath());
+        }
+        MultiModelField multiModelField = multiModel.getFields().get(name);
+        if (multiModelField == null) {
+            multiModelField = new MultiModelField(name, modelField);
+            multiModel.getFields().put(name, multiModelField);
+        }
+        return multiModelField;
+    }
+
+    public void _addPath(List<String> path) {
         List<String> currentPath = new ArrayList<String>();
         MultiModelItem currentItem = this.multiModel.getItemList().get(0);
         ReferenceField currentField;
@@ -132,8 +154,11 @@ public class ModelQuery {
             field((ForeignField) field);
         } else if (field instanceof FunctionField) {
             field((FunctionField) field);
+        } else if (field instanceof BaseReference) {
+            field((BaseReference) field);
         } else {
-            Target target = new FieldTarget(this, field.getFieldName(), getMultiModelField(field));
+            Target target = new FieldTarget(field.getFieldName(), multiModel.getFields().get(field.getFieldName()));
+            target.config(this);
             this.targets.put(target.getName(), target);
         }
 
@@ -141,13 +166,22 @@ public class ModelQuery {
     }
 
     public ModelQuery field(ForeignField field) {
-        Target target = new ForeignTarget(this, field);
+        Target target = new ForeignTarget(field);
+        target.config(this);
         this.targets.put(target.getName(), target);
         return this;
     }
 
     public ModelQuery field(FunctionField field) {
-       Target target = new FunctionTarget(this, field);
+        Target target = new FunctionTarget(field);
+        target.config(this);
+        this.targets.put(target.getName(), target);
+        return this;
+    }
+
+    public ModelQuery field(BaseReference field) {
+        Target target = new ReferenceTarget(field);
+        target.config(this);
         this.targets.put(target.getName(), target);
         return this;
     }
@@ -204,25 +238,29 @@ public class ModelQuery {
 
     public ModelQuery order(Map<String, String> order) {
         if (order != null && order.size() > 0 && order.containsKey("field")) {
-            OrderItem orderItem = new OrderItem(order);
-            orderItem.config(this);
-            orderList.add(orderItem);
+            return order(order.get("field"), order.get("orderType"));
         }
 
         return this;
     }
 
     public ModelQuery order(String field) {
-        OrderItem orderItem = new OrderItem(field);
-        orderItem.config(this);
-        orderList.add(orderItem);
+        return order(field, null);
+    }
+
+    public ModelQuery order(String field, String orderType) {
+        MultiModelField multiModelField = _registerField(field);
+        orderList.add(new OrderItem(multiModelField, orderType));
         return this;
     }
 
     public ModelQuery order(Field field) {
-        OrderItem orderItem = new OrderItem(field.getFieldName());
-        orderItem.config(this);
-        orderList.add(orderItem);
+        return order(field, null);
+    }
+
+    public ModelQuery order(Field field, String orderType) {
+        MultiModelField multiModelField = _registerField(field);
+        orderList.add(new OrderItem(multiModelField, orderType));
         return this;
     }
 
@@ -247,7 +285,7 @@ public class ModelQuery {
     }
 
     public ModelQuery value(String name, Object value) throws DBException {
-        MultiModelField multiModelField = getMultiModelField(manager.getField(name));
+        MultiModelField multiModelField = _registerField(name);
         this.values.put(multiModelField.getName(), value);
         return this;
     }
@@ -257,11 +295,11 @@ public class ModelQuery {
     public ModelQuery page(Map<String, Object> page) {
         if (page != null) {
             this.page.put("start", page.containsKey("start") ? (Integer) page.get("start") : null);
-        this.page.put("end", page.containsKey("end") ? (Integer) page.get("end") : null);
+            this.page.put("end", page.containsKey("end") ? (Integer) page.get("end") : null);
         }
 
-    return this;
-}
+        return this;
+    }
 
 
     /* exec query methods */

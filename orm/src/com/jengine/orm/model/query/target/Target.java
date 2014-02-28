@@ -10,13 +10,12 @@ public abstract class Target {
     protected ModelQuery modelQuery;
     protected String name;
 
-    protected Target(ModelQuery modelQuery) {
-        this.modelQuery = modelQuery;
+    protected Target(String name) {
+        this.name = name;
     }
 
-    protected Target(ModelQuery modelQuery, String name) {
+    public void config(ModelQuery modelQuery) {
         this.modelQuery = modelQuery;
-        this.name = name;
     }
 
     public String getName() {

@@ -11,7 +11,7 @@ import com.jengine.orm.db.cache.ehcache.EhcacheManager;
 import com.jengine.orm.db.provider.Provider;
 import com.jengine.orm.db.provider.mysql.MySQLProvider;
 import com.jengine.orm.exception.ValidateException;
-import com.jengine.orm.model.field.aggregation.Calc;
+import com.jengine.orm.model.field.Calc;
 import com.jengine.orm.model.field.aggregation.Max;
 import com.jengine.utils.CollectionUtil;
 import models.*;
@@ -183,7 +183,7 @@ public class Test {
         member3.setId(3l);
         member3.setFirstName("Gary");
         member3.setLastName("Miller");
-        // required = false only for testing
+        // required is set to 'false' only for testing
         // member3.setLibrary(globeLibrary);
         member3.save();
 
@@ -293,11 +293,14 @@ public class Test {
 
         //with fields
         check( Transaction.cls.select("member.library").<Library>list().get(0).getId() != null );
+        check( Transaction.cls.select("member.library.id").<Long>list().get(0) != null );
         // distinct test
         check( Transaction.cls.select("member.library").distinct().<Library>list().size() == 1 );
 
         //order testing
-        check( CollectionUtil.equals(Author.cls.select("id").order("lastName").<Author>list(), list(2l, 3l, 1l)) );
+        check( CollectionUtil.equals(Author.cls.select("id").order("lastName").list(), list(2l, 3l, 1l)) );
+        List members = Member.cls.select(new Calc("f", Long.class, "%s + 1", Member.id)).order("library.name").order("f").list();
+        check( CollectionUtil.equals(members, list(2l, 3l, 4l, 5l, 6l)) );
     }
 
     /**

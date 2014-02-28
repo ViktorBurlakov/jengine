@@ -1,12 +1,11 @@
 package com.jengine.orm.model.query.target;
 
-import com.jengine.orm.model.Model;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.query.SQLQuery;
+import com.jengine.orm.model.Model;
 import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.multi.MultiModelField;
 import com.jengine.orm.model.multi.MultiModelItem;
-import com.jengine.orm.model.query.ModelQuery;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -15,16 +14,16 @@ import java.util.LinkedHashMap;
 public class ModelTarget extends Target {
     protected MultiModelItem item;
 
-    public ModelTarget(ModelQuery modelQuery, String name) {
-        super(modelQuery, name);
+    public ModelTarget(String name) {
+        super(name);
     }
 
-    public ModelTarget(ModelQuery modelQuery, MultiModelItem item) {
-        this(modelQuery, item.getName(), item);
+    public ModelTarget(MultiModelItem item) {
+        this(item.getName(), item);
     }
 
-    public ModelTarget(ModelQuery modelQuery, String name, MultiModelItem item) {
-        super(modelQuery, name);
+    public ModelTarget(String name, MultiModelItem item) {
+        super(name);
         this.item = item;
     }
 

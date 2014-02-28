@@ -15,8 +15,20 @@ public class MultiModelField {
         this.item = item;
     }
 
+    public MultiModelField(String name, MultiModelItem item, Field modelField) {
+        this.name = name;
+        this.modelField = modelField;
+        this.item = item;
+    }
+
+    public MultiModelField(String name, Field modelField) {
+        this.name = name;
+        this.modelField = modelField;
+    }
+
     public String getSQLName() {
-        return String.format("%s.%s", item.getTableItem().getName(), modelField.getColumnName());
+        return item != null ? String.format("%s.%s", item.getTableItem().getName(), modelField.getColumnName()) :
+                modelField.getColumnName();
     }
 
     public String getName() {
