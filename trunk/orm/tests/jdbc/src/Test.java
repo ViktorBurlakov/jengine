@@ -14,7 +14,7 @@ import com.jengine.orm.exception.ValidateException;
 import com.jengine.orm.model.field.Calc;
 import com.jengine.orm.model.field.aggregation.Max;
 import com.jengine.utils.CollectionUtil;
-import models.*;
+import model.*;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.config.CacheConfiguration;
