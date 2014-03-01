@@ -378,6 +378,7 @@ public class Provider {
                     joinKeyword = "RIGHT JOIN";
                 }
                 sql.append(" ").append(joinKeyword).append(" ").append(build(join.getJoinNode()));
+                sql.append(" ON ").append(join.getRestriction()).append(" ");
             } else if (node instanceof SQLQuery.And) {
                 SQLQuery.And and = (SQLQuery.And) node;
                 sql.append(build(and.getNodes().get(0))).append(" AND ").append(and.getNodes().get(1));
@@ -386,9 +387,6 @@ public class Provider {
                 sql.append(item.getTable());
                 if (item.getAlias() != null && item.getAlias().length() > 0) {
                     sql.append(" AS ").append(item.getAlias());
-                }
-                if (item.getRestriction() != null) {
-                    sql.append(" ON ").append(item.getRestriction()).append(" ");
                 }
                 sql.append(" ");
             }

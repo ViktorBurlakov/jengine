@@ -217,37 +217,37 @@ public class SQLQuery {
         }
 
         public Table join(String table, String alias, String restriction) {
-            return join(new TableItem(table, alias, restriction));
+            return join(new TableItem(table, alias), restriction);
         }
 
-        public Table join(TableItem item) {
+        public Table join(TableItem item, String restriction) {
             items.put(item.getName(), item);
-            expression = new Join(expression, new ExpressionData<TableItem>(item));
+            expression = new Join(expression, new ExpressionData<TableItem>(item), restriction);
             return this;
         }
 
         public Table ljoin(String table, String alias, String restriction) {
-            return ljoin(new TableItem(table, alias, restriction));
+            return ljoin(new TableItem(table, alias), restriction);
         }
 
-        public Table ljoin(TableItem item) {
+        public Table ljoin(TableItem item, String restriction) {
             items.put(item.getName(), item);
-            expression = new LeftJoin(expression, new ExpressionData<TableItem>(item));
+            expression = new LeftJoin(expression, new ExpressionData<TableItem>(item), restriction);
             return this;
         }
 
         public Table rjoin(String table, String alias, String restriction) {
-            return rjoin(new TableItem(table, alias, restriction));
+            return rjoin(new TableItem(table, alias), restriction);
         }
 
-        public Table rjoin(TableItem item) {
+        public Table rjoin(TableItem item, String restriction) {
             items.put(item.getName(), item);
-            expression = new RightJoin(expression, new ExpressionData<TableItem>(item));
+            expression = new RightJoin(expression, new ExpressionData<TableItem>(item), restriction);
             return this;
         }
 
-        public Table and(String table, String alias, String restriction) {
-            return and(new TableItem(table, alias, restriction));
+        public Table and(String table, String alias) {
+            return and(new TableItem(table, alias));
         }
 
         public Table and(TableItem item) {
@@ -273,21 +273,14 @@ public class SQLQuery {
     public static class TableItem {
         private String alias;
         private String table;
-        private String restriction;
 
-        public TableItem(String table, String alias, String restriction) {
+        public TableItem(String table, String alias) {
             this.alias = alias;
             this.table = table;
-            this.restriction = restriction;
         }
 
         public TableItem(String table) {
             this.table = table;
-        }
-
-        public TableItem(String table, String alias) {
-            this.table = table;
-            this.alias = alias;
         }
 
         public String getName() {
@@ -300,14 +293,6 @@ public class SQLQuery {
 
         public String getTable() {
             return table;
-        }
-
-        public String getRestriction() {
-            return restriction;
-        }
-
-        public void setRestriction(String restriction) {
-            this.restriction = restriction;
         }
     }
 
@@ -324,9 +309,11 @@ public class SQLQuery {
     }
 
     public static class Join extends ExpressionOperation {
+        private String restriction;
 
-        public Join(ExpressionNode operand1, ExpressionNode operand2) {
+        public Join(ExpressionNode operand1, ExpressionNode operand2, String restriction) {
             super(operand1, operand2);
+            this.restriction = restriction;
         }
 
         public ExpressionNode getLeftNode() {
@@ -337,17 +324,24 @@ public class SQLQuery {
             return nodes.get(1);
         }
 
+        public String getRestriction() {
+            return restriction;
+        }
+
+        public void setRestriction(String restriction) {
+            this.restriction = restriction;
+        }
     }
 
     public static class LeftJoin extends Join {
-        public LeftJoin(ExpressionNode operand1, ExpressionNode operand2) {
-            super(operand1, operand2);
+        public LeftJoin(ExpressionNode operand1, ExpressionNode operand2, String restriction) {
+            super(operand1, operand2, restriction);
         }
     }
 
     public static class RightJoin extends Join {
-        public RightJoin(ExpressionNode operand1, ExpressionNode operand2) {
-            super(operand1, operand2);
+        public RightJoin(ExpressionNode operand1, ExpressionNode operand2, String restriction) {
+            super(operand1, operand2, restriction);
         }
     }
 
