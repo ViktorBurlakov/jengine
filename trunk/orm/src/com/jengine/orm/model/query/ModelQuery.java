@@ -20,10 +20,10 @@
 package com.jengine.orm.model.query;
 
 
-import com.jengine.orm.model.ModelClassBase;
-import com.jengine.orm.model.ModelManager;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.query.SQLQuery;
+import com.jengine.orm.model.ModelClassBase;
+import com.jengine.orm.model.ModelManager;
 import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.ForeignField;
 import com.jengine.orm.model.field.FunctionField;
@@ -40,9 +40,7 @@ import com.jengine.utils.CollectionUtil;
 
 import java.util.*;
 
-import static com.jengine.utils.CollectionUtil.concat;
-import static com.jengine.utils.CollectionUtil.map;
-import static com.jengine.utils.CollectionUtil.toList;
+import static com.jengine.utils.CollectionUtil.*;
 
 public class ModelQuery {
     private LinkedHashMap<String, Target> targets = new LinkedHashMap<String, Target>();
@@ -345,7 +343,8 @@ public class ModelQuery {
     }
 
     public SQLQuery toSQL() {
-        SQLQuery query = new SQLQuery(multiModel.getTable());
+//        SQLQuery.Table table = new SQLQuery.Table(multiModel.getItemList().get(0).getTableItem());
+        SQLQuery query = new SQLQuery(multiModel.getMultiTable());
 
         if (targets.size() > 0) {
             for (Target target : targets.values()) {

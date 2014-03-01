@@ -1,8 +1,8 @@
 package com.jengine.orm.model.multi;
 
 
-import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.db.query.SQLQuery;
+import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.model.field.Field;
 
 import java.util.LinkedHashMap;
@@ -14,9 +14,9 @@ public class MultiModelItem {
     private MultiModel multiModel;
     private ModelClassBase modelClass;
     private String name;
-    private SQLQuery.TableItem tableItem;
     private MultiModelField primaryKey = null;
     private LinkedHashMap<String, MultiModelField> fields = new LinkedHashMap<String, MultiModelField>();
+    private SQLQuery.TableItem tableItem;
 
     public MultiModelItem(MultiModel multiModel, ModelClassBase modelClass, String name) {
         this.multiModel = multiModel;
@@ -25,6 +25,7 @@ public class MultiModelItem {
         for(Field field: modelClass.getManager().getPersistenceFields()) {
             addField(field);
         }
+        this.tableItem = new SQLQuery.TableItem(modelClass.getManager().getTableName(), name.replace(".", "_"));
     }
 
     public MultiModelField addField(Field field) {
@@ -34,10 +35,6 @@ public class MultiModelItem {
             primaryKey = multiModelField;
         }
         return multiModelField;
-    }
-
-    public void setTableItem(SQLQuery.TableItem tableItem) {
-        this.tableItem = tableItem;
     }
 
     public SQLQuery.TableItem getTableItem() {
