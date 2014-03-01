@@ -17,7 +17,7 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package models;
+package model;
 
 
 import com.jengine.orm.model.Model;

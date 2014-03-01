@@ -17,8 +17,7 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package models;
-
+package model;
 
 import com.jengine.orm.model.ModelClass;
 import com.jengine.orm.db.DBException;
@@ -30,37 +29,28 @@ import com.jengine.orm.model.field.StringField;
 import static com.jengine.utils.CollectionUtil.map;
 
 
-public class Member extends TestModel {
-    public static Field id = new PrimaryKey();
-    public static Field firstName = new StringField("verbose", "First Name");
-    public static Field lastName  = new StringField("verbose", "Last Name");
-    public static Field library   = new ReferenceField(Library.class, map("verbose", "Library", "required", false));
-    public static ModelClass<Member> cls = new ModelClass<Member>(Member.class);
+public class Book extends TestModel {
+    public static Field id  = new PrimaryKey();
+    public static Field title   = new StringField("verbose", "Title");
+    public static Field library = new ReferenceField(Library.class, map("verbose", "Library"));
+    public static ModelClass<Book> cls = new ModelClass<Book>(Book.class);
 
-    public Member() throws DBException {
+    public Book() throws DBException {
         super();
     }
 
     public String getVerbose() throws DBException {
-        return String.format("%s %s", getFirstName(), getLastName());
+        return String.format("%s", getTitle());
     }
 
     /* getters and setters block  */
 
-    public void setFirstName(String value) throws DBException {
-        setValue(firstName, value);
+    public void setTitle(String value) throws DBException {
+        setValue(title, value);
     }
 
-    public String getFirstName() throws DBException {
-        return (String) getValue(firstName);
-    }
-
-    public void setLastName(String value) throws DBException {
-        setValue(lastName, value);
-    }
-
-    public String getLastName() throws DBException {
-        return (String) getValue(lastName);
+    public String getTitle() throws DBException {
+        return (String) getValue(title);
     }
 
     public void setLibrary(Library value) throws DBException {
@@ -70,13 +60,4 @@ public class Member extends TestModel {
     public Library getLibrary() throws DBException {
         return (Library) getValue(library);
     }
-
-    public Address getAddress() throws DBException {
-        return (Address) getValue("address");
-    }
-
-    public void setAddress(Address value) throws DBException {
-        setValue("address", value);
-    }
-
 }
