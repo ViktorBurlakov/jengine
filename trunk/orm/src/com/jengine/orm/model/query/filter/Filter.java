@@ -5,6 +5,7 @@ import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.filter.SQLFilter;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.model.multi.MultiModelField;
+import com.jengine.orm.model.query.BaseQuery;
 import com.jengine.orm.model.query.ModelQuery;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Filter {
-    private ModelQuery modelQuery;
+    private BaseQuery query;
     private MultiModelField multiModelField;
     private String field;
     private String operation;
@@ -24,9 +25,9 @@ public class Filter {
         this.value = value;
     }
 
-    public void config(ModelQuery modelQuery) throws DBException {
-        this.modelQuery = modelQuery;
-        this.multiModelField = modelQuery._registerField(field);
+    public void config(BaseQuery query) throws DBException {
+        this.query = query;
+        this.multiModelField = query._registerField(field);
         this.value = this.multiModelField.getModelField().cast(this.value);
     }
 

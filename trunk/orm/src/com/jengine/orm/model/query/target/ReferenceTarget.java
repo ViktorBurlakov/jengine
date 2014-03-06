@@ -2,6 +2,7 @@ package com.jengine.orm.model.query.target;
 
 
 import com.jengine.orm.model.field.reference.BaseReference;
+import com.jengine.orm.model.query.BaseQuery;
 import com.jengine.orm.model.query.ModelQuery;
 
 import static com.jengine.utils.CollectionUtil.list;
@@ -18,9 +19,9 @@ public class ReferenceTarget extends ModelTarget {
         this.reference = field;
     }
 
-    public void config(ModelQuery modelQuery) {
+    public void config(BaseQuery modelQuery) {
         super.config(modelQuery);
-        modelQuery._addPath(list(reference.getFieldName()));
+        ((ModelQuery)modelQuery)._addPath(list(reference.getFieldName()));
         this.item = modelQuery.getMultiModel().getItems().get(reference.getFieldName());
     }
 }

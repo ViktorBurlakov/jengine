@@ -36,26 +36,19 @@ import com.jengine.orm.model.multi.MultiModelItem;
 import com.jengine.orm.model.query.filter.Filter;
 import com.jengine.orm.model.query.filter.StringFilter;
 import com.jengine.orm.model.query.target.*;
-import com.jengine.utils.CollectionUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-import static com.jengine.utils.CollectionUtil.*;
+import static com.jengine.utils.CollectionUtil.concat;
 
-public class ModelQuery {
-    private LinkedHashMap<String, Target> targets = new LinkedHashMap<String, Target>();
-    private Target defaultTarget;
-    private MultiModel multiModel;
-    private List<Filter> filters = new ArrayList<Filter>();
-    private List<StringFilter> stringFilters = new ArrayList<StringFilter>();
-    private List<OrderItem> orderList = new ArrayList<OrderItem>();
-    private Map<String, Integer> page = map("start", null, "end", null);
-    private Map<String, Object> values = new LinkedHashMap<String, Object>();
-    private LinkedHashMap<String, Target> group = new LinkedHashMap<String, Target>();
+public class ModelQuery extends BaseQuery {
     private ModelManager manager = null;
-    private Boolean distinct = false;
+    protected MultiModel multiModel;
 
     public ModelQuery(ModelManager manager) {
+        super();
         this.manager = manager;
         this.multiModel = new MultiModel(manager.getModelClass());
         for (MultiModelField field : this.multiModel.getFieldList()) {
@@ -111,8 +104,15 @@ public class ModelQuery {
     /* field methods */
 
     public ModelQuery distinct() {
-        this.distinct = true;
-        return this;
+        return (ModelQuery) super.distinct();
+    }
+
+    public ModelQuery distinct(String... fields) {
+        return (ModelQuery) super.distinct(fields);
+    }
+
+    public ModelQuery distinct(String field) {
+        return (ModelQuery) super.distinct(field);
     }
 
     public ModelQuery distinct(Object ... fields) {
@@ -131,6 +131,14 @@ public class ModelQuery {
         this.distinct = true;
         this.field(field);
         return this;
+    }
+
+    public ModelQuery field(FunctionField field) {
+        return (ModelQuery) super.field(field);
+    }
+
+    public ModelQuery fields(String... fields) {
+        return (ModelQuery) super.fields(fields);
     }
 
     public ModelQuery field(Object field) {
@@ -170,13 +178,6 @@ public class ModelQuery {
         return this;
     }
 
-    public ModelQuery field(FunctionField field) {
-        Target target = new FunctionTarget(field);
-        target.config(this);
-        this.targets.put(target.getName(), target);
-        return this;
-    }
-
     public ModelQuery field(BaseReference field) {
         Target target = new ReferenceTarget(field);
         target.config(this);
@@ -199,113 +200,51 @@ public class ModelQuery {
         return this;
     }
 
-
-    /* filter methods */
-
-    public ModelQuery filter(String query, Object ... params) throws DBException {
-        try {
-            StringFilter stringFilter = new StringFilter(query, params);
-            stringFilter.config(this);
-            this.stringFilters.add(stringFilter);
-        } catch (Exception e) {
-            throw new DBException(e);
-        }
-
-        return this;
+    public ModelQuery filter(String query, Object... params) throws DBException {
+        return (ModelQuery) super.filter(query, params);
     }
 
     public ModelQuery filter(Map<String, Object> filter) throws DBException {
-        return filter(Filter.parse(filter));
+        return (ModelQuery) super.filter(filter);
     }
 
     public ModelQuery filter(List<Filter> filters) throws DBException {
-        for (Filter filter : filters) {
-            filter.config(this);
-            this.filters.add(filter);
-        }
-
-        return this;
+        return (ModelQuery) super.filter(filters);
     }
 
-    public ModelQuery filter(Filter ... filter) throws DBException {
-        return this.filter(Arrays.asList(filter));
+    public ModelQuery filter(Filter... filter) throws DBException {
+        return (ModelQuery) super.filter(filter);
     }
-
-
-    /* order methods */
 
     public ModelQuery order(Map<String, String> order) {
-        if (order != null && order.size() > 0 && order.containsKey("field")) {
-            return order(order.get("field"), order.get("orderType"));
-        }
-
-        return this;
+        return (ModelQuery) super.order(order);
     }
 
     public ModelQuery order(String field) {
-        return order(field, null);
+        return (ModelQuery) super.order(field);
     }
 
     public ModelQuery order(String field, String orderType) {
-        MultiModelField multiModelField = _registerField(field);
-        orderList.add(new OrderItem(multiModelField, orderType));
-        return this;
+        return (ModelQuery) super.order(field, orderType);
     }
-
-    public ModelQuery order(Field field) {
-        return order(field, null);
-    }
-
-    public ModelQuery order(Field field, String orderType) {
-        MultiModelField multiModelField = _registerField(field);
-        orderList.add(new OrderItem(multiModelField, orderType));
-        return this;
-    }
-
-
-    /* group by methods */
 
     public ModelQuery group(String targetName) {
-        group.put(targetName, targets.get(targetName));
-        return this;
+        return (ModelQuery) super.group(targetName);
     }
 
-    /* value methods */
-
     public ModelQuery values(Map<String, Object> values) throws DBException {
-        if (values != null && values.size() > 0) {
-            for (String name : values.keySet()) {
-                value(name, values.get(name));
-            }
-        }
-
-        return this;
+        return (ModelQuery) super.values(values);
     }
 
     public ModelQuery value(String name, Object value) throws DBException {
-        MultiModelField multiModelField = _registerField(name);
-        this.values.put(multiModelField.getName(), value);
-        return this;
+        return (ModelQuery) super.value(name, value);
     }
-
-    /* page methods */
 
     public ModelQuery page(Map<String, Object> page) {
-        if (page != null) {
-            this.page.put("start", page.containsKey("start") ? (Integer) page.get("start") : null);
-            this.page.put("end", page.containsKey("end") ? (Integer) page.get("end") : null);
-        }
-
-        return this;
+        return (ModelQuery) super.page(page);
     }
-
 
     /* exec query methods */
-
-    public <T extends Object> T one() throws DBException {
-        List values = list();
-        return values.size() > 0 ? (T) values.get(0) : null;
-    }
 
     public long count() throws DBException {
         return this.field(new Count(this.manager.getModelClass())).<Long>one();
@@ -325,25 +264,7 @@ public class ModelQuery {
         manager.getModelClass().getProvider().remove(toSQL());
     }
 
-    protected List processResult(List values) throws DBException {
-        List result = new ArrayList();
-        List<Target> targets = this.targets.size() > 0 ? toList(this.targets.values()) : CollectionUtil.list(defaultTarget);
-
-        for (Object value : values) {
-            Object[] items = value.getClass().isArray() ? (Object[]) value : new Object[]{value};
-            List resultItem = new ArrayList();
-            Iterator itemIterator =  Arrays.asList(items).iterator();
-            for (Target target : targets) {
-                resultItem.add(target.processResult(itemIterator));
-            }
-            result.add(resultItem.size() == 1 ? resultItem.get(0) : resultItem);
-        }
-
-        return result;
-    }
-
     public SQLQuery toSQL() {
-//        SQLQuery.Table table = new SQLQuery.Table(multiModel.getItemList().get(0).getTableItem());
         SQLQuery query = new SQLQuery(multiModel.getMultiTable());
 
         if (targets.size() > 0) {
