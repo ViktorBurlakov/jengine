@@ -1,6 +1,7 @@
 package com.jengine.orm.model.multi;
 
 
+import com.jengine.orm.DB;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.model.ModelClassBase;
 import com.jengine.utils.expression.ExpressionData;
@@ -25,6 +26,10 @@ public class MultiModel {
 
     public MultiModel(ModelClassBase model, String name) {
         add(new MultiModelItem(this, model, name));
+    }
+
+    public DB getDB() {
+        return getItemList().get(0).getModelClass().getDb();
     }
 
     /* model operations */

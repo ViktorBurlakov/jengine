@@ -2,20 +2,20 @@ package com.jengine.orm.model.query.target;
 
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.query.SQLQuery;
-import com.jengine.orm.model.query.ModelQuery;
+import com.jengine.orm.model.query.BaseQuery;
 
 import java.util.Iterator;
 
 public abstract class Target {
-    protected ModelQuery modelQuery;
+    protected BaseQuery query;
     protected String name;
 
     protected Target(String name) {
         this.name = name;
     }
 
-    public void config(ModelQuery modelQuery) {
-        this.modelQuery = modelQuery;
+    public void config(BaseQuery query) {
+        this.query = query;
     }
 
     public String getName() {

@@ -11,6 +11,7 @@ import com.jengine.orm.db.cache.ehcache.EhcacheManager;
 import com.jengine.orm.db.provider.Provider;
 import com.jengine.orm.db.provider.mysql.MySQLProvider;
 import com.jengine.orm.exception.ValidateException;
+import com.jengine.orm.model.cluster.Cluster;
 import com.jengine.orm.model.field.Calc;
 import com.jengine.orm.model.field.aggregation.Max;
 import com.jengine.utils.CollectionUtil;
@@ -43,16 +44,17 @@ public class Test {
         // testing
         DBConnection connection = db.getConnection();
         try {
-            test1();
-            test2();
-            test3();
-            test4();
-            test5();
-            test6();
-            test7();
-            test8();
-            test9();
-            test10();
+//            test1();
+//            test2();
+//            test3();
+//            test4();
+//            test5();
+//            test6();
+//            test7();
+//            test8();
+//            test9();
+//            test10();
+            test11();
         } finally {
             db.closeConnection(connection);
             db.getCacheManager().shutdown();
@@ -486,6 +488,19 @@ public class Test {
 
         check( Transaction.cls.get(1) != null );
         check( Author.cls.getProvider().getCache(Author.cls.getManager().getTableName(), 1l) != null );
+    }
+
+    /**
+     * Cluster testing
+     */
+    public static void test11() throws Exception {
+        System.out.println("** Test 11: Cluster testing");
+
+        clearData();
+        loadData();
+
+        Cluster cluster = new Cluster(Transaction.cls).ljoin(Book.cls, "Book", "Transaction.book", "Book.id");
+        check( cluster.select("Transaction.id").one() != null );
     }
 
 

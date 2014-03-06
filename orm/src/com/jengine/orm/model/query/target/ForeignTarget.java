@@ -5,6 +5,7 @@ import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.model.field.ForeignField;
 import com.jengine.orm.model.field.reference.ReferenceField;
 import com.jengine.orm.model.multi.MultiModelField;
+import com.jengine.orm.model.query.BaseQuery;
 import com.jengine.orm.model.query.ModelQuery;
 
 import java.util.Iterator;
@@ -22,8 +23,9 @@ public class ForeignTarget extends Target {
         this.field = field;
     }
 
-    public void config(ModelQuery modelQuery) {
-        super.config(modelQuery);
+    public void config(BaseQuery query) {
+        super.config(query);
+        ModelQuery modelQuery = (ModelQuery) query;
         MultiModelField multiModelField = modelQuery._registerField(field);
         this.target = (field.getActualField() instanceof ReferenceField) ?
                 new ModelTarget(name, modelQuery.getMultiModel().getItems().get(field.getFieldName())):

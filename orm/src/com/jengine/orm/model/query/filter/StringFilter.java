@@ -6,6 +6,7 @@ import antlr.TokenStreamException;
 import com.jengine.orm.db.filter.SQLStringFilter;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.model.multi.MultiModelField;
+import com.jengine.orm.model.query.BaseQuery;
 import com.jengine.orm.model.query.ModelQuery;
 
 import java.io.UnsupportedEncodingException;
@@ -18,24 +19,24 @@ import static com.jengine.utils.CollectionUtil.toList;
 public class StringFilter {
     private SQLStringFilter stringFilter;
     private List<MultiModelField> multiModelFields = new ArrayList<MultiModelField>();
-    private String query;
+    private String source;
     private List params = new ArrayList();
 
 
-    public StringFilter(String query, Object[] params) throws TokenStreamException, RecognitionException, UnsupportedEncodingException {
-        this.query = query;
+    public StringFilter(String source, Object[] params) throws TokenStreamException, RecognitionException, UnsupportedEncodingException {
+        this.source = source;
         this.params.addAll(toList(params));
     }
 
-    public void config(ModelQuery modelQuery) throws TokenStreamException, RecognitionException, UnsupportedEncodingException {
+    public void config(BaseQuery query) throws TokenStreamException, RecognitionException, UnsupportedEncodingException {
         List sqlParams = new ArrayList();
         for (Object param : this.params) {
             sqlParams.add(param instanceof ModelQuery ? ((ModelQuery) param).toSQL() : param);
         }
-        stringFilter = new SQLStringFilter(this.query, sqlParams);
+        stringFilter = new SQLStringFilter(this.source, sqlParams);
         List<String> columns = stringFilter.findColumns();
         for (int index = 0; index < columns.size(); index++) {
-            MultiModelField multiModelField = modelQuery._registerField(columns.get(index));
+            MultiModelField multiModelField = query._registerField(columns.get(index));
             multiModelFields.add(multiModelField);
             stringFilter.setColumnSQLName(index, multiModelField.getSQLName());
         }

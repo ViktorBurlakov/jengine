@@ -6,6 +6,7 @@ import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.FunctionField;
 import com.jengine.orm.model.multi.MultiModelField;
+import com.jengine.orm.model.query.BaseQuery;
 import com.jengine.orm.model.query.ModelQuery;
 
 import java.util.Iterator;
@@ -28,8 +29,9 @@ public class FunctionTarget extends Target {
         this.field = field;
     }
 
-    public void config(ModelQuery modelQuery) {
-        super.config(modelQuery);
+    public void config(BaseQuery query) {
+        ModelQuery modelQuery = (ModelQuery) query;
+        super.config(query);
         this.multiModelField = modelQuery._registerField(name, field);
         for (Object attribute : field.getAttributes()) {
             MultiModelField multiModelField = attribute instanceof  String ?
