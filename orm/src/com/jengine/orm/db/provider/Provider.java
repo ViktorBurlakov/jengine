@@ -385,7 +385,7 @@ public class Provider {
             } else if (node instanceof ExpressionData){
                 SQLQuery.TableItem item = (SQLQuery.TableItem) ((ExpressionData) node).getData();
                 sql.append(item.getTable());
-                if (item.getAlias() != null && item.getAlias().length() > 0) {
+                if (item.getAlias() != null && item.getAlias().length() > 0 && !item.getAlias().equals(item.getTable())) {
                     sql.append(" AS ").append(item.getAlias());
                 }
                 sql.append(" ");
