@@ -21,16 +21,44 @@ public class Cluster extends MultiModel {
         super(model, name);
     }
 
+    public Cluster join(ModelClassBase model) {
+        return (Cluster) super.join(model);
+    }
+
+    public Cluster join(ModelClassBase model, String reference, String key) {
+        return (Cluster) super.join(model, reference, key);
+    }
+
     public Cluster join(ModelClassBase model, String name, String reference, String key) {
         return (Cluster) super.join(model, name, reference, key);
+    }
+
+    public Cluster ljoin(ModelClassBase model) {
+        return (Cluster) super.ljoin(model);
+    }
+
+    public Cluster ljoin(ModelClassBase model, String reference, String key) {
+        return (Cluster) super.ljoin(model, reference, key);
     }
 
     public Cluster ljoin(ModelClassBase model, String name, String reference, String key) {
         return (Cluster) super.ljoin(model, name, reference, key);
     }
 
+    public Cluster rjoin(ModelClassBase model) {
+        return (Cluster) super.rjoin(model);
+    }
+
+    public Cluster rjoin(ModelClassBase model, String reference, String key) {
+        return (Cluster) super.rjoin(model, reference, key);
+    }
+
     public Cluster rjoin(ModelClassBase model, String name, String reference, String key) {
         return (Cluster) super.rjoin(model, name, reference, key);
+    }
+
+    public Cluster and(ModelClassBase model) {
+        return (Cluster) super.and(model);
     }
 
     public Cluster and(ModelClassBase model, String name) {
