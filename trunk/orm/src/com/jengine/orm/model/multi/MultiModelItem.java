@@ -16,6 +16,7 @@ public class MultiModelItem {
     private String name;
     private MultiModelField primaryKey = null;
     private LinkedHashMap<String, MultiModelField> fields = new LinkedHashMap<String, MultiModelField>();
+    private LinkedHashMap<String, MultiModelField> modelFields = new LinkedHashMap<String, MultiModelField>();
     private SQLQuery.TableItem tableItem;
 
     public MultiModelItem(MultiModel multiModel, ModelClassBase modelClass, String name) {
@@ -28,9 +29,14 @@ public class MultiModelItem {
         this.tableItem = new SQLQuery.TableItem(modelClass.getManager().getTableName(), name.replace(".", "_"));
     }
 
+    public MultiModelField getMultiModelField(Field field) {
+        return modelFields.get(field.getFieldName());
+    }
+
     public MultiModelField addField(Field field) {
         MultiModelField multiModelField = new MultiModelField(this, field);
         fields.put(multiModelField.getName(), multiModelField);
+        modelFields.put(field.getFieldName(), multiModelField);
         if (field.isPrimaryKey()) {
             primaryKey = multiModelField;
         }
