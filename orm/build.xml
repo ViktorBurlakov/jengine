@@ -7,7 +7,8 @@
     <property name="dist"  location="./.dist"/>
     <property name="jengine_dist"  location="../.dist"/>
     <property name="lib_path"  location="../lib"/>
-    <property name="antlr_grammar_path" value="src/com/jengine/db/query/parser" />
+    <property name="antlr_grammar_path" value="src/com/jengine/orm/db/query/parser" />
+    <property name="model_antlr_grammar_path" value="src/com/jengine/orm/model/multi/parser" />
     
 
     <path id="project.class.path">
@@ -23,6 +24,14 @@
 	    <arg value="-o"/>
 	    <arg path="${antlr_grammar_path}"/>
 	    <arg path="${antlr_grammar_path}/sql.g"/>
+	</java>
+    </target>
+
+    <target name="model_antlr">
+	<java classname="org.antlr.Tool" classpath="${lib_path}/antlr2.jar:${lib_path}/antlr3.jar:${lib_path}/stringtemplate.jar" failonerror="true">
+	    <arg value="-o"/>
+	    <arg path="${model_antlr_grammar_path}"/>
+	    <arg path="${model_antlr_grammar_path}/Expr.g"/>
 	</java>
     </target>
 
