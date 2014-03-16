@@ -25,10 +25,7 @@ import com.jengine.orm.model.field.ForeignField;
 import com.jengine.orm.model.field.reference.ReferenceField;
 import com.jengine.orm.model.field.reference.SelfField;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 import static com.jengine.utils.CollectionUtil.concat;
 import static com.jengine.utils.CollectionUtil.toList;
@@ -41,6 +38,7 @@ public class ModelManager {
     private ModelClassBase modelClass;
     private LinkedHashMap<String, Field> fields = new LinkedHashMap<String, Field>();
     private LinkedHashMap<String, ReferenceField> references = new LinkedHashMap<String, ReferenceField>();
+    private HashMap<String, ReferenceField> referenceModels = new HashMap<String, ReferenceField>();
     private Field primaryKey = null;
     private SelfField self;
     private Boolean cacheEnabled;
@@ -62,7 +60,9 @@ public class ModelManager {
             this.self = (SelfField) field;
         }
         if (field instanceof ReferenceField) {
-            this.references.put(field.getFieldName(), (ReferenceField) field);
+            ReferenceField referenceField = (ReferenceField) field;
+            this.references.put(field.getFieldName(), referenceField);
+            this.referenceModels.put(referenceField.getReferenceModelName(), referenceField);
         }
 
         return field;
@@ -188,6 +188,10 @@ public class ModelManager {
 
     public void setTableName(String tableName) {
         this.tableName = tableName;
+    }
+
+    public HashMap<String, ReferenceField> getReferenceModels() {
+        return referenceModels;
     }
 
 }

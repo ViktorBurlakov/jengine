@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g 2014-03-13 11:07:56
+// $ANTLR 3.0.1 /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g 2014-03-16 19:53:08
 
 package com.jengine.orm.model.multi.parser;
 
@@ -47,81 +47,34 @@ public class ExprParser extends Parser {
     public String getGrammarFileName() { return "/home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g"; }
 
 
-    public static class model_name_return extends ParserRuleReturnScope {
-        Object tree;
-        public Object getTree() { return tree; }
-    };
-
-    // $ANTLR start model_name
-    // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:43:1: model_name : IDENTIFIER ;
-    public final model_name_return model_name() throws RecognitionException {
-        model_name_return retval = new model_name_return();
-        retval.start = input.LT(1);
-
-        Object root_0 = null;
-
-        Token IDENTIFIER1=null;
-
-        Object IDENTIFIER1_tree=null;
-
-        try {
-            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:43:12: ( IDENTIFIER )
-            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:44:5: IDENTIFIER
-            {
-            root_0 = (Object)adaptor.nil();
-
-            IDENTIFIER1=(Token)input.LT(1);
-            match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_model_name271); 
-            IDENTIFIER1_tree = (Object)adaptor.create(IDENTIFIER1);
-            adaptor.addChild(root_0, IDENTIFIER1_tree);
-
-
-            }
-
-            retval.stop = input.LT(-1);
-
-                retval.tree = (Object)adaptor.rulePostProcessing(root_0);
-                adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-        }
-        return retval;
-    }
-    // $ANTLR end model_name
-
     public static class model_expression_return extends ParserRuleReturnScope {
         Object tree;
         public Object getTree() { return tree; }
     };
 
     // $ANTLR start model_expression
-    // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:46:1: model_expression : ( atom ( operation atom )* )* ;
+    // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:43:1: model_expression : ( atom ( operation atom )* )* ;
     public final model_expression_return model_expression() throws RecognitionException {
         model_expression_return retval = new model_expression_return();
         retval.start = input.LT(1);
 
         Object root_0 = null;
 
-        atom_return atom2 = null;
+        atom_return atom1 = null;
 
-        operation_return operation3 = null;
+        operation_return operation2 = null;
 
-        atom_return atom4 = null;
+        atom_return atom3 = null;
 
 
 
         try {
-            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:46:17: ( ( atom ( operation atom )* )* )
-            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:47:5: ( atom ( operation atom )* )*
+            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:43:17: ( ( atom ( operation atom )* )* )
+            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:44:5: ( atom ( operation atom )* )*
             {
             root_0 = (Object)adaptor.nil();
 
-            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:47:5: ( atom ( operation atom )* )*
+            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:44:5: ( atom ( operation atom )* )*
             loop2:
             do {
                 int alt2=2;
@@ -134,14 +87,14 @@ public class ExprParser extends Parser {
 
                 switch (alt2) {
             	case 1 :
-            	    // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:47:7: atom ( operation atom )*
+            	    // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:44:7: atom ( operation atom )*
             	    {
-            	    pushFollow(FOLLOW_atom_in_model_expression285);
-            	    atom2=atom();
+            	    pushFollow(FOLLOW_atom_in_model_expression272);
+            	    atom1=atom();
             	    _fsp--;
 
-            	    adaptor.addChild(root_0, atom2.getTree());
-            	    // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:47:12: ( operation atom )*
+            	    adaptor.addChild(root_0, atom1.getTree());
+            	    // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:44:12: ( operation atom )*
             	    loop1:
             	    do {
             	        int alt1=2;
@@ -154,18 +107,18 @@ public class ExprParser extends Parser {
 
             	        switch (alt1) {
             	    	case 1 :
-            	    	    // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:47:13: operation atom
+            	    	    // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:44:13: operation atom
             	    	    {
-            	    	    pushFollow(FOLLOW_operation_in_model_expression288);
-            	    	    operation3=operation();
+            	    	    pushFollow(FOLLOW_operation_in_model_expression275);
+            	    	    operation2=operation();
             	    	    _fsp--;
 
-            	    	    root_0 = (Object)adaptor.becomeRoot(operation3.getTree(), root_0);
-            	    	    pushFollow(FOLLOW_atom_in_model_expression291);
-            	    	    atom4=atom();
+            	    	    root_0 = (Object)adaptor.becomeRoot(operation2.getTree(), root_0);
+            	    	    pushFollow(FOLLOW_atom_in_model_expression278);
+            	    	    atom3=atom();
             	    	    _fsp--;
 
-            	    	    adaptor.addChild(root_0, atom4.getTree());
+            	    	    adaptor.addChild(root_0, atom3.getTree());
 
             	    	    }
             	    	    break;
@@ -209,21 +162,21 @@ public class ExprParser extends Parser {
     };
 
     // $ANTLR start atom
-    // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:49:1: atom : ( model_name | group );
+    // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:46:1: atom : ( model_name | group );
     public final atom_return atom() throws RecognitionException {
         atom_return retval = new atom_return();
         retval.start = input.LT(1);
 
         Object root_0 = null;
 
-        model_name_return model_name5 = null;
+        model_name_return model_name4 = null;
 
-        group_return group6 = null;
+        group_return group5 = null;
 
 
 
         try {
-            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:49:5: ( model_name | group )
+            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:46:5: ( model_name | group )
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -235,34 +188,34 @@ public class ExprParser extends Parser {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("49:1: atom : ( model_name | group );", 3, 0, input);
+                    new NoViableAltException("46:1: atom : ( model_name | group );", 3, 0, input);
 
                 throw nvae;
             }
             switch (alt3) {
                 case 1 :
-                    // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:50:5: model_name
+                    // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:47:5: model_name
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    pushFollow(FOLLOW_model_name_in_atom309);
-                    model_name5=model_name();
+                    pushFollow(FOLLOW_model_name_in_atom296);
+                    model_name4=model_name();
                     _fsp--;
 
-                    adaptor.addChild(root_0, model_name5.getTree());
+                    adaptor.addChild(root_0, model_name4.getTree());
 
                     }
                     break;
                 case 2 :
-                    // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:50:18: group
+                    // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:47:18: group
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    pushFollow(FOLLOW_group_in_atom313);
-                    group6=group();
+                    pushFollow(FOLLOW_group_in_atom300);
+                    group5=group();
                     _fsp--;
 
-                    adaptor.addChild(root_0, group6.getTree());
+                    adaptor.addChild(root_0, group5.getTree());
 
                     }
                     break;
@@ -283,6 +236,77 @@ public class ExprParser extends Parser {
         return retval;
     }
     // $ANTLR end atom
+
+    public static class model_name_return extends ParserRuleReturnScope {
+        Object tree;
+        public Object getTree() { return tree; }
+    };
+
+    // $ANTLR start model_name
+    // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:49:1: model_name : IDENTIFIER -> ^( MODEL_NAME IDENTIFIER ) ;
+    public final model_name_return model_name() throws RecognitionException {
+        model_name_return retval = new model_name_return();
+        retval.start = input.LT(1);
+
+        Object root_0 = null;
+
+        Token IDENTIFIER6=null;
+
+        Object IDENTIFIER6_tree=null;
+        RewriteRuleTokenStream stream_IDENTIFIER=new RewriteRuleTokenStream(adaptor,"token IDENTIFIER");
+
+        try {
+            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:49:12: ( IDENTIFIER -> ^( MODEL_NAME IDENTIFIER ) )
+            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:50:5: IDENTIFIER
+            {
+            IDENTIFIER6=(Token)input.LT(1);
+            match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_model_name313); 
+            stream_IDENTIFIER.add(IDENTIFIER6);
+
+
+            // AST REWRITE
+            // elements: IDENTIFIER
+            // token labels: 
+            // rule labels: retval
+            // token list labels: 
+            // rule list labels: 
+            retval.tree = root_0;
+            RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"token retval",retval!=null?retval.tree:null);
+
+            root_0 = (Object)adaptor.nil();
+            // 50:16: -> ^( MODEL_NAME IDENTIFIER )
+            {
+                // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:50:19: ^( MODEL_NAME IDENTIFIER )
+                {
+                Object root_1 = (Object)adaptor.nil();
+                root_1 = (Object)adaptor.becomeRoot(adaptor.create(MODEL_NAME, "MODEL_NAME"), root_1);
+
+                adaptor.addChild(root_1, stream_IDENTIFIER.next());
+
+                adaptor.addChild(root_0, root_1);
+                }
+
+            }
+
+
+
+            }
+
+            retval.stop = input.LT(-1);
+
+                retval.tree = (Object)adaptor.rulePostProcessing(root_0);
+                adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+        }
+        return retval;
+    }
+    // $ANTLR end model_name
 
     public static class operation_return extends ParserRuleReturnScope {
         Object tree;
@@ -316,7 +340,7 @@ public class ExprParser extends Parser {
             else {
                 MismatchedSetException mse =
                     new MismatchedSetException(null,input);
-                recoverFromMismatchedSet(input,mse,FOLLOW_set_in_operation326);    throw mse;
+                recoverFromMismatchedSet(input,mse,FOLLOW_set_in_operation332);    throw mse;
             }
 
 
@@ -366,16 +390,16 @@ public class ExprParser extends Parser {
             // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:56:5: LPAREN model_expression RPAREN
             {
             LPAREN8=(Token)input.LT(1);
-            match(input,LPAREN,FOLLOW_LPAREN_in_group349); 
+            match(input,LPAREN,FOLLOW_LPAREN_in_group355); 
             stream_LPAREN.add(LPAREN8);
 
-            pushFollow(FOLLOW_model_expression_in_group351);
+            pushFollow(FOLLOW_model_expression_in_group357);
             model_expression9=model_expression();
             _fsp--;
 
             stream_model_expression.add(model_expression9.getTree());
             RPAREN10=(Token)input.LT(1);
-            match(input,RPAREN,FOLLOW_RPAREN_in_group353); 
+            match(input,RPAREN,FOLLOW_RPAREN_in_group359); 
             stream_RPAREN.add(RPAREN10);
 
 
@@ -426,15 +450,15 @@ public class ExprParser extends Parser {
 
  
 
-    public static final BitSet FOLLOW_IDENTIFIER_in_model_name271 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_atom_in_model_expression285 = new BitSet(new long[]{0x0000000000017402L});
-    public static final BitSet FOLLOW_operation_in_model_expression288 = new BitSet(new long[]{0x0000000000010400L});
-    public static final BitSet FOLLOW_atom_in_model_expression291 = new BitSet(new long[]{0x0000000000017402L});
-    public static final BitSet FOLLOW_model_name_in_atom309 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_group_in_atom313 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_set_in_operation326 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LPAREN_in_group349 = new BitSet(new long[]{0x0000000000010C00L});
-    public static final BitSet FOLLOW_model_expression_in_group351 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_RPAREN_in_group353 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_atom_in_model_expression272 = new BitSet(new long[]{0x0000000000017402L});
+    public static final BitSet FOLLOW_operation_in_model_expression275 = new BitSet(new long[]{0x0000000000010400L});
+    public static final BitSet FOLLOW_atom_in_model_expression278 = new BitSet(new long[]{0x0000000000017402L});
+    public static final BitSet FOLLOW_model_name_in_atom296 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_group_in_atom300 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_model_name313 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_set_in_operation332 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_LPAREN_in_group355 = new BitSet(new long[]{0x0000000000010C00L});
+    public static final BitSet FOLLOW_model_expression_in_group357 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_RPAREN_in_group359 = new BitSet(new long[]{0x0000000000000002L});
 
 }
