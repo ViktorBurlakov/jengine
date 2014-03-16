@@ -2,15 +2,24 @@ package com.jengine.orm.model.multi;
 
 
 import com.jengine.orm.DB;
+import com.jengine.orm.DBFactory;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.model.field.reference.ReferenceField;
+import com.jengine.orm.model.multi.parser.ExprLexer;
+import com.jengine.orm.model.multi.parser.ExprParser;
 import com.jengine.utils.expression.ExpressionData;
 import com.jengine.utils.expression.ExpressionNode;
 import com.jengine.utils.expression.ExpressionOperation;
+import org.antlr.runtime.ANTLRStringStream;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.tree.CommonTree;
+import org.antlr.runtime.tree.Tree;
 
 import java.util.*;
 
+import static com.jengine.utils.CollectionUtil.list;
 import static com.jengine.utils.CollectionUtil.toList;
 
 public class MultiModel {
@@ -18,51 +27,91 @@ public class MultiModel {
     protected LinkedHashMap<String, MultiModelField> fields = new LinkedHashMap<String, MultiModelField>();
     protected ExpressionNode expression;
     protected Map<String, Integer> _modelCounters = new HashMap<String, Integer>();
+    protected DB db;
+
+    public MultiModel(String expr) throws RecognitionException {
+        db = DBFactory.get();
+        expression = parse(expr);
+    }
+
+    public MultiModel(DB db, String expr) throws RecognitionException {
+        this.expression = parse(expr);
+        this.db = db;
+    }
 
     public MultiModel(ModelClassBase model) {
         MultiModelItem item = add(new MultiModelItem(this, model, model.getName()));
         expression =  new MultiModelNode(item);
+        db = model.getDb();
     }
 
     public MultiModel(ModelClassBase model, String name) {
         add(new MultiModelItem(this, model, name));
+        db = model.getDb();
     }
 
     public DB getDB() {
-        return getItemList().get(0).getModelClass().getDb();
+        return db;
     }
 
     /* model operations */
 
-    public MultiModel join(ModelClassBase model) {
-        MultiModelField field = findReferenceField(model.getName());
-        if (field != null) {
-            join(model, model.getName() + "." + ((ReferenceField)field.getModelField()).getReferenceModelKey().getFieldName(), field.getName());
-        }
-        return this;
-    }
-
     public MultiModel join(ModelClassBase model, String reference, String key) {
-        return join(model, makeItemName(model.getName()), reference, key);
+        return join(model, makeItemName(model), reference, key);
     }
 
     public MultiModel join(ModelClassBase model, String name, String reference, String key) {
         MultiModelItem item = add(new MultiModelItem(this, model, name));
-        expression = new Join(expression, new MultiModelNode(item), fields.get(reference), fields.get(key));
+        expression = new InnerJoin(expression, new MultiModelNode(item), fields.get(reference), fields.get(key));
         return this;
     }
+
+    public MultiModel join(ModelClassBase model) {
+//        MultiModelField field = findReferenceField(model.getName());
+//        if (field != null) {
+//            join(model, model.getName() + "." + ((ReferenceField) field.getModelField()).getReferenceModelKey().getFieldName(), field.getName());
+//        }
+        MultiModelItem item = add(new MultiModelItem(this, model, makeItemName(model)));
+        String[] keys = calcRestrictionKeys(toList(items.values()), item);
+        expression = new InnerJoin(expression, new MultiModelNode(item), fields.get(keys[0]), fields.get(keys[1]));
+        return this;
+    }
+
+    protected String[] calcRestrictionKeys(List<MultiModelItem> items, List<MultiModelItem> joinItems) {
+        for (MultiModelItem joinItem : joinItems) {
+            String[] result = calcRestrictionKeys(items, joinItem);
+            if (result != null) {
+                return result;
+            }
+        }
+        return null;
+    }
+
+    protected String[] calcRestrictionKeys(List<MultiModelItem> items, MultiModelItem joinItem) {
+        String[] result = new String[2];
+
+        for (MultiModelItem item : items) {
+            if (item.getName().equals(joinItem.getName())) {
+                continue;
+            }
+            ModelClassBase modelClass = item.getModelClass();
+            HashMap<String, ReferenceField> referenceModels = modelClass.getManager().getReferenceModels();
+            if (referenceModels.containsKey(joinItem.getModelClass().getName())) {
+                ReferenceField referenceField = referenceModels.get(joinItem.getModelClass().getName());
+                result[0] = joinItem.getMultiModelField(referenceField.getReferenceModelKey()).getName();
+                result[1] = item.getMultiModelField(referenceField).getName();
+                return result;
+            }
+        }
+
+        return null;
+    }
+
 
     /* left join operations */
-    public MultiModel ljoin(ModelClassBase model) {
-        MultiModelField field = findReferenceField(model.getName());
-        if (field != null) {
-            ljoin(model, model.getName() + "." + ((ReferenceField)field.getModelField()).getReferenceModelKey().getFieldName(), field.getName());
-        }
-        return this;
-    }
 
     public MultiModel ljoin(ModelClassBase model, String reference, String key) {
-        return ljoin(model, makeItemName(model.getName()), reference, key);
+        return ljoin(model, makeItemName(model), reference, key);
     }
 
     public MultiModel ljoin(ModelClassBase model, String name, String reference, String key) {
@@ -71,17 +120,22 @@ public class MultiModel {
         return this;
     }
 
-    /* right join operations */
-    public MultiModel rjoin(ModelClassBase model) {
-        MultiModelField field = findReferenceField(model.getName());
-        if (field != null) {
-            rjoin(model, model.getName() + "." + ((ReferenceField)field.getModelField()).getReferenceModelKey().getFieldName(), field.getName());
-        }
+    public MultiModel ljoin(ModelClassBase model) {
+//        MultiModelField field = findReferenceField(model.getName());
+//        if (field != null) {
+//            ljoin(model, model.getName() + "." + ((ReferenceField) field.getModelField()).getReferenceModelKey().getFieldName(), field.getName());
+//        }
+//        return this;
+        MultiModelItem item = add(new MultiModelItem(this, model, makeItemName(model)));
+        String[] keys = calcRestrictionKeys(toList(items.values()), item);
+        expression = new LeftJoin(expression, new MultiModelNode(item), fields.get(keys[0]), fields.get(keys[1]));
         return this;
     }
 
+    /* right join operations */
+
     public MultiModel rjoin(ModelClassBase model, String reference, String key) {
-        return rjoin(model, makeItemName(model.getName()), reference, key);
+        return rjoin(model, makeItemName(model), reference, key);
     }
 
     public MultiModel rjoin(ModelClassBase model, String name, String reference, String key) {
@@ -90,8 +144,20 @@ public class MultiModel {
         return this;
     }
 
+    public MultiModel rjoin(ModelClassBase model) {
+//        MultiModelField field = findReferenceField(model.getName());
+//        if (field != null) {
+//            rjoin(model, model.getName() + "." + ((ReferenceField)field.getModelField()).getReferenceModelKey().getFieldName(), field.getName());
+//        }
+//        return this;
+        MultiModelItem item = add(new MultiModelItem(this, model, makeItemName(model)));
+        String[] keys = calcRestrictionKeys(toList(items.values()), item);
+        expression = new RightJoin(expression, new MultiModelNode(item), fields.get(keys[0]), fields.get(keys[1]));
+        return this;
+    }
+
     public MultiModel and(ModelClassBase model) {
-        return and(model, makeItemName(model.getName()));
+        return and(model, makeItemName(model));
     }
 
     public MultiModel and(ModelClassBase model, String name) {
@@ -103,8 +169,11 @@ public class MultiModel {
     protected MultiModelItem add(MultiModelItem item) {
         items.put(item.getName(), item);
         fields.putAll(item.getFields());
+        _modelCounters.put(item.getModelClass().getName(), 0);
         return item;
     }
+
+    /* SQL methods*/
 
     public SQLQuery.Table getMultiTable() {
         List<SQLQuery.TableItem> tableItems = getTableItems();
@@ -128,19 +197,19 @@ public class MultiModel {
         return items;
     }
 
-    protected String makeItemName(String modelName) {
-        String name = modelName;
+    protected String makeItemName(ModelClassBase modelClass) {
+        String name = modelClass.getName();
 
-        if (items.containsKey(modelName)) {
+        if (items.containsKey(name)) {
             Integer modelCounter = _modelCounters.get(name) + 1;
-            name = String.format("%s%s", modelName, modelCounter);
+            name = String.format("%s%s", name, modelCounter);
             _modelCounters.put(name, modelCounter);
         }
 
         return name;
     }
 
-    protected MultiModelField findReferenceField(String modelName) {
+   /* protected MultiModelField findReferenceField(String modelName) {
         for (MultiModelField field : fields.values()) {
             if (field.getModelField() instanceof ReferenceField) {
                 ReferenceField reference = (ReferenceField) field.getModelField();
@@ -150,16 +219,7 @@ public class MultiModel {
             }
         }
         return null;
-    }
-//    protected MultiModelItem getItemByModel(String modelName) {
-//        for (MultiModelItem item : items.values()) {
-//            if (item.getModelClass().getName().equals(modelName)) {
-//                return item;
-//            }
-//        }
-//
-//        return null;
-//    }
+    }*/
 
     /* getters and setters */
 
@@ -177,6 +237,56 @@ public class MultiModel {
 
     public List<MultiModelField> getFieldList() {
         return toList(fields.values());
+    }
+
+    public ExpressionNode getExpression() {
+        return expression;
+    }
+
+    /* parsing methods */
+    public ExpressionNode parse(String modelExpression) throws RecognitionException {
+        ANTLRStringStream in = new ANTLRStringStream(modelExpression);
+        ExprLexer lexer = new ExprLexer(in);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        ExprParser parser = new ExprParser(tokens);
+        CommonTree tree = (CommonTree) parser.model_expression().getTree();
+        return visit(tree);
+    }
+
+    protected ExpressionNode visit(Tree tree) {
+        if (tree.getType() == ExprParser.GROUP) {
+            return new Group(visit(tree.getChild(0)));
+        } else if (tree.getType() == ExprParser.MODEL_NAME) {
+            String modelClassName = tree.getChild(0).getText();
+            ModelClassBase modelClass = getDB().getModelClass(modelClassName);
+            MultiModelItem item = add(new MultiModelItem(this, modelClass, makeItemName(modelClass)));
+            return new MultiModelNode(item);
+        } else if (tree.getType() == ExprParser.RIGHT_JOIN) {
+            ExpressionNode operand1 = visit(tree.getChild(0));
+            ExpressionNode operand2 = visit(tree.getChild(1));
+            String[] keys = calcRestrictionKeys(getMultiModelItems(operand2), getMultiModelItems(operand1));
+            keys = keys != null ?  keys : calcRestrictionKeys(getMultiModelItems(operand1), getMultiModelItems(operand2));
+            return new RightJoin(operand1, operand2, fields.get(keys[0]), fields.get(keys[1]));
+        } else if (tree.getType() == ExprParser.LEFT_JOIN) {
+            ExpressionNode operand1 = visit(tree.getChild(0));
+            ExpressionNode operand2 = visit(tree.getChild(1));
+            String[] keys = calcRestrictionKeys(getMultiModelItems(operand1), getMultiModelItems(operand2));
+            keys = keys != null ?  keys : calcRestrictionKeys(getMultiModelItems(operand2), getMultiModelItems(operand1));
+            return new LeftJoin(operand1, operand2, fields.get(keys[0]), fields.get(keys[1]));
+        } else if (tree.getType() == ExprParser.INNER_JOIN) {
+            ExpressionNode operand1 = visit(tree.getChild(0));
+            ExpressionNode operand2 = visit(tree.getChild(1));
+            String[] keys = calcRestrictionKeys(getMultiModelItems(operand1), getMultiModelItems(operand2));
+            keys = keys != null ?  keys : calcRestrictionKeys(getMultiModelItems(operand2), getMultiModelItems(operand1));
+            return new InnerJoin(operand1, operand2, fields.get(keys[0]), fields.get(keys[1]));
+        }
+        return null;
+    }
+
+    protected List<MultiModelItem> getMultiModelItems(ExpressionNode node) {
+        return node instanceof MultiModelNode ?
+                list(((MultiModelNode) node).getData()) :
+                ((ModelOperation) node).getMultiModelItems();
     }
 
     /* inner classes */
@@ -205,6 +315,20 @@ public class MultiModel {
             super(nodes);
         }
 
+        protected List<MultiModelItem> getMultiModelItems() {
+            List<MultiModelItem> items = new ArrayList<MultiModelItem>();
+
+            for (ExpressionNode node : nodes) {
+                if (node instanceof MultiModelNode) {
+                    items.add(((MultiModelNode) node).getData());
+                } else {
+                    items.addAll(((ModelOperation) node).getMultiModelItems());
+                }
+            }
+
+            return items;
+        }
+
         public ExpressionOperation toSQL() {
             return null;
         }
@@ -229,7 +353,7 @@ public class MultiModel {
         }
     }
 
-    public static class Join extends ModelOperation {
+    public static abstract class Join extends ModelOperation {
         private MultiModelField reference;
         private MultiModelField key;
 
@@ -247,13 +371,23 @@ public class MultiModel {
             return nodes.get(1);
         }
 
-        public ExpressionOperation toSQL() {
-            return new SQLQuery.Join(toSQL(getLeftNode()), toSQL(getJoinNode()), makeSQLRestriction());
-        }
+        abstract public ExpressionOperation toSQL();
 
         protected String makeSQLRestriction() {
             return String.format("%s = %s", reference.getSQLName(), key.getSQLName());
         }
+    }
+
+    public static class InnerJoin extends Join {
+
+        public InnerJoin(ExpressionNode operand1, ExpressionNode operand2, MultiModelField reference, MultiModelField key) {
+            super(operand1, operand2, reference, key);
+        }
+
+        public ExpressionOperation toSQL() {
+            return new SQLQuery.Join(toSQL(getLeftNode()), toSQL(getJoinNode()), makeSQLRestriction());
+        }
+
     }
 
     public static class LeftJoin extends Join {

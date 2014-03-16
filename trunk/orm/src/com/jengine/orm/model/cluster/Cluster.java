@@ -1,11 +1,13 @@
 package com.jengine.orm.model.cluster;
 
 
+import com.jengine.orm.DB;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.model.multi.MultiModel;
 import com.jengine.orm.model.query.ClusterQuery;
 import com.jengine.orm.model.query.filter.Filter;
+import org.antlr.runtime.RecognitionException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +17,14 @@ public class Cluster extends MultiModel {
 
     public Cluster(ModelClassBase model) {
         super(model);
+    }
+
+    public Cluster(String expr) throws RecognitionException {
+        super(expr);
+    }
+
+    public Cluster(DB db, String expr) throws RecognitionException {
+        super(db, expr);
     }
 
     public Cluster(ModelClassBase model, String name) {
@@ -33,6 +43,10 @@ public class Cluster extends MultiModel {
         return (Cluster) super.join(model, name, reference, key);
     }
 
+//    public Cluster join(MultiModel other) {
+//        return (Cluster) super.join(other);
+//    }
+//
     public Cluster ljoin(ModelClassBase model) {
         return (Cluster) super.ljoin(model);
     }

@@ -40,16 +40,16 @@ IDENTIFIER :
      CHAR ( CHAR | '0' .. '9' | '_' | '$' | '#' )* ;
 
 
-model_name :
-    IDENTIFIER ;
-
 model_expression:
     ( atom (operation^ atom)* )* ;
 
 atom: 
     model_name | group ;
 
-operation: 
+model_name :
+    IDENTIFIER -> ^(MODEL_NAME IDENTIFIER);
+
+operation:
     (LEFT_JOIN | RIGHT_JOIN | INNER_JOIN) ;
 
 group: 
