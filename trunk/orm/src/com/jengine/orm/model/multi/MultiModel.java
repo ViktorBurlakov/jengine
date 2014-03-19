@@ -273,12 +273,22 @@ public class MultiModel {
             String[] keys = calcRestrictionKeys(getMultiModelItems(operand1), getMultiModelItems(operand2));
             keys = keys != null ?  keys : calcRestrictionKeys(getMultiModelItems(operand2), getMultiModelItems(operand1));
             return new LeftJoin(operand1, operand2, fields.get(keys[0]), fields.get(keys[1]));
+        } else if (tree.getType() == ExprParser.FULL_JOIN) {
+            ExpressionNode operand1 = visit(tree.getChild(0));
+            ExpressionNode operand2 = visit(tree.getChild(1));
+            String[] keys = calcRestrictionKeys(getMultiModelItems(operand1), getMultiModelItems(operand2));
+            keys = keys != null ?  keys : calcRestrictionKeys(getMultiModelItems(operand2), getMultiModelItems(operand1));
+            return new FullJoin(operand1, operand2, fields.get(keys[0]), fields.get(keys[1]));
         } else if (tree.getType() == ExprParser.INNER_JOIN) {
             ExpressionNode operand1 = visit(tree.getChild(0));
             ExpressionNode operand2 = visit(tree.getChild(1));
             String[] keys = calcRestrictionKeys(getMultiModelItems(operand1), getMultiModelItems(operand2));
             keys = keys != null ?  keys : calcRestrictionKeys(getMultiModelItems(operand2), getMultiModelItems(operand1));
             return new InnerJoin(operand1, operand2, fields.get(keys[0]), fields.get(keys[1]));
+        } else if (tree.getType() == ExprParser.AND) {
+            ExpressionNode operand1 = visit(tree.getChild(0));
+            ExpressionNode operand2 = visit(tree.getChild(1));
+            return new And(operand1, operand2);
         }
         return null;
     }
@@ -386,6 +396,18 @@ public class MultiModel {
 
         public ExpressionOperation toSQL() {
             return new SQLQuery.Join(toSQL(getLeftNode()), toSQL(getJoinNode()), makeSQLRestriction());
+        }
+
+    }
+
+    public static class FullJoin extends Join {
+
+        public FullJoin(ExpressionNode operand1, ExpressionNode operand2, MultiModelField reference, MultiModelField key) {
+            super(operand1, operand2, reference, key);
+        }
+
+        public ExpressionOperation toSQL() {
+            return new SQLQuery.FullJoin(toSQL(getLeftNode()), toSQL(getJoinNode()), makeSQLRestriction());
         }
 
     }

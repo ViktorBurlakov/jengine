@@ -31,7 +31,9 @@ LPAREN      :  '('   ;
 RPAREN      :  ')'   ;
 LEFT_JOIN   :  '<<'  ;
 RIGHT_JOIN  :  '>>'  ;
+FULL_JOIN   :  '^'   ;
 INNER_JOIN  :  '&&'  ;
+AND         :  ','   ;
 
 fragment CHAR : 
     ('a'..'z'|'A'..'Z');
@@ -50,7 +52,7 @@ model_name :
     IDENTIFIER -> ^(MODEL_NAME IDENTIFIER);
 
 operation:
-    (LEFT_JOIN | RIGHT_JOIN | INNER_JOIN) ;
+    (LEFT_JOIN | RIGHT_JOIN | INNER_JOIN | FULL_JOIN | AND) ;
 
 group: 
     LPAREN model_expression RPAREN -> ^(GROUP model_expression);

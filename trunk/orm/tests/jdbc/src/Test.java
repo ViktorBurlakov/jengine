@@ -505,6 +505,7 @@ public class Test {
         check( new Cluster("Transaction && Book").select("Transaction.id").one() != null );
         check( new Cluster("(Transaction && Book) << Book").select("Transaction.id").one() != null );
         check( new Cluster("(Transaction << Book << Library) >> Author_books << Author").select("Author_books.id").one() != null );
+        check( new Cluster("(Transaction << Book) >> Author_books, Author").select("Author_books.id").one() != null );
     }
 
 

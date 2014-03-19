@@ -333,6 +333,18 @@ public class SQLQuery {
         }
     }
 
+    public static class InnerJoin extends Join {
+        public InnerJoin(ExpressionNode operand1, ExpressionNode operand2, String restriction) {
+            super(operand1, operand2, restriction);
+        }
+    }
+
+    public static class FullJoin extends Join {
+        public FullJoin(ExpressionNode operand1, ExpressionNode operand2, String restriction) {
+            super(operand1, operand2, restriction);
+        }
+    }
+
     public static class LeftJoin extends Join {
         public LeftJoin(ExpressionNode operand1, ExpressionNode operand2, String restriction) {
             super(operand1, operand2, restriction);

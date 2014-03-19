@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g 2014-03-16 19:53:08
+// $ANTLR 3.0.1 /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g 2014-03-19 22:16:25
 
 package com.jengine.orm.model.multi.parser;
 
@@ -9,21 +9,23 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class ExprLexer extends Lexer {
-    public static final int RPAREN=11;
-    public static final int GROUP=6;
     public static final int MODEL_EXPRESSION=4;
-    public static final int WS=9;
     public static final int LEFT_JOIN=12;
-    public static final int IDENTIFIER=16;
-    public static final int MODEL_NAME=5;
-    public static final int CHAR=15;
-    public static final int INNER_JOIN=14;
+    public static final int FULL_JOIN=14;
+    public static final int CHAR=17;
+    public static final int INNER_JOIN=15;
     public static final int ATOM=8;
-    public static final int OPERATION=7;
-    public static final int Tokens=17;
+    public static final int AND=16;
     public static final int EOF=-1;
-    public static final int LPAREN=10;
+    public static final int Tokens=19;
     public static final int RIGHT_JOIN=13;
+    public static final int LPAREN=10;
+    public static final int GROUP=6;
+    public static final int RPAREN=11;
+    public static final int WS=9;
+    public static final int IDENTIFIER=18;
+    public static final int MODEL_NAME=5;
+    public static final int OPERATION=7;
     public ExprLexer() {;} 
     public ExprLexer(CharStream input) {
         super(input);
@@ -198,12 +200,30 @@ public class ExprLexer extends Lexer {
     }
     // $ANTLR end RIGHT_JOIN
 
+    // $ANTLR start FULL_JOIN
+    public final void mFULL_JOIN() throws RecognitionException {
+        try {
+            int _type = FULL_JOIN;
+            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:34:13: ( '^' )
+            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:34:16: '^'
+            {
+            match('^'); 
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end FULL_JOIN
+
     // $ANTLR start INNER_JOIN
     public final void mINNER_JOIN() throws RecognitionException {
         try {
             int _type = INNER_JOIN;
-            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:34:13: ( '&&' )
-            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:34:16: '&&'
+            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:35:13: ( '&&' )
+            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:35:16: '&&'
             {
             match("&&"); 
 
@@ -217,11 +237,29 @@ public class ExprLexer extends Lexer {
     }
     // $ANTLR end INNER_JOIN
 
+    // $ANTLR start AND
+    public final void mAND() throws RecognitionException {
+        try {
+            int _type = AND;
+            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:36:13: ( ',' )
+            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:36:16: ','
+            {
+            match(','); 
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end AND
+
     // $ANTLR start CHAR
     public final void mCHAR() throws RecognitionException {
         try {
-            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:36:15: ( ( 'a' .. 'z' | 'A' .. 'Z' ) )
-            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:37:5: ( 'a' .. 'z' | 'A' .. 'Z' )
+            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:38:15: ( ( 'a' .. 'z' | 'A' .. 'Z' ) )
+            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:39:5: ( 'a' .. 'z' | 'A' .. 'Z' )
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -246,11 +284,11 @@ public class ExprLexer extends Lexer {
     public final void mIDENTIFIER() throws RecognitionException {
         try {
             int _type = IDENTIFIER;
-            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:39:12: ( CHAR ( CHAR | '0' .. '9' | '_' | '$' | '#' )* )
-            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:40:6: CHAR ( CHAR | '0' .. '9' | '_' | '$' | '#' )*
+            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:41:12: ( CHAR ( CHAR | '0' .. '9' | '_' | '$' | '#' )* )
+            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:42:6: CHAR ( CHAR | '0' .. '9' | '_' | '$' | '#' )*
             {
             mCHAR(); 
-            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:40:11: ( CHAR | '0' .. '9' | '_' | '$' | '#' )*
+            // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:42:11: ( CHAR | '0' .. '9' | '_' | '$' | '#' )*
             loop2:
             do {
                 int alt2=2;
@@ -295,8 +333,8 @@ public class ExprLexer extends Lexer {
     // $ANTLR end IDENTIFIER
 
     public void mTokens() throws RecognitionException {
-        // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:1:8: ( WS | LPAREN | RPAREN | LEFT_JOIN | RIGHT_JOIN | INNER_JOIN | IDENTIFIER )
-        int alt3=7;
+        // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:1:8: ( WS | LPAREN | RPAREN | LEFT_JOIN | RIGHT_JOIN | FULL_JOIN | INNER_JOIN | AND | IDENTIFIER )
+        int alt3=9;
         switch ( input.LA(1) ) {
         case '\t':
         case '\n':
@@ -326,9 +364,19 @@ public class ExprLexer extends Lexer {
             alt3=5;
             }
             break;
-        case '&':
+        case '^':
             {
             alt3=6;
+            }
+            break;
+        case '&':
+            {
+            alt3=7;
+            }
+            break;
+        case ',':
+            {
+            alt3=8;
             }
             break;
         case 'A':
@@ -384,12 +432,12 @@ public class ExprLexer extends Lexer {
         case 'y':
         case 'z':
             {
-            alt3=7;
+            alt3=9;
             }
             break;
         default:
             NoViableAltException nvae =
-                new NoViableAltException("1:1: Tokens : ( WS | LPAREN | RPAREN | LEFT_JOIN | RIGHT_JOIN | INNER_JOIN | IDENTIFIER );", 3, 0, input);
+                new NoViableAltException("1:1: Tokens : ( WS | LPAREN | RPAREN | LEFT_JOIN | RIGHT_JOIN | FULL_JOIN | INNER_JOIN | AND | IDENTIFIER );", 3, 0, input);
 
             throw nvae;
         }
@@ -431,14 +479,28 @@ public class ExprLexer extends Lexer {
                 }
                 break;
             case 6 :
-                // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:1:48: INNER_JOIN
+                // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:1:48: FULL_JOIN
+                {
+                mFULL_JOIN(); 
+
+                }
+                break;
+            case 7 :
+                // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:1:58: INNER_JOIN
                 {
                 mINNER_JOIN(); 
 
                 }
                 break;
-            case 7 :
-                // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:1:59: IDENTIFIER
+            case 8 :
+                // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:1:69: AND
+                {
+                mAND(); 
+
+                }
+                break;
+            case 9 :
+                // /home/victor/IdeaProjects/jengine/orm/src/com/jengine/orm/model/multi/parser/Expr.g:1:73: IDENTIFIER
                 {
                 mIDENTIFIER(); 
 
