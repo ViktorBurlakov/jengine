@@ -371,17 +371,21 @@ public class Provider {
             } else if (node instanceof SQLQuery.Join) {
                 SQLQuery.Join join = (SQLQuery.Join) node;
                 sql.append(build(join.getLeftNode()));
-                String joinKeyword = "JOIN";
+                String joinKeyword;
                 if (node instanceof SQLQuery.LeftJoin) {
                     joinKeyword = "LEFT JOIN";
                 } else if (node instanceof SQLQuery.RightJoin) {
                     joinKeyword = "RIGHT JOIN";
+                } else if (node instanceof SQLQuery.FullJoin) {
+                    joinKeyword = "FULL JOIN";
+                } else {
+                    joinKeyword = "INNER JOIN";
                 }
                 sql.append(" ").append(joinKeyword).append(" ").append(build(join.getJoinNode()));
                 sql.append(" ON ").append(join.getRestriction()).append(" ");
             } else if (node instanceof SQLQuery.And) {
                 SQLQuery.And and = (SQLQuery.And) node;
-                sql.append(build(and.getNodes().get(0))).append(" AND ").append(and.getNodes().get(1));
+                sql.append(build(and.getNodes().get(0))).append(", ").append(build(and.getNodes().get(1)));
             } else if (node instanceof ExpressionData){
                 SQLQuery.TableItem item = (SQLQuery.TableItem) ((ExpressionData) node).getData();
                 sql.append(item.getTable());
