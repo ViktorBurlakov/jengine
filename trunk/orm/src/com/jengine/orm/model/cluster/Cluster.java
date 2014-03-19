@@ -43,10 +43,6 @@ public class Cluster extends MultiModel {
         return (Cluster) super.join(model, name, reference, key);
     }
 
-//    public Cluster join(MultiModel other) {
-//        return (Cluster) super.join(other);
-//    }
-//
     public Cluster ljoin(ModelClassBase model) {
         return (Cluster) super.ljoin(model);
     }
@@ -69,6 +65,18 @@ public class Cluster extends MultiModel {
 
     public Cluster rjoin(ModelClassBase model, String name, String reference, String key) {
         return (Cluster) super.rjoin(model, name, reference, key);
+    }
+
+    public Cluster fjoin(ModelClassBase model, String reference, String key) {
+        return (Cluster) super.fjoin(model, reference, key);
+    }
+
+    public Cluster fjoin(ModelClassBase model, String name, String reference, String key) {
+        return (Cluster) super.fjoin(model, name, reference, key);
+    }
+
+    public Cluster fjoin(ModelClassBase model) {
+        return (Cluster) super.fjoin(model);
     }
 
     public Cluster and(ModelClassBase model) {
