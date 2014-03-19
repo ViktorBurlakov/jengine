@@ -67,13 +67,78 @@ public class MultiModel {
     }
 
     public MultiModel join(ModelClassBase model) {
-//        MultiModelField field = findReferenceField(model.getName());
-//        if (field != null) {
-//            join(model, model.getName() + "." + ((ReferenceField) field.getModelField()).getReferenceModelKey().getFieldName(), field.getName());
-//        }
         MultiModelItem item = add(new MultiModelItem(this, model, makeItemName(model)));
         String[] keys = calcRestrictionKeys(toList(items.values()), item);
         expression = new InnerJoin(expression, new MultiModelNode(item), fields.get(keys[0]), fields.get(keys[1]));
+        return this;
+    }
+
+    /* left join operations */
+
+    public MultiModel ljoin(ModelClassBase model, String reference, String key) {
+        return ljoin(model, makeItemName(model), reference, key);
+    }
+
+    public MultiModel ljoin(ModelClassBase model, String name, String reference, String key) {
+        MultiModelItem item = add(new MultiModelItem(this, model, name));
+        expression = new LeftJoin(expression, new MultiModelNode(item), fields.get(reference), fields.get(key));
+        return this;
+    }
+
+    public MultiModel ljoin(ModelClassBase model) {
+        MultiModelItem item = add(new MultiModelItem(this, model, makeItemName(model)));
+        String[] keys = calcRestrictionKeys(toList(items.values()), item);
+        expression = new LeftJoin(expression, new MultiModelNode(item), fields.get(keys[0]), fields.get(keys[1]));
+        return this;
+    }
+
+    /* right join operations */
+
+    public MultiModel rjoin(ModelClassBase model, String reference, String key) {
+        return rjoin(model, makeItemName(model), reference, key);
+    }
+
+    public MultiModel rjoin(ModelClassBase model, String name, String reference, String key) {
+        MultiModelItem item = add(new MultiModelItem(this, model, name));
+        expression = new RightJoin(expression, new MultiModelNode(item), fields.get(reference), fields.get(key));
+        return this;
+    }
+
+    public MultiModel rjoin(ModelClassBase model) {
+        MultiModelItem item = add(new MultiModelItem(this, model, makeItemName(model)));
+        String[] keys = calcRestrictionKeys(toList(items.values()), item);
+        expression = new RightJoin(expression, new MultiModelNode(item), fields.get(keys[0]), fields.get(keys[1]));
+        return this;
+    }
+
+    /* full join operations */
+
+    public MultiModel fjoin(ModelClassBase model, String reference, String key) {
+        return rjoin(model, makeItemName(model), reference, key);
+    }
+
+    public MultiModel fjoin(ModelClassBase model, String name, String reference, String key) {
+        MultiModelItem item = add(new MultiModelItem(this, model, name));
+        expression = new FullJoin(expression, new MultiModelNode(item), fields.get(reference), fields.get(key));
+        return this;
+    }
+
+    public MultiModel fjoin(ModelClassBase model) {
+        MultiModelItem item = add(new MultiModelItem(this, model, makeItemName(model)));
+        String[] keys = calcRestrictionKeys(toList(items.values()), item);
+        expression = new FullJoin(expression, new MultiModelNode(item), fields.get(keys[0]), fields.get(keys[1]));
+        return this;
+    }
+
+    /* cross join operations */
+
+    public MultiModel and(ModelClassBase model) {
+        return and(model, makeItemName(model));
+    }
+
+    public MultiModel and(ModelClassBase model, String name) {
+        MultiModelItem item = add(new MultiModelItem(this, model, name));
+        expression = new And(expression, new MultiModelNode(item));
         return this;
     }
 
@@ -105,65 +170,6 @@ public class MultiModel {
         }
 
         return null;
-    }
-
-
-    /* left join operations */
-
-    public MultiModel ljoin(ModelClassBase model, String reference, String key) {
-        return ljoin(model, makeItemName(model), reference, key);
-    }
-
-    public MultiModel ljoin(ModelClassBase model, String name, String reference, String key) {
-        MultiModelItem item = add(new MultiModelItem(this, model, name));
-        expression = new LeftJoin(expression, new MultiModelNode(item), fields.get(reference), fields.get(key));
-        return this;
-    }
-
-    public MultiModel ljoin(ModelClassBase model) {
-//        MultiModelField field = findReferenceField(model.getName());
-//        if (field != null) {
-//            ljoin(model, model.getName() + "." + ((ReferenceField) field.getModelField()).getReferenceModelKey().getFieldName(), field.getName());
-//        }
-//        return this;
-        MultiModelItem item = add(new MultiModelItem(this, model, makeItemName(model)));
-        String[] keys = calcRestrictionKeys(toList(items.values()), item);
-        expression = new LeftJoin(expression, new MultiModelNode(item), fields.get(keys[0]), fields.get(keys[1]));
-        return this;
-    }
-
-    /* right join operations */
-
-    public MultiModel rjoin(ModelClassBase model, String reference, String key) {
-        return rjoin(model, makeItemName(model), reference, key);
-    }
-
-    public MultiModel rjoin(ModelClassBase model, String name, String reference, String key) {
-        MultiModelItem item = add(new MultiModelItem(this, model, name));
-        expression = new RightJoin(expression, new MultiModelNode(item), fields.get(reference), fields.get(key));
-        return this;
-    }
-
-    public MultiModel rjoin(ModelClassBase model) {
-//        MultiModelField field = findReferenceField(model.getName());
-//        if (field != null) {
-//            rjoin(model, model.getName() + "." + ((ReferenceField)field.getModelField()).getReferenceModelKey().getFieldName(), field.getName());
-//        }
-//        return this;
-        MultiModelItem item = add(new MultiModelItem(this, model, makeItemName(model)));
-        String[] keys = calcRestrictionKeys(toList(items.values()), item);
-        expression = new RightJoin(expression, new MultiModelNode(item), fields.get(keys[0]), fields.get(keys[1]));
-        return this;
-    }
-
-    public MultiModel and(ModelClassBase model) {
-        return and(model, makeItemName(model));
-    }
-
-    public MultiModel and(ModelClassBase model, String name) {
-        MultiModelItem item = add(new MultiModelItem(this, model, name));
-        expression = new And(expression, new MultiModelNode(item));
-        return this;
     }
 
     protected MultiModelItem add(MultiModelItem item) {
@@ -208,18 +214,6 @@ public class MultiModel {
 
         return name;
     }
-
-   /* protected MultiModelField findReferenceField(String modelName) {
-        for (MultiModelField field : fields.values()) {
-            if (field.getModelField() instanceof ReferenceField) {
-                ReferenceField reference = (ReferenceField) field.getModelField();
-                if (reference.getReferenceModelName().equals(modelName)) {
-                    return field;
-                }
-            }
-        }
-        return null;
-    }*/
 
     /* getters and setters */
 
