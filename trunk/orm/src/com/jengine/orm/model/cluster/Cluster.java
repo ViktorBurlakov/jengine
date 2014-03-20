@@ -32,6 +32,10 @@ public class Cluster extends MultiModel {
         super(model, name);
     }
 
+    public Cluster restriction(int operationIndex, String reference, String key) {
+        return (Cluster) super.restriction(operationIndex, reference, key);
+    }
+
     public Cluster alias(String itemName, String alias) {
         return (Cluster) super.alias(itemName, alias);
     }
