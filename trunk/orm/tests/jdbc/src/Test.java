@@ -507,6 +507,7 @@ public class Test {
         check( new Cluster("(Transaction << Book << Library) >> Author_books << Author").select("Author_books.id").one() != null );
         check( new Cluster("(Transaction << Book) >> Author_books, Author").select("Author_books.id").one() != null );
         check( new Cluster("(Transaction << Book) >> Author_books, Author").alias("Author_books", "books").select("books.id").one() != null );
+        check( new Cluster("(Transaction << Book) >> Author_books, Author").alias(0, "t").select("t.id").one() != null );
     }
 
 

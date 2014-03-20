@@ -54,8 +54,15 @@ public class MultiModel {
         return db;
     }
 
+    public MultiModel alias(int itemIndex, String alias) {
+        return alias(getItemList().get(itemIndex), alias);
+    }
+
     public MultiModel alias(String itemName, String alias) {
-        MultiModelItem item = items.get(itemName);
+        return alias(items.get(itemName), alias);
+    }
+
+    public MultiModel alias(MultiModelItem item, String alias) {
         items.put(alias, item);
         for (MultiModelField field : item.getFields().values()) {
             fields.put(alias + "." + field.getModelField().getFieldName(), field);
