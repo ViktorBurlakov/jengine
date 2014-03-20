@@ -5,6 +5,7 @@ import com.jengine.orm.DB;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.model.multi.MultiModel;
+import com.jengine.orm.model.multi.MultiModelItem;
 import com.jengine.orm.model.query.ClusterQuery;
 import com.jengine.orm.model.query.filter.Filter;
 import org.antlr.runtime.RecognitionException;
@@ -33,6 +34,14 @@ public class Cluster extends MultiModel {
 
     public Cluster alias(String itemName, String alias) {
         return (Cluster) super.alias(itemName, alias);
+    }
+
+    public Cluster alias(int itemIndex, String alias) {
+        return (Cluster) super.alias(itemIndex, alias);
+    }
+
+    public Cluster alias(MultiModelItem item, String alias) {
+        return (Cluster) super.alias(item, alias);
     }
 
     public Cluster join(ModelClassBase model) {
