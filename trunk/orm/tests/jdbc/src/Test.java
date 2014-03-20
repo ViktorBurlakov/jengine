@@ -44,16 +44,16 @@ public class Test {
         // testing
         DBConnection connection = db.getConnection();
         try {
-            test1();
-            test2();
-            test3();
-            test4();
-            test5();
-            test6();
-            test7();
-            test8();
-            test9();
-            test10();
+//            test1();
+//            test2();
+//            test3();
+//            test4();
+//            test5();
+//            test6();
+//            test7();
+//            test8();
+//            test9();
+//            test10();
             test11();
         } finally {
             db.closeConnection(connection);
@@ -506,6 +506,7 @@ public class Test {
         check( new Cluster("(Transaction && Book) << Book").select("Transaction.id").one() != null );
         check( new Cluster("(Transaction << Book << Library) >> Author_books << Author").select("Author_books.id").one() != null );
         check( new Cluster("(Transaction << Book) >> Author_books, Author").select("Author_books.id").one() != null );
+        check( new Cluster("(Transaction << Book) >> Author_books, Author").alias("Author_books", "books").select("books.id").one() != null );
     }
 
 

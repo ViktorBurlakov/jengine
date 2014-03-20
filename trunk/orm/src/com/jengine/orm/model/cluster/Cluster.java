@@ -31,6 +31,10 @@ public class Cluster extends MultiModel {
         super(model, name);
     }
 
+    public Cluster alias(String itemName, String alias) {
+        return (Cluster) super.alias(itemName, alias);
+    }
+
     public Cluster join(ModelClassBase model) {
         return (Cluster) super.join(model);
     }
