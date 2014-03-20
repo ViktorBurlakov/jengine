@@ -26,6 +26,7 @@ public class MultiModel {
     protected LinkedHashMap<String, MultiModelItem> items = new LinkedHashMap<String, MultiModelItem>();
     protected LinkedHashMap<String, MultiModelField> fields = new LinkedHashMap<String, MultiModelField>();
     protected ExpressionNode expression;
+    protected List<Join> operations = new ArrayList<Join>();
     protected Map<String, Integer> _modelCounters = new HashMap<String, Integer>();
     protected DB db;
 
@@ -54,6 +55,12 @@ public class MultiModel {
         return db;
     }
 
+    public MultiModel restriction(int operationIndex, String reference, String key) {
+        operations.get(operationIndex).setReference(fields.get(reference));
+        operations.get(operationIndex).setKey(fields.get(key));
+        return this;
+    }
+
     public MultiModel alias(int itemIndex, String alias) {
         return alias(getItemList().get(itemIndex), alias);
     }
@@ -79,6 +86,7 @@ public class MultiModel {
     public MultiModel join(ModelClassBase model, String name, String reference, String key) {
         MultiModelItem item = add(new MultiModelItem(this, model, name));
         expression = new InnerJoin(expression, new MultiModelNode(item), fields.get(reference), fields.get(key));
+        operations.add((Join) expression);
         return this;
     }
 
@@ -86,6 +94,7 @@ public class MultiModel {
         MultiModelItem item = add(new MultiModelItem(this, model, makeItemName(model)));
         String[] keys = calcRestrictionKeys(toList(items.values()), item);
         expression = new InnerJoin(expression, new MultiModelNode(item), fields.get(keys[0]), fields.get(keys[1]));
+        operations.add((Join) expression);
         return this;
     }
 
@@ -98,6 +107,7 @@ public class MultiModel {
     public MultiModel ljoin(ModelClassBase model, String name, String reference, String key) {
         MultiModelItem item = add(new MultiModelItem(this, model, name));
         expression = new LeftJoin(expression, new MultiModelNode(item), fields.get(reference), fields.get(key));
+        operations.add((Join) expression);
         return this;
     }
 
@@ -105,6 +115,7 @@ public class MultiModel {
         MultiModelItem item = add(new MultiModelItem(this, model, makeItemName(model)));
         String[] keys = calcRestrictionKeys(toList(items.values()), item);
         expression = new LeftJoin(expression, new MultiModelNode(item), fields.get(keys[0]), fields.get(keys[1]));
+        operations.add((Join) expression);
         return this;
     }
 
@@ -117,6 +128,7 @@ public class MultiModel {
     public MultiModel rjoin(ModelClassBase model, String name, String reference, String key) {
         MultiModelItem item = add(new MultiModelItem(this, model, name));
         expression = new RightJoin(expression, new MultiModelNode(item), fields.get(reference), fields.get(key));
+        operations.add((Join) expression);
         return this;
     }
 
@@ -124,6 +136,7 @@ public class MultiModel {
         MultiModelItem item = add(new MultiModelItem(this, model, makeItemName(model)));
         String[] keys = calcRestrictionKeys(toList(items.values()), item);
         expression = new RightJoin(expression, new MultiModelNode(item), fields.get(keys[0]), fields.get(keys[1]));
+        operations.add((Join) expression);
         return this;
     }
 
@@ -136,6 +149,7 @@ public class MultiModel {
     public MultiModel fjoin(ModelClassBase model, String name, String reference, String key) {
         MultiModelItem item = add(new MultiModelItem(this, model, name));
         expression = new FullJoin(expression, new MultiModelNode(item), fields.get(reference), fields.get(key));
+        operations.add((Join) expression);
         return this;
     }
 
@@ -143,6 +157,7 @@ public class MultiModel {
         MultiModelItem item = add(new MultiModelItem(this, model, makeItemName(model)));
         String[] keys = calcRestrictionKeys(toList(items.values()), item);
         expression = new FullJoin(expression, new MultiModelNode(item), fields.get(keys[0]), fields.get(keys[1]));
+        operations.add((Join) expression);
         return this;
     }
 
@@ -276,25 +291,33 @@ public class MultiModel {
             ExpressionNode operand2 = visit(tree.getChild(1));
             String[] keys = calcRestrictionKeys(getMultiModelItems(operand2), getMultiModelItems(operand1));
             keys = keys != null ?  keys : calcRestrictionKeys(getMultiModelItems(operand1), getMultiModelItems(operand2));
-            return new RightJoin(operand1, operand2, fields.get(keys[0]), fields.get(keys[1]));
+            RightJoin join = new RightJoin(operand1, operand2, fields.get(keys[0]), fields.get(keys[1]));
+            operations.add(join);
+            return join;
         } else if (tree.getType() == ExprParser.LEFT_JOIN) {
             ExpressionNode operand1 = visit(tree.getChild(0));
             ExpressionNode operand2 = visit(tree.getChild(1));
             String[] keys = calcRestrictionKeys(getMultiModelItems(operand1), getMultiModelItems(operand2));
             keys = keys != null ?  keys : calcRestrictionKeys(getMultiModelItems(operand2), getMultiModelItems(operand1));
-            return new LeftJoin(operand1, operand2, fields.get(keys[0]), fields.get(keys[1]));
+            LeftJoin join = new LeftJoin(operand1, operand2, fields.get(keys[0]), fields.get(keys[1]));
+            operations.add(join);
+            return join;
         } else if (tree.getType() == ExprParser.FULL_JOIN) {
             ExpressionNode operand1 = visit(tree.getChild(0));
             ExpressionNode operand2 = visit(tree.getChild(1));
             String[] keys = calcRestrictionKeys(getMultiModelItems(operand1), getMultiModelItems(operand2));
             keys = keys != null ?  keys : calcRestrictionKeys(getMultiModelItems(operand2), getMultiModelItems(operand1));
-            return new FullJoin(operand1, operand2, fields.get(keys[0]), fields.get(keys[1]));
+            FullJoin join = new FullJoin(operand1, operand2, fields.get(keys[0]), fields.get(keys[1]));
+            operations.add(join);
+            return join;
         } else if (tree.getType() == ExprParser.INNER_JOIN) {
             ExpressionNode operand1 = visit(tree.getChild(0));
             ExpressionNode operand2 = visit(tree.getChild(1));
             String[] keys = calcRestrictionKeys(getMultiModelItems(operand1), getMultiModelItems(operand2));
             keys = keys != null ?  keys : calcRestrictionKeys(getMultiModelItems(operand2), getMultiModelItems(operand1));
-            return new InnerJoin(operand1, operand2, fields.get(keys[0]), fields.get(keys[1]));
+            InnerJoin join = new InnerJoin(operand1, operand2, fields.get(keys[0]), fields.get(keys[1]));
+            operations.add(join);
+            return join;
         } else if (tree.getType() == ExprParser.AND) {
             ExpressionNode operand1 = visit(tree.getChild(0));
             ExpressionNode operand2 = visit(tree.getChild(1));
@@ -389,6 +412,14 @@ public class MultiModel {
 
         public ExpressionNode getJoinNode() {
             return nodes.get(1);
+        }
+
+        public void setReference(MultiModelField reference) {
+            this.reference = reference;
+        }
+
+        public void setKey(MultiModelField key) {
+            this.key = key;
         }
 
         abstract public ExpressionOperation toSQL();
