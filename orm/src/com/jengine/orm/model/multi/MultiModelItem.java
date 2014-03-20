@@ -43,6 +43,15 @@ public class MultiModelItem {
         return multiModelField;
     }
 
+    public void setName(String name) {
+        this.name = name;
+        this.tableItem = new SQLQuery.TableItem(modelClass.getManager().getTableName(), name.replace(".", "_"));
+        fields.clear();
+        for(Field field: modelClass.getManager().getPersistenceFields()) {
+            addField(field);
+        }
+    }
+
     public SQLQuery.TableItem getTableItem() {
         return tableItem;
     }
