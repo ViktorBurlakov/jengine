@@ -5,16 +5,19 @@ import com.jengine.orm.DB;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.model.multi.MultiModel;
+import com.jengine.orm.model.multi.MultiModelField;
 import com.jengine.orm.model.multi.MultiModelItem;
 import com.jengine.orm.model.query.ClusterQuery;
-import com.jengine.orm.model.query.filter.Filter;
 import org.antlr.runtime.RecognitionException;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+
+import static com.jengine.utils.CollectionUtil.toList;
 
 public class Cluster extends MultiModel {
+    protected LinkedHashMap<String, MultiModelField> selectedFields = new LinkedHashMap<String, MultiModelField>();
 
     public Cluster(ModelClassBase model) {
         super(model);
@@ -30,6 +33,46 @@ public class Cluster extends MultiModel {
 
     public Cluster(ModelClassBase model, String name) {
         super(model, name);
+    }
+
+    public Cluster(ModelClassBase model, List fields) {
+        super(model);
+        fields(fields);
+    }
+
+    public Cluster(String expr, List fields) throws RecognitionException {
+        super(expr);
+        fields(fields);
+    }
+
+    public Cluster(DB db, String expr, List fields) throws RecognitionException {
+        super(db, expr);
+        fields(fields);
+    }
+
+    public Cluster(ModelClassBase model, String name, List fields) {
+        super(model, name);
+        fields(fields);
+    }
+
+    public Cluster fields(Object ... fields) {
+        return fields(toList(fields));
+    }
+
+    public Cluster fields(List fields) {
+        for (Object field : fields) {
+            this.field(field);
+        }
+        return this;
+    }
+
+    public Cluster field(Object field) {
+        if (field instanceof String) {
+            this.selectedFields.put((String) field, this.fields.get(field));
+//        } else if (field instanceof FunctionField) {
+//
+        }
+        return this;
     }
 
     public Cluster restriction(int operationIndex, String reference, String key) {
@@ -109,25 +152,25 @@ public class Cluster extends MultiModel {
     }
 
     public ClusterQuery select(List fields) throws DBException {
-        return new ClusterQuery(this).fields(fields);
+        return new ClusterQuery(this).fields(fields.size() > 0 ? fields : toList(this.selectedFields.keySet()));
     }
 
-    public ClusterQuery filter(String query, Object ... params) throws DBException {
-        return new ClusterQuery(this).filter(query, (Object[]) params);
-    }
-
-    public ClusterQuery filter(Map<String, Object> filter) throws DBException {
-        return new ClusterQuery(this).filter(filter);
-    }
-
-    public ClusterQuery filter(Filter... filters) throws DBException {
-        return filter(Arrays.asList(filters));
-    }
-
-    public ClusterQuery filter(List<Filter> filter) throws DBException {
-        return new ClusterQuery(this).filter(filter);
-    }
-
+//    public ClusterQuery filter(String query, Object ... params) throws DBException {
+//        return new ClusterQuery(this).filter(query, (Object[]) params);
+//    }
+//
+//    public ClusterQuery filter(Map<String, Object> filter) throws DBException {
+//        return new ClusterQuery(this).filter(filter);
+//    }
+//
+//    public ClusterQuery filter(Filter... filters) throws DBException {
+//        return filter(Arrays.asList(filters));
+//    }
+//
+//    public ClusterQuery filter(List<Filter> filter) throws DBException {
+//        return new ClusterQuery(this).filter(filter);
+//    }
+//
 //    public Long count() throws DBException {
 //        return (Long) new ClusterQuery(this).field(new Count(this)).one();
 //    }

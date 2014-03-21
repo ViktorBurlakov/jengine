@@ -51,10 +51,6 @@ public class MultiModel {
         db = model.getDb();
     }
 
-    public DB getDB() {
-        return db;
-    }
-
     public MultiModel restriction(int operationIndex, String reference, String key) {
         operations.get(operationIndex).setReference(fields.get(reference));
         operations.get(operationIndex).setKey(fields.get(key));
@@ -266,6 +262,10 @@ public class MultiModel {
 
     public ExpressionNode getExpression() {
         return expression;
+    }
+
+    public DB getDB() {
+        return db;
     }
 
     /* parsing methods */
