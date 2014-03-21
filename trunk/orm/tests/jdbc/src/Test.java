@@ -499,16 +499,18 @@ public class Test {
         clearData();
         loadData();
 
-        check( new Cluster(Transaction.cls).ljoin(Book.cls).select("Transaction.id").one() != null );
-        check( new Cluster("Transaction << Book").select("Transaction.id").one() != null );
-        check( new Cluster("Transaction >> Book").select("Transaction.id").one() != null );
-        check( new Cluster("Transaction && Book").select("Transaction.id").one() != null );
-        check( new Cluster("(Transaction && Book) << Book").select("Transaction.id").one() != null );
-        check( new Cluster("(Transaction << Book << Library) >> Author_books << Author").select("Author_books.id").one() != null );
-        check( new Cluster("(Transaction << Book) >> Author_books, Author").select("Author_books.id").one() != null );
-        check( new Cluster("(Transaction << Book) >> Author_books, Author").alias("Author_books", "books").select("books.id").one() != null );
-        check( new Cluster("(Transaction << Book) >> Author_books, Author").alias(0, "t").select("t.id").one() != null );
-        check( new Cluster("(Transaction << Book) >> Author_books, Author").restriction(0, "Transaction.book", "Book.id").select("Transaction.id").one() != null );
+        check( new Cluster(Transaction.cls).ljoin(Book.cls).field("Transaction.id").select().one() != null );
+        check( new Cluster("Transaction << Book", list("Transaction.id")).select().one() != null );
+        check( new Cluster("Transaction << Book", list("Transaction.id", "Book.id", "Book.title")).select("Book.title").one() != null );
+        check( new Cluster("Transaction << Book").fields("Transaction.id").select().one() != null );
+        check( new Cluster("Transaction >> Book").fields("Transaction.id").select().one() != null );
+        check( new Cluster("Transaction && Book").fields("Transaction.id").select().one() != null );
+        check( new Cluster("(Transaction && Book) << Book").fields("Transaction.id").select().one() != null );
+        check( new Cluster("(Transaction << Book << Library) >> Author_books << Author").fields("Author_books.id").select().one() != null );
+        check( new Cluster("(Transaction << Book) >> Author_books, Author").fields("Author_books.id").select().one() != null );
+        check( new Cluster("(Transaction << Book) >> Author_books, Author").alias("Author_books", "books").fields("books.id").select().one() != null );
+        check( new Cluster("(Transaction << Book) >> Author_books, Author").alias(0, "t").fields("t.id").select().one() != null );
+        check( new Cluster("(Transaction << Book) >> Author_books, Author").restriction(0, "Transaction.book", "Book.id").fields("Transaction.id").select().one() != null );
     }
 
 
