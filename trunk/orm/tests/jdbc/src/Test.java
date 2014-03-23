@@ -513,6 +513,9 @@ public class Test {
         check( new Cluster("(Transaction << Book) >> Author_books, Author").alias("Author_books", "books").fields("books.id").select().one() != null );
         check( new Cluster("(Transaction << Book) >> Author_books, Author").alias(0, "t").fields("t.id").select().one() != null );
         check( new Cluster("(Transaction << Book) >> Author_books, Author").restriction(0, "Transaction.book", "Book.id").fields("Transaction.id").select().one() != null );
+        check( new Cluster("Transaction << Book").fields("Book.title").select().distinct("Book.title").order("Book.title").list() != null );
+        check( new Cluster("Transaction << Book").fields("Book.title").select().distinct("Book.title").order("Book.title").page(0, 2).list() != null );
+        check( new Cluster("Transaction << Book").fields("Book.title").select().distinct("Book.title").order("Book.title").page(0, 2).list() != null );
     }
 
 
