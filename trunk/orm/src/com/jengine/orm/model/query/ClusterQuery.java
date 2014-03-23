@@ -21,10 +21,10 @@ public class ClusterQuery extends BaseQuery {
     }
 
     public MultiModelField _registerField(String field) {
-        return null;
+        return multiModel.getFields().get(field);
     }
 
-    public ClusterQuery field(String field) {
+    public ClusterQuery target(String field) {
         MultiModelField multiModelField = multiModel.getFields().get(field);
         Target target = new FieldTarget(field, multiModelField);
         target.config(this);
@@ -48,16 +48,16 @@ public class ClusterQuery extends BaseQuery {
         return (ClusterQuery) super.distinct(field);
     }
 
-    public ClusterQuery field(FunctionField field) {
-        return (ClusterQuery) super.field(field);
+    public ClusterQuery target(FunctionField field) {
+        return (ClusterQuery) super.target(field);
     }
 
-    public ClusterQuery fields(String... fields) {
-        return (ClusterQuery) super.fields(fields);
+    public ClusterQuery targets(String... fields) {
+        return (ClusterQuery) super.targets(fields);
     }
 
-    public ClusterQuery fields(List<String> fields) {
-        return (ClusterQuery) super.fields(fields);
+    public ClusterQuery targets(List<String> fields) {
+        return (ClusterQuery) super.targets(fields);
     }
 
     public ClusterQuery filter(String query, Object... params) throws DBException {
@@ -74,6 +74,14 @@ public class ClusterQuery extends BaseQuery {
 
     public ClusterQuery filter(Filter... filter) throws DBException {
         return (ClusterQuery) super.filter(filter);
+    }
+
+    public ClusterQuery sfilter(StringFilter... filter) throws DBException {
+        return (ClusterQuery) super.sfilter(filter);
+    }
+
+    public ClusterQuery sfilter(List<StringFilter> filters) throws DBException {
+        return (ClusterQuery) super.sfilter(filters);
     }
 
     public ClusterQuery order(Map<String, String> order) {

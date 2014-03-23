@@ -7,7 +7,8 @@ import com.jengine.orm.model.multi.MultiModel;
 import com.jengine.orm.model.multi.MultiModelField;
 import com.jengine.orm.model.query.filter.Filter;
 import com.jengine.orm.model.query.filter.StringFilter;
-import com.jengine.orm.model.query.target.*;
+import com.jengine.orm.model.query.target.FunctionTarget;
+import com.jengine.orm.model.query.target.Target;
 import com.jengine.utils.CollectionUtil;
 
 import java.util.*;
@@ -36,7 +37,7 @@ public abstract class BaseQuery {
 
     abstract public MultiModelField _registerField(String field);
 
-    /* field methods */
+    /* target methods */
 
     public BaseQuery distinct() {
         this.distinct = true;
@@ -45,41 +46,41 @@ public abstract class BaseQuery {
 
     public BaseQuery distinct(String ... fields) {
         this.distinct = true;
-        this.fields(fields);
+        this.targets(fields);
         return this;
     }
 
     public BaseQuery distinct(List<String> fields) {
         this.distinct = true;
-        this.fields(fields);
+        this.targets(fields);
         return this;
     }
 
     public BaseQuery distinct(String field) {
         this.distinct = true;
-        this.field(field);
+        this.target(field);
         return this;
     }
 
-    abstract public BaseQuery field(String field);
+    abstract public BaseQuery target(String field);
 
-    public BaseQuery field(FunctionField field) {
+    public BaseQuery target(FunctionField field) {
         Target target = new FunctionTarget(field);
         target.config(this);
         this.targets.put(target.getName(), target);
         return this;
     }
 
-    public BaseQuery fields(String ... fields) {
+    public BaseQuery targets(String ... fields) {
         for(String field : fields) {
-            this.field(field);
+            this.target(field);
         }
         return this;
     }
 
-    public BaseQuery fields(List<String> fields) {
+    public BaseQuery targets(List<String> fields) {
         for(String field : fields) {
-            this.field(field);
+            this.target(field);
         }
 
         return this;
@@ -115,6 +116,23 @@ public abstract class BaseQuery {
 
     public BaseQuery filter(Filter ... filter) throws DBException {
         return this.filter(Arrays.asList(filter));
+    }
+
+    public BaseQuery sfilter(StringFilter ... filter) throws DBException {
+        return sfilter(toList(filter));
+    }
+
+    public BaseQuery sfilter(List<StringFilter> filters) throws DBException {
+        for (StringFilter filter : filters) {
+            try {
+                filter.config(this);
+                this.stringFilters.add(filter);
+            } catch (Exception e) {
+                throw new DBException(e);
+            }
+        }
+        this.stringFilters.addAll(filters);
+        return this;
     }
 
 
@@ -183,7 +201,7 @@ public abstract class BaseQuery {
     }
 
 //    public long count() throws DBException {
-//        return this.field(new Count(this.manager.getModelClass())).<Long>one();
+//        return this.target(new Count(this.manager.getModelClass())).<Long>one();
 //    }
 
     abstract public <T extends Object> List<T> list() throws DBException;
