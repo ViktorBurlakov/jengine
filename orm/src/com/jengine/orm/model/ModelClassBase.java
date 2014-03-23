@@ -64,7 +64,7 @@ public class ModelClassBase<T extends Model> {
     }
 
     public ModelQuery select(List fields) throws DBException {
-        return new ModelQuery(manager).fields(fields);
+        return new ModelQuery(manager).targets(fields);
     }
 
     public ModelQuery filter(String query, Object ... params) throws DBException {
@@ -84,51 +84,51 @@ public class ModelClassBase<T extends Model> {
     }
 
     public Long count() throws DBException {
-        return (Long) new ModelQuery(manager).field(new Count(this, manager.getPrimaryKey())).one();
+        return (Long) new ModelQuery(manager).target(new Count(this, manager.getPrimaryKey())).one();
     }
 
     public Long count(String field) throws DBException {
-        return (Long) new ModelQuery(manager).field(new Count(this, field)).one();
+        return (Long) new ModelQuery(manager).target(new Count(this, field)).one();
     }
 
     public Object max(String field) throws DBException {
-        return new ModelQuery(manager).field(new Max(this, field)).one();
+        return new ModelQuery(manager).target(new Max(this, field)).one();
     }
 
     public Object min(String field) throws DBException {
-        return new ModelQuery(manager).field(new Min(this, field)).one();
+        return new ModelQuery(manager).target(new Min(this, field)).one();
     }
 
     public Object avg(String field) throws DBException {
-        return new ModelQuery(manager).field(new Avg(this, field)).one();
+        return new ModelQuery(manager).target(new Avg(this, field)).one();
     }
 
     public Object sum(String field) throws DBException {
-        return new ModelQuery(manager).field(new Sum(this, field)).one();
+        return new ModelQuery(manager).target(new Sum(this, field)).one();
     }
 
     public Long count(Field field) throws DBException {
-        return (Long) new ModelQuery(manager).field(new Count(this, field)).one();
+        return (Long) new ModelQuery(manager).target(new Count(this, field)).one();
     }
 
     public <ResultType> ResultType max(Field field) throws DBException {
-        return (ResultType) new ModelQuery(manager).field(new Max(this, field)).one();
+        return (ResultType) new ModelQuery(manager).target(new Max(this, field)).one();
     }
 
     public <ResultType> ResultType min(Field field) throws DBException {
-        return (ResultType) new ModelQuery(manager).field(new Min(this, field)).one();
+        return (ResultType) new ModelQuery(manager).target(new Min(this, field)).one();
     }
 
     public <ResultType> ResultType avg(Field field) throws DBException {
-        return (ResultType) new ModelQuery(manager).field(new Avg(this, field)).one();
+        return (ResultType) new ModelQuery(manager).target(new Avg(this, field)).one();
     }
 
     public <ResultType> ResultType sum(Field field) throws DBException {
-        return (ResultType) new ModelQuery(manager).field(new Sum(this, field)).one();
+        return (ResultType) new ModelQuery(manager).target(new Sum(this, field)).one();
     }
 
     public <ResultType> ResultType calc(String name, Class type, String expr, Field ... fields) throws DBException {
-        return (ResultType) new ModelQuery(manager).field(new Calc(this, name, type, expr, fields)).one();
+        return (ResultType) new ModelQuery(manager).target(new Calc(this, name, type, expr, fields)).one();
     }
 
     public void remove() throws DBException {

@@ -101,7 +101,7 @@ public class ModelQuery extends BaseQuery {
         }
     }
 
-    /* field methods */
+    /* target methods */
 
     public ModelQuery distinct() {
         return (ModelQuery) super.distinct();
@@ -117,51 +117,51 @@ public class ModelQuery extends BaseQuery {
 
     public ModelQuery distinct(Object ... fields) {
         this.distinct = true;
-        this.fields(fields);
+        this.targets(fields);
         return this;
     }
 
     public ModelQuery distinct(List fields) {
         this.distinct = true;
-        this.fields(fields);
+        this.targets(fields);
         return this;
     }
 
     public ModelQuery distinct(Object field) {
         this.distinct = true;
-        this.field(field);
+        this.target(field);
         return this;
     }
 
-    public ModelQuery field(FunctionField field) {
-        return (ModelQuery) super.field(field);
+    public ModelQuery target(FunctionField field) {
+        return (ModelQuery) super.target(field);
     }
 
-    public ModelQuery fields(String... fields) {
-        return (ModelQuery) super.fields(fields);
+    public ModelQuery targets(String... fields) {
+        return (ModelQuery) super.targets(fields);
     }
 
-    public ModelQuery field(Object field) {
+    public ModelQuery target(Object field) {
         if (String.class.equals(field.getClass())) {
-            this.field((String) field);
+            this.target((String) field);
         } else  {
-            this.field((Field) field);
+            this.target((Field) field);
         }
 
         return this;
     }
 
-    public ModelQuery field(String field) {
-        return this.field(manager.getField(field));
+    public ModelQuery target(String field) {
+        return this.target(manager.getField(field));
     }
 
-    public ModelQuery field(Field field) {
+    public ModelQuery target(Field field) {
         if (field instanceof ForeignField) {
-            field((ForeignField) field);
+            target((ForeignField) field);
         } else if (field instanceof FunctionField) {
-            field((FunctionField) field);
+            target((FunctionField) field);
         } else if (field instanceof BaseReference) {
-            field((BaseReference) field);
+            target((BaseReference) field);
         } else {
             Target target = new FieldTarget(field.getFieldName(), multiModel.getFields().get(field.getFieldName()));
             target.config(this);
@@ -171,30 +171,30 @@ public class ModelQuery extends BaseQuery {
         return this;
     }
 
-    public ModelQuery field(ForeignField field) {
+    public ModelQuery target(ForeignField field) {
         Target target = new ForeignTarget(field);
         target.config(this);
         this.targets.put(target.getName(), target);
         return this;
     }
 
-    public ModelQuery field(BaseReference field) {
+    public ModelQuery target(BaseReference field) {
         Target target = new ReferenceTarget(field);
         target.config(this);
         this.targets.put(target.getName(), target);
         return this;
     }
 
-    public ModelQuery fields(Object ... fields) {
+    public ModelQuery targets(Object... fields) {
         for(Object field : fields) {
-            this.field(field);
+            this.target(field);
         }
         return this;
     }
 
-    public ModelQuery fields(List fields) {
+    public ModelQuery targets(List fields) {
         for(Object field : fields) {
-            this.field(field);
+            this.target(field);
         }
 
         return this;
@@ -247,7 +247,7 @@ public class ModelQuery extends BaseQuery {
     /* exec query methods */
 
     public long count() throws DBException {
-        return this.field(new Count(this.manager.getModelClass())).<Long>one();
+        return this.target(new Count(this.manager.getModelClass())).<Long>one();
     }
 
     public <T extends Object> List<T> list() throws DBException {

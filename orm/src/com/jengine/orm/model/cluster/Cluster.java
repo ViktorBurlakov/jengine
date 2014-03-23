@@ -8,16 +8,18 @@ import com.jengine.orm.model.multi.MultiModel;
 import com.jengine.orm.model.multi.MultiModelField;
 import com.jengine.orm.model.multi.MultiModelItem;
 import com.jengine.orm.model.query.ClusterQuery;
+import com.jengine.orm.model.query.filter.Filter;
+import com.jengine.orm.model.query.filter.StringFilter;
 import org.antlr.runtime.RecognitionException;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 import static com.jengine.utils.CollectionUtil.toList;
 
 public class Cluster extends MultiModel {
     protected LinkedHashMap<String, MultiModelField> selectedFields = new LinkedHashMap<String, MultiModelField>();
+    protected List<Filter> filters = new ArrayList<Filter>();
+    protected List<StringFilter> stringFilters = new ArrayList<StringFilter>();
 
     public Cluster(ModelClassBase model) {
         super(model);
@@ -147,55 +149,96 @@ public class Cluster extends MultiModel {
         return (Cluster) super.and(model, name);
     }
 
+    public Cluster filterCluster(String query, Object ... params) throws DBException {
+        try {
+            stringFilters.add(new StringFilter(query, toList(params)));
+        } catch (Exception e) {
+            throw new DBException(e);
+        }
+        return this;
+    }
+
+    public Cluster filterCluster(Map<String, Object> filter) throws DBException {
+        return filterCluster(Filter.parse(filter));
+    }
+
+    public Cluster filterCluster(Filter... filters) throws DBException {
+        return filterCluster(Arrays.asList(filters));
+    }
+
+    public Cluster filterCluster(List<Filter> filter) throws DBException {
+        filters.addAll(filter);
+        return this;
+    }
+
+    public <T extends Object> T one() throws DBException {
+        return newQuery().one();
+    }
+
+    public <T extends Object> List<T> list() throws DBException {
+        return newQuery().list();
+    }
+
     public ClusterQuery select(Object ... fields) throws DBException {
         return select(Arrays.asList(fields));
     }
 
     public ClusterQuery select(List fields) throws DBException {
-        return new ClusterQuery(this).fields(fields.size() > 0 ? fields : toList(this.selectedFields.keySet()));
+        return newQuery(fields);
     }
 
-//    public ClusterQuery filter(String query, Object ... params) throws DBException {
-//        return new ClusterQuery(this).filter(query, (Object[]) params);
-//    }
-//
-//    public ClusterQuery filter(Map<String, Object> filter) throws DBException {
-//        return new ClusterQuery(this).filter(filter);
-//    }
-//
-//    public ClusterQuery filter(Filter... filters) throws DBException {
-//        return filter(Arrays.asList(filters));
-//    }
-//
-//    public ClusterQuery filter(List<Filter> filter) throws DBException {
-//        return new ClusterQuery(this).filter(filter);
-//    }
-//
+    public ClusterQuery filter(String query, Object ... params) throws DBException {
+        return newQuery().filter(query, (Object[]) params);
+    }
+
+    public ClusterQuery filter(Map<String, Object> filter) throws DBException {
+        return newQuery().filter(filter);
+    }
+
+    public ClusterQuery filter(Filter... filters) throws DBException {
+        return filter(Arrays.asList(filters));
+    }
+
+    public ClusterQuery filter(List<Filter> filter) throws DBException {
+        return newQuery().filter(filter);
+    }
+
 //    public Long count() throws DBException {
-//        return (Long) new ClusterQuery(this).field(new Count(this)).one();
+//        return (Long) new ClusterQuery(this).target(new Count(this)).one();
 //    }
 //
 //    public Long count(String field) throws DBException {
-//        return (Long) new ClusterQuery(this).field(new Count(this, field)).one();
+//        return (Long) new ClusterQuery(this).target(new Count(this, target)).one();
 //    }
 //
 //    public Object max(String field) throws DBException {
-//        return new ClusterQuery(this).field(new Max(this, field)).one();
+//        return new ClusterQuery(this).target(new Max(this, target)).one();
 //    }
 //
 //    public Object min(String field) throws DBException {
-//        return new ClusterQuery(this).field(new Min(this, field)).one();
+//        return new ClusterQuery(this).target(new Min(this, target)).one();
 //    }
 //
 //    public Object avg(String field) throws DBException {
-//        return new ClusterQuery(this).field(new Avg(this, field)).one();
+//        return new ClusterQuery(this).target(new Avg(this, target)).one();
 //    }
 //
 //    public Object sum(String field) throws DBException {
-//        return new ClusterQuery(this).field(new Sum(this, field)).one();
+//        return new ClusterQuery(this).target(new Sum(this, target)).one();
 //    }
 //
 //    public <ResultType> ResultType calc(String name, Class type, String expr, String ... fields) throws DBException {
-//        return (ResultType) new ClusterQuery(this).field(new Calc(this, name, type, expr, fields)).one();
+//        return (ResultType) new ClusterQuery(this).target(new Calc(this, name, type, expr, fields)).one();
 //    }
+
+
+    protected ClusterQuery newQuery() throws DBException {
+        return new ClusterQuery(this).targets(toList(this.selectedFields.keySet())).filter(filters).sfilter(stringFilters);
+    }
+
+    protected ClusterQuery newQuery(List fields) throws DBException {
+        List targets = fields.size() > 0 ? fields : toList(this.selectedFields.keySet());
+        return new ClusterQuery(this).targets(targets).filter(filters).sfilter(stringFilters);
+    }
+
 }

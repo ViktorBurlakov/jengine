@@ -23,7 +23,11 @@ public class StringFilter {
     private List params = new ArrayList();
 
 
-    public StringFilter(String source, Object[] params) throws TokenStreamException, RecognitionException, UnsupportedEncodingException {
+    public StringFilter(String source, Object ... params) throws TokenStreamException, RecognitionException, UnsupportedEncodingException {
+        this(source, toList(params));
+    }
+
+    public StringFilter(String source, List params) throws TokenStreamException, RecognitionException, UnsupportedEncodingException {
         this.source = source;
         this.params.addAll(toList(params));
     }

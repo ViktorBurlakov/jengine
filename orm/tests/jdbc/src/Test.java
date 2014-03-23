@@ -156,7 +156,7 @@ public class Test {
 
         Book book2 = new Book();
         book2.setId(2l);
-        book2.setTitle("The Shining ");
+        book2.setTitle("The Shining");
         book2.setLibrary(globeLibrary);
         book2.save();
 
@@ -502,6 +502,8 @@ public class Test {
         check( new Cluster(Transaction.cls).ljoin(Book.cls).field("Transaction.id").select().one() != null );
         check( new Cluster("Transaction << Book", list("Transaction.id")).select().one() != null );
         check( new Cluster("Transaction << Book", list("Transaction.id", "Book.id", "Book.title")).select("Book.title").one() != null );
+        Cluster cluster = new Cluster("Transaction << Book", list("Transaction.id", "Book.id", "Book.title")).filterCluster(" Book.title = ? ", "The Shining");
+        check( cluster.select("Book.title").one() != null );
         check( new Cluster("Transaction << Book").fields("Transaction.id").select().one() != null );
         check( new Cluster("Transaction >> Book").fields("Transaction.id").select().one() != null );
         check( new Cluster("Transaction && Book").fields("Transaction.id").select().one() != null );

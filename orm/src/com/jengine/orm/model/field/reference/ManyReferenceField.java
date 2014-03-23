@@ -87,7 +87,7 @@ public class ManyReferenceField extends BaseReference {
         ModelClassBase middleCls = getMiddleClass();
         Field middleField = getMiddleField();
         Object keyValue = obj.getData().get(getKeyFieldName());
-        return middleCls.filter(middleField.eq(keyValue)).field(middleField);
+        return middleCls.filter(middleField.eq(keyValue)).target(middleField);
     }
 
     public void createMiddleClass() {
