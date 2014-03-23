@@ -25,7 +25,7 @@ public abstract class BaseQuery {
     protected List<OrderItem> orderList = new ArrayList<OrderItem>();
     protected Map<String, Integer> page = map("start", null, "end", null);
     protected Map<String, Object> values = new LinkedHashMap<String, Object>();
-    protected LinkedHashMap<String, Target> group = new LinkedHashMap<String, Target>();
+    protected LinkedHashMap<String, MultiModelField> group = new LinkedHashMap<String, MultiModelField>();
     protected Boolean distinct = false;
 
     public BaseQuery() {
@@ -158,8 +158,8 @@ public abstract class BaseQuery {
 
     /* group by methods */
 
-    public BaseQuery group(String targetName) {
-        group.put(targetName, targets.get(targetName));
+    public BaseQuery group(String fieldName) {
+        group.put(fieldName, _registerField(fieldName));
         return this;
     }
 
