@@ -192,6 +192,12 @@ public abstract class BaseQuery {
         return this;
     }
 
+    public BaseQuery page(Integer start, Integer end) {
+        this.page.put("start", start);
+        this.page.put("end", end);
+        return this;
+    }
+
 
     /* exec query methods */
 

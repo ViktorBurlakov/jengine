@@ -244,6 +244,10 @@ public class ModelQuery extends BaseQuery {
         return (ModelQuery) super.page(page);
     }
 
+    public ModelQuery page(Integer start, Integer end) {
+        return (ModelQuery) super.page(start, end);
+    }
+
     /* exec query methods */
 
     public long count() throws DBException {
@@ -291,8 +295,12 @@ public class ModelQuery extends BaseQuery {
             Field field = manager.getField(fieldName);
             query.addValue(field.getColumnName(), values.get(fieldName));
         }
-        query.setStart(page.get("start"));
-        query.setEnd(page.get("end"));
+        if (page.get("start") != null && page.get("end") != null) {
+            query.setStart(page.get("start"));
+            query.setEnd(page.get("end"));
+            query.addParam(page.get("start"));
+            query.addParam(page.get("end"));
+        }
 
         return query;
     }

@@ -307,18 +307,33 @@ public class Provider {
         if (query.getGroup().size() > 0) {
             queryString.append("GROUP BY ").append(concat(query.getGroup(), ", ")).append(" ");
         }
+
         // order clause
         if(!query.getOrder().isEmpty()) {
             queryString.append("ORDER BY ").append(query.getOrder().get("orderByCol"));
             if (query.getOrder().containsKey("orderByType") && query.getOrder().get("orderByType") != null) {
                 queryString.append(" ").append(query.getOrder().get("orderByType"));
             }
-            queryString.append("");
+            queryString.append(" ");
+        }
+
+        // limit clause
+        if(query.getStart() != null && query.getEnd() != null) {
+            queryString.append("LIMIT ").append(LimitClause.build(this, query)).append(" ");
         }
 
         return queryString.toString();
     }
 
+
+    public static class LimitClause {
+        public static StringBuffer build(Provider provider, SQLQuery query) {
+            StringBuffer queryString = new StringBuffer();
+
+            return queryString.append("?").append(", ").append("?");
+        }
+
+    }
 
     public static class WhereClause {
 

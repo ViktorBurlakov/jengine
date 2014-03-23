@@ -112,6 +112,10 @@ public class ClusterQuery extends BaseQuery {
         return (ClusterQuery) super.page(page);
     }
 
+    public ClusterQuery page(Integer start, Integer end) {
+        return (ClusterQuery) super.page(start, end);
+    }
+
     public <T extends Object> List<T> list() throws DBException {
         SQLQuery sqlQuery = toSQL();
         List result = multiModel.getDB().getProvider().select(sqlQuery);
@@ -141,8 +145,12 @@ public class ClusterQuery extends BaseQuery {
             MultiModelField field = multiModel.getFields().get(fieldName);
             query.addValue(field.getSQLName(), values.get(fieldName));
         }
-        query.setStart(page.get("start"));
-        query.setEnd(page.get("end"));
+        if (page.get("start") != null && page.get("end") != null) {
+            query.setStart(page.get("start"));
+            query.setEnd(page.get("end"));
+            query.addParam(page.get("start"));
+            query.addParam(page.get("end"));
+        }
 
         return query;
     }
