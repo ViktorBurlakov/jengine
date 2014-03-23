@@ -135,8 +135,8 @@ public class ClusterQuery extends BaseQuery {
         for (StringFilter stringFilter : stringFilters) {
             stringFilter.setSQL(query);
         }
-        for (Target target : group.values()) {
-            query.group(target.getSQLName());
+        for (MultiModelField field : group.values()) {
+            query.group(field.getSQLName());
         }
         for (OrderItem orderItem : orderList) {
             orderItem.setSQL(query);
