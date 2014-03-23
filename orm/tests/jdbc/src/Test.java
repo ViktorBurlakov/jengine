@@ -44,16 +44,16 @@ public class Test {
         // testing
         DBConnection connection = db.getConnection();
         try {
-//            test1();
-//            test2();
-//            test3();
-//            test4();
-//            test5();
-//            test6();
-//            test7();
-//            test8();
-//            test9();
-//            test10();
+            test1();
+            test2();
+            test3();
+            test4();
+            test5();
+            test6();
+            test7();
+            test8();
+            test9();
+            test10();
             test11();
         } finally {
             db.closeConnection(connection);
@@ -303,6 +303,7 @@ public class Test {
         check( CollectionUtil.equals(Author.cls.select("id").order("lastName").list(), list(2l, 3l, 1l)) );
         List members = Member.cls.select(new Calc("f", Long.class, "%s + 1", Member.id)).order("library.name").order("f").list();
         check( CollectionUtil.equals(members, list(2l, 3l, 4l, 5l, 6l)) );
+        check( Transaction.cls.select("member").distinct().page(0, 1).<Member>list().size() == 1 );
     }
 
     /**
@@ -513,9 +514,9 @@ public class Test {
         check( new Cluster("(Transaction << Book) >> Author_books, Author").alias("Author_books", "books").fields("books.id").select().one() != null );
         check( new Cluster("(Transaction << Book) >> Author_books, Author").alias(0, "t").fields("t.id").select().one() != null );
         check( new Cluster("(Transaction << Book) >> Author_books, Author").restriction(0, "Transaction.book", "Book.id").fields("Transaction.id").select().one() != null );
-        check( new Cluster("Transaction << Book").fields("Book.title").select().distinct("Book.title").order("Book.title").list() != null );
-        check( new Cluster("Transaction << Book").fields("Book.title").select().distinct("Book.title").order("Book.title").page(0, 2).list() != null );
-        check( new Cluster("Transaction << Book").fields("Book.title").select().distinct("Book.title").order("Book.title").page(0, 2).list() != null );
+        Cluster cluster1 = new Cluster("Transaction << Book", list("Book.title"));
+        check( cluster1.select().distinct("Book.title").order("Book.title").list() != null );
+        check( cluster1.select().distinct("Book.title").order("Book.title", "DESC").page(0, 2).list() != null );
     }
 
 
