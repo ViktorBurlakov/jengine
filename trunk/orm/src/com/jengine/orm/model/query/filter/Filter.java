@@ -4,7 +4,7 @@ package com.jengine.orm.model.query.filter;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.filter.SQLFilter;
 import com.jengine.orm.db.query.SQLQuery;
-import com.jengine.orm.model.multi.MultiModelField;
+import com.jengine.orm.model.multi.field.MultiModelField;
 import com.jengine.orm.model.query.BaseQuery;
 import com.jengine.orm.model.query.ModelQuery;
 

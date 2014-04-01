@@ -283,7 +283,7 @@ public class Provider {
         // select clause
         List<String> targets = new ArrayList<String>();
         for (Object[] target : query.getTargets()) {
-            if (target.length > 1) {
+            if (target[1] != null) {
                 targets.add(String.format("%s AS %s", target));
             } else {
                 targets.add((String) target[0]);

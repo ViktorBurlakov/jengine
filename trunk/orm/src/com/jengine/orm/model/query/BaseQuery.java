@@ -2,12 +2,12 @@ package com.jengine.orm.model.query;
 
 
 import com.jengine.orm.db.DBException;
-import com.jengine.orm.model.field.FunctionField;
 import com.jengine.orm.model.multi.MultiModel;
-import com.jengine.orm.model.multi.MultiModelField;
+import com.jengine.orm.model.multi.field.CalcMultiField;
+import com.jengine.orm.model.multi.field.MultiModelField;
 import com.jengine.orm.model.query.filter.Filter;
 import com.jengine.orm.model.query.filter.StringFilter;
-import com.jengine.orm.model.query.target.FunctionTarget;
+import com.jengine.orm.model.query.target.FieldTarget;
 import com.jengine.orm.model.query.target.Target;
 import com.jengine.utils.CollectionUtil;
 
@@ -64,10 +64,12 @@ public abstract class BaseQuery {
 
     abstract public BaseQuery target(String field);
 
-    public BaseQuery target(FunctionField field) {
-        Target target = new FunctionTarget(field);
+    public BaseQuery target(CalcMultiField field) {
+        multiModel.getFields().put(field.getName(), field);
+        field.config(multiModel);
+        Target target = new FieldTarget(field);
         target.config(this);
-        this.targets.put(target.getName(), target);
+        targets.put(field.getName(), target);
         return this;
     }
 

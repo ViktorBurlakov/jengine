@@ -126,7 +126,7 @@ public class SQLQuery {
     }
 
     public void addTarget(String target) {
-        targets.add(new String[]{target}) ;
+        targets.add(new String[]{target, null}) ;
     }
 
 

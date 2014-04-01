@@ -27,15 +27,19 @@ import com.jengine.orm.model.ModelManager;
 import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.ForeignField;
 import com.jengine.orm.model.field.FunctionField;
-import com.jengine.orm.model.field.aggregation.Count;
 import com.jengine.orm.model.field.reference.BaseReference;
 import com.jengine.orm.model.field.reference.ReferenceField;
 import com.jengine.orm.model.multi.MultiModel;
-import com.jengine.orm.model.multi.MultiModelField;
 import com.jengine.orm.model.multi.MultiModelItem;
+import com.jengine.orm.model.multi.field.CalcMultiField;
+import com.jengine.orm.model.multi.field.MultiModelField;
+import com.jengine.orm.model.multi.field.aggregation.Count;
 import com.jengine.orm.model.query.filter.Filter;
 import com.jengine.orm.model.query.filter.StringFilter;
-import com.jengine.orm.model.query.target.*;
+import com.jengine.orm.model.query.target.FieldTarget;
+import com.jengine.orm.model.query.target.ModelTarget;
+import com.jengine.orm.model.query.target.Target;
+import com.jengine.utils.CollectionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,14 +49,13 @@ import static com.jengine.utils.CollectionUtil.concat;
 
 public class ModelQuery extends BaseQuery {
     private ModelManager manager = null;
-    protected MultiModel multiModel;
 
     public ModelQuery(ModelManager manager) {
         super();
         this.manager = manager;
         this.multiModel = new MultiModel(manager.getModelClass());
         for (MultiModelField field : this.multiModel.getFieldList()) {
-            if (!(field.getModelField() instanceof BaseReference)) {
+            if (field.getModelField().isPersistence()) {
                 multiModel.getFields().put(field.getModelField().getFieldName(), field);
             }
         }
@@ -133,17 +136,19 @@ public class ModelQuery extends BaseQuery {
         return this;
     }
 
-    public ModelQuery target(FunctionField field) {
-        return (ModelQuery) super.target(field);
-    }
-
     public ModelQuery targets(String... fields) {
         return (ModelQuery) super.targets(fields);
     }
 
+    public ModelQuery target(CalcMultiField field) {
+        return (ModelQuery) super.target(field);
+    }
+
     public ModelQuery target(Object field) {
-        if (String.class.equals(field.getClass())) {
+        if (field instanceof  String) {
             this.target((String) field);
+        } else if (field instanceof  CalcMultiField)  {
+            this.target((CalcMultiField) field);
         } else  {
             this.target((Field) field);
         }
@@ -157,31 +162,31 @@ public class ModelQuery extends BaseQuery {
 
     public ModelQuery target(Field field) {
         if (field instanceof ForeignField) {
-            target((ForeignField) field);
-        } else if (field instanceof FunctionField) {
-            target((FunctionField) field);
+            this._addPath(((ForeignField) field).getReferencePath());
         } else if (field instanceof BaseReference) {
-            target((BaseReference) field);
+            this._addPath(CollectionUtil.list(field.getFieldName()));
+        }
+        return target(field.getFieldName(), multiModel.getFields().get(field.getFieldName()));
+    }
+
+    public ModelQuery target(String name, MultiModelField field) {
+        if (field instanceof CalcMultiField) {
+            target((CalcMultiField) field);
+        } else if (field.getModelField() instanceof FunctionField) {
+            Target target = new FieldTarget(field);
+            target.config(this);
+            this.targets.put(target.getName(), target);
+        } else if (field.getModelField() instanceof BaseReference) {
+            MultiModelItem item =  multiModel.getItems().get(name);
+            Target target = new ModelTarget(name, item);
+            target.config(this);
+            this.targets.put(target.getName(), target);
         } else {
-            Target target = new FieldTarget(field.getFieldName(), multiModel.getFields().get(field.getFieldName()));
+            Target target = new FieldTarget(field);
             target.config(this);
             this.targets.put(target.getName(), target);
         }
 
-        return this;
-    }
-
-    public ModelQuery target(ForeignField field) {
-        Target target = new ForeignTarget(field);
-        target.config(this);
-        this.targets.put(target.getName(), target);
-        return this;
-    }
-
-    public ModelQuery target(BaseReference field) {
-        Target target = new ReferenceTarget(field);
-        target.config(this);
-        this.targets.put(target.getName(), target);
         return this;
     }
 
@@ -251,7 +256,7 @@ public class ModelQuery extends BaseQuery {
     /* exec query methods */
 
     public long count() throws DBException {
-        return this.target(new Count(this.manager.getModelClass())).<Long>one();
+        return this.target(new Count()).<Long>one();
     }
 
     public <T extends Object> List<T> list() throws DBException {
