@@ -2,7 +2,9 @@ package com.jengine.orm.model.query.target;
 
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.query.SQLQuery;
-import com.jengine.orm.model.multi.MultiModelField;
+import com.jengine.orm.model.multi.field.CalcMultiField;
+import com.jengine.orm.model.multi.field.FunctionMultiField;
+import com.jengine.orm.model.multi.field.MultiModelField;
 
 import java.util.Iterator;
 
@@ -28,10 +30,15 @@ public class FieldTarget extends Target {
     }
 
     public void setSQL(SQLQuery query) {
-        query.addTarget(multiModelField.getSQLName());
+        if (multiModelField instanceof FunctionMultiField || multiModelField instanceof CalcMultiField) {
+            query.addTarget(multiModelField.toSQL(), multiModelField.getSQLName());
+        } else {
+            query.addTarget(multiModelField.toSQL());
+        }
+
     }
 
     public Object processResult(Iterator itr) throws DBException {
-        return multiModelField.getModelField().cast(super.processResult(itr));
+        return multiModelField.cast(super.processResult(itr));
     }
 }

@@ -5,7 +5,7 @@ import antlr.RecognitionException;
 import antlr.TokenStreamException;
 import com.jengine.orm.db.filter.SQLStringFilter;
 import com.jengine.orm.db.query.SQLQuery;
-import com.jengine.orm.model.multi.MultiModelField;
+import com.jengine.orm.model.multi.field.MultiModelField;
 import com.jengine.orm.model.query.BaseQuery;
 import com.jengine.orm.model.query.ModelQuery;
 

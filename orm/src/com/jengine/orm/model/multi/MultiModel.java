@@ -6,6 +6,7 @@ import com.jengine.orm.DBFactory;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.model.field.reference.ReferenceField;
+import com.jengine.orm.model.multi.field.MultiModelField;
 import com.jengine.orm.model.multi.parser.ExprLexer;
 import com.jengine.orm.model.multi.parser.ExprParser;
 import com.jengine.utils.expression.ExpressionData;

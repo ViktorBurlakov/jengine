@@ -4,8 +4,8 @@ package com.jengine.orm.model.query;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.model.cluster.Cluster;
-import com.jengine.orm.model.field.FunctionField;
-import com.jengine.orm.model.multi.MultiModelField;
+import com.jengine.orm.model.multi.field.CalcMultiField;
+import com.jengine.orm.model.multi.field.MultiModelField;
 import com.jengine.orm.model.query.filter.Filter;
 import com.jengine.orm.model.query.filter.StringFilter;
 import com.jengine.orm.model.query.target.FieldTarget;
@@ -48,7 +48,7 @@ public class ClusterQuery extends BaseQuery {
         return (ClusterQuery) super.distinct(field);
     }
 
-    public ClusterQuery target(FunctionField field) {
+    public ClusterQuery target(CalcMultiField field) {
         return (ClusterQuery) super.target(field);
     }
 
@@ -96,8 +96,8 @@ public class ClusterQuery extends BaseQuery {
         return (ClusterQuery) super.order(field, orderType);
     }
 
-    public ClusterQuery group(String targetName) {
-        return (ClusterQuery) super.group(targetName);
+    public ClusterQuery group(String fieldName) {
+        return (ClusterQuery) super.group(fieldName);
     }
 
     public ClusterQuery values(Map<String, Object> values) throws DBException {

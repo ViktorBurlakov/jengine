@@ -2,7 +2,7 @@ package com.jengine.orm.model.query;
 
 
 import com.jengine.orm.db.query.SQLQuery;
-import com.jengine.orm.model.multi.MultiModelField;
+import com.jengine.orm.model.multi.field.MultiModelField;
 import com.jengine.utils.CollectionUtil;
 
 public class OrderItem {

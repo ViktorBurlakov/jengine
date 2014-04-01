@@ -5,8 +5,10 @@ import com.jengine.orm.DB;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.model.multi.MultiModel;
-import com.jengine.orm.model.multi.MultiModelField;
 import com.jengine.orm.model.multi.MultiModelItem;
+import com.jengine.orm.model.multi.field.CalcMultiField;
+import com.jengine.orm.model.multi.field.MultiModelField;
+import com.jengine.orm.model.multi.field.aggregation.*;
 import com.jengine.orm.model.query.ClusterQuery;
 import com.jengine.orm.model.query.filter.Filter;
 import com.jengine.orm.model.query.filter.StringFilter;
@@ -71,8 +73,11 @@ public class Cluster extends MultiModel {
     public Cluster field(Object field) {
         if (field instanceof String) {
             this.selectedFields.put((String) field, this.fields.get(field));
-//        } else if (field instanceof FunctionField) {
-//
+        } else if (field instanceof CalcMultiField) {
+            CalcMultiField multiField = (CalcMultiField) field;
+            multiField.config(this);
+            this.fields.put(multiField.getName(), multiField);
+            this.selectedFields.put(multiField.getName(), multiField);
         }
         return this;
     }
@@ -203,34 +208,34 @@ public class Cluster extends MultiModel {
         return newQuery().filter(filter);
     }
 
-//    public Long count() throws DBException {
-//        return (Long) new ClusterQuery(this).target(new Count(this)).one();
-//    }
-//
-//    public Long count(String field) throws DBException {
-//        return (Long) new ClusterQuery(this).target(new Count(this, target)).one();
-//    }
-//
-//    public Object max(String field) throws DBException {
-//        return new ClusterQuery(this).target(new Max(this, target)).one();
-//    }
-//
-//    public Object min(String field) throws DBException {
-//        return new ClusterQuery(this).target(new Min(this, target)).one();
-//    }
-//
-//    public Object avg(String field) throws DBException {
-//        return new ClusterQuery(this).target(new Avg(this, target)).one();
-//    }
-//
-//    public Object sum(String field) throws DBException {
-//        return new ClusterQuery(this).target(new Sum(this, target)).one();
-//    }
-//
-//    public <ResultType> ResultType calc(String name, Class type, String expr, String ... fields) throws DBException {
-//        return (ResultType) new ClusterQuery(this).target(new Calc(this, name, type, expr, fields)).one();
-//    }
+    public Long count() throws DBException {
+        return (Long) new ClusterQuery(this).target(new Count()).one();
+    }
 
+    public Long count(String field) throws DBException {
+        return (Long) new ClusterQuery(this).target(new Count(field)).one();
+    }
+
+    public <T> T max(String field) throws DBException {
+        return new ClusterQuery(this).target(new Max(field)).one();
+    }
+
+    public <T> T min(String field) throws DBException {
+        return new ClusterQuery(this).target(new Min(field)).one();
+    }
+
+    public <T> T avg(String field) throws DBException {
+        return new ClusterQuery(this).target(new Avg(field)).one();
+    }
+
+    public<T> T sum(String field) throws DBException {
+        return new ClusterQuery(this).target(new Sum(field)).one();
+    }
+
+//    public <ResultType> ResultType calc(String expr, String ... fields) throws DBException {
+//        return (ResultType) new ClusterQuery(this).target(new Calc("_calc_", null, expr, fields)).one();
+//    }
+//
 
     protected ClusterQuery newQuery() throws DBException {
         return new ClusterQuery(this).targets(toList(this.selectedFields.keySet())).filter(filters).sfilter(stringFilters);

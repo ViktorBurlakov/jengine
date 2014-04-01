@@ -4,8 +4,9 @@ import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.model.Model;
 import com.jengine.orm.model.field.Field;
-import com.jengine.orm.model.multi.MultiModelField;
 import com.jengine.orm.model.multi.MultiModelItem;
+import com.jengine.orm.model.multi.field.FunctionMultiField;
+import com.jengine.orm.model.multi.field.MultiModelField;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -37,14 +38,18 @@ public class ModelTarget extends Target {
 
     public void setSQL(SQLQuery query) {
         for (MultiModelField field : item.getFieldList()) {
-            query.addTarget(field.getSQLName());
+            if (field instanceof FunctionMultiField) {
+                query.addTarget(field.toSQL(), field.getSQLName());
+            } else {
+                query.addTarget(field.toSQL());
+            }
         }
     }
 
     protected Object processItem(Iterator itr, MultiModelItem item) throws DBException {
         LinkedHashMap<String, Object> values = new LinkedHashMap<String, Object>();
         for (MultiModelField field : item.getFieldList()) {
-            values.put(field.getModelField().getFieldName(), field.getModelField().cast(itr.next()));
+            values.put(field.getModelField().getFieldName(), field.cast(itr.next()));
         }
         Field pk = item.getPrimaryKey().getModelField();
         if (values.containsKey(pk.getFieldName()) && values.get(pk.getFieldName()) != null) {
