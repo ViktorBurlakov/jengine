@@ -35,8 +35,6 @@ public abstract class BaseQuery {
         this.multiModel = multiModel;
     }
 
-    abstract public MultiModelField _registerField(String field);
-
     /* target methods */
 
     public BaseQuery distinct() {
@@ -44,44 +42,54 @@ public abstract class BaseQuery {
         return this;
     }
 
-    public BaseQuery distinct(String ... fields) {
+    public BaseQuery distinct(Object ... fields) {
         this.distinct = true;
         this.targets(fields);
         return this;
     }
 
-    public BaseQuery distinct(List<String> fields) {
+    public BaseQuery distinct(List fields) {
         this.distinct = true;
         this.targets(fields);
         return this;
     }
 
-    public BaseQuery distinct(String field) {
+    public BaseQuery distinct(Object field) {
         this.distinct = true;
         this.target(field);
         return this;
     }
 
-    abstract public BaseQuery target(String field);
+    public BaseQuery target(Object field) {
+        if (field instanceof CalcMultiField)  {
+            return target((CalcMultiField) field);
+        }  else {
+            MultiModelField multiModelField = multiModel.getField((String) field);
+            Target target = new FieldTarget((String) field, multiModelField);
+            target.config(this);
+            this.targets.put(target.getName(), target);
+        }
 
-    public BaseQuery target(CalcMultiField field) {
-        multiModel.getFields().put(field.getName(), field);
-        field.config(multiModel);
+        return this;
+    }
+
+    protected BaseQuery target(CalcMultiField field) {
+        multiModel.addCalcField(field);
         Target target = new FieldTarget(field);
         target.config(this);
         targets.put(field.getName(), target);
         return this;
     }
 
-    public BaseQuery targets(String ... fields) {
-        for(String field : fields) {
+    public BaseQuery targets(Object ... fields) {
+        for(Object field : fields) {
             this.target(field);
         }
         return this;
     }
 
-    public BaseQuery targets(List<String> fields) {
-        for(String field : fields) {
+    public BaseQuery targets(List fields) {
+        for(Object field : fields) {
             this.target(field);
         }
 
@@ -153,7 +161,7 @@ public abstract class BaseQuery {
     }
 
     public BaseQuery order(String field, String orderType) {
-        MultiModelField multiModelField = _registerField(field);
+        MultiModelField multiModelField = multiModel.getField(field);
         orderList.add(new OrderItem(multiModelField, orderType));
         return this;
     }
@@ -161,7 +169,7 @@ public abstract class BaseQuery {
     /* group by methods */
 
     public BaseQuery group(String fieldName) {
-        group.put(fieldName, _registerField(fieldName));
+        group.put(fieldName, multiModel.getField(fieldName));
         return this;
     }
 
@@ -178,7 +186,7 @@ public abstract class BaseQuery {
     }
 
     public BaseQuery value(String name, Object value) throws DBException {
-        MultiModelField multiModelField = _registerField(name);
+        MultiModelField multiModelField = multiModel.getField(name);
         this.values.put(multiModelField.getName(), value);
         return this;
     }

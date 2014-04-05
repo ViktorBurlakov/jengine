@@ -4,11 +4,9 @@ package com.jengine.orm.model.query;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.model.cluster.Cluster;
-import com.jengine.orm.model.multi.field.CalcMultiField;
 import com.jengine.orm.model.multi.field.MultiModelField;
 import com.jengine.orm.model.query.filter.Filter;
 import com.jengine.orm.model.query.filter.StringFilter;
-import com.jengine.orm.model.query.target.FieldTarget;
 import com.jengine.orm.model.query.target.Target;
 
 import java.util.List;
@@ -20,43 +18,35 @@ public class ClusterQuery extends BaseQuery {
         super(cluster);
     }
 
-    public MultiModelField _registerField(String field) {
-        return multiModel.getFields().get(field);
-    }
-
     public ClusterQuery target(String field) {
-        MultiModelField multiModelField = multiModel.getFields().get(field);
-        Target target = new FieldTarget(field, multiModelField);
-        target.config(this);
-        this.targets.put(target.getName(), target);
-        return this;
+        return (ClusterQuery) super.target((String) field);
     }
 
     public ClusterQuery distinct() {
         return (ClusterQuery) super.distinct();
     }
 
-    public ClusterQuery distinct(String... fields) {
+    public ClusterQuery distinct(Object... fields) {
         return (ClusterQuery) super.distinct(fields);
     }
 
-    public ClusterQuery distinct(List<String> fields) {
+    public ClusterQuery distinct(List fields) {
         return (ClusterQuery) super.distinct(fields);
     }
 
-    public ClusterQuery distinct(String field) {
+    public ClusterQuery distinct(Object field) {
         return (ClusterQuery) super.distinct(field);
     }
 
-    public ClusterQuery target(CalcMultiField field) {
+    public ClusterQuery target(Object field) {
         return (ClusterQuery) super.target(field);
     }
 
-    public ClusterQuery targets(String... fields) {
+    public ClusterQuery targets(Object... fields) {
         return (ClusterQuery) super.targets(fields);
     }
 
-    public ClusterQuery targets(List<String> fields) {
+    public ClusterQuery targets(List fields) {
         return (ClusterQuery) super.targets(fields);
     }
 

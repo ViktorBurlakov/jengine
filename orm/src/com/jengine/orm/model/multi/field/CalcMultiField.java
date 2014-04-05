@@ -39,7 +39,7 @@ public class CalcMultiField extends MultiModelField {
     public void config(MultiModel multiModel) {
         this.multiModel = multiModel;
         for (String field : this.fields) {
-            columns.add(multiModel.getFields().get(field).getSQLName());
+            columns.add(multiModel.getField(field).getSQLName());
         }
     }
 

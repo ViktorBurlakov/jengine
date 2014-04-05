@@ -40,7 +40,7 @@ public class StringFilter {
         stringFilter = new SQLStringFilter(this.source, sqlParams);
         List<String> columns = stringFilter.findColumns();
         for (int index = 0; index < columns.size(); index++) {
-            MultiModelField multiModelField = query._registerField(columns.get(index));
+            MultiModelField multiModelField = query.getMultiModel().getField(columns.get(index));
             multiModelFields.add(multiModelField);
             stringFilter.setColumnSQLName(index, multiModelField.getSQLName());
         }

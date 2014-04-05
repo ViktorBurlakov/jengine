@@ -5,7 +5,11 @@ import com.jengine.orm.DB;
 import com.jengine.orm.DBFactory;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.model.ModelClassBase;
+import com.jengine.orm.model.field.Field;
+import com.jengine.orm.model.field.ForeignField;
+import com.jengine.orm.model.field.reference.BaseReference;
 import com.jengine.orm.model.field.reference.ReferenceField;
+import com.jengine.orm.model.multi.field.CalcMultiField;
 import com.jengine.orm.model.multi.field.MultiModelField;
 import com.jengine.orm.model.multi.parser.ExprLexer;
 import com.jengine.orm.model.multi.parser.ExprParser;
@@ -72,6 +76,10 @@ public class MultiModel {
             fields.put(alias + "." + field.getModelField().getFieldName(), field);
         }
         return this;
+    }
+
+    public MultiModelField getField(String field) {
+        return fields.get(field);
     }
 
     /* model operations */
@@ -200,11 +208,61 @@ public class MultiModel {
         return null;
     }
 
+    public <T extends CalcMultiField> T addCalcField(T field) {
+        fields.put(field.getName(), field);
+        field.config(this);
+        return field;
+    }
+
     protected MultiModelItem add(MultiModelItem item) {
         items.put(item.getName(), item);
         fields.putAll(item.getFields());
         _modelCounters.put(item.getModelClass().getName(), 0);
+        item.config();
         return item;
+    }
+
+    /* Join Related Models */
+
+    public MultiModelField getRelatedField(MultiModelItem item, String field) {
+        return getRelatedField(item, item.getModelClass().getManager().getField(field));
+    }
+
+    public MultiModelField getRelatedField(MultiModelItem item, Field modelField) {
+        String fullName = getRelatedFieldName(item, modelField.getFieldName());
+        this.joinRelatedModels(item, getReferencePath(modelField));
+        return fields.get(fullName);
+    }
+
+    public List<String> getReferencePath(Field modelField) {
+        List<String> result = new ArrayList<String>();
+
+        if (modelField instanceof ForeignField) {
+            result.addAll(((ForeignField) modelField).getReferencePath());
+        } else if (modelField instanceof BaseReference) {
+            result.add(modelField.getFieldName());
+        }
+
+        return result;
+    }
+
+    protected String getRelatedFieldName(MultiModelItem item, String fieldName) {
+        return item.getName() + "." + fieldName;
+    }
+
+    public void joinRelatedModels(MultiModelItem item, List<String> path) {
+        if (path.size() > 0) {
+            String fieldName = path.get(0);
+            ReferenceField currentField  = (ReferenceField) item.getModelClass().getManager().getField(fieldName);
+            ModelClassBase referenceClass = currentField.getReferenceClass();
+            String referenceItemName = item.getName() + "." + fieldName;
+            if (!this.items.containsKey(referenceItemName)) {
+                this.ljoin(referenceClass, referenceItemName,
+                        String.format("%s.%s", referenceItemName, currentField.getReferenceModelKey().getFieldName()),
+                        String.format("%s.%s", item.getName(), fieldName));
+            }
+            joinRelatedModels(items.get(referenceItemName), path.subList(1, path.size()));
+        }
     }
 
     /* SQL methods*/

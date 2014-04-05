@@ -238,12 +238,16 @@ public class Cluster extends MultiModel {
 //
 
     protected ClusterQuery newQuery() throws DBException {
-        return new ClusterQuery(this).targets(toList(this.selectedFields.keySet())).filter(filters).sfilter(stringFilters);
+        return new ClusterQuery(this).targets(getTargets()).filter(filters).sfilter(stringFilters);
     }
 
     protected ClusterQuery newQuery(List fields) throws DBException {
-        List targets = fields.size() > 0 ? fields : toList(this.selectedFields.keySet());
+        List targets = fields.size() > 0 ? fields : getTargets();
         return new ClusterQuery(this).targets(targets).filter(filters).sfilter(stringFilters);
+    }
+
+    protected List<String> getTargets() {
+        return selectedFields.size() > 0 ? toList(this.selectedFields.keySet()) : toList(this.fields.keySet());
     }
 
 }

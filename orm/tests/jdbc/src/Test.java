@@ -252,6 +252,7 @@ public class Test {
         loadData();
 
         Date tdate = Transaction.cls.get(1).getDate();
+        check( Transaction.cls.get(1).getCounter() == (Transaction.cls.get(1).<Long>getId() + 1));
         Date modificationDate = Transaction.cls.get(1).getModificationDate();
         Thread.sleep(2000);
         Transaction.cls.get(1).save();
@@ -304,6 +305,8 @@ public class Test {
         List members = Member.cls.select(new Calc("f", Long.class, "%s + 1", "id")).order("library.name").order("f").list();
         check( CollectionUtil.equals(members, list(2l, 3l, 4l, 5l, 6l)) );
         check( Transaction.cls.select("member").distinct().page(0, 1).<Member>list().size() == 1 );
+
+        check( Transaction.cls.select().<Transaction>list().size() == 3 );
     }
 
     /**
@@ -356,6 +359,7 @@ public class Test {
         check( Book.cls.select(new Calc("counter", Long.class, "id + 1", "id")).filter("id = ?", 1l).<Long>one() == 2l );
         Book.cls.select("id", new Max("id")).filter("id = ?", 1l).group("id").one();
         check( Book.cls.<Long>calc("sum", Long.class, "max(%s) + 2", Book.id) == 5l );
+        Transaction.cls.select("id", new Max("book.id")).filter("book.id = ?", 1l).group("id").one();
     }
 
     /**
@@ -526,6 +530,7 @@ public class Test {
 //        check( cluster1.<Long>calc("%s + 10", "Transaction.id") > 0);
         check( new Cluster("Transaction >> Book").fields("Transaction.id", new Calc("calc_field", Long.class, "%s + 10", "Transaction.id")).select().list() != null );
         check( new Cluster("Transaction >> Book").fields("Transaction.id",  "Book.id", "Book.title", new Max("Transaction.id")).select().group("Book.title").list() != null );
+        check( new Cluster("Transaction << Book").select().filter("Book.id > 1").one() != null );
     }
 
 

@@ -38,8 +38,9 @@ public class MultiModelField {
         this.modelField = modelField;
     }
 
-    public void config(MultiModel multiModel) {
-        this.multiModel = multiModel;
+    public void config(MultiModelItem item) {
+        this.item = item;
+        this.multiModel = item.getMultiModel();
     }
 
     public String getSQLName() {

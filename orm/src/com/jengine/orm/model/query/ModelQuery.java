@@ -25,10 +25,8 @@ import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.model.ModelManager;
 import com.jengine.orm.model.field.Field;
-import com.jengine.orm.model.field.ForeignField;
 import com.jengine.orm.model.field.FunctionField;
 import com.jengine.orm.model.field.reference.BaseReference;
-import com.jengine.orm.model.field.reference.ReferenceField;
 import com.jengine.orm.model.multi.MultiModel;
 import com.jengine.orm.model.multi.MultiModelItem;
 import com.jengine.orm.model.multi.field.CalcMultiField;
@@ -39,13 +37,9 @@ import com.jengine.orm.model.query.filter.StringFilter;
 import com.jengine.orm.model.query.target.FieldTarget;
 import com.jengine.orm.model.query.target.ModelTarget;
 import com.jengine.orm.model.query.target.Target;
-import com.jengine.utils.CollectionUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import static com.jengine.utils.CollectionUtil.concat;
 
 public class ModelQuery extends BaseQuery {
     private ModelManager manager = null;
@@ -53,55 +47,9 @@ public class ModelQuery extends BaseQuery {
     public ModelQuery(ModelManager manager) {
         super();
         this.manager = manager;
-        this.multiModel = new MultiModel(manager.getModelClass());
-        for (MultiModelField field : this.multiModel.getFieldList()) {
-            if (field.getModelField().isPersistence()) {
-                multiModel.getFields().put(field.getModelField().getFieldName(), field);
-            }
-        }
-        this.defaultTarget = new ModelTarget(multiModel.getItemList().get(0));
+        this.multiModel = new QueryMultiModel(manager.getModelClass());
+        this.defaultTarget = new ModelTarget(getMultiModel().getMainItem());
         this.defaultTarget.config(this);
-    }
-
-    public MultiModelField _registerField(String field) {
-        return multiModel.getFields().containsKey(field) ?
-                multiModel.getFields().get(field) :
-                _registerField(manager.getField(field));
-    }
-
-    public MultiModelField _registerField(Field modelField) {
-        return _registerField(modelField.getFieldName(), modelField);
-    }
-
-    public MultiModelField _registerField(String name, Field modelField) {
-        if (modelField instanceof ForeignField) {
-            _addPath(((ForeignField) modelField).getReferencePath());
-        }
-        MultiModelField multiModelField = multiModel.getFields().get(name);
-        if (multiModelField == null) {
-            multiModelField = new MultiModelField(name, modelField);
-            multiModel.getFields().put(name, multiModelField);
-        }
-        return multiModelField;
-    }
-
-    public void _addPath(List<String> path) {
-        List<String> currentPath = new ArrayList<String>();
-        MultiModelItem currentItem = this.multiModel.getItemList().get(0);
-        ReferenceField currentField;
-
-        for (String fieldName : path) {
-            currentField = (ReferenceField) currentItem.getModelClass().getManager().getField(fieldName);
-            ModelClassBase referenceClass = currentField.getReferenceClass();
-            currentPath.add(fieldName);
-            String referenceItemName = concat(currentPath, ".").toString();
-            if (!this.multiModel.getItems().containsKey(referenceItemName)) {
-                this.multiModel.ljoin(referenceClass, referenceItemName,
-                        String.format("%s.%s", referenceItemName, currentField.getReferenceModelKey().getFieldName()),
-                        String.format("%s.%s", currentItem.getName(), fieldName));
-            }
-            currentItem = this.multiModel.getItems().get(referenceItemName);
-        }
     }
 
     /* target methods */
@@ -110,66 +58,29 @@ public class ModelQuery extends BaseQuery {
         return (ModelQuery) super.distinct();
     }
 
-    public ModelQuery distinct(String... fields) {
+    public ModelQuery distinct(Object ... fields) {
         return (ModelQuery) super.distinct(fields);
     }
 
-    public ModelQuery distinct(String field) {
-        return (ModelQuery) super.distinct(field);
-    }
-
-    public ModelQuery distinct(Object ... fields) {
-        this.distinct = true;
-        this.targets(fields);
-        return this;
-    }
-
     public ModelQuery distinct(List fields) {
-        this.distinct = true;
-        this.targets(fields);
-        return this;
+        return (ModelQuery) super.distinct(fields);
     }
 
     public ModelQuery distinct(Object field) {
-        this.distinct = true;
-        this.target(field);
-        return this;
-    }
-
-    public ModelQuery targets(String... fields) {
-        return (ModelQuery) super.targets(fields);
-    }
-
-    public ModelQuery target(CalcMultiField field) {
-        return (ModelQuery) super.target(field);
+        return (ModelQuery) super.distinct(field);
     }
 
     public ModelQuery target(Object field) {
-        if (field instanceof  String) {
-            this.target((String) field);
-        } else if (field instanceof  CalcMultiField)  {
+        if (field instanceof CalcMultiField) {
             this.target((CalcMultiField) field);
-        } else  {
-            this.target((Field) field);
+        } else {
+            this.target(getMultiModel().getField(field));
         }
 
         return this;
     }
 
-    public ModelQuery target(String field) {
-        return this.target(manager.getField(field));
-    }
-
-    public ModelQuery target(Field field) {
-        if (field instanceof ForeignField) {
-            this._addPath(((ForeignField) field).getReferencePath());
-        } else if (field instanceof BaseReference) {
-            this._addPath(CollectionUtil.list(field.getFieldName()));
-        }
-        return target(field.getFieldName(), multiModel.getFields().get(field.getFieldName()));
-    }
-
-    public ModelQuery target(String name, MultiModelField field) {
+    public ModelQuery target(MultiModelField field) {
         if (field instanceof CalcMultiField) {
             target((CalcMultiField) field);
         } else if (field.getModelField() instanceof FunctionField) {
@@ -177,8 +88,8 @@ public class ModelQuery extends BaseQuery {
             target.config(this);
             this.targets.put(target.getName(), target);
         } else if (field.getModelField() instanceof BaseReference) {
-            MultiModelItem item =  multiModel.getItems().get(name);
-            Target target = new ModelTarget(name, item);
+            MultiModelItem item =  multiModel.getItems().get(field.getName());
+            Target target = new ModelTarget(field.getName(), item);
             target.config(this);
             this.targets.put(target.getName(), target);
         } else {
@@ -191,18 +102,11 @@ public class ModelQuery extends BaseQuery {
     }
 
     public ModelQuery targets(Object... fields) {
-        for(Object field : fields) {
-            this.target(field);
-        }
-        return this;
+        return (ModelQuery) super.targets(fields);
     }
 
     public ModelQuery targets(List fields) {
-        for(Object field : fields) {
-            this.target(field);
-        }
-
-        return this;
+        return (ModelQuery) super.targets(fields);
     }
 
     public ModelQuery filter(String query, Object... params) throws DBException {
@@ -316,7 +220,36 @@ public class ModelQuery extends BaseQuery {
         return manager;
     }
 
-    public MultiModel getMultiModel() {
-        return multiModel;
+    public QueryMultiModel getMultiModel() {
+        return (QueryMultiModel) multiModel;
+    }
+
+    /* inner classes */
+
+    public class QueryMultiModel extends MultiModel {
+        private MultiModelItem mainItem = null;
+
+        public QueryMultiModel(ModelClassBase model) {
+            super(model);
+            mainItem = getItemList().get(0);
+        }
+
+        public QueryMultiModel(ModelClassBase model, String name) {
+            super(model, name);
+            mainItem = getItemList().get(0);
+        }
+
+        public MultiModelField getField(Object field) {
+            return getField(field instanceof String ? (String) field : ((Field) field).getFieldName());
+        }
+
+        public MultiModelField getField(String fieldName) {
+            return multiModel.getFields().containsKey(fieldName) ?
+                    multiModel.getFields().get(fieldName) : getRelatedField(mainItem, fieldName);
+        }
+
+        public MultiModelItem getMainItem() {
+            return mainItem;
+        }
     }
 }

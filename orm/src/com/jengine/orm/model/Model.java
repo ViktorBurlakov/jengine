@@ -24,7 +24,9 @@ import com.jengine.orm.exception.ValidateException;
 import com.jengine.orm.model.field.Field;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.jengine.utils.CollectionUtil.map;
@@ -114,7 +116,11 @@ public class Model {
     public Map<String, Object> getValues() throws DBException {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-        for (Field field : cls.getManager().getPersistenceFields()) {
+        List<Field> fields = new ArrayList<Field>();
+        fields.addAll(cls.getManager().getPersistenceFields());
+        fields.addAll(cls.getManager().getFunctionFields());
+
+        for (Field field : fields) {
             result.put(field.getFieldName(), getValue(field));
         }
 
@@ -133,7 +139,10 @@ public class Model {
 
     public void setData(LinkedHashMap<String, Object> values) throws DBException {
         oldData.clear();
-        for (Field field : cls.getManager().getPersistenceFields()){
+        List<Field> fields = new ArrayList<Field>();
+        fields.addAll(cls.getManager().getPersistenceFields());
+        fields.addAll(cls.getManager().getFunctionFields());
+        for (Field field : fields){
             Object value = values.containsKey(field.getFieldName()) ?
                     values.get(field.getFieldName()) : field.getDefaultValue();
             data.put(field.getFieldName(), value);
@@ -144,6 +153,16 @@ public class Model {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 
         for (Field field : cls.getManager().getPersistenceFields()) {
+            result.put(field.getColumnName(), field.getPersistenceValue(this));
+        }
+
+        return result;
+    }
+
+    protected Map<String, Object> getFunctionValues() throws DBException {
+        Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+        for (Field field : cls.getManager().getFunctionFields()) {
             result.put(field.getColumnName(), field.getPersistenceValue(this));
         }
 
