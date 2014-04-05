@@ -126,7 +126,7 @@ public class Provider {
 
         DBConnection connection = this.adapter.getConnection();
         this.adapter.executeUpdate(connection, sql.toString(), values, map("return_generated_keys", autoIncrement));
-        return connection.getGeneratedKeys().size() == 1 ? connection.getGeneratedKeys().get(0) : null;
+        return connection.getGeneratedKeys().size() == 1 ? connection.getGeneratedKeys().remove(0) : null;
     }
 
     public void update(String table, String keyName, Map<String, Object> attributes) throws DBException {

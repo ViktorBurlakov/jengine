@@ -22,6 +22,7 @@ package model;
 
 import com.jengine.orm.model.ModelClass;
 import com.jengine.orm.db.DBException;
+import com.jengine.orm.model.field.FunctionField;
 import com.jengine.orm.model.field.datetime.DateField;
 import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.reference.ReferenceField;
@@ -35,6 +36,7 @@ public class Transaction extends TestModel {
     public static Field book   = new ReferenceField(Book.class, map("verbose", "Book", "required", true));
     public static Field member = new ReferenceField(Member.class, map("verbose", "Member", "required", true));
     public static Field tdate  = new DateField("verbose", "Date", "required", true, "autoNowAdd", true);
+    public static Field counter  = new FunctionField(Long.class, "%s + 1", "id");
     public static Field modificationDate  = new DateField("verbose", "Modification Date", "required", true, "autoNow", true);
     public static ModelClass<Transaction> cls = new ModelClass<Transaction>(Transaction.class);
 
@@ -71,6 +73,10 @@ public class Transaction extends TestModel {
 
     public Date getDate() throws DBException {
         return (Date) getValue(tdate);
+    }
+
+    public Long getCounter() throws DBException {
+        return (Long) getValue(counter);
     }
 
     public Date getModificationDate() throws DBException {

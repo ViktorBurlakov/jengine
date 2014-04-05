@@ -27,7 +27,7 @@ public class Filter {
 
     public void config(BaseQuery query) throws DBException {
         this.query = query;
-        this.multiModelField = query._registerField(field);
+        this.multiModelField = query.getMultiModel().getField(field);
         this.value = this.multiModelField.getModelField().cast(this.value);
     }
 

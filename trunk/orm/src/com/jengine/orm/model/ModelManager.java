@@ -22,6 +22,7 @@ package com.jengine.orm.model;
 
 import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.ForeignField;
+import com.jengine.orm.model.field.FunctionField;
 import com.jengine.orm.model.field.reference.ReferenceField;
 import com.jengine.orm.model.field.reference.SelfField;
 
@@ -108,6 +109,18 @@ public class ModelManager {
 
         for (Field field : fields.values()) {
             if (field.isPersistence()) {
+                result.add(field);
+            }
+        }
+
+        return  result;
+    }
+
+    public List<Field> getFunctionFields() {
+        List<Field> result = new ArrayList<Field>();
+
+        for (Field field : fields.values()) {
+            if (field instanceof FunctionField) {
                 result.add(field);
             }
         }

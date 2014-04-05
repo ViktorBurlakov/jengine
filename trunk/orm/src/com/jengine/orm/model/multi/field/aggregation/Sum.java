@@ -22,8 +22,8 @@ public class Sum extends CalcMultiField {
 
     public void config(MultiModel multiModel) {
         super.config(multiModel);
-        fieldClass = multiModel.getFields().get(fields.get(0)).getModelField().getFieldClass();
-        columnType = multiModel.getFields().get(fields.get(0)).getModelField().getColumnType();
+        fieldClass = multiModel.getField(fields.get(0)).getModelField().getFieldClass();
+        columnType = multiModel.getField(fields.get(0)).getModelField().getColumnType();
     }
 
     protected String makeDefaultName(String field) {

@@ -4,6 +4,8 @@ package com.jengine.orm.model.multi;
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.model.field.Field;
+import com.jengine.orm.model.field.FunctionField;
+import com.jengine.orm.model.multi.field.FunctionMultiField;
 import com.jengine.orm.model.multi.field.MultiModelField;
 
 import java.util.LinkedHashMap;
@@ -24,10 +26,18 @@ public class MultiModelItem {
         this.multiModel = multiModel;
         this.modelClass = modelClass;
         this.name = name;
-        for(Field field: modelClass.getManager().getPersistenceFields()) {
-            addField(field);
-        }
         this.tableItem = new SQLQuery.TableItem(modelClass.getManager().getTableName(), name.replace(".", "_"));
+        for(Field field: modelClass.getManager().getFields()) {
+            if (field.isPersistence() || field instanceof FunctionField) {
+                addField(field);
+            }
+        }
+    }
+
+    public void config() {
+        for (MultiModelField field : fields.values()) {
+            field.config(this);
+        }
     }
 
     public MultiModelField getMultiModelField(Field field) {
@@ -35,7 +45,12 @@ public class MultiModelItem {
     }
 
     public MultiModelField addField(Field field) {
-        MultiModelField multiModelField = new MultiModelField(this, field);
+        MultiModelField multiModelField = null;
+        if (field instanceof FunctionField) {
+            multiModelField = new FunctionMultiField(this, (FunctionField) field);
+        } else {
+            multiModelField = new MultiModelField(this, field);
+        }
         fields.put(multiModelField.getName(), multiModelField);
         modelFields.put(field.getFieldName(), multiModelField);
         if (field.isPrimaryKey()) {
@@ -44,14 +59,15 @@ public class MultiModelItem {
         return multiModelField;
     }
 
-    public void setName(String name) {
-        this.name = name;
-        this.tableItem = new SQLQuery.TableItem(modelClass.getManager().getTableName(), name.replace(".", "_"));
-        fields.clear();
-        for(Field field: modelClass.getManager().getPersistenceFields()) {
-            addField(field);
-        }
-    }
+//    public void setName(String name) {
+//        this.name = name;
+//        this.tableItem = new SQLQuery.TableItem(modelClass.getManager().getTableName(), name.replace(".", "_"));
+//        fields.clear();
+//        for(Field field: modelClass.getManager().getPersistenceFields()) {
+//            addField(field);
+//        }
+//        this.config();
+//    }
 
     public SQLQuery.TableItem getTableItem() {
         return tableItem;

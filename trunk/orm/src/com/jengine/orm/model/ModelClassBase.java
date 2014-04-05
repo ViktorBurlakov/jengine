@@ -12,10 +12,7 @@ import com.jengine.orm.model.query.ModelQuery;
 import com.jengine.orm.model.query.filter.Filter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.jengine.utils.CollectionUtil.map;
 
@@ -156,7 +153,12 @@ public class ModelClassBase<T extends Model> {
 
     public T getCache(Object id) throws DBException {
         if (manager.getCacheEnabled()) {
-            Map<String, Object> values = provider.getCache(manager.getTableName(), id);
+            Map<String, Object> values = null;
+            try {
+                values = provider.getCache(manager.getTableName(), id);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return values != null ? (T) wrap(values) : null;
         } else {
             return null;
@@ -177,14 +179,17 @@ public class ModelClassBase<T extends Model> {
 
     public void cache(Model obj) throws DBException {
         if (manager.getCacheEnabled()) {
-            provider.cache(manager.getTableName(), manager.getPrimaryKey().getPersistenceValue(obj), obj.getPersistenceValues());
+            Map<String, Object> attributes = new HashMap<String, Object>();
+            attributes.putAll(obj.getPersistenceValues());
+            attributes.putAll(obj.getFunctionValues());
+            provider.cache(manager.getTableName(), manager.getPrimaryKey().getPersistenceValue(obj), attributes);
         }
     }
 
 
     /* Model object methods  */
 
-    public T insert(Model obj) throws ValidateException, DBException {
+    public T insert(T obj) throws ValidateException, DBException {
         boolean autoIncrement = obj.getPrimaryKey() == null && manager.getPrimaryKey().isAutoIncrement();
         Object id = provider.insert(manager.getTableName(), obj.getPersistenceValues(), autoIncrement);
         obj.setNew(false);
@@ -195,10 +200,18 @@ public class ModelClassBase<T extends Model> {
             ((ManyReferenceField) field).insert(obj);
             obj.getData().remove(field.getFieldName());
         }
-        return (T) obj;
+        List<Field> functionFields = manager.getFunctionFields();
+        if (manager.getFunctionFields().size() > 0) {
+            Model updatedObject = get(obj.getId());
+
+            for (Field field : functionFields) {
+                obj.getData().put(field.getFieldName(), updatedObject.getData().get(field.getFieldName()));
+            }
+        }
+        return obj;
     }
 
-    public Model update(Model obj) throws ValidateException, DBException {
+    public T update(T obj) throws ValidateException, DBException {
         Map<String, Object> changes = obj.getChangedPersistenceValues();
         if (changes.size() > 0) {
             provider.update(manager.getTableName(), manager.getPrimaryKey().getColumnName(), changes);
@@ -207,7 +220,14 @@ public class ModelClassBase<T extends Model> {
             ((ManyReferenceField) field).update(obj);
             obj.getData().remove(field.getFieldName());
         }
+        List<Field> functionFields = manager.getFunctionFields();
+        if (manager.getFunctionFields().size() > 0) {
+            Model updatedObject = get(obj.getId());
 
+            for (Field field : functionFields) {
+                obj.getData().put(field.getFieldName(), updatedObject.getData().get(field.getFieldName()));
+            }
+        }
         return obj;
     }
 

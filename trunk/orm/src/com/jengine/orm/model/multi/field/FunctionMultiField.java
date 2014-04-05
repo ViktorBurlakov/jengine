@@ -1,35 +1,36 @@
 package com.jengine.orm.model.multi.field;
 
+import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.FunctionField;
-import com.jengine.orm.model.multi.MultiModel;
 import com.jengine.orm.model.multi.MultiModelItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionMultiField extends MultiModelField{
-    private List<String> fields = new ArrayList<String>();
-    private List<String> columns = new ArrayList<String>();
+    protected List<String> fields = new ArrayList<String>();
+    protected List<String> columns = new ArrayList<String>();
 
-    public FunctionMultiField(MultiModelItem item, FunctionField modelField, List<String> fields) {
+    public FunctionMultiField(MultiModelItem item, FunctionField modelField) {
         super(item, modelField);
-        this.fields = fields;
     }
 
-    public FunctionMultiField(String name, MultiModelItem item, FunctionField modelField, List<String> fields) {
+    public FunctionMultiField(String name, MultiModelItem item, FunctionField modelField) {
         super(name, item, modelField);
-        this.fields = fields;
     }
 
-    public FunctionMultiField(String name, FunctionField modelField, List<String> fields) {
+    public FunctionMultiField(String name, FunctionField modelField) {
         super(name, modelField);
-        this.fields = fields;
     }
 
-    public void config(MultiModel multiModel) {
-        super.config(multiModel);
-        for (String field : fields) {
-            columns.add(multiModel.getFields().get(field).getSQLName());
+    public void config(MultiModelItem item) {
+        super.config(item);
+        FunctionField functionField = (FunctionField) modelField;
+        for (Object attribute: functionField.getAttributes()) {
+            String fieldName = attribute instanceof String ? (String) attribute : ((Field) attribute).getFieldName();
+            MultiModelField attributeMultiField = multiModel.getRelatedField(item, fieldName);
+            this.fields.add(attributeMultiField.getName());
+            this.columns.add(attributeMultiField.getSQLName());
         }
     }
 
