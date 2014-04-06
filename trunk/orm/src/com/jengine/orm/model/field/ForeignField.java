@@ -36,6 +36,15 @@ public class ForeignField extends Field {
     private Field nextField;
     private List<String> parentFields = new ArrayList<String>();
 
+    public ForeignField(ForeignField field) {
+        super(field);
+        this.fieldMap = field.getFieldMap();
+        this.fields = field.getFields();
+        this.currentField = field.getCurrentField();
+        this.nextField = field.getNextField();
+        this.parentFields = field.getParentFields();
+    }
+
     public ForeignField(ReferenceField currentField, Field nextField) {
         super(nextField.getFieldClass());
         this.currentField = currentField;
@@ -110,5 +119,9 @@ public class ForeignField extends Field {
 
     public void setNextField(Field nextField) {
         this.nextField = nextField;
+    }
+
+    public List<String> getFields() {
+        return fields;
     }
 }

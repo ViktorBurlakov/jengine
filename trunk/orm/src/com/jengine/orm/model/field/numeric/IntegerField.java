@@ -30,6 +30,10 @@ public class IntegerField extends Field {
         this(new HashMap());
     }
 
+    public IntegerField(IntegerField field) {
+        super(field);
+    }
+
     public IntegerField(Map<String, Object> options) {
         super(Integer.class, options);
     }

@@ -6,6 +6,10 @@ import java.util.Map;
 
 public class SingleReferenceField extends ReferenceField {
 
+    public SingleReferenceField(SingleReferenceField field) {
+        super(field);
+    }
+
     public SingleReferenceField(Class fieldClass) {
         super(fieldClass);
     }

@@ -20,10 +20,10 @@
 package com.jengine.orm.model.field;
 
 
-import com.jengine.orm.model.Model;
-import com.jengine.orm.model.ModelManager;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.exception.ValidateException;
+import com.jengine.orm.model.Model;
+import com.jengine.orm.model.ModelManager;
 import com.jengine.orm.model.query.filter.Filter;
 import com.jengine.utils.Variant;
 
@@ -54,6 +54,21 @@ public class Field {
     protected Map<String, Object> options = new LinkedHashMap<String, Object>();
 
     public Field() {
+    }
+
+    public Field(Field field) {
+        this.fieldName = field.getFieldName();
+        this.fieldClass = field.getFieldClass();
+        this.columnName = field._getColumnName();
+        this.columnType = field.getColumnType();
+        this.manager = field.getManager();
+        this.verbose = field.getVerbose();
+        this.primaryKey = field.isPrimaryKey() ;
+        this.autoIncrement = field.isAutoIncrement();
+        this.visible = field.isVisible();
+        this.required = field.isRequired();
+        this.defaultValue = field.getDefaultValue();
+        this.options = field.getOptions();
     }
 
     public Field(Class fieldClass) {
@@ -154,6 +169,10 @@ public class Field {
         return columnName == null ? fieldName : columnName;
     }
 
+    public String _getColumnName() {
+        return columnName;
+    }
+
     public void setColumnName(String columnName) {
         this.columnName = columnName;
     }
@@ -232,6 +251,14 @@ public class Field {
 
     public void setDefaultValue(Object defaultValue) {
         this.defaultValue = defaultValue;
+    }
+
+    public Field copy() throws DBException {
+        try {
+            return getClass().getConstructor(getClass()).newInstance(this);
+        } catch (Exception e) {
+            throw new DBException(e);
+        }
     }
 
     public Map<String, Object> toMap() {

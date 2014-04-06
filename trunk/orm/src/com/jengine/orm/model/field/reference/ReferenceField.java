@@ -34,6 +34,11 @@ import static com.jengine.utils.StringUtil.caps;
 public class ReferenceField extends BaseReference {
     protected String referenceModelKeyName;
 
+    public ReferenceField(ReferenceField field) {
+        super(field);
+        this.referenceModelKeyName = field.getReferenceModelKeyName();
+    }
+
     public ReferenceField(Class fieldClass) {
         this(fieldClass, new HashMap<String, Object>());
     }
@@ -91,6 +96,10 @@ public class ReferenceField extends BaseReference {
 
     public void setReferenceModelKeyName(String referenceModelKeyName) {
         this.referenceModelKeyName = referenceModelKeyName;
+    }
+
+    public String getReferenceModelKeyName() {
+        return referenceModelKeyName;
     }
 
     public String getReverseFieldName() {

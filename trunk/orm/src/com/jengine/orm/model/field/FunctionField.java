@@ -27,6 +27,12 @@ public class FunctionField extends Field {
     private String expression = "";
     private List attributes = new ArrayList();
 
+    public FunctionField(FunctionField field) {
+        super(field);
+        this.expression = field.getExpression();
+        this.attributes = field.getAttributes();
+    }
+
     public FunctionField(Class fieldClass, String expression, Object ... attributes) {
         this(fieldClass, new HashMap<String, Object>(), expression, attributes);
     }

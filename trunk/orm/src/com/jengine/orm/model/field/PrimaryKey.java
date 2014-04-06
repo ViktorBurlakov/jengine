@@ -30,6 +30,10 @@ import static com.jengine.utils.CollectionUtil.map;
 
 public class PrimaryKey extends Field {
 
+    public PrimaryKey(PrimaryKey field) {
+        super(field);
+    }
+
     public PrimaryKey() {
         this(new HashMap<String, Object>());
     }

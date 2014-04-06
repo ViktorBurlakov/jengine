@@ -1,12 +1,13 @@
 package com.jengine.orm.model;
 
 import com.jengine.orm.DBFactory;
-import com.jengine.orm.model.field.*;
+import com.jengine.orm.db.DBException;
+import com.jengine.orm.model.field.Field;
+import com.jengine.orm.model.field.ModelProperty;
+import com.jengine.orm.model.field.PrimaryKey;
 import com.jengine.orm.model.field.reference.SelfField;
 import com.jengine.utils.ClassUtils;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -67,43 +68,6 @@ public class ModelClass<T extends Model> extends ModelClassBase<T> {
         }
 
         return null;
-    }
-
-
-    /* collect methods */
-
-    public Map<String, Field> collectFields(Class cls) {
-        Map<String, Field> modelFields = new LinkedHashMap<String, Field>();
-        java.lang.reflect.Field fieldlist[] = cls.getDeclaredFields();
-        for (int i = 0; i < fieldlist.length; i++) {
-            java.lang.reflect.Field fld = fieldlist[i];
-            if (Modifier.isStatic(fld.getModifiers())) {
-                try {
-                    if (fld.get(null) instanceof Field) {
-                        Field modelField = (Field) fld.get(null);
-                        modelFields.put(fld.getName(), modelField);
-                    }
-                } catch (IllegalAccessException e) {
-                }
-            }
-        }
-        return modelFields;
-    }
-
-    public Map<String, ModelProperty> collectProperties(Class cls) {
-        Map<String, ModelProperty> properties =  new LinkedHashMap<String, ModelProperty>();
-
-        for (Method method : cls.getMethods()) {
-            if (method.isAnnotationPresent(Attribute.class)) {
-                Attribute attribute = method.getAnnotation(Attribute.class);
-                properties.put(attribute.name(),
-                        new ModelProperty(method.getName(), method.getReturnType(),
-                                map("verbose", attribute.verbose(), "visible", attribute.visible()))
-                );
-            }
-        }
-
-        return properties;
     }
 
 }

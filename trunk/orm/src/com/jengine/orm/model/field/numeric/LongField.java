@@ -30,6 +30,10 @@ public class LongField extends Field {
         this(new HashMap<String, Object>());
     }
 
+    public LongField(Field field) {
+        super(field);
+    }
+
     public LongField(Map<String, Object> options) {
         super(Long.class, options);
     }
