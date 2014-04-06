@@ -252,6 +252,7 @@ public class Test {
         loadData();
 
         Date tdate = Transaction.cls.get(1).getDate();
+//        check( Transaction.cls.get(1).getCounter() == (Transaction.cls.get(1).getBook().<Long>getId() + 1));
         check( Transaction.cls.get(1).getCounter() == (Transaction.cls.get(1).<Long>getId() + 1));
         Date modificationDate = Transaction.cls.get(1).getModificationDate();
         Thread.sleep(2000);
