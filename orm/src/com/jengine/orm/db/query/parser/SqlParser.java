@@ -1,4 +1,3 @@
-// $ANTLR 2.7.7 (2006-11-01): "sql.g" -> "SqlParser.java"$
 
 package com.jengine.orm.db.query.parser;
 
