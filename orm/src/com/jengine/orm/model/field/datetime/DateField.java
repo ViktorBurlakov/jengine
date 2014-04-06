@@ -29,6 +29,10 @@ import static com.jengine.utils.CollectionUtil.map;
 public class DateField extends BaseDateField {
     public static  String DEFAULT_FORMAT = "yyyy-MM-dd"; // ISO date format
 
+    public DateField(DateField field) {
+        super(field);
+    }
+
     public DateField() {
         this(map());
     }

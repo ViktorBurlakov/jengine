@@ -17,6 +17,14 @@ public class BaseDateField extends Field {
     protected Boolean autoNow = false;
     protected Boolean autoNowAdd = false;
 
+    public BaseDateField(BaseDateField field) {
+        super(field);
+        this.format = field.getFormat();
+        this.formatter = new SimpleDateFormat(format);
+        this.autoNow = field.getAutoNow();
+        this.autoNowAdd = field.getAutoNowAdd();
+    }
+
     public BaseDateField(Class fieldClass, Map<String, Object> options) {
         super(fieldClass, options);
         format = getDefaultFormat();
@@ -51,6 +59,22 @@ public class BaseDateField extends Field {
     public void setFormat(String format) {
         this.format = format;
         this.formatter = new SimpleDateFormat(format);
+    }
+
+    public Boolean getAutoNow() {
+        return autoNow;
+    }
+
+    public void setAutoNow(Boolean autoNow) {
+        this.autoNow = autoNow;
+    }
+
+    public Boolean getAutoNowAdd() {
+        return autoNowAdd;
+    }
+
+    public void setAutoNowAdd(Boolean autoNowAdd) {
+        this.autoNowAdd = autoNowAdd;
     }
 
     public Date cast(Object value){

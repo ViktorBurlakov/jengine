@@ -31,6 +31,11 @@ import static com.jengine.utils.CollectionUtil.map;
 public class StringField extends Field {
     private Integer maxLength = null;
 
+    public StringField(StringField field) {
+        super(field);
+        this.maxLength = field.getMaxLength();
+    }
+
     public StringField(Object... options) {
         this(map(options));
     }

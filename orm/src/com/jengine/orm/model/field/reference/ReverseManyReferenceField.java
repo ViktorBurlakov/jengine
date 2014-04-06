@@ -1,6 +1,7 @@
 package com.jengine.orm.model.field.reference;
 
 
+import com.jengine.orm.db.DBException;
 import com.jengine.orm.model.ModelManager;
 import com.jengine.orm.model.field.Field;
 
@@ -8,6 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ReverseManyReferenceField extends ManyReferenceField {
+
+    public ReverseManyReferenceField(ReverseManyReferenceField field) {
+        super(field);
+    }
 
     public ReverseManyReferenceField(Class fieldClass) {
         super(fieldClass);
@@ -28,7 +33,11 @@ public class ReverseManyReferenceField extends ManyReferenceField {
     public void config(String fieldName, ModelManager manager) {
         super.config(fieldName, manager);
         if (getMiddleClass() == null) {
-            createMiddleClass();
+            try {
+                createMiddleClass();
+            } catch (DBException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

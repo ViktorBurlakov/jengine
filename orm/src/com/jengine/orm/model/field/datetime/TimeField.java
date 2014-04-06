@@ -29,6 +29,10 @@ import static com.jengine.utils.CollectionUtil.map;
 public class TimeField extends BaseDateField {
     public static String DEFAULT_FORMAT = "HH:mm:ss"; // ISO date time format
 
+    public TimeField(TimeField field) {
+        super(field);
+    }
+
     public TimeField(Object... options) {
         this(map(options));
     }

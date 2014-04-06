@@ -4,7 +4,9 @@ import com.jengine.orm.DB;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.provider.Provider;
 import com.jengine.orm.exception.ValidateException;
+import com.jengine.orm.model.field.Attribute;
 import com.jengine.orm.model.field.Field;
+import com.jengine.orm.model.field.ModelProperty;
 import com.jengine.orm.model.field.reference.ManyReferenceField;
 import com.jengine.orm.model.multi.field.CalcMultiField;
 import com.jengine.orm.model.multi.field.aggregation.*;
@@ -12,6 +14,8 @@ import com.jengine.orm.model.query.ModelQuery;
 import com.jengine.orm.model.query.filter.Filter;
 
 import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.*;
 
 import static com.jengine.utils.CollectionUtil.map;
@@ -253,4 +257,69 @@ public class ModelClassBase<T extends Model> {
     public DB getDb() {
         return db;
     }
+
+
+    /* collect methods */
+
+    public Map<String, Field> collectFields(Class cls) {
+        Map<String, Field> modelFields = new LinkedHashMap<String, Field>();
+        for (java.lang.reflect.Field fld : cls.getDeclaredFields()){
+            if (Modifier.isStatic(fld.getModifiers())) {
+                try {
+                    if (fld.get(null) instanceof Field) {
+                        Field modelField = (Field) fld.get(null);
+                        modelFields.put(fld.getName(), modelField);
+                    }
+                } catch (IllegalAccessException e) {
+                }
+            }
+        }
+        for (java.lang.reflect.Field fld : getAllFields(cls.getSuperclass())){
+            if (Modifier.isStatic(fld.getModifiers())) {
+                try {
+                    if (fld.get(null) instanceof Field) {
+                        Field modelField = (Field) fld.get(null);
+                        try {
+                            modelFields.put(fld.getName(), modelField.copy());
+                        } catch (DBException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } catch (IllegalAccessException e) {
+                }
+            }
+        }
+        return modelFields;
+    }
+
+    public Map<String, ModelProperty> collectProperties(Class cls) {
+        Map<String, ModelProperty> properties =  new LinkedHashMap<String, ModelProperty>();
+
+        for (Method method : cls.getMethods()) {
+            if (method.isAnnotationPresent(Attribute.class)) {
+                Attribute attribute = method.getAnnotation(Attribute.class);
+                properties.put(attribute.name(),
+                        new ModelProperty(method.getName(), method.getReturnType(),
+                                map("verbose", attribute.verbose(), "visible", attribute.visible()))
+                );
+            }
+        }
+
+        return properties;
+    }
+
+    public static List<java.lang.reflect.Field> getAllFields(Class<?> type) {
+        List<java.lang.reflect.Field> fields = new ArrayList<java.lang.reflect.Field>();
+
+        for (java.lang.reflect.Field field: type.getDeclaredFields()) {
+            fields.add(field);
+        }
+        if (type.getSuperclass() != null) {
+            fields.addAll(getAllFields(type.getSuperclass()));
+        }
+
+        return fields;
+    }
+
+
 }

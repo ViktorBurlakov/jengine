@@ -30,6 +30,11 @@ import java.util.Map;
 public class ModelProperty extends Field {
     private String methodName;
 
+    public ModelProperty(ModelProperty field) {
+        super(field);
+        this.methodName = field.getMethodName();
+    }
+
     public ModelProperty(String methodName, Class fieldClass) {
         this(methodName, fieldClass, new HashMap<String, Object>());
     }

@@ -28,6 +28,10 @@ import java.util.Map;
 public class SelfField extends ReferenceField {
     public static String DEFAULT_NAME = "self";
 
+    public SelfField(SelfField field) {
+        super(field);
+    }
+
     public SelfField(Class fieldClass) {
         this(fieldClass, new HashMap<String, Object>());
     }

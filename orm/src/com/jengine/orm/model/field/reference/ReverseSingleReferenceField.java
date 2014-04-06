@@ -7,6 +7,10 @@ import com.jengine.orm.db.DBException;
 import static com.jengine.utils.CollectionUtil.map;
 
 public class ReverseSingleReferenceField extends BaseReference {
+    public ReverseSingleReferenceField(ReverseSingleReferenceField field) {
+        super(field);
+    }
+
     public ReverseSingleReferenceField(Class fieldClass, String reverseFieldName) {
         super(fieldClass, map("reverseFieldName", reverseFieldName));
     }

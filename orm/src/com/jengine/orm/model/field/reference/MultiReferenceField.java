@@ -27,6 +27,10 @@ import static com.jengine.utils.CollectionUtil.map;
 
 public class MultiReferenceField extends BaseReference {
 
+    public MultiReferenceField(MultiReferenceField field) {
+        super(field);
+    }
+
     public MultiReferenceField(Class fieldClass, String reverseFieldName) {
         this(fieldClass, fieldClass.getSimpleName(), reverseFieldName);
     }

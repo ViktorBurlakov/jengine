@@ -27,6 +27,7 @@ CREATE TABLE `Author` (
   `firstName` varchar(75) DEFAULT NULL,
   `lastName` varchar(75) DEFAULT NULL,
   `icon` varchar(255) DEFAULT NULL,
+  `enable` varbinary(1) DEFAULT 'y',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -37,7 +38,7 @@ CREATE TABLE `Author` (
 
 LOCK TABLES `Author` WRITE;
 /*!40000 ALTER TABLE `Author` DISABLE KEYS */;
-INSERT INTO `Author` VALUES (1,'Jules','Verne', NULL),(2,'Isaac','Asimov', NULL),(3,'Stephen','King', NULL);
+INSERT INTO `Author` VALUES (1,'Jules','Verne', NULL, 'y'),(2,'Isaac','Asimov', NULL, 'y'),(3,'Stephen','King', NULL, 'y');
 /*!40000 ALTER TABLE `Author` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,6 +53,7 @@ CREATE TABLE `Book` (
   `id` bigint(20) NOT NULL,
   `libraryId` bigint(20) DEFAULT NULL,
   `title` varchar(75) DEFAULT NULL,
+  `enable` varbinary(1) DEFAULT 'y',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -62,7 +64,7 @@ CREATE TABLE `Book` (
 
 LOCK TABLES `Book` WRITE;
 /*!40000 ALTER TABLE `Book` DISABLE KEYS */;
-INSERT INTO `Book` VALUES (1,1,'The Dark Tower'),(2,1,'The Shining '),(3,1,'Vingt mille lieues sous les mers');
+INSERT INTO `Book` VALUES (1,1,'The Dark Tower', 'y'),(2,1,'The Shining', 'y'),(3,1,'Vingt mille lieues sous les mers', 'y');
 /*!40000 ALTER TABLE `Book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,6 +95,7 @@ CREATE TABLE `Library` (
   `id` bigint(20) NOT NULL,
   `name` varchar(75) DEFAULT NULL,
   `address` varchar(75) DEFAULT NULL,
+  `enable` varbinary(1) DEFAULT 'y',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -103,7 +106,7 @@ CREATE TABLE `Library` (
 
 LOCK TABLES `Library` WRITE;
 /*!40000 ALTER TABLE `Library` DISABLE KEYS */;
-INSERT INTO `Library` VALUES (1,'Globe','Springfield, 742 Evergreen Terrace'),(2,'Local','Local');
+INSERT INTO `Library` VALUES (1,'Globe','Springfield, 742 Evergreen Terrace', 'y'),(2,'Local','Local', 'y');
 /*!40000 ALTER TABLE `Library` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,6 +122,7 @@ CREATE TABLE `Member` (
   `libraryId` bigint(20) DEFAULT NULL,
   `firstName` varchar(75) DEFAULT NULL,
   `lastName` varchar(75) DEFAULT NULL,
+  `enable` varbinary(1) DEFAULT 'y',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -129,7 +133,7 @@ CREATE TABLE `Member` (
 
 LOCK TABLES `Member` WRITE;
 /*!40000 ALTER TABLE `Member` DISABLE KEYS */;
-INSERT INTO `Member` VALUES (1,1,'Mark','Adamson'),(2,1,'Peter','Douglas'),(3,1,'Gary','Miller'),(4,1,'Homer','Simpson'),(5,1,'Burt','Simpson');
+INSERT INTO `Member` VALUES (1,1,'Mark','Adamson', 'y'),(2,1,'Peter','Douglas', 'y'),(3,1,'Gary','Miller', 'y'),(4,1,'Homer','Simpson', 'y'),(5,1,'Burt','Simpson', 'y');
 /*!40000 ALTER TABLE `Member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,6 +153,7 @@ CREATE TABLE `Address` (
   `memberId` bigint(20) DEFAULT NULL,
   `street` varchar(75) DEFAULT NULL,
   `number` varchar(75) DEFAULT NULL,
+  `enable` varbinary(1) DEFAULT 'y',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -168,6 +173,7 @@ CREATE TABLE `Transaction` (
   `memberId` bigint(20) DEFAULT NULL,
   `tdate` datetime DEFAULT NULL,
   `modificationDate` datetime DEFAULT NULL,
+  `enable` varbinary(1) DEFAULT 'y',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

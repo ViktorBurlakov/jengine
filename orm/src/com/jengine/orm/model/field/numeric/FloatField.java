@@ -10,6 +10,10 @@ public class FloatField extends RealField {
         this(map());
     }
 
+    public FloatField(FloatField field) {
+        super(field);
+    }
+
     public FloatField(Map<String, Object> options) {
         super(Float.class, options);
     }

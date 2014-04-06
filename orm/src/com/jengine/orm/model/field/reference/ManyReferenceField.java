@@ -23,6 +23,18 @@ public class ManyReferenceField extends BaseReference {
     private String middleModelTableName;
     private String middleModelFieldName;
     private String middleModelReferenceFieldName;
+    private Class middleBaseClass = Model.class;
+
+    public ManyReferenceField(ManyReferenceField field) {
+        super(field);
+        this.keyFieldName = field._getKeyFieldName();
+        this.referenceKeyFieldName = field.getReferenceKeyFieldName();
+        this.middleModelName = field._getMiddleModelName();
+        this.middleModelTableName = field._getMiddleModelTableName();
+        this.middleModelFieldName = field._getMiddleModelFieldName();
+        this.middleModelReferenceFieldName = field.getMiddleModelReferenceFieldName();
+        this.middleBaseClass = field.getMiddleBaseClass();
+    }
 
     public ManyReferenceField(Class fieldClass) {
         this(fieldClass, new HashMap<String, Object>());
@@ -52,6 +64,9 @@ public class ManyReferenceField extends BaseReference {
         if (options.containsKey("middleModelTableName")) {
             middleModelTableName = (String) options.get("middleModelTableName");
         }
+        if (options.containsKey("middleBaseClass")) {
+            middleBaseClass = (Class) options.get("middleBaseClass");
+        }
     }
 
     public Field newReverseField() {
@@ -62,7 +77,8 @@ public class ManyReferenceField extends BaseReference {
                 "middleModelName", getMiddleModelName(),
                 "middleModelTableName", getMiddleModelTableName(),
                 "middleModelFieldName", getMiddleModelReferenceFieldName(),
-                "middleModelReferenceFieldName", getMiddleModelFieldName()
+                "middleModelReferenceFieldName", getMiddleModelFieldName(),
+                "middleBaseClass", middleBaseClass
         ));
     }
 
@@ -90,12 +106,12 @@ public class ManyReferenceField extends BaseReference {
         return middleCls.filter(middleField.eq(keyValue)).target(middleField);
     }
 
-    public void createMiddleClass() {
+    public void createMiddleClass() throws DBException {
         ModelClassBase referenceModelClass = getReferenceClass();
         ModelClassBase middleModelClass = getMiddleClass();
         ManyReferenceField referenceField = getReverseField();
         if (middleModelClass == null) {
-            middleModelClass = new DynamicModelClass(getMiddleModelName(), Model.class, map("table", getMiddleModelTableName()));
+            middleModelClass = new DynamicModelClass(getMiddleModelName(), middleBaseClass, map("table", getMiddleModelTableName()));
             middleModelClass.getManager().addField(
                     referenceField.getMiddleModelFieldName(),
                     new ReferenceField(referenceModelClass.getManager().getModel(), map(
@@ -190,12 +206,20 @@ public class ManyReferenceField extends BaseReference {
         return middleModelName != null ? middleModelName : String.format("%s_%s", manager.getName(), fieldName);
     }
 
+    public String _getMiddleModelName() {
+        return middleModelName;
+    }
+
     public void setMiddleModelName(String middleModelName) {
         this.middleModelName = middleModelName;
     }
 
     public String getMiddleModelFieldName() {
         return middleModelFieldName != null ? middleModelFieldName : manager.getName().toLowerCase();
+    }
+
+    public String _getMiddleModelFieldName() {
+        return middleModelFieldName;
     }
 
     public void setMiddleModelFieldName(String middleModelFieldName) {
@@ -212,6 +236,10 @@ public class ManyReferenceField extends BaseReference {
 
     public String getKeyFieldName() {
         return keyFieldName != null ? keyFieldName : manager.getPrimaryKey().getFieldName();
+    }
+
+    public String _getKeyFieldName() {
+        return keyFieldName;
     }
 
     public void setKeyFieldName(String keyFieldName) {
@@ -238,7 +266,19 @@ public class ManyReferenceField extends BaseReference {
         return middleModelTableName != null ? middleModelTableName : String.format("%s_%s", manager.getTableName(), fieldName);
     }
 
+    public String _getMiddleModelTableName() {
+        return middleModelTableName;
+    }
+
     public void setMiddleModelTableName(String middleModelTableName) {
         this.middleModelTableName = middleModelTableName;
+    }
+
+    public Class getMiddleBaseClass() {
+        return middleBaseClass;
+    }
+
+    public void setMiddleBaseClass(Class middleBaseClass) {
+        this.middleBaseClass = middleBaseClass;
     }
 }

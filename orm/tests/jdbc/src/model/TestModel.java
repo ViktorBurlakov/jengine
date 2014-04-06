@@ -20,10 +20,13 @@
 package model;
 
 
-import com.jengine.orm.model.Model;
 import com.jengine.orm.db.DBException;
+import com.jengine.orm.model.Model;
+import com.jengine.orm.model.field.Field;
+import com.jengine.orm.model.field.StringField;
 
 public class TestModel extends Model {
+    public static Field enable = new StringField("default", "y");
 
     public TestModel() throws DBException {
         super();

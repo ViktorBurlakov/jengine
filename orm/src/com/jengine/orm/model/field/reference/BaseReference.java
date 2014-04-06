@@ -18,6 +18,12 @@ abstract public class BaseReference extends Field {
         this(fieldClass, new HashMap<String, Object>());
     }
 
+    protected BaseReference(BaseReference field) {
+        super(field);
+        this.referenceModelName = field.getReferenceModelName();
+        this.reverseFieldName = field._getReverseFieldName();
+    }
+
     public BaseReference(Class fieldClass, Object... options) {
         this(fieldClass, map(options));
     }
@@ -31,7 +37,7 @@ abstract public class BaseReference extends Field {
         this.referenceModelName = referenceModelName;
     }
 
-    public void config(String fieldName, ModelManager manager) {
+    public void config(String fieldName, ModelManager manager)  {
         super.config(fieldName, manager);
         if (options.containsKey("reverseFieldName")) {
             this.reverseFieldName = (String) options.get("reverseFieldName");
@@ -59,6 +65,10 @@ abstract public class BaseReference extends Field {
     }
 
     public String getReverseFieldName() {
+        return reverseFieldName;
+    }
+
+    public String _getReverseFieldName() {
         return reverseFieldName;
     }
 

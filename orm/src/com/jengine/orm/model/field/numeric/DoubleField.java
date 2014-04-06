@@ -10,6 +10,10 @@ public class DoubleField extends RealField {
         this(map());
     }
 
+    public DoubleField(DoubleField fieldClass) {
+        super(fieldClass);
+    }
+
     public DoubleField(Map<String, Object> options) {
         super(Double.class, options);
     }

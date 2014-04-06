@@ -27,6 +27,10 @@ import static com.jengine.utils.CollectionUtil.map;
 
 public class BooleanField extends Field {
 
+    public BooleanField(BooleanField field) {
+        super(field);
+    }
+
     public BooleanField() {
         this(new HashMap<String, Object>());
     }

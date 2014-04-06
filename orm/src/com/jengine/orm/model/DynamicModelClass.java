@@ -2,6 +2,7 @@ package com.jengine.orm.model;
 
 
 import com.jengine.orm.DBFactory;
+import com.jengine.orm.db.DBException;
 import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.reference.SelfField;
 
@@ -10,7 +11,7 @@ import java.util.Map;
 
 public class DynamicModelClass<T extends Model> extends ModelClassBase<T> {
 
-    public DynamicModelClass(String name, Class cls, Map options) {
+    public DynamicModelClass(String name, Class cls, Map options) throws DBException {
         super(name, cls);
         String dbName = options.containsKey("dbName") ? (String) options.get("dbName") : "default";
         db = DBFactory.get(dbName);
@@ -24,6 +25,7 @@ public class DynamicModelClass<T extends Model> extends ModelClassBase<T> {
         // init fields and properties
         Map<String, Field> fields = new LinkedHashMap<String, Field>();
         fields.put(SelfField.DEFAULT_NAME, new SelfField(cls, name));
+        fields.putAll(collectFields(cls));
         for (String fieldName : fields.keySet()) {
             Field field = fields.get(fieldName);
             manager.addField(fieldName, field);

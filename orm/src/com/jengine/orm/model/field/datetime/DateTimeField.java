@@ -30,6 +30,10 @@ import static com.jengine.utils.CollectionUtil.map;
 public class DateTimeField extends BaseDateField {
     public static String DEFAULT_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
+    public DateTimeField(DateTimeField field) {
+        super(field);
+    }
+
     public DateTimeField() {
         this(new HashMap<String, Object>());
     }
