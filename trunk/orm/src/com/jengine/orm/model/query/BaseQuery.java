@@ -173,6 +173,20 @@ public abstract class BaseQuery {
         return this;
     }
 
+    public BaseQuery group(List<String> fields) {
+        for (String fieldName : fields) {
+            this.group(fieldName);
+        }
+        return this;
+    }
+
+    public BaseQuery group(String ... fields) {
+        for (String fieldName : fields) {
+            this.group(fieldName);
+        }
+        return this;
+    }
+
     /* value methods */
 
     public BaseQuery values(Map<String, Object> values) throws DBException {

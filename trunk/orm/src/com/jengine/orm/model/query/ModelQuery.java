@@ -141,6 +141,14 @@ public class ModelQuery extends BaseQuery {
         return (ModelQuery) super.group(targetName);
     }
 
+    public ModelQuery group(List<String> fields) {
+        return (ModelQuery) super.group(fields);
+    }
+
+    public ModelQuery group(String... fields) {
+        return (ModelQuery) super.group(fields);
+    }
+
     public ModelQuery values(Map<String, Object> values) throws DBException {
         return (ModelQuery) super.values(values);
     }
