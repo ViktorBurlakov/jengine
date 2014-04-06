@@ -90,6 +90,14 @@ public class ClusterQuery extends BaseQuery {
         return (ClusterQuery) super.group(fieldName);
     }
 
+    public ClusterQuery group(List<String> fields) {
+        return (ClusterQuery) super.group(fields);
+    }
+
+    public ClusterQuery group(String... fields) {
+        return (ClusterQuery) super.group(fields);
+    }
+
     public ClusterQuery values(Map<String, Object> values) throws DBException {
         return (ClusterQuery) super.values(values);
     }

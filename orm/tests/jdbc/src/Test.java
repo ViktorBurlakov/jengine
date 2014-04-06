@@ -252,8 +252,8 @@ public class Test {
         loadData();
 
         Date tdate = Transaction.cls.get(1).getDate();
-//        check( Transaction.cls.get(1).getCounter() == (Transaction.cls.get(1).getBook().<Long>getId() + 1));
-        check( Transaction.cls.get(1).getCounter() == (Transaction.cls.get(1).<Long>getId() + 1));
+//        check( Transaction.cls.get(1).getCounter() == (Transaction.cls.get(1).getBook().<Long>getId() + 1) );
+        check( Transaction.cls.get(1).getCounter() == (Transaction.cls.get(1).<Long>getId() + 1) );
         Date modificationDate = Transaction.cls.get(1).getModificationDate();
         Thread.sleep(2000);
         Transaction.cls.get(1).save();
@@ -531,6 +531,7 @@ public class Test {
 //        check( cluster1.<Long>calc("%s + 10", "Transaction.id") > 0);
         check( new Cluster("Transaction >> Book").fields("Transaction.id", new Calc("calc_field", Long.class, "%s + 10", "Transaction.id")).select().list() != null );
         check( new Cluster("Transaction >> Book").fields("Transaction.id",  "Book.id", "Book.title", new Max("Transaction.id")).select().group("Book.title").list() != null );
+        check( new Cluster("Transaction >> Book").fields("Transaction.id",  "Book.id", "Book.title", new Max("Transaction.id")).groupCluster("Book.title").select().list() != null );
         check( new Cluster("Transaction << Book").select().filter("Book.id > 1").one() != null );
     }
 

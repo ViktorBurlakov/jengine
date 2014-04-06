@@ -22,6 +22,7 @@ public class Cluster extends MultiModel {
     protected LinkedHashMap<String, MultiModelField> selectedFields = new LinkedHashMap<String, MultiModelField>();
     protected List<Filter> filters = new ArrayList<Filter>();
     protected List<StringFilter> stringFilters = new ArrayList<StringFilter>();
+    protected List<String> group = new ArrayList<String>();
 
     public Cluster(ModelClassBase model) {
         super(model);
@@ -176,6 +177,11 @@ public class Cluster extends MultiModel {
         return this;
     }
 
+    public Cluster groupCluster(String fieldName) {
+        group.add(fieldName);
+        return this;
+    }
+
     public <T extends Object> T one() throws DBException {
         return newQuery().one();
     }
@@ -238,12 +244,12 @@ public class Cluster extends MultiModel {
 //
 
     protected ClusterQuery newQuery() throws DBException {
-        return new ClusterQuery(this).targets(getTargets()).filter(filters).sfilter(stringFilters);
+        return new ClusterQuery(this).targets(getTargets()).filter(filters).sfilter(stringFilters).group(group);
     }
 
     protected ClusterQuery newQuery(List fields) throws DBException {
         List targets = fields.size() > 0 ? fields : getTargets();
-        return new ClusterQuery(this).targets(targets).filter(filters).sfilter(stringFilters);
+        return new ClusterQuery(this).targets(targets).filter(filters).sfilter(stringFilters).group(group);
     }
 
     protected List<String> getTargets() {
