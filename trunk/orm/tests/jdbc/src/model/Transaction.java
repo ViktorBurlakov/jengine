@@ -37,6 +37,7 @@ public class Transaction extends TestModel {
     public static Field member = new ReferenceField(Member.class, map("verbose", "Member", "required", true));
     public static Field tdate  = new DateField("verbose", "Date", "required", true, "autoNowAdd", true);
     public static Field counter  = new FunctionField(Long.class, "%s + 1", "id");
+//    public static Field counter  = new FunctionField(Long.class, "%s + 1", "book.id");
     public static Field modificationDate  = new DateField("verbose", "Modification Date", "required", true, "autoNow", true);
     public static ModelClass<Transaction> cls = new ModelClass<Transaction>(Transaction.class);
 
