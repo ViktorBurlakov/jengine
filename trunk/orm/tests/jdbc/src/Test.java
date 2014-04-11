@@ -275,10 +275,11 @@ public class Test {
         check( Transaction.cls.get(1).getCounter() == (Transaction.cls.get(1).<Long>getId() + 1) );
         Date modificationDate = Transaction.cls.get(1).getModificationDate();
         Thread.sleep(2000);
+        Transaction.cls.clearCache();
         Transaction.cls.get(1).save();
 
-        check(Transaction.cls.get(1).getDate().equals(tdate));
-        check(!Transaction.cls.get(1).getModificationDate().equals(modificationDate));
+        check(Transaction.cls.get(1).getDate().getTime() == tdate.getTime());
+        check(Transaction.cls.get(1).getModificationDate().getTime() != modificationDate.getTime());
         check(Author.cls.count() == 3);
         check(Member.cls.get(3).getLibrary() == null);
         check(Member.cls.select(Member.library).filter("id = ?", 3).one() == null);

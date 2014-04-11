@@ -57,14 +57,14 @@ public class Provider {
 
     public void register(String table) {
         tables.add(table);
-        if (cacheManager.getCache(table) == null) {
+        if (cacheManager != null && cacheManager.getCache(table) == null) {
             cacheManager.addCache(table);
         }
     }
 
     public void unregister(String table) {
         tables.remove(table);
-        if (cacheManager.getCache(table) != null) {
+        if (cacheManager != null && cacheManager.getCache(table) != null) {
             cacheManager.removeCache(table);
         }
     }
@@ -80,6 +80,10 @@ public class Provider {
     }
 
     /* cache methods */
+
+    public boolean isCacheEnabled() {
+        return cacheManager != null;
+    }
 
     public void addCache(String table) {
         cacheManager.addCache(table);

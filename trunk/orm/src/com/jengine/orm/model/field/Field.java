@@ -132,6 +132,10 @@ public class Field {
         return data.containsKey(fieldName) ? data.get(fieldName) : getDefaultValue();
     }
 
+    public boolean isChanged(Model obj) throws DBException {
+        return obj.getOldData().containsKey(fieldName);
+    }
+
     public Object cast(Object value) throws DBException {
         return new Variant(value).convertTo(getFieldClass());
     }
