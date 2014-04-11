@@ -20,7 +20,6 @@
 package com.jengine.orm.model;
 
 import com.jengine.orm.DBFactory;
-import com.jengine.orm.db.DBException;
 import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.ModelProperty;
 import com.jengine.orm.model.field.PrimaryKey;

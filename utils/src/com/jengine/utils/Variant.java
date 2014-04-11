@@ -58,6 +58,8 @@ public class Variant<T> {
             return convertBigDecimalTo(cls);
         } else if (value.getClass().equals(BigInteger.class)) {
             return convertBigIntegerTo(cls);
+        } else if (value.getClass().equals(byte[].class)) {
+            return convertByteArrayTo(cls);
         }
 
         return value;
@@ -88,6 +90,22 @@ public class Variant<T> {
             return Double.valueOf((String) value);
         } else if (cls.isArray() && cls.getComponentType().equals(Byte.class)) {
             return ((String)value).getBytes();
+        }
+
+        return value;
+    }
+
+    public Object convertByteArrayTo(Class cls) {
+        if (cls.equals(Integer.class)) {
+            return new BigInteger((byte[]) value).intValue();
+        } else if (cls.equals(Long.class)) {
+            return new BigInteger((byte[]) value).longValue();
+        } else if (cls.equals(Float.class)) {
+            return new BigInteger((byte[]) value).floatValue();
+        } else if (cls.equals(Double.class)) {
+            return new BigInteger((byte[]) value).doubleValue();
+        } else if (cls.equals(String.class)) {
+            return new String((byte[]) value);
         }
 
         return value;

@@ -160,7 +160,7 @@ public class ModelClassBase<T extends Model> {
 
     public void remove() throws DBException {
         new ModelQuery(manager).remove();
-        clearCache(cls);
+        clearCache();
     }
 
     public Model wrap(Map<String, Object> values) throws DBException {
@@ -175,7 +175,7 @@ public class ModelClassBase<T extends Model> {
     /* Cache methods  */
 
     public T getCache(Object id) throws DBException {
-        if (manager.getCacheEnabled()) {
+        if (manager.getCacheEnabled() && provider.isCacheEnabled()) {
             Map<String, Object> values = null;
             try {
                 values = provider.getCache(manager.getTableName(), id);
@@ -188,20 +188,20 @@ public class ModelClassBase<T extends Model> {
         }
     }
 
-    public void clearCache(Class cls) throws DBException {
-        if (manager.getCacheEnabled()) {
+    public void clearCache() throws DBException {
+        if (manager.getCacheEnabled() && provider.isCacheEnabled()) {
             provider.clearCache(manager.getTableName());
         }
     }
 
     public void clearCache(Model obj) throws DBException {
-        if (manager.getCacheEnabled()) {
+        if (manager.getCacheEnabled() && provider.isCacheEnabled()) {
             provider.clearCache(manager.getTableName(), obj.getPrimaryKey());
         }
     }
 
     public void cache(Model obj) throws DBException {
-        if (manager.getCacheEnabled()) {
+        if (manager.getCacheEnabled() && provider.isCacheEnabled()) {
             Map<String, Object> attributes = new HashMap<String, Object>();
             attributes.putAll(obj.getPersistenceValues());
             attributes.putAll(obj.getFunctionValues());
@@ -216,7 +216,7 @@ public class ModelClassBase<T extends Model> {
         boolean autoIncrement = obj.getPrimaryKey() == null && manager.getPrimaryKey().isAutoIncrement();
         Object id = provider.insert(manager.getTableName(), obj.getPersistenceValues(), autoIncrement);
         obj.setNew(false);
-        if (autoIncrement) {
+        if (autoIncrement && id != null) {
             obj.setPrimaryKey((Serializable) id);
         }
         for (Field field : manager.getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE)) {
@@ -239,10 +239,12 @@ public class ModelClassBase<T extends Model> {
         if (changes.size() > 0) {
             provider.update(manager.getTableName(), manager.getPrimaryKey().getColumnName(), changes);
         }
+        // many references
         for (Field field : manager.getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE)) {
             ((ManyReferenceField) field).update(obj);
             obj.getData().remove(field.getFieldName());
         }
+        // calculation function fields
         List<Field> functionFields = manager.getFunctionFields();
         if (manager.getFunctionFields().size() > 0) {
             Model updatedObject = get(obj.getId());

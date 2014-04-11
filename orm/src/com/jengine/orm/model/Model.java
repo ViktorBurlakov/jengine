@@ -133,6 +133,10 @@ public class Model {
         return data;
     }
 
+    public Map<String, Object> getOldData() throws DBException {
+        return oldData;
+    }
+
     public void setDefaultData() throws DBException {
         setData(map());
     }
@@ -144,7 +148,7 @@ public class Model {
         fields.addAll(cls.getManager().getFunctionFields());
         for (Field field : fields){
             Object value = values.containsKey(field.getFieldName()) ?
-                    values.get(field.getFieldName()) : field.getDefaultValue();
+                    field.cast(values.get(field.getFieldName())) : field.getDefaultValue();
             data.put(field.getFieldName(), value);
         }
     }
@@ -172,9 +176,8 @@ public class Model {
     protected Map<String, Object> getChangedPersistenceValues() throws DBException {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-        for (String fieldName : oldData.keySet()) {
-            Field field = cls.getManager().getField(fieldName);
-            if (field.isPersistence()) {
+        for (Field field : cls.getManager().getPersistenceFields()) {
+            if (field.isChanged(this)) {
                 result.put(field.getColumnName(), field.getPersistenceValue(this));
             }
         }
