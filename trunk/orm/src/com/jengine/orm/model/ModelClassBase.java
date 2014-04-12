@@ -237,7 +237,7 @@ public class ModelClassBase<T extends Model> {
     public T update(T obj) throws ValidateException, DBException {
         Map<String, Object> changes = obj.getChangedPersistenceValues();
         if (changes.size() > 0) {
-            provider.update(manager.getTableName(), manager.getPrimaryKey().getColumnName(), changes);
+            provider.update(manager.getTableName(), manager.getPrimaryKey().getColumnName(), obj.getPrimaryKey(), changes);
         }
         // many references
         for (Field field : manager.getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE)) {
