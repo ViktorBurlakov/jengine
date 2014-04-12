@@ -39,38 +39,6 @@ public class TestServiceImpl extends TestServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link com.jenginetest.builder.service.TestServiceUtil} to access the test remote service.
 	 */
     public void test() throws SystemException, PortalException {
-        test1();
-        test2();
-        test3();
-        test4();
-        test5();
-        test6();
-        test7();
-    }
-    public void test1() throws SystemException, PortalException {
-        testLocalService.test1();
-    }
-    public void test2() throws SystemException, PortalException {
-        testLocalService.test2();
-    }
-
-    public void test3() throws SystemException, PortalException {
-        testLocalService.test3();
-    }
-
-    public void test4() throws SystemException, PortalException {
-        testLocalService.test4();
-    }
-
-    public void test5() throws SystemException, PortalException {
-        testLocalService.test5();
-    }
-
-    public void test6() throws SystemException, PortalException {
-        testLocalService.test6();
-    }
-
-    public void test7() throws SystemException, PortalException {
-        testLocalService.test7();
+        testLocalService.test();
     }
 }

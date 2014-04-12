@@ -24,8 +24,8 @@
 	<import class="com.jenginetest.builder.model.SBook" />
 	<import class="com.jenginetest.builder.model.SLibrary" />
 	<import class="com.jenginetest.builder.model.SMember" />
-	<import class="com.jenginetest.builder.model.STest" />
 	<import class="com.jenginetest.builder.model.STransaction" />
+	<import class="com.jenginetest.builder.model.Test" />
 	<class name="com.jenginetest.builder.model.impl.SAuthorImpl" table="SB_SAuthor">
 		<cache usage="read-write" />
 		<id name="authorId" type="long">

@@ -48,6 +48,7 @@ public class JDBCAdapter extends Adapter {
                 pstmt.setObject(index++, item);
             }
             System.out.println(sql);
+            System.out.println(params);
             pstmt.executeUpdate();
             if (returnGeneratedKeys) {
                 List generatedKeys = new ArrayList();
@@ -83,6 +84,7 @@ public class JDBCAdapter extends Adapter {
                 pstmt.setObject(index++, item);
             }
             System.out.println(sql);
+            System.out.println(params);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 Object[] record = new Object[rs.getMetaData().getColumnCount()];

@@ -17,6 +17,8 @@
  *  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+package com.jenginetest;
+
 import com.jengine.orm.DB;
 import com.jengine.orm.DBFactory;
 import com.jengine.orm.db.DBConnection;
@@ -24,9 +26,8 @@ import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.DBSavePoint;
 import com.jengine.orm.db.adapter.Adapter;
 import com.jengine.orm.db.adapter.ConnectionManager;
-import com.jengine.orm.db.adapter.jdbc.JDBCAdapter;
-import com.jengine.orm.db.adapter.jdbc.connection.DBCPConnectionPool;
-import com.jengine.orm.db.cache.ehcache.EhcacheManager;
+import com.jengine.orm.db.adapter.liferay.LiferayAdapter;
+import com.jengine.orm.db.adapter.liferay.LiferayConnectionManager;
 import com.jengine.orm.db.provider.Provider;
 import com.jengine.orm.db.provider.mysql.MySQLProvider;
 import com.jengine.orm.exception.ValidateException;
@@ -34,15 +35,8 @@ import com.jengine.orm.model.cluster.Cluster;
 import com.jengine.orm.model.multi.field.Calc;
 import com.jengine.orm.model.multi.field.aggregation.Max;
 import com.jengine.utils.CollectionUtil;
-import model.*;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.config.CacheConfiguration;
-import net.sf.ehcache.config.PersistenceConfiguration;
-import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
-import org.apache.commons.dbcp.BasicDataSource;
+import com.jenginetest.model.*;
 
-import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,13 +46,23 @@ import static com.jengine.utils.CollectionUtil.map;
 
 public class Test {
 
+    static {
+        try {
+            ConnectionManager connectionManager = new LiferayConnectionManager();
+            Adapter adapter = new LiferayAdapter(connectionManager);
+            Provider provider = new MySQLProvider(adapter);
+            DB db = DBFactory.register(new DB(provider));
+        } catch (DBException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
     public static void main(String [] args) throws Exception {
-        ConnectionManager connectionManager = new DBCPConnectionPool(newDBCPDataSource());
-//        ConnectionManager connectionManager = new SingleConnectionManager("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/bookdb?", "root", "");
-        Adapter adapter = new JDBCAdapter(connectionManager);
-        EhcacheManager cacheManager = new EhcacheManager(newEhcacheManager());
-        Provider provider = new MySQLProvider(adapter, cacheManager);
-        DB db = DBFactory.register(new DB(provider));
+        run();
+    }
+
+    public static void run() throws Exception {
+        DB db = DBFactory.get();
 
         // testing
         DBConnection connection = db.getConnection();
@@ -71,49 +75,17 @@ public class Test {
             test6();
             test7();
             test8();
-            test9();
+//            test9();
             test10();
             test11();
         } finally {
             db.closeConnection(connection);
-            db.getCacheManager().shutdown();
         }
     }
 
-    public static DataSource newDBCPDataSource() {
-        // jdbc connection pool manager
-        BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName("com.mysql.jdbc.Driver");
-        ds.setUsername("root");
-        ds.setPassword("");
-        ds.setUrl("jdbc:mysql://localhost:3306/bookdb?");
-        ds.setMaxActive(20);
-        ds.setMaxIdle(2);
-
-        return ds;
-    }
-
-    public static net.sf.ehcache.CacheManager newEhcacheManager() {
-        //Create a singleton CacheManager using defaults
-        CacheManager manager = CacheManager.create();
-        //Create a Cache specifying its configuration.
-        Cache testCache = new Cache(
-                new CacheConfiguration("Author", 7)
-                        .memoryStoreEvictionPolicy(MemoryStoreEvictionPolicy.LFU)
-                        .eternal(false)
-                        .timeToLiveSeconds(60)
-                        .timeToIdleSeconds(30)
-//                        .diskExpiryThreadIntervalSeconds(0)
-                        .persistence(new PersistenceConfiguration().strategy(PersistenceConfiguration.Strategy.LOCALTEMPSWAP)));
-        manager.addCache(testCache);
-
-        return manager;
-    }
-
-
     /**
      * All data Removing
-     * @throws DBException
+     * @throws com.jengine.orm.db.DBException
      */
     public static void clearData() throws DBException {
         Author.cls.remove();
@@ -128,7 +100,7 @@ public class Test {
 
     /**
      * New objects Adding
-     * @throws DBException
+     * @throws com.jengine.orm.db.DBException
      */
     public static void loadData() throws Exception {
         /* Authors */
@@ -272,12 +244,14 @@ public class Test {
 
         Date tdate = Transaction.cls.get(1).getDate();
 //        check( Transaction.cls.get(1).getCounter() == (Transaction.cls.get(1).getBook().<Long>getId() + 1) );
+        long t1 = System.currentTimeMillis();
         check( Transaction.cls.get(1).getCounter() == (Transaction.cls.get(1).<Long>getId() + 1) );
         Date modificationDate = Transaction.cls.get(1).getModificationDate();
         Thread.sleep(2000);
         Transaction.cls.clearCache();
         Transaction.cls.get(1).save();
 
+        System.out.println("delta = " + (System.currentTimeMillis() -t1));
         check(Transaction.cls.get(1).getDate().getTime() == tdate.getTime());
         check(Transaction.cls.get(1).getModificationDate().getTime() != modificationDate.getTime());
         check(Author.cls.count() == 3);

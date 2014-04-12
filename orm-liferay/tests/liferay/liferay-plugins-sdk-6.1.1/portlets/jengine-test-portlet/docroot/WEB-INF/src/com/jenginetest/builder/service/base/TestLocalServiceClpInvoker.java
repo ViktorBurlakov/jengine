@@ -31,41 +31,9 @@ public class TestLocalServiceClpInvoker {
 
 		_methodParameterTypes51 = new String[] { "java.lang.String" };
 
-		_methodName54 = "clearData";
+		_methodName54 = "test";
 
 		_methodParameterTypes54 = new String[] {  };
-
-		_methodName55 = "loadData";
-
-		_methodParameterTypes55 = new String[] {  };
-
-		_methodName56 = "test1";
-
-		_methodParameterTypes56 = new String[] {  };
-
-		_methodName57 = "test2";
-
-		_methodParameterTypes57 = new String[] {  };
-
-		_methodName58 = "test3";
-
-		_methodParameterTypes58 = new String[] {  };
-
-		_methodName59 = "test4";
-
-		_methodParameterTypes59 = new String[] {  };
-
-		_methodName60 = "test5";
-
-		_methodParameterTypes60 = new String[] {  };
-
-		_methodName61 = "test6";
-
-		_methodParameterTypes61 = new String[] {  };
-
-		_methodName62 = "test7";
-
-		_methodParameterTypes62 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -82,47 +50,7 @@ public class TestLocalServiceClpInvoker {
 
 		if (_methodName54.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
-			TestLocalServiceUtil.clearData();
-		}
-
-		if (_methodName55.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
-			TestLocalServiceUtil.loadData();
-		}
-
-		if (_methodName56.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
-			TestLocalServiceUtil.test1();
-		}
-
-		if (_methodName57.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
-			TestLocalServiceUtil.test2();
-		}
-
-		if (_methodName58.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
-			TestLocalServiceUtil.test3();
-		}
-
-		if (_methodName59.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
-			TestLocalServiceUtil.test4();
-		}
-
-		if (_methodName60.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
-			TestLocalServiceUtil.test5();
-		}
-
-		if (_methodName61.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
-			TestLocalServiceUtil.test6();
-		}
-
-		if (_methodName62.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
-			TestLocalServiceUtil.test7();
+			TestLocalServiceUtil.test();
 		}
 
 		throw new UnsupportedOperationException();
@@ -134,20 +62,4 @@ public class TestLocalServiceClpInvoker {
 	private String[] _methodParameterTypes51;
 	private String _methodName54;
 	private String[] _methodParameterTypes54;
-	private String _methodName55;
-	private String[] _methodParameterTypes55;
-	private String _methodName56;
-	private String[] _methodParameterTypes56;
-	private String _methodName57;
-	private String[] _methodParameterTypes57;
-	private String _methodName58;
-	private String[] _methodParameterTypes58;
-	private String _methodName59;
-	private String[] _methodParameterTypes59;
-	private String _methodName60;
-	private String[] _methodParameterTypes60;
-	private String _methodName61;
-	private String[] _methodParameterTypes61;
-	private String _methodName62;
-	private String[] _methodParameterTypes62;
 }

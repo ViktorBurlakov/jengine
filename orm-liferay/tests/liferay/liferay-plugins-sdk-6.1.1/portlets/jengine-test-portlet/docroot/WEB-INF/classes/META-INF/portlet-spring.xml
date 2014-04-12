@@ -31,9 +31,9 @@
 	<bean id="com.jenginetest.builder.service.SMemberLocalService" class="com.jenginetest.builder.service.impl.SMemberLocalServiceImpl" />
 	<bean id="com.jenginetest.builder.service.SMemberService" class="com.jenginetest.builder.service.impl.SMemberServiceImpl" />
 	<bean id="com.jenginetest.builder.service.persistence.SMemberPersistence" class="com.jenginetest.builder.service.persistence.SMemberPersistenceImpl" parent="basePersistence" />
-	<bean id="com.jenginetest.builder.service.STestLocalService" class="com.jenginetest.builder.service.impl.STestLocalServiceImpl" />
-	<bean id="com.jenginetest.builder.service.STestService" class="com.jenginetest.builder.service.impl.STestServiceImpl" />
 	<bean id="com.jenginetest.builder.service.STransactionLocalService" class="com.jenginetest.builder.service.impl.STransactionLocalServiceImpl" />
 	<bean id="com.jenginetest.builder.service.STransactionService" class="com.jenginetest.builder.service.impl.STransactionServiceImpl" />
 	<bean id="com.jenginetest.builder.service.persistence.STransactionPersistence" class="com.jenginetest.builder.service.persistence.STransactionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.jenginetest.builder.service.TestLocalService" class="com.jenginetest.builder.service.impl.TestLocalServiceImpl" />
+	<bean id="com.jenginetest.builder.service.TestService" class="com.jenginetest.builder.service.impl.TestServiceImpl" />
 </beans>
