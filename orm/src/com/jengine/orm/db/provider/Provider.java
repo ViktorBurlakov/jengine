@@ -133,7 +133,7 @@ public class Provider {
         return connection.getGeneratedKeys().size() == 1 ? connection.getGeneratedKeys().remove(0) : null;
     }
 
-    public void update(String table, String keyName, Map<String, Object> attributes) throws DBException {
+    public void update(String table, String keyName, Serializable id, Map<String, Object> attributes) throws DBException {
         StringBuffer sql = new StringBuffer();
         List pairs = new ArrayList();
         List params = new ArrayList();
@@ -147,7 +147,7 @@ public class Provider {
             pairs.add(pair.toString());
             params.add(attributes.get(columnName));
         }
-        params.add(attributes.get(keyName));
+        params.add(id);
         sql.append("UPDATE ").append(table).append(" SET ").append(concat(pairs, ", "))
                 .append(" WHERE ").append(keyName).append("=").append("?");
 
