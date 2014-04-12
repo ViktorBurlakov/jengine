@@ -42,6 +42,14 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Liferay-portal-src-6.1.1-ce-ga2" />
     <orderEntry type="module" module-name="Orm-liferay" />
+    <orderEntry type="module" module-name="orm" />
+    <orderEntry type="module" module-name="Utils" />
+    <orderEntry type="library" name="liferay.sdk.lib" level="project" />
+    <orderEntry type="library" name="liferay.tomcat.lib" level="project" />
+    <orderEntry type="library" name="jengine.lib.antlr2" level="project" />
+    <orderEntry type="library" name="jengine.lib.antlr3" level="project" />
+    <orderEntry type="library" name="liferay.root.lib" level="project" />
+    <orderEntry type="library" name="liferay.tomcat.lib.ext" level="project" />
   </component>
 </module>
 

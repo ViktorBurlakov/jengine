@@ -264,13 +264,17 @@ public abstract class BaseQuery {
         List<Target> targets = this.targets.size() > 0 ? toList(this.targets.values()) : CollectionUtil.list(defaultTarget);
 
         for (Object value : values) {
-            Object[] items = value.getClass().isArray() ? (Object[]) value : new Object[]{value};
-            List resultItem = new ArrayList();
-            Iterator itemIterator =  Arrays.asList(items).iterator();
-            for (Target target : targets) {
-                resultItem.add(target.processResult(itemIterator));
+            if (value != null) {
+                Object[] items = value.getClass().isArray() ? (Object[]) value : new Object[]{value};
+                List resultItem = new ArrayList();
+                Iterator itemIterator =  Arrays.asList(items).iterator();
+                for (Target target : targets) {
+                    resultItem.add(target.processResult(itemIterator));
+                }
+                result.add(resultItem.size() == 1 ? resultItem.get(0) : resultItem);
+            } else {
+                result.add(null);
             }
-            result.add(resultItem.size() == 1 ? resultItem.get(0) : resultItem);
         }
 
         return result;

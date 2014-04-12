@@ -55,78 +55,10 @@ public class TestLocalServiceWrapper implements TestLocalService,
 		return _testLocalService.invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public void clearData()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_testLocalService.clearData();
-	}
-
-	public void loadData()
+	public void test()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_testLocalService.loadData();
-	}
-
-	/**
-	* Clearing data test
-	*/
-	public void test1()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_testLocalService.test1();
-	}
-
-	/**
-	* Object creation test
-	*/
-	public void test2()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_testLocalService.test2();
-	}
-
-	/**
-	* Selection test
-	*/
-	public void test3()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_testLocalService.test3();
-	}
-
-	/**
-	* Sub query test
-	*/
-	public void test4()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_testLocalService.test4();
-	}
-
-	/**
-	* Inserting and Updating test
-	*/
-	public void test5()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_testLocalService.test5();
-	}
-
-	/**
-	* Aggregation testing
-	*/
-	public void test6()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_testLocalService.test6();
-	}
-
-	/**
-	* Aggregation testing
-	*/
-	public void test7()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_testLocalService.test7();
+		_testLocalService.test();
 	}
 
 	/**
