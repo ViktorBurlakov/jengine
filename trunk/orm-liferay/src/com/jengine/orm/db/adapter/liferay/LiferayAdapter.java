@@ -63,7 +63,7 @@ public class LiferayAdapter extends Adapter {
         }
     }
 
-    public List executeQuery(DBConnection dbConnection, String sql, List params) throws DBException {
+    public List executeQuery(DBConnection dbConnection, String sql, List params, List types) throws DBException {
         List items = new ArrayList();
         Session session = (Session) dbConnection.getNativeConnection();
         SQLQuery query = null;

@@ -79,6 +79,11 @@ public class MultiModelField {
         return name;
     }
 
+    public String getAlias() {
+        return item != null ? String.format("%s_%s", item.getTableItem().getName(), modelField.getColumnName()) :
+                modelField.getColumnName();
+    }
+
     public void setName(String name) {
         this.name = name;
     }

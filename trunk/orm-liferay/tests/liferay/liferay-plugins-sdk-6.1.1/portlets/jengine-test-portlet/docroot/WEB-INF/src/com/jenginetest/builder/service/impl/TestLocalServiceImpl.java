@@ -46,5 +46,11 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         } catch (Exception e) {
             e.printStackTrace();
         }
+//        for (Object item : testFinder.search()) {
+//            for(Object value : ((Object[]) item)) {
+//                System.out.print(", " + value);
+//            }
+//            System.out.println();
+//        }
     }
 }

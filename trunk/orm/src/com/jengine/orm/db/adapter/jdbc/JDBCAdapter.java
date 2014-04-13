@@ -71,7 +71,7 @@ public class JDBCAdapter extends Adapter {
         }
     }
 
-    public List executeQuery(DBConnection dbConnection, String sql, List params) throws DBException {
+    public List executeQuery(DBConnection dbConnection, String sql, List params, List types) throws DBException {
         List items = new ArrayList();
         Connection connection = (Connection) dbConnection.getNativeConnection();
         PreparedStatement pstmt = null;

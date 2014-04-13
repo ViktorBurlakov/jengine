@@ -32,6 +32,7 @@ import com.jenginetest.builder.service.persistence.SBookPersistence;
 import com.jenginetest.builder.service.persistence.SLibraryPersistence;
 import com.jenginetest.builder.service.persistence.SMemberPersistence;
 import com.jenginetest.builder.service.persistence.STransactionPersistence;
+import com.jenginetest.builder.service.persistence.TestFinder;
 
 import com.liferay.counter.service.CounterLocalService;
 
@@ -597,6 +598,24 @@ public abstract class STransactionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the test finder.
+	 *
+	 * @return the test finder
+	 */
+	public TestFinder getTestFinder() {
+		return testFinder;
+	}
+
+	/**
+	 * Sets the test finder.
+	 *
+	 * @param testFinder the test finder
+	 */
+	public void setTestFinder(TestFinder testFinder) {
+		this.testFinder = testFinder;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -817,6 +836,8 @@ public abstract class STransactionLocalServiceBaseImpl
 	protected TestLocalService testLocalService;
 	@BeanReference(type = TestService.class)
 	protected TestService testService;
+	@BeanReference(type = TestFinder.class)
+	protected TestFinder testFinder;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = ResourceLocalService.class)

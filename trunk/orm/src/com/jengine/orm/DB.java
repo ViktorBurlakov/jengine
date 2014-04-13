@@ -28,23 +28,36 @@ import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.reference.BaseReference;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static com.jengine.utils.CollectionUtil.map;
 
 public class DB {
     protected String name;
     protected Provider provider;
     protected ConcurrentHashMap<String, ModelClassBase> models = new ConcurrentHashMap<String, ModelClassBase>();
     protected Map<String, Map<String, Field>> deferredFields = new ConcurrentHashMap<String, Map<String, Field>>();
+    protected Map<String, Object> options = map("aliasEnabled", true);
 
     public DB(Provider provider) {
         this("default", provider);
     }
 
+    public DB(Provider provider, Map<String, Object> options) {
+        this("default", provider, options);
+    }
+
     public DB(String name, Provider provider) {
+        this(name, provider, new HashMap<String, Object>());
+    }
+
+    public DB(String name, Provider provider, Map<String, Object> options) {
         this.name = name;
         this.provider = provider;
+        this.options.putAll(options);
     }
 
     public void register(ModelClassBase modelClass) {
@@ -100,6 +113,14 @@ public class DB {
 
     public CacheManager getCacheManager() {
         return provider.getCacheManager();
+    }
+
+    public Map<String, Object> getOptions() {
+        return options;
+    }
+
+    public void setOptions(Map<String, Object> options) {
+        this.options = options;
     }
 
     @Override

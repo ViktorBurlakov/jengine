@@ -24,9 +24,6 @@ import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.DBSavePoint;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-
-import java.lang.reflect.InvocationTargetException;
 
 
 public class LiferayConnection extends DBConnection {
@@ -34,11 +31,11 @@ public class LiferayConnection extends DBConnection {
 
     public LiferayConnection(Object nativeConnection) throws DBException {
         super(nativeConnection);
-        try {
-            transactionalPortalCacheHelper = PortalClassLoaderUtil.getClassLoader().loadClass("com.liferay.portal.cache.transactional.TransactionalPortalCacheHelper");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            transactionalPortalCacheHelper = PortalClassLoaderUtil.getClassLoader().loadClass("com.liferay.portal.cache.transactional.TransactionalPortalCacheHelper");
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
         if (isTransactionActive()) {
             startTransaction();
         }
@@ -53,39 +50,39 @@ public class LiferayConnection extends DBConnection {
     }
 
     public void startTransaction() throws DBException {
-        try {
-            transactionalPortalCacheHelper.getMethod("begin").invoke(transactionalPortalCacheHelper);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            transactionalPortalCacheHelper.getMethod("begin").invoke(transactionalPortalCacheHelper);
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        } catch (NoSuchMethodException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void commit() throws DBException {
-        try {
-            transactionalPortalCacheHelper.getMethod("commit").invoke(transactionalPortalCacheHelper);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            transactionalPortalCacheHelper.getMethod("commit").invoke(transactionalPortalCacheHelper);
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        } catch (NoSuchMethodException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void rollback() throws DBException {
-        try {
-            transactionalPortalCacheHelper.getMethod("rollback").invoke(transactionalPortalCacheHelper);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            transactionalPortalCacheHelper.getMethod("rollback").invoke(transactionalPortalCacheHelper);
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        } catch (NoSuchMethodException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void finishTransaction() throws DBException {

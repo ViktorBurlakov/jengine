@@ -23,43 +23,43 @@ import java.util.Arrays;
  */
 public class TestLocalServiceClpInvoker {
 	public TestLocalServiceClpInvoker() {
-		_methodName50 = "getBeanIdentifier";
+		_methodName52 = "getBeanIdentifier";
 
-		_methodParameterTypes50 = new String[] {  };
+		_methodParameterTypes52 = new String[] {  };
 
-		_methodName51 = "setBeanIdentifier";
+		_methodName53 = "setBeanIdentifier";
 
-		_methodParameterTypes51 = new String[] { "java.lang.String" };
+		_methodParameterTypes53 = new String[] { "java.lang.String" };
 
-		_methodName54 = "test";
+		_methodName56 = "test";
 
-		_methodParameterTypes54 = new String[] {  };
+		_methodParameterTypes56 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName50.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
+		if (_methodName52.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
 			return TestLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName51.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes51, parameterTypes)) {
+		if (_methodName53.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
 			TestLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 		}
 
-		if (_methodName54.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
+		if (_methodName56.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
 			TestLocalServiceUtil.test();
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName50;
-	private String[] _methodParameterTypes50;
-	private String _methodName51;
-	private String[] _methodParameterTypes51;
-	private String _methodName54;
-	private String[] _methodParameterTypes54;
+	private String _methodName52;
+	private String[] _methodParameterTypes52;
+	private String _methodName53;
+	private String[] _methodParameterTypes53;
+	private String _methodName56;
+	private String[] _methodParameterTypes56;
 }

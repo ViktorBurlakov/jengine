@@ -36,4 +36,5 @@
 	<bean id="com.jenginetest.builder.service.persistence.STransactionPersistence" class="com.jenginetest.builder.service.persistence.STransactionPersistenceImpl" parent="basePersistence" />
 	<bean id="com.jenginetest.builder.service.TestLocalService" class="com.jenginetest.builder.service.impl.TestLocalServiceImpl" />
 	<bean id="com.jenginetest.builder.service.TestService" class="com.jenginetest.builder.service.impl.TestServiceImpl" />
+	<bean id="com.jenginetest.builder.service.persistence.TestFinder" class="com.jenginetest.builder.service.persistence.TestFinderImpl" parent="basePersistence" />
 </beans>

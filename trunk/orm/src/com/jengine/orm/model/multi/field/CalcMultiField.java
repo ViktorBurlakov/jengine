@@ -66,6 +66,10 @@ public class CalcMultiField extends MultiModelField {
         return name;
     }
 
+    public String getAlias() {
+        return name;
+    }
+
     public Object cast(Object value) throws DBException {
         return new Variant(value).convertTo(fieldClass);
     }
@@ -74,4 +78,11 @@ public class CalcMultiField extends MultiModelField {
         return String.format(expression, columns.toArray());
     }
 
+    public Map<String, Object> getOptions() {
+        return options;
+    }
+
+    public Integer getColumnType() {
+        return columnType;
+    }
 }
