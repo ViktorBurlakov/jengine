@@ -46,13 +46,5 @@ public class TestLocalServiceImpl extends TestLocalServiceBaseImpl {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        try {
-//            SessionFactory sessionFactory = (SessionFactory) PortalBeanLocatorUtil.locate("liferaySessionFactory");
-//            LiferayConnection connection = new LiferayConnection(sessionFactory.openSession());
-//            System.out.println("ddddddd");
-//            sessionFactory.closeSession(connection.getNativeConnection());
-//        } catch (DBException e) {
-//            e.printStackTrace();
-//        }
     }
 }

@@ -37,6 +37,14 @@ public class LiferayAdapter extends Adapter {
         super(connectionManager);
     }
 
+    public DBConnection getConnection() throws DBException {
+        return connectionManager.getConnection();
+    }
+
+    public void closeConnection(DBConnection connection) throws DBException {
+        connectionManager.closeConnection(connection);
+    }
+
     public void executeUpdate(DBConnection dbConnection, String sql, List params, Map<String, Object> options) throws DBException {
         Session session = (Session) dbConnection.getNativeConnection();
         SQLQuery query = null;
