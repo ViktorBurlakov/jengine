@@ -19,6 +19,7 @@
 
 package model;
 
+import com.jengine.orm.model.Meta;
 import com.jengine.orm.model.ModelClass;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.model.field.Field;
@@ -27,6 +28,7 @@ import com.jengine.orm.model.field.reference.SingleReferenceField;
 
 import static com.jengine.utils.CollectionUtil.map;
 
+@Meta(table = "MemberAddress")
 public class Address extends TestModel {
     public static Field street = new StringField("verbose", "Street");
     public static Field number = new StringField("verbose", "Building Number");

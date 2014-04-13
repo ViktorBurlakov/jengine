@@ -138,17 +138,13 @@ INSERT INTO `Member` VALUES (1,1,'Mark','Adamson', 'y'),(2,1,'Peter','Douglas', 
 UNLOCK TABLES;
 
 --
--- Table structure for table `Transaction`
+-- Table structure for table `MemberAddress`
 --
 
---
--- Table structure for table `Address`
---
-
-DROP TABLE IF EXISTS `Address`;
+DROP TABLE IF EXISTS `MemberAddress`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Address` (
+CREATE TABLE `MemberAddress` (
   `id` bigint(20) NOT NULL,
   `memberId` bigint(20) DEFAULT NULL,
   `street` varchar(75) DEFAULT NULL,
