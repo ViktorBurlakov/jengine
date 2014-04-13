@@ -29,6 +29,7 @@ import com.jengine.orm.model.multi.field.MultiModelField;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 public class ModelTarget extends Target {
@@ -56,12 +57,16 @@ public class ModelTarget extends Target {
     }
 
     public void setSQL(SQLQuery query) {
+        Map<String, Object> options = this.query.getMultiModel().getDB().getOptions();
+        boolean aliasEnabled = options.containsKey("aliasEnabled") && ((Boolean) options.get("aliasEnabled"));
+
         for (MultiModelField field : item.getFieldList()) {
             if (field instanceof FunctionMultiField) {
-                query.addTarget(field.toSQL(), field.getSQLName());
+                query.addTarget(field.toSQL(), field.getAlias());
+                query.getTargetTypes().put(field.getAlias(), field.getModelField().getColumnType());
             } else {
-                query.addTarget(field.toSQL());
-            }
+                query.addTarget(field.getSQLName(), aliasEnabled ? field.getAlias() : null);
+                query.getTargetTypes().put(aliasEnabled ? field.getAlias() : field.getSQLName(), field.getModelField().getColumnType());            }
         }
     }
 

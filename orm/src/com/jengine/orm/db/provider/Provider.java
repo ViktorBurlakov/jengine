@@ -187,7 +187,7 @@ public class Provider {
     public List select(SQLQuery sqlQuery) throws DBException {
         String sql = buildSelectSQL(sqlQuery);
         DBConnection connection = this.adapter.getConnection();
-        return this.adapter.executeQuery(connection, sql, sqlQuery.getParams());
+        return this.adapter.executeQuery(connection, sql, sqlQuery.getParams(), toList(sqlQuery.getTargetTypes().values()));
     }
 
 

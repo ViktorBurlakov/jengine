@@ -52,6 +52,10 @@ public class Test {
             Adapter adapter = new LiferayAdapter(connectionManager);
             Provider provider = new MySQLProvider(adapter);
             DB db = DBFactory.register(new DB(provider));
+
+
+
+
         } catch (DBException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -506,29 +510,36 @@ public class Test {
         check( new Cluster("Transaction << Book", list("Transaction.id", "Book.id", "Book.title")).select("Book.title").one() != null );
         Cluster cluster = new Cluster("Transaction << Book", list("Transaction.id", "Book.id", "Book.title")).filterCluster(" Book.title = ? ", "The Shining");
         check( cluster.select("Book.title").one() != null );
-        check( new Cluster("Transaction << Book").fields("Transaction.id").select().one() != null );
-        check( new Cluster("Transaction >> Book").fields("Transaction.id").select().one() != null );
-        check( new Cluster("Transaction && Book").fields("Transaction.id").select().one() != null );
-        check( new Cluster("(Transaction && Book) << Book").fields("Transaction.id").select().one() != null );
+        check( new Cluster("Transaction << Book").fields("Transaction.id").select().<Long>one() == 1l );
+        check( new Cluster("Transaction >> Book").fields("Transaction.id").select().list().size() == 4 );
+        check( new Cluster("Transaction >> Book").fields("Transaction.id").select().list().get(3) == null );
+        check( new Cluster("Transaction >> Book").fields("Transaction.id").select().<Long>one() == 1l );
+        check( new Cluster("Transaction && Book").fields("Transaction.id").select().list().equals(list(1l, 2l, 3l)) );
+        check( new Cluster("(Transaction && Book) << Book").fields("Transaction.id").select().list().equals(list(1l, 2l, 3l)) );
         check( new Cluster("(Transaction << Book << Library) >> Author_books << Author").fields("Author_books.id").select().one() != null );
         check( new Cluster("(Transaction << Book) >> Author_books, Author").fields("Author_books.id").select().one() != null );
         check( new Cluster("(Transaction << Book) >> Author_books, Author").alias("Author_books", "books").fields("books.id").select().one() != null );
-        check( new Cluster("(Transaction << Book) >> Author_books, Author").alias(0, "t").fields("t.id").select().one() != null );
-        check( new Cluster("(Transaction << Book) >> Author_books, Author").restriction(0, "Transaction.book", "Book.id").fields("Transaction.id").select().one() != null );
+        check( new Cluster("(Transaction << Book) >> Author_books, Author").alias(0, "t").fields("t.id").select().list().equals(list(1l, 1l, 1l)) );
+        check( new Cluster("(Transaction << Book) >> Author_books, Author").restriction(0, "Transaction.book", "Book.id").fields("Transaction.id").select().list().equals(list(1l, 1l, 1l)) );
         Cluster cluster1 = new Cluster("Transaction << Book", list("Book.title"));
-        check( cluster1.select().distinct("Book.title").order("Book.title").list() != null );
-        check( cluster1.select().distinct("Book.title").order("Book.title", "DESC").page(0, 2).list() != null );
-        check( cluster1.<Long>max("Book.id") > 0);
-        check( cluster1.<Long>min("Transaction.id") > 0);
-        check( cluster1.<Double>avg("Transaction.id") > 0);
-        check( cluster1.<Long>sum("Transaction.id") > 0);
-        check( cluster1.count() > 0);
-        check( cluster1.count("Book.id") > 0);
+        check( cluster1.select().distinct("Book.title").order("Book.title").list().equals(list("The Dark Tower", "The Shining")) );
+        check( cluster1.select().distinct("Book.title").order("Book.title", "DESC").page(0, 2).list().equals(list("The Shining", "The Dark Tower")));
+        check( cluster1.select().distinct("Book.title").order("Book.title", "DESC").page(0, 1).list().equals(list("The Shining")));
+        check( cluster1.<Long>max("Book.id") == 2l);
+        check( cluster1.<Long>min("Transaction.id") == 1l);
+        check( cluster1.<Double>avg("Transaction.id") == 2.0);
+        check( cluster1.<Long>sum("Transaction.id") == 6);
+        check( cluster1.count() == 3);
+        check( cluster1.count("Book.id") == 3);
 //        check( cluster1.<Long>calc("%s + 10", "Transaction.id") > 0);
-        check( new Cluster("Transaction >> Book").fields("Transaction.id", new Calc("calc_field", Long.class, "%s + 10", "Transaction.id")).select().list() != null );
-        check( new Cluster("Transaction >> Book").fields("Transaction.id",  "Book.id", "Book.title", new Max("Transaction.id")).select().group("Book.title").list() != null );
-        check( new Cluster("Transaction >> Book").fields("Transaction.id",  "Book.id", "Book.title", new Max("Transaction.id")).groupCluster("Book.title").select().list() != null );
-        check( new Cluster("Transaction << Book").select().filter("Book.id > 1").one() != null );
+//        check( new Cluster("Transaction >> Book").fields("Transaction.id", new Calc("calc_field", Long.class, "%s + 10", "Transaction.id")).select().list() != null );
+        check( new Cluster("Transaction >> Book").fields("Transaction.id", new Calc("calc_field", Long.class, "%s + 10", "Transaction.id")).select().list()
+                .equals(list(list(1l, 11l), list(2l, 12l), list(3l, 13l), list(null, null))) );
+        check( new Cluster("Transaction >> Book").fields("Transaction.id",  "Book.id", "Book.title", new Max("Transaction.id")).select().group("Book.title").list()
+                .equals(list(list(1l, 1l, "The Dark Tower", 1l), list(2l, 2l, "The Shining", 3l), list(null, 3l, "Vingt mille lieues sous les mers", null))) );
+        check( new Cluster("Transaction >> Book").fields("Transaction.id",  "Book.id", "Book.title", new Max("Transaction.id")).groupCluster("Book.title").select().list()
+                .equals(list(list(1l, 1l, "The Dark Tower", 1l), list(2l, 2l, "The Shining", 3l), list(null, 3l, "Vingt mille lieues sous les mers", null))) );
+        check( new Cluster("Transaction << Book").select().filter("Book.id > 1").list().size() == 2);
     }
 
 

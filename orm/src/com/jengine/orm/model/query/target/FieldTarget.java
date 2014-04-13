@@ -26,6 +26,7 @@ import com.jengine.orm.model.multi.field.FunctionMultiField;
 import com.jengine.orm.model.multi.field.MultiModelField;
 
 import java.util.Iterator;
+import java.util.Map;
 
 public class FieldTarget extends Target {
     protected MultiModelField multiModelField;
@@ -49,10 +50,18 @@ public class FieldTarget extends Target {
     }
 
     public void setSQL(SQLQuery query) {
-        if (multiModelField instanceof FunctionMultiField || multiModelField instanceof CalcMultiField) {
-            query.addTarget(multiModelField.toSQL(), multiModelField.getSQLName());
+        Map<String, Object> options = this.query.getMultiModel().getDB().getOptions();
+        boolean aliasEnabled = options.containsKey("aliasEnabled") && ((Boolean) options.get("aliasEnabled"));
+
+        if (multiModelField instanceof FunctionMultiField) {
+            query.addTarget(multiModelField.toSQL(), multiModelField.getAlias());
+            query.getTargetTypes().put(multiModelField.getAlias(), multiModelField.getModelField().getColumnType());
+        } else if (multiModelField instanceof CalcMultiField) {
+            query.addTarget(multiModelField.toSQL(), multiModelField.getAlias());
+            query.getTargetTypes().put(multiModelField.getAlias(), ((CalcMultiField) multiModelField).getColumnType());
         } else {
-            query.addTarget(multiModelField.toSQL());
+            query.addTarget(multiModelField.getSQLName(), aliasEnabled ? multiModelField.getAlias() : null);
+            query.getTargetTypes().put(aliasEnabled ? multiModelField.getAlias() : multiModelField.getSQLName(), multiModelField.getModelField().getColumnType());
         }
 
     }
@@ -60,4 +69,5 @@ public class FieldTarget extends Target {
     public Object processResult(Iterator itr) throws DBException {
         return multiModelField.cast(super.processResult(itr));
     }
+
 }
