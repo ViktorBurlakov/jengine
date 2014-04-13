@@ -24,12 +24,21 @@ import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.DBSavePoint;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+
+import java.lang.reflect.InvocationTargetException;
 
 
 public class LiferayConnection extends DBConnection {
+    public Class transactionalPortalCacheHelper;
 
     public LiferayConnection(Object nativeConnection) throws DBException {
         super(nativeConnection);
+        try {
+            transactionalPortalCacheHelper = PortalClassLoaderUtil.getClassLoader().loadClass("com.liferay.portal.cache.transactional.TransactionalPortalCacheHelper");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         if (isTransactionActive()) {
             startTransaction();
         }
@@ -44,39 +53,43 @@ public class LiferayConnection extends DBConnection {
     }
 
     public void startTransaction() throws DBException {
-//        try {
-//            getNativeConnection().setAutoCommit(false);
-//            System.out.println("Transaction started!");
-//        } catch (ORMException e) {
-//            throw new DBException(e);
-//        }
+        try {
+            transactionalPortalCacheHelper.getMethod("begin").invoke(transactionalPortalCacheHelper);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
     }
 
     public void commit() throws DBException {
-//        try {
-//            getNativeConnection().commit();
-//            System.out.println("Transaction committed!");
-//        } catch (ORMException e) {
-//            throw new DBException(e);
-//        }
+        try {
+            transactionalPortalCacheHelper.getMethod("commit").invoke(transactionalPortalCacheHelper);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
     }
 
     public void rollback() throws DBException {
-//        try {
-//            getNativeConnection().rollback();
-//            System.out.println("Transaction rollback!");
-//        } catch (SQLException e) {
-//            throw new DBException(e);
-//        }
+        try {
+            transactionalPortalCacheHelper.getMethod("rollback").invoke(transactionalPortalCacheHelper);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
     }
 
     public void finishTransaction() throws DBException {
-//        try {
-//            getNativeConnection().setAutoCommit(true);
-//            System.out.println("Transaction finish!");
-//        } catch (SQLException e) {
-//            throw new DBException(e);
-//        }
+        //TransactionalPortalCacheHelper.();
     }
 
     public DBSavePoint savePoint(String name) throws DBException {
@@ -117,7 +130,7 @@ public class LiferayConnection extends DBConnection {
 //        } catch (SQLException e) {
 //            throw new DBException(e);
 //        }
-        return false;
+        return true;
     }
 
     public Session getNativeConnection() {
