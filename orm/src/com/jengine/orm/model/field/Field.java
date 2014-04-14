@@ -91,9 +91,9 @@ public class Field {
             this.columnName = (String) options.get("columnName");
         }
         if (options.containsKey("columnType")) {
-            this.columnType = (Integer) options.get("columnType");
-//            this.columnType = options.containsKey("columnType") ?  (Integer) options.get("columnType") :
-//                    (getTypeMap().containsKey(fieldClass.getName()) ? getTypeMap().get(fieldClass.getName())[0] : null);
+//            this.columnType = (Integer) options.get("columnType");
+            this.columnType = options.containsKey("columnType") ?  (Integer) options.get("columnType") :
+                    (getTypeMap().containsKey(fieldClass.getName()) ? getTypeMap().get(fieldClass.getName())[0] : null);
         }
         if (options.containsKey("required")) {
             this.required = (Boolean) options.get("required");

@@ -26,6 +26,7 @@ import com.jengine.orm.db.adapter.ConnectionManager;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +72,7 @@ public class JDBCAdapter extends Adapter {
         }
     }
 
-    public List executeQuery(DBConnection dbConnection, String sql, List params, List types) throws DBException {
+    public List executeQuery(DBConnection dbConnection, String sql, List params, LinkedHashMap<String, Integer> types) throws DBException {
         List items = new ArrayList();
         Connection connection = (Connection) dbConnection.getNativeConnection();
         PreparedStatement pstmt = null;
