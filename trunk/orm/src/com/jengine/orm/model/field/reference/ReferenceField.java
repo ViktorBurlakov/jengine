@@ -70,6 +70,10 @@ public class ReferenceField extends BaseReference {
         return true;
     }
 
+    public Integer getColumnType() {
+        return getReferenceModelKey().getColumnType();
+    }
+
     public Object getValue(Model obj) throws DBException {
         Object key = obj.getData().get(fieldName);
         return key != null ? getReferenceClass().filter(getReferenceModelKey().eq(key)).one() : null;

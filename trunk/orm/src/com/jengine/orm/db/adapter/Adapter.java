@@ -24,6 +24,7 @@ import com.jengine.orm.db.DBConnection;
 import com.jengine.orm.db.DBException;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +58,7 @@ public class Adapter {
     public void executeUpdate(DBConnection dbConnection, String sql, List params, Map<String, Object> options) throws DBException {
     }
 
-    public List executeQuery(DBConnection dbConnection, String sql, List params, List types) throws DBException {
+    public List executeQuery(DBConnection dbConnection, String sql, List params, LinkedHashMap<String, Integer> types) throws DBException {
         return new ArrayList();
     }
 

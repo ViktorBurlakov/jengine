@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,7 +64,7 @@ public class LiferayAdapter extends Adapter {
         }
     }
 
-    public List executeQuery(DBConnection dbConnection, String sql, List params, List types) throws DBException {
+    public List executeQuery(DBConnection dbConnection, String sql, List params,  LinkedHashMap<String, Integer> types) throws DBException {
         List items = new ArrayList();
         Session session = (Session) dbConnection.getNativeConnection();
         SQLQuery query = null;
