@@ -34,6 +34,7 @@ import com.jengine.orm.exception.ValidateException;
 import com.jengine.orm.model.cluster.Cluster;
 import com.jengine.orm.model.multi.field.Calc;
 import com.jengine.orm.model.multi.field.aggregation.Max;
+import com.jengine.orm.model.query.ModelQuery;
 import com.jengine.utils.CollectionUtil;
 import com.jenginetest.model.*;
 
@@ -41,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.jengine.utils.ClassUtils.forceInit;
 import static com.jengine.utils.CollectionUtil.list;
 import static com.jengine.utils.CollectionUtil.map;
 
@@ -82,6 +84,7 @@ public class Test {
 //            test9();
             test10();
             test11();
+            test12();
         } finally {
             db.closeConnection(connection);
         }
@@ -95,6 +98,7 @@ public class Test {
         Author.cls.remove();
         Library.cls.remove();
         Book.cls.remove();
+        forceInit(Account.class);
         Member.cls.remove();
         Transaction.cls.remove();
         Address.cls.remove();
@@ -167,6 +171,7 @@ public class Test {
         member1.setFirstName("Mark");
         member1.setLastName("Adamson");
         member1.setLibrary(globeLibrary);
+        member1.setAccount(Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one());
         member1.save();
 
         Member member2 = new Member();
@@ -174,6 +179,7 @@ public class Test {
         member2.setFirstName("Peter");
         member2.setLastName("Douglas");
         member2.setLibrary(globeLibrary);
+        member2.setAccount(Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one());
         member2.save();
 
         Member member3 = new Member();
@@ -182,6 +188,7 @@ public class Test {
         member3.setLastName("Miller");
         // required is set to 'false' only for testing
         // member3.setLibrary(globeLibrary);
+        member3.setAccount(Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one());
         member3.save();
 
         Member member4 = new Member();
@@ -189,6 +196,7 @@ public class Test {
         member4.setFirstName("Homer");
         member4.setLastName("Simpson");
         member4.setLibrary(globeLibrary);
+        member4.setAccount(Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one());
         member4.save();
 
         Member member5 = new Member();
@@ -196,6 +204,7 @@ public class Test {
         member5.setFirstName("Burt");
         member5.setLastName("Simpson");
         member5.setLibrary(globeLibrary);
+        member5.setAccount(Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one());
         member5.save();
 
         Address address1 = new Address();
@@ -540,6 +549,20 @@ public class Test {
         check( new Cluster("Transaction >> Book").fields("Transaction.id",  "Book.id", "Book.title", new Max("Transaction.id")).groupCluster("Book.title").select().list()
                 .equals(list(list(1l, 1l, "The Dark Tower", 1l), list(2l, 2l, "The Shining", 3l), list(null, 3l, "Vingt mille lieues sous les mers", null))) );
         check( new Cluster("Transaction << Book").select().filter("Book.id > 1").list().size() == 2);
+    }
+
+    /**
+     * Liferay binding testing
+     */
+    public static void test12() throws Exception {
+        System.out.println("** Test 12: Liferay binding testing");
+
+        clearData();
+        loadData();
+
+        check( Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one().getScreenName().equals("test") );
+        check( Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one().<ModelQuery>getValue("member_set").count() == 5 );
+        check( Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one().<ModelQuery>getValue("member_set").filter("firstName = ?", "Homer").count() == 1 );
     }
 
 
