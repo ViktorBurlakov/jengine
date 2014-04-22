@@ -92,8 +92,8 @@ public class Model {
         this.setValue(cls.getManager().getField(fieldName), value);
     }
 
-    public Object getValue(String fieldName) throws DBException {
-        return this.getValue(cls.getManager().getField(fieldName));
+    public <T> T getValue(String fieldName) throws DBException {
+        return this.<T>getValue(cls.getManager().getField(fieldName));
     }
 
     public void setValue(Field field, Object value) throws DBException {
@@ -103,8 +103,8 @@ public class Model {
         data.put(field.getFieldName(), field.cast(value));
     }
 
-    public Object getValue(Field field) throws DBException {
-        return field.getValue(this);
+    public <T> T getValue(Field field) throws DBException {
+        return (T) field.getValue(this);
     }
 
     public void setValues(Map<String, Object> valueMap) throws DBException {

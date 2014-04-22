@@ -36,6 +36,7 @@ import static com.jengine.utils.CollectionUtil.map;
 
 public class ModelClass<T extends Model> extends ModelClassBase<T> {
     public static Map<String, ModelClass> classMap = new ConcurrentHashMap<String, ModelClass>();
+    protected Map options;
 
     public ModelClass(Class<T> cls) {
         this(cls, new HashMap());
@@ -43,6 +44,7 @@ public class ModelClass<T extends Model> extends ModelClassBase<T> {
 
     public ModelClass(Class<T> cls, Map options) {
         super(cls.getSimpleName(), cls);
+        this.options = options;
         classMap.put(cls.getName(), this);
         Meta meta = cls.getAnnotation(Meta.class);
         Map metaMap = meta == null ? ClassUtils.annotationToMap(Meta.class) : ClassUtils.annotationToMap(meta);

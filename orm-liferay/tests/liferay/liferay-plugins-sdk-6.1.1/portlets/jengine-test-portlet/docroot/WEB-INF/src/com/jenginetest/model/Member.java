@@ -34,6 +34,7 @@ public class Member extends TestModel {
     public static Field id = new PrimaryKey();
     public static Field firstName = new StringField("verbose", "First Name");
     public static Field lastName  = new StringField("verbose", "Last Name");
+    public static Field account = new ReferenceField(Account.class, map("verbose", "Account", "required", false, "columnName", "userId"));
     public static Field library   = new ReferenceField(Library.class, map("verbose", "Library", "required", false));
     public static ModelClass<Member> cls = new ModelClass<Member>(Member.class);
 
@@ -77,6 +78,14 @@ public class Member extends TestModel {
 
     public void setAddress(Address value) throws DBException {
         setValue("address", value);
+    }
+
+    public Account getAccount() throws DBException {
+        return (Account) getValue(account);
+    }
+
+    public void setAccount(Account value) throws DBException {
+        setValue(account, value);
     }
 
 }

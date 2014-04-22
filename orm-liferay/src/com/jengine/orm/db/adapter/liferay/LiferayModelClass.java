@@ -6,7 +6,6 @@ import com.jengine.orm.model.Model;
 import com.jengine.orm.model.ModelClass;
 import com.jengine.orm.model.field.BooleanField;
 import com.jengine.orm.model.field.Field;
-import com.jengine.orm.model.field.PrimaryKey;
 import com.jengine.orm.model.field.StringField;
 import com.jengine.orm.model.field.datetime.DateTimeField;
 import com.jengine.orm.model.field.numeric.DoubleField;
@@ -14,9 +13,9 @@ import com.jengine.orm.model.field.numeric.FloatField;
 import com.jengine.orm.model.field.numeric.IntegerField;
 import com.jengine.orm.model.field.numeric.LongField;
 import com.jengine.utils.ClassUtils;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.impl.BaseModelImpl;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -24,56 +23,62 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.util.*;
 
+import static com.jengine.utils.StringUtil.caps;
+
 public class LiferayModelClass<T extends Model>  extends ModelClass<T> {
     private Class entryModelClass;
     private Class entryModelClassImpl;
     private boolean liferayCacheEnabled = true;
     private boolean autoScan = true;
 
-    public LiferayModelClass(Class cls) {
-        this(cls, new HashMap());
+    public LiferayModelClass(Class cls, String entryClassImplName) {
+        this(cls, entryClassImplName, new HashMap());
     }
 
-    public LiferayModelClass(Class cls, Map options) {
+    public LiferayModelClass(Class cls, String entryClassImplName, Map options) {
         super(cls, options);
         liferayCacheEnabled = options.containsKey("liferayCacheEnabled") ?
                 (Boolean) options.get("liferayCacheEnabled") : liferayCacheEnabled;
-        liferayCacheEnabled = options.containsKey("autoScan") ?
-                (Boolean) options.get("autoScan") : liferayCacheEnabled;
+        autoScan = options.containsKey("autoScan") ?  (Boolean) options.get("autoScan") : liferayCacheEnabled;
         entryModelClass = ClassUtils.getGenericSuperclassType(cls, 0);
         try {
-            entryModelClassImpl = PortalClassLoaderUtil.getClassLoader().loadClass(entryModelClass.getClass().getName() + "Impl");
+            entryModelClassImpl = PortalClassLoaderUtil.getClassLoader().loadClass(entryClassImplName);
             if (liferayCacheEnabled) {
-            boolean cacheEnabled = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get("value.object.entity.cache.enabled." + entryModelClass.getName()));
-            manager.setCacheEnabled(cacheEnabled && manager.getCacheEnabled());
+//            boolean cacheEnabled = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get("value.object.entity.cache.enabled." + entryModelClass.getName()));
+                boolean cacheEnabled = (Boolean) entryModelClassImpl.getField("ENTITY_CACHE_ENABLED").get(entryModelClassImpl);
+                manager.setCacheEnabled(cacheEnabled && manager.getCacheEnabled());
             }
-            manager.setTableName((String) entryModelClassImpl.getDeclaredField("TABLE_NAME").get(entryModelClassImpl));
+            manager.setTableName((String) entryModelClassImpl.getField("TABLE_NAME").get(entryModelClassImpl));
         } catch (Exception e) {
             e.printStackTrace();
         }
         if (autoScan) {
-            Set exclude = options.containsKey("exclude") ? (Set) options.get("exclude") : new HashSet();
-            String pkFieldName = null;
-            try {
-                BeanInfo bi = Introspector.getBeanInfo(entryModelClassImpl);
-                for (PropertyDescriptor propertyDescriptor : bi.getPropertyDescriptors()) {
-                    String fieldName = propertyDescriptor.getName();
-                    Class fieldClass = propertyDescriptor.getPropertyType();
-                    if (!manager.getFieldMap().containsKey(fieldName) && !exclude.contains(fieldName)) {
-                        if (pkFieldName == null) {
-                            getManager().addField(fieldName, new PrimaryKey(fieldClass));
-                            pkFieldName = fieldName;
-                        } else {
-                            Field field = map(fieldClass);
-                            if (field != null) {
-                                getManager().addField(fieldName, field);
-                            }
-                        }
+            scanEntity();
+        }
+    }
+
+    protected void scanEntity() {
+        Set exclude = options.containsKey("exclude") ? (Set) options.get("exclude") : new HashSet();
+        try {
+            BeanInfo bi = Introspector.getBeanInfo(entryModelClassImpl, BaseModelImpl.class);
+            for (PropertyDescriptor propertyDescriptor : bi.getPropertyDescriptors()) {
+                if (propertyDescriptor.getWriteMethod() == null || propertyDescriptor.getReadMethod() == null) {
+                    continue;
+                }
+                String fieldName = propertyDescriptor.getName();
+                Class fieldClass = propertyDescriptor.getPropertyType();
+                if (!manager.getFieldMap().containsKey(fieldName) && !exclude.contains(fieldName)) {
+                    Field field = map(fieldClass);
+                    if (field != null) {
+                        field.setVerbose(caps(fieldName));
+                        getManager().addField(fieldName, field);
+                    } else {
+                        System.out.println("fieldName type mapping not found: " + fieldName);
                     }
                 }
-            } catch (IntrospectionException e) {
-                e.printStackTrace();
             }
+        } catch (IntrospectionException e) {
+            e.printStackTrace();
         }
     }
 
@@ -113,19 +118,17 @@ public class LiferayModelClass<T extends Model>  extends ModelClass<T> {
         Field field = null;
         if (entityClass.equals(String.class)) {
            field = new StringField();
-        } else if (entityClass.equals(Integer.class)) {
+        } else if (entityClass.equals(Integer.class) || entityClass.equals(int.class)) {
             field = new IntegerField();
-        } else if (entityClass.equals(Long.class)) {
+        } else if (entityClass.equals(Long.class) || entityClass.equals(long.class) ) {
             field = new LongField();
-        } else if (entityClass.equals(Float.class)) {
+        } else if (entityClass.equals(Float.class) || entityClass.equals(float.class)) {
             field = new FloatField();
-        } else if (entityClass.equals(Double.class)) {
-            field = new DoubleField();
-        } else if (entityClass.equals(Double.class)) {
+        } else if (entityClass.equals(Double.class) || entityClass.equals(double.class)) {
             field = new DoubleField();
         } else if (entityClass.equals(Date.class)) {
             field = new DateTimeField();
-        } else if (entityClass.equals(Boolean.class)) {
+        } else if (entityClass.equals(Boolean.class) || entityClass.equals(boolean.class)) {
             field = new BooleanField();
         }
 
