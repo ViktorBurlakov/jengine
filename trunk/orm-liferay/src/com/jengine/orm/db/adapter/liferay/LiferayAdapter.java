@@ -26,13 +26,13 @@ import com.jengine.orm.db.adapter.ConnectionManager;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class LiferayAdapter extends Adapter {
+    private static Log log = LogFactoryUtil.getLog(LiferayAdapter.class);
 
     public LiferayAdapter(ConnectionManager connectionManager) throws DBException {
         super(connectionManager);
@@ -56,8 +56,7 @@ public class LiferayAdapter extends Adapter {
             for (Object item: params) {
                 qpos.add(item);
             }
-            System.out.println(sql);
-            System.out.println(params);
+            log.debug(sql + "\n" + params);
             query.executeUpdate();
         } catch (Exception e) {
             throw new DBException(e);
@@ -75,9 +74,18 @@ public class LiferayAdapter extends Adapter {
             for (Object item: params) {
                 qpos.add(item);
             }
-            System.out.println(sql);
-            System.out.println(params);
+            log.debug(sql + "\n" + params);
             items = query.list();
+//            for (Object item : items) {
+//                if (item != null) {
+//                    if (item.getClass().isArray()) {
+//                        for (Object value : (Object[]) item) {
+//                            System.out.println("1111111111 :" + value + " ;;;; type : " + (value != null ? value.getClass() : null));
+//                        }
+//                    }
+//                }
+//            }
+//            System.out.println();
         } catch (Exception e) {
             throw new DBException(e);
         }

@@ -26,9 +26,11 @@ import com.jengine.orm.db.DBSavePoint;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Savepoint;
+import java.util.logging.Logger;
 
 
 public class JDBCConnection extends DBConnection {
+    private static Logger logger = Logger.getLogger(JDBCConnection.class.getName());
 
     public JDBCConnection(Object nativeConnection) throws DBException {
         super(nativeConnection);
@@ -48,7 +50,7 @@ public class JDBCConnection extends DBConnection {
     public void startTransaction() throws DBException {
         try {
             getNativeConnection().setAutoCommit(false);
-            System.out.println("Transaction started!");
+            logger.info("Transaction started!");
         } catch (SQLException e) {
             throw new DBException(e);
         }
@@ -57,7 +59,7 @@ public class JDBCConnection extends DBConnection {
     public void commit() throws DBException {
         try {
             getNativeConnection().commit();
-            System.out.println("Transaction committed!");
+            logger.info("Transaction committed!");
         } catch (SQLException e) {
             throw new DBException(e);
         }
@@ -66,7 +68,7 @@ public class JDBCConnection extends DBConnection {
     public void rollback() throws DBException {
         try {
             getNativeConnection().rollback();
-            System.out.println("Transaction rollback!");
+            logger.info("Transaction rollback!");
         } catch (SQLException e) {
             throw new DBException(e);
         }
@@ -75,7 +77,7 @@ public class JDBCConnection extends DBConnection {
     public void finishTransaction() throws DBException {
         try {
             getNativeConnection().setAutoCommit(true);
-            System.out.println("Transaction finish!");
+            logger.info("Transaction finish!");
         } catch (SQLException e) {
             throw new DBException(e);
         }
@@ -83,7 +85,7 @@ public class JDBCConnection extends DBConnection {
 
     public DBSavePoint savePoint(String name) throws DBException {
         try {
-            System.out.println("Save Point '" + name + "' start");
+            logger.info("Save Point '" + name + "' start");
             return new DBSavePoint(getNativeConnection().setSavepoint(name));
         } catch (SQLException e) {
             throw new DBException(e);
@@ -92,7 +94,7 @@ public class JDBCConnection extends DBConnection {
 
     public DBSavePoint savePoint() throws DBException {
         try {
-            System.out.println("Save Point start");
+            logger.info("Save Point start");
             return new DBSavePoint(getNativeConnection().setSavepoint());
         } catch (SQLException e) {
             throw new DBException(e);
@@ -102,7 +104,7 @@ public class JDBCConnection extends DBConnection {
     public void releasePoint(DBSavePoint point) throws DBException {
         try {
             getNativeConnection().releaseSavepoint((Savepoint) point.getNativeObject());
-            System.out.println("Save Point released");
+            logger.info("Save Point released");
         } catch (SQLException e) {
             throw new DBException(e);
         }
@@ -111,7 +113,7 @@ public class JDBCConnection extends DBConnection {
     public void rollback(DBSavePoint point) throws DBException {
         try {
             getNativeConnection().rollback((Savepoint) point.getNativeObject());
-            System.out.println("Save Point rollback");
+            logger.info("Save Point rollback");
         } catch (SQLException e) {
             throw new DBException(e);
         }

@@ -24,9 +24,13 @@ import com.jengine.orm.db.DBException;
 import com.jengine.orm.db.DBSavePoint;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 
 public class LiferayConnection extends DBConnection {
+    private static Log log = LogFactoryUtil.getLog(LiferayConnection.class);
+
     public Class transactionalPortalCacheHelper;
 
     public LiferayConnection(Object nativeConnection) throws DBException {
@@ -90,12 +94,12 @@ public class LiferayConnection extends DBConnection {
     }
 
     public DBSavePoint savePoint(String name) throws DBException {
-        System.out.println("Save Point '" + name + "' start");
+        log.debug("Save Point '" + name + "' start");
         return new DBSavePoint(null);
     }
 
     public DBSavePoint savePoint() throws DBException {
-        System.out.println("Save Point start");
+        log.debug("Save Point start");
         return new DBSavePoint(null);
     }
 

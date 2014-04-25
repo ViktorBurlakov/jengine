@@ -37,7 +37,14 @@ import com.jengine.orm.model.multi.field.aggregation.Max;
 import com.jengine.orm.model.query.ModelQuery;
 import com.jengine.utils.CollectionUtil;
 import com.jenginetest.model.*;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -563,6 +570,27 @@ public class Test {
         check( Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one().getScreenName().equals("test") );
         check( Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one().<ModelQuery>getValue("member_set").count() == 5 );
         check( Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one().<ModelQuery>getValue("member_set").filter("firstName = ?", "Homer").count() == 1 );
+        User user = Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one().toEntityObject();
+        User userFromDB = findUser("test@liferay.com");
+        for (String fieldName : userFromDB.getModelAttributes().keySet()) {
+            if (userFromDB.getModelAttributes().get(fieldName) == null &&
+                    userFromDB.getModelAttributes().get(fieldName) != user.getModelAttributes().get(fieldName)) {
+
+                throw new Exception("Checking failed!!!");
+
+            } else if (userFromDB.getModelAttributes().get(fieldName) != null &&
+                    user.getModelAttributes().get(fieldName) != null) {
+
+                System.out.println(fieldName + " = ("+ userFromDB.getModelAttributes().get(fieldName) +"," + user.getModelAttributes().get(fieldName) + "}");
+                // dynamic query return sql.Timestamp not Date
+                if (userFromDB.getModelAttributes().get(fieldName) instanceof Timestamp) {
+                    check( ((Timestamp) userFromDB.getModelAttributes().get(fieldName)).getTime() == ((Date) user.getModelAttributes().get(fieldName)).getTime() );
+                } else {
+                    check( userFromDB.getModelAttributes().get(fieldName).equals(user.getModelAttributes().get(fieldName)) );
+                }
+
+            }
+        }
     }
 
 
@@ -571,4 +599,11 @@ public class Test {
             throw new Exception("Checking failed!!!");
         }
     }
+
+    public static User findUser(String email) throws SystemException {
+        DynamicQuery dqUser = DynamicQueryFactoryUtil.forClass(User.class)
+                .add(PropertyFactoryUtil.forName("emailAddress").like("%" + email + "%"));
+        return (User) UserLocalServiceUtil.dynamicQuery(dqUser).get(0);
+    }
+
 }
