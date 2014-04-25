@@ -573,13 +573,9 @@ public class Test {
         User user = Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one().toEntityObject();
         User userFromDB = findUser("test@liferay.com");
         for (String fieldName : userFromDB.getModelAttributes().keySet()) {
-            if (userFromDB.getModelAttributes().get(fieldName) == null &&
-                    userFromDB.getModelAttributes().get(fieldName) != user.getModelAttributes().get(fieldName)) {
-
+            if ( userFromDB.getModelAttributes().get(fieldName) == null && user.getModelAttributes().get(fieldName) != null) {
                 throw new Exception("Checking failed!!!");
-
-            } else if (userFromDB.getModelAttributes().get(fieldName) != null &&
-                    user.getModelAttributes().get(fieldName) != null) {
+            } else if (userFromDB.getModelAttributes().get(fieldName) != null && user.getModelAttributes().get(fieldName) != null) {
 
                 System.out.println(fieldName + " = ("+ userFromDB.getModelAttributes().get(fieldName) +"," + user.getModelAttributes().get(fieldName) + "}");
                 // dynamic query return sql.Timestamp not Date
@@ -591,6 +587,7 @@ public class Test {
 
             }
         }
+        check( Account.cls.getCache(user.getUserId()).toEntityObject() != null );
     }
 
 
