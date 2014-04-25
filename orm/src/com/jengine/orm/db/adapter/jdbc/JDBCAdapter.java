@@ -29,8 +29,10 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class JDBCAdapter extends Adapter {
+    private static Logger logger = Logger.getLogger(JDBCAdapter.class.getName());
 
     public JDBCAdapter(ConnectionManager connectionManager) throws DBException {
         super(connectionManager);
@@ -48,8 +50,7 @@ public class JDBCAdapter extends Adapter {
             for (Object item: params) {
                 pstmt.setObject(index++, item);
             }
-            System.out.println(sql);
-            System.out.println(params);
+            logger.info(sql + "\n" + params.toString());
             pstmt.executeUpdate();
             if (returnGeneratedKeys) {
                 List generatedKeys = new ArrayList();
@@ -84,8 +85,7 @@ public class JDBCAdapter extends Adapter {
             for (Object item: params) {
                 pstmt.setObject(index++, item);
             }
-            System.out.println(sql);
-            System.out.println(params);
+            logger.info(sql + "\n" + params.toString());
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 Object[] record = new Object[rs.getMetaData().getColumnCount()];

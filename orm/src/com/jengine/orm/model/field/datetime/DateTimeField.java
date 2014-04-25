@@ -43,7 +43,11 @@ public class DateTimeField extends BaseDateField {
     }
 
     public DateTimeField(Map<String, Object> options) {
-        super(Date.class, options);
+        this(Date.class, options);
+    }
+
+    public DateTimeField(Class fieldClass, Map<String, Object> options) {
+        super(fieldClass, options);
     }
 
     protected Map<String, Integer[]> getTypeMap() {

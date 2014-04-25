@@ -24,6 +24,7 @@ import com.jengine.orm.model.Model;
 import com.jengine.orm.model.field.Field;
 import com.jengine.utils.DateUtil;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -104,6 +105,9 @@ public class BaseDateField extends Field {
     public Date cast(Object value){
         if (Long.class.isInstance(value)) {
             return new Date((Long)value);
+        } else if (Timestamp.class.isInstance(value) && fieldClass.equals(Date.class)){
+            //TODO: to better with Variant
+            return new Date(((Timestamp) value).getTime());
         } else if (String.class.isInstance(value)){
             try {
 

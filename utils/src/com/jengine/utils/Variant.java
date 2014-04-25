@@ -122,7 +122,10 @@ public class Variant<T> {
             return ((Byte)value).doubleValue();
         } else if (cls.equals(String.class)) {
             return String.valueOf(value);
+        } else if (cls.equals(Boolean.class)) {
+            return ((Byte) value) != 0;
         }
+
 
         return value;
     }
