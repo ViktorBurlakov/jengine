@@ -597,8 +597,8 @@ public class Test {
         check( adminAccount.getScreenName().equals(newScreenName));
         check( UserLocalServiceUtil.getUser(user.getUserId()).getScreenName().equals(newScreenName));
         check( findUser("test@liferay.com").getScreenName().equals(newScreenName));
-//        adminAccount.setScreenName(screenName);
-//        adminAccount.update();
+        adminAccount.setScreenName(screenName);
+        adminAccount.update();
     }
 
 
