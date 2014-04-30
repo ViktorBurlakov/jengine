@@ -144,6 +144,7 @@ public class LiferayModelClass<T extends Model>  extends ModelClass<T> {
             getPersistence().update(toEntityObject(obj), false);
             obj.setNew(false);
             updateManyReference(obj);
+            calcFunctionField(obj);
         } catch (SystemException e) {
             throw new DBException(e);
         }
@@ -154,6 +155,7 @@ public class LiferayModelClass<T extends Model>  extends ModelClass<T> {
         try {
             getPersistence().update(toEntityObject(obj), true);
             updateManyReference(obj);
+            calcFunctionField(obj);
         } catch (SystemException e) {
             throw new DBException(e);
         }
