@@ -588,6 +588,17 @@ public class Test {
             }
         }
         check( Account.cls.getCache(user.getUserId()).toEntityObject() != null );
+
+        Account adminAccount = Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one();
+        String screenName = adminAccount.getScreenName();
+        String newScreenName = screenName + "1";
+        adminAccount.setScreenName(newScreenName);
+        adminAccount.update();
+        check( adminAccount.getScreenName().equals(newScreenName));
+        check( UserLocalServiceUtil.getUser(user.getUserId()).getScreenName().equals(newScreenName));
+        check( findUser("test@liferay.com").getScreenName().equals(newScreenName));
+//        adminAccount.setScreenName(screenName);
+//        adminAccount.update();
     }
 
 
