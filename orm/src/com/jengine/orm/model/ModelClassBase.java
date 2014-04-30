@@ -174,8 +174,12 @@ public class ModelClassBase<T extends Model> {
 
     /* Cache methods  */
 
+    public boolean isCacheEnabled() throws DBException {
+        return manager.getCacheEnabled() && provider.isCacheEnabled();
+    }
+
     public T getCache(Object id) throws DBException {
-        if (manager.getCacheEnabled() && provider.isCacheEnabled()) {
+        if (isCacheEnabled()) {
             Map<String, Object> values = null;
             try {
                 values = provider.getCache(manager.getTableName(), id);
@@ -189,19 +193,19 @@ public class ModelClassBase<T extends Model> {
     }
 
     public void clearCache() throws DBException {
-        if (manager.getCacheEnabled() && provider.isCacheEnabled()) {
+        if (isCacheEnabled()) {
             provider.clearCache(manager.getTableName());
         }
     }
 
     public void clearCache(Model obj) throws DBException {
-        if (manager.getCacheEnabled() && provider.isCacheEnabled()) {
+        if (isCacheEnabled()) {
             provider.clearCache(manager.getTableName(), obj.getPrimaryKey());
         }
     }
 
     public void cache(Model obj) throws DBException {
-        if (manager.getCacheEnabled() && provider.isCacheEnabled()) {
+        if (isCacheEnabled()) {
             Map<String, Object> attributes = new HashMap<String, Object>();
             attributes.putAll(obj.getPersistenceValues());
             attributes.putAll(obj.getFunctionValues());
@@ -219,18 +223,8 @@ public class ModelClassBase<T extends Model> {
         if (autoIncrement && id != null) {
             obj.setPrimaryKey((Serializable) id);
         }
-        for (Field field : manager.getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE)) {
-            ((ManyReferenceField) field).insert(obj);
-            obj.getData().remove(field.getFieldName());
-        }
-        List<Field> functionFields = manager.getFunctionFields();
-        if (manager.getFunctionFields().size() > 0) {
-            Model updatedObject = get(obj.getId());
-
-            for (Field field : functionFields) {
-                obj.getData().put(field.getFieldName(), updatedObject.getData().get(field.getFieldName()));
-            }
-        }
+        insertManyReference(obj);
+        calcFunctionField(obj);
         return obj;
     }
 
@@ -239,12 +233,26 @@ public class ModelClassBase<T extends Model> {
         if (changes.size() > 0) {
             provider.update(manager.getTableName(), manager.getPrimaryKey().getColumnName(), obj.getPrimaryKey(), changes);
         }
-        // many references
+        updateManyReference(obj);
+        calcFunctionField(obj);
+        return obj;
+    }
+
+    protected void updateManyReference(T obj) throws ValidateException, DBException {
         for (Field field : manager.getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE)) {
             ((ManyReferenceField) field).update(obj);
             obj.getData().remove(field.getFieldName());
         }
-        // calculation function fields
+    }
+
+    protected void insertManyReference(T obj) throws ValidateException, DBException {
+        for (Field field : manager.getFields(Field.Type.MANY_REFERENCE, Field.Type.REVERSE_MANY_REFERENCE)) {
+            ((ManyReferenceField) field).insert(obj);
+            obj.getData().remove(field.getFieldName());
+        }
+    }
+
+    protected void calcFunctionField(T obj) throws ValidateException, DBException {
         List<Field> functionFields = manager.getFunctionFields();
         if (manager.getFunctionFields().size() > 0) {
             Model updatedObject = get(obj.getId());
@@ -253,7 +261,6 @@ public class ModelClassBase<T extends Model> {
                 obj.getData().put(field.getFieldName(), updatedObject.getData().get(field.getFieldName()));
             }
         }
-        return obj;
     }
 
     public void remove(Model obj) throws DBException {

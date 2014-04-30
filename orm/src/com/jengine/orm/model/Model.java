@@ -153,7 +153,7 @@ public class Model {
         }
     }
 
-    protected Map<String, Object> getPersistenceValues() throws DBException {
+    public Map<String, Object> getPersistenceValues() throws DBException {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 
         for (Field field : cls.getManager().getPersistenceFields()) {
@@ -163,7 +163,7 @@ public class Model {
         return result;
     }
 
-    protected Map<String, Object> getFunctionValues() throws DBException {
+    public Map<String, Object> getFunctionValues() throws DBException {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 
         for (Field field : cls.getManager().getFunctionFields()) {
@@ -173,7 +173,7 @@ public class Model {
         return result;
     }
 
-    protected Map<String, Object> getChangedPersistenceValues() throws DBException {
+    public Map<String, Object> getChangedPersistenceValues() throws DBException {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 
         for (Field field : cls.getManager().getPersistenceFields()) {
