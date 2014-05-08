@@ -24,9 +24,51 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
+import static com.jengine.utils.StringUtil.uncaps;
+
 public class ClassUtils {
+    public static List<String> GETTERS_MODIFICATIONS = CollectionUtil.list("is", "get");
+    public static List<String> SETTERS_MODIFICATIONS = CollectionUtil.list("set");
+
+    public static LinkedHashMap<String, Class> reflectBeanInterface(Class interfaceClass) {
+        LinkedHashMap<String, Class> getters = new LinkedHashMap<String, Class>();
+        LinkedHashMap<String, Class> setters = new LinkedHashMap<String, Class>();
+        LinkedHashMap<String, Class> result = new LinkedHashMap<String, Class>();
+
+        for (Method method : interfaceClass.getMethods()) {
+            for (String modificator: GETTERS_MODIFICATIONS) {
+                if (method.getName().startsWith(modificator)) {
+                    String fieldName = uncaps(method.getName().substring(modificator.length()));
+                    Class fieldClass = method.getReturnType();
+                    getters.put(fieldName, fieldClass);
+                }
+            }
+        }
+
+        for (Method method : interfaceClass.getMethods()) {
+            for (String modificator: SETTERS_MODIFICATIONS) {
+                if (method.getName().startsWith(modificator)) {
+                    String fieldName = uncaps(method.getName().substring(modificator.length()));
+                    if (method.getParameterTypes().length > 0) {
+                        Class fieldClass = method.getParameterTypes()[0];
+                        setters.put(fieldName, fieldClass);
+                    }
+                }
+            }
+        }
+
+        for(String fieldName : getters.keySet()) {
+            if (setters.containsKey(fieldName)) {
+                result.put(fieldName, getters.get(fieldName));
+            }
+        }
+
+        return result;
+    }
 
     public static Map annotationToMap(Object iface) {
         Map result = new HashMap();

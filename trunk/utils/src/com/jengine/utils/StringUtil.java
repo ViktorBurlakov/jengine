@@ -28,6 +28,12 @@ public class StringUtil {
         return tmp.toString();
     }
 
+    static public String uncaps(String input) {
+        StringBuffer tmp = new StringBuffer(input);
+        tmp.replace(0, 1, String.valueOf(Character.toLowerCase(tmp.charAt(0))));
+        return tmp.toString();
+    }
+
     static public String toString(String[] input) {
         StringBuilder sb = new StringBuilder();
         for (String n : input) {

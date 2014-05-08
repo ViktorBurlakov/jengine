@@ -43,8 +43,8 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.persistence.UserUtil;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -570,24 +570,11 @@ public class Test {
         check( Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one().getScreenName().equals("test") );
         check( Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one().<ModelQuery>getValue("member_set").count() == 5 );
         check( Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one().<ModelQuery>getValue("member_set").filter("firstName = ?", "Homer").count() == 1 );
-        User user = Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one().toEntityObject();
-        User userFromDB = findUser("test@liferay.com");
-        for (String fieldName : userFromDB.getModelAttributes().keySet()) {
-            if ( userFromDB.getModelAttributes().get(fieldName) == null && user.getModelAttributes().get(fieldName) != null) {
-                throw new Exception("Checking failed!!!");
-            } else if (userFromDB.getModelAttributes().get(fieldName) != null && user.getModelAttributes().get(fieldName) != null) {
-
-                System.out.println(fieldName + " = ("+ userFromDB.getModelAttributes().get(fieldName) +"," + user.getModelAttributes().get(fieldName) + "}");
-                // dynamic query return sql.Timestamp not Date
-                if (userFromDB.getModelAttributes().get(fieldName) instanceof Timestamp) {
-                    check( ((Timestamp) userFromDB.getModelAttributes().get(fieldName)).getTime() == ((Date) user.getModelAttributes().get(fieldName)).getTime() );
-                } else {
-                    check( userFromDB.getModelAttributes().get(fieldName).equals(user.getModelAttributes().get(fieldName)) );
-                }
-
-            }
-        }
-        check( Account.cls.getCache(user.getUserId()).toEntityObject() != null );
+        Account account = Account.cls.filter("emailAddress = ?", "test@liferay.com").one();
+        UserUtil.clearCache();
+        User user = UserLocalServiceUtil.fetchUser((Long) account.getId());
+//        User user = findUser("test@liferay.com");
+        check( Account.cls.equalsEntity(account, user) );
 
         Account adminAccount = Account.cls.filter("emailAddress = ?", "test@liferay.com").<Account>one();
         String screenName = adminAccount.getScreenName();
