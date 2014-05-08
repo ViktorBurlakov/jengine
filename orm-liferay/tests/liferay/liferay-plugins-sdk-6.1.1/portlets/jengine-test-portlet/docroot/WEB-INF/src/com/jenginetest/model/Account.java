@@ -2,26 +2,30 @@ package com.jenginetest.model;
 
 
 import com.jengine.orm.db.DBException;
-import com.jengine.orm.db.adapter.liferay.LiferayModel;
 import com.jengine.orm.db.adapter.liferay.LiferayModelClass;
+import com.jengine.orm.exception.ValidateException;
+import com.jengine.orm.model.Meta;
+import com.jengine.orm.model.Model;
 import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.PrimaryKey;
 import com.jengine.orm.model.field.StringField;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.UserUtil;
 
-import java.util.Map;
+import java.io.Serializable;
 import java.util.Set;
 
 import static com.jengine.utils.CollectionUtil.map;
 import static com.jengine.utils.CollectionUtil.set;
 
-public class Account extends LiferayModel<User> {
+@Meta(table = "User_", cacheEnabled = true)
+public class Account extends Model {
     public static Field userId  = new PrimaryKey();
     public static Field uuid = new StringField("columnName", "uuid_");
     public static Field password = new StringField("verbose", "Password", "columnName", "password_");
-    public static AccountModelClass cls = new AccountModelClass(map("exclude", AccountModelClass.excludes));
+    public static AccountModelClass cls = new AccountModelClass();
 
 
     public Account() throws DBException {
@@ -50,13 +54,18 @@ public class Account extends LiferayModel<User> {
     /* Model Class for Account */
 
     public static class AccountModelClass extends LiferayModelClass<Account> {
-        public static Set excludes = set("passwordUnencrypted", "userUuid", "passwordModified", "primaryKey");
+        public static Set exclude = set("passwordUnencrypted", "passwordModified", "primaryKey", "userUuid",
+                "cachedModel", "new");
 
-        public AccountModelClass(Map options) {
-            super(Account.class, "com.liferay.portal.model.impl.UserImpl", options);
+        public AccountModelClass() {
+            super(Account.class, User.class, map("autoScan", true, "exclude", exclude));
         }
 
-        public BasePersistence getPersistence() {
+        public BaseModel createEntity(Serializable id) throws ValidateException, DBException {
+            return getPersistence().create((Long) id);
+        }
+
+        public UserPersistence getPersistence() {
             return UserUtil.getPersistence();
         }
     }
