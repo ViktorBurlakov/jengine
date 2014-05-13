@@ -591,6 +591,8 @@ public class Test {
         user.setScreenName(newScreenName);
         UserLocalServiceUtil.updateUser(user, false);
         check( Account.cls.get(user.getUserId()).getScreenName().equals(newScreenName));
+        user.setScreenName(screenName);
+        UserLocalServiceUtil.updateUser(user, false);
     }
 
 

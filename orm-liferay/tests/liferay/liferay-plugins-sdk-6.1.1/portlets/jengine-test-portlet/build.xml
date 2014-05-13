@@ -24,6 +24,9 @@
 	<copy todir="./docroot/WEB-INF/lib">
 	    <fileset dir="../../../../../../.dist"/>
 	</copy>
+	<!--copy file="../../../../../../lib/antlr2.jar" todir="./docroot/WEB-INF/lib"/>
+	<copy file="../../../../../../lib/antlr3-runtime.jar" todir="./docroot/WEB-INF/lib"/>
+	<copy file="../../../../../../lib/antlr3.jar" todir="./docroot/WEB-INF/lib"/-->
 
 	<import file="../build-common-portlet.xml" />
 </project>

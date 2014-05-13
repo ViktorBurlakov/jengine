@@ -13,9 +13,11 @@
 
     <path id="project.class.path">
 	<!--pathelement path="${lib_path}/"/-->
-	<fileset dir="${lib_path}">
+	<!--fileset dir="${lib_path}">
 	    <include name="**/*.jar"/>
-	</fileset>
+	</fileset-->
+	<pathelement location="${lib_path}/antlr2.jar"/>
+	<pathelement location="${lib_path}/antlr3.jar"/>
 	<pathelement location="${jengine_dist}/jengine.utils.jar"/>
     </path>
 
@@ -63,11 +65,13 @@
 	<copy todir="${jengine_dist}">
 	    <fileset dir="${dist}"/>
 	</copy>
+	<ant antfile="./plugins/build.xml" target="dist" inheritAll="false"/>
     </target>
 
     <target name="clean" description="clean up">
 	<!-- Delete the ${build} and ${dist} directory trees -->
 	<delete dir="${build}"/>
 	<delete dir="${dist}"/>
+	<ant antfile="./plugins/build.xml" target="clean" inheritAll="false"/>
     </target>
 </project>
