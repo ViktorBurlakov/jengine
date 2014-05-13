@@ -1,0 +1,38 @@
+<component name="libraryTable">
+  <library name="jengine.orm.extension.liferay.tomcat.lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/ext/activation.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/ext/ccpp.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/ext/hsql.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/ext/jms.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/ext/jta.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/ext/jtds.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/ext/jutf7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/ext/mail.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/ext/mysql.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/ext/persistence.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/ext/portal-service.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/ext/portlet.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/ext/postgresql.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/ext/support-tomcat.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/annotations-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/catalina-ant.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/catalina-ha.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/catalina-tribes.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/catalina.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/ecj-3.7.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/el-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/jasper-el.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/jasper.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/jsp-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/servlet-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/tomcat-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/tomcat-coyote.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/tomcat-dbcp.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/tomcat-jdbc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27/lib/tomcat-util.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

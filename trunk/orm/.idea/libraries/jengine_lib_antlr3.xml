@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="jengine.lib.antlr3">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../lib/antlr3-runtime.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../lib/antlr3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../lib/stringtemplate.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

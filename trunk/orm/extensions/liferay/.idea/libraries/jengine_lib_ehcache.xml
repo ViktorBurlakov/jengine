@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="jengine.lib.ehcache">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../lib/ehcache-2.8.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../lib/slf4j-api-1.6.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../lib/slf4j-jdk14-1.6.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
