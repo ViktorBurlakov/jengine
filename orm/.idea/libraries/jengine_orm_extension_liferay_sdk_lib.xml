@@ -1,0 +1,25 @@
+<component name="libraryTable">
+  <library name="jengine.orm.extension.liferay.sdk.lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib/activation.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib/ant-contrib.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib/antelope.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib/ccpp.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib/ecj.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib/jalopy.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib/jargs.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib/jsp-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib/junit.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib/log4j.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib/mail.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib/qdox.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib/serializer.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib/servlet-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib/xalan.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib/xercesImpl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib/xml-apis.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

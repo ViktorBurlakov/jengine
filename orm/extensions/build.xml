@@ -1,0 +1,12 @@
+<project name="jengine" default="dist" basedir=".">
+    <description>build file</description>
+
+    <target name="dist">
+	<ant antfile="liferay/build.xml" target="dist" inheritAll="false"/>
+    </target>
+
+    <target name="clean">
+	<ant antfile="liferay/build.xml" target="clean" inheritAll="false"/>
+    </target>
+    
+</project>

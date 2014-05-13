@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="tools">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-src-6.1.1-ce-ga2/tools/grinder-3.1.zip!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-src-6.1.1-ce-ga2/tools/icu4j-4_0_1-src.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-src-6.1.1-ce-ga2/tools/jamwiki-0.9.3-src.zip!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-portal-src-6.1.1-ce-ga2/tools/yuicompressor-2.4.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

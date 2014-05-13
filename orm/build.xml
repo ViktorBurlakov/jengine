@@ -66,6 +66,7 @@
 	    <fileset dir="${dist}"/>
 	</copy>
 	<ant antfile="./plugins/build.xml" target="dist" inheritAll="false"/>
+	<ant antfile="./extensions/build.xml" target="dist" inheritAll="false"/>
     </target>
 
     <target name="clean" description="clean up">
@@ -73,5 +74,6 @@
 	<delete dir="${build}"/>
 	<delete dir="${dist}"/>
 	<ant antfile="./plugins/build.xml" target="clean" inheritAll="false"/>
+	<ant antfile="./extensions/build.xml" target="clean" inheritAll="false"/>
     </target>
 </project>

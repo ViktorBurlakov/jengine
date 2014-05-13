@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/lib/jengine.utils-src.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/lib/jengine.orm.plugin.ehcache.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/lib/jengine.orm.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/lib/jengine.orm-src.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/lib/jengine.orm.liferay-src.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/lib/jengine-test-portlet-service.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/lib/jengine.ui-src.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/lib/jengine.utils.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/lib/jengine.ui.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/lib/jengine.orm.liferay.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extensions/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/lib/jengine.orm.plugin.ehcache-src.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
