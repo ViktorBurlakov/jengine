@@ -3,14 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="7dddfee1-22ea-45a9-a93c-10ab4bb2cd7a" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/jengine/orm/db/adapter/liferay/LiferayModel.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../../orm-liferay/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
       <change type="MOVED" beforePath="$PROJECT_DIR$/../../../orm-liferay/src/com/jengine/orm/db/adapter/liferay/LiferayAdapter.java" afterPath="$PROJECT_DIR$/src/com/jengine/orm/db/adapter/liferay/LiferayAdapter.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../../orm-liferay/src/com/jengine/orm/db/adapter/liferay/LiferayConnection.java" afterPath="$PROJECT_DIR$/src/com/jengine/orm/db/adapter/liferay/LiferayConnection.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../../orm-liferay/src/com/jengine/orm/db/adapter/liferay/LiferayModelClass.java" afterPath="$PROJECT_DIR$/src/com/jengine/orm/db/adapter/liferay/LiferayModelClass.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../../orm-liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/liferay-sdk.iml" afterPath="$PROJECT_DIR$/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/liferay-sdk.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../../orm-liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/src/com/jenginetest/Test.java" afterPath="$PROJECT_DIR$/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/src/com/jenginetest/Test.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../../../orm-liferay/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
       <change type="MOVED" beforePath="$PROJECT_DIR$/../../../orm-liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/src/com/jenginetest/model/Account.java" afterPath="$PROJECT_DIR$/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/src/com/jenginetest/model/Account.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../../../orm-liferay/src/com/jengine/orm/db/adapter/liferay/LiferayModelClass.java" afterPath="$PROJECT_DIR$/src/com/jengine/orm/db/adapter/liferay/LiferayModelClass.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../../../orm-liferay/src/com/jengine/orm/db/adapter/liferay/LiferayConnection.java" afterPath="$PROJECT_DIR$/src/com/jengine/orm/db/adapter/liferay/LiferayConnection.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../../../orm-liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/src/com/jenginetest/Test.java" afterPath="$PROJECT_DIR$/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/src/com/jenginetest/Test.java" />
       <change type="MOVED" beforePath="$PROJECT_DIR$/../../../orm-liferay" afterPath="$PROJECT_DIR$" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../../../orm-liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/liferay-sdk.iml" afterPath="$PROJECT_DIR$/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/liferay-sdk.iml" />
     </list>
     <ignored path="orm-liferay.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,8 +41,8 @@
         <option name="CONDITION_ENABLED" value="false" />
         <option name="CLASS_FILTERS_ENABLED" value="false" />
         <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="&#13;&#13;JAVA" />
-        <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
       </breakpoint>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -56,29 +56,12 @@
         <option name="CONDITION_ENABLED" value="false" />
         <option name="CLASS_FILTERS_ENABLED" value="false" />
         <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="&#13;&#13;JAVA" />
-        <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
     <breakpoint_rules />
-    <ui_properties>
-      <property name="line_breakpoints_groupByMethods" value="false" />
-      <property name="line_breakpoints_viewId" value="TABLE" />
-      <property name="exception_breakpoints_flattenPackages" value="true" />
-      <property name="method_breakpoints_flattenPackages" value="true" />
-      <property name="field_breakpoints_flattenPackages" value="true" />
-      <property name="exception_breakpoints_groupByMethods" value="false" />
-      <property name="line_breakpoints_groupByClasses" value="true" />
-      <property name="method_breakpoints_viewId" value="TABLE" />
-      <property name="field_breakpoints_groupByMethods" value="false" />
-      <property name="line_breakpoints_flattenPackages" value="true" />
-      <property name="field_breakpoints_groupByClasses" value="true" />
-      <property name="method_breakpoints_groupByClasses" value="true" />
-      <property name="exception_breakpoints_viewId" value="TABLE" />
-      <property name="field_breakpoints_viewId" value="TABLE" />
-      <property name="exception_breakpoints_groupByClasses" value="true" />
-      <property name="method_breakpoints_groupByMethods" value="false" />
-    </ui_properties>
+    <ui_properties />
   </component>
   <component name="FavoritesManager">
     <favorites_list name="orm-liferay" />
@@ -89,9 +72,7 @@
         <entry file="file://$PROJECT_DIR$/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/src/com/jenginetest/Test.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="577" column="63" selection-start="23279" selection-end="23279" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#22608#22617#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -99,7 +80,7 @@
       <file leaf-file-name="LiferayAdapter.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/jengine/orm/db/adapter/liferay/LiferayAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="13" selection-start="1302" selection-end="1302" vertical-scroll-proportion="0.092307694">
+            <state line="33" column="13" selection-start="1302" selection-end="1302" vertical-scroll-proportion="0.015368853">
               <folding />
             </state>
           </provider>
@@ -153,10 +134,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1" />
-    <option name="y" value="52" />
-    <option name="width" value="1934" />
-    <option name="height" value="1159" />
+    <option name="x" value="-8" />
+    <option name="y" value="24" />
+    <option name="width" value="1936" />
+    <option name="height" value="1160" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -186,6 +167,16 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="orm-liferay" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -206,28 +197,18 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="orm-liferay" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="171" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="161" />
     <property name="project.structure.last.edited" value="Modules" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="161" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="75" />
-    <property name="OverrideImplement.combined" value="true" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="176" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="176" />
+    <property name="OverrideImplement.combined" value="true" />
     <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
@@ -246,19 +227,19 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="161" />
-    <property name="GoToClass.includeLibraries" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth5" value="1085" />
+    <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="options.lastSelected" value="project.propDebugger" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder5" value="5" />
+    <property name="options.lastSelected" value="project.propDebugger" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
-    <property name="project.structure.side.proportion" value="0.2" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
@@ -297,24 +278,6 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -341,6 +304,24 @@
       <envs />
       <properties />
       <listeners />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -551,14 +532,13 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1" y="52" width="1934" height="1159" extended-state="0" />
+    <frame x="-8" y="24" width="1936" height="1160" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32135728" sideWeight="0.49264705" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2457265" sideWeight="0.6786427" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.53592813" sideWeight="0.66933763" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -571,11 +551,12 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22032085" sideWeight="0.6786427" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22168803" sideWeight="0.6786427" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298122" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32367632" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32135728" sideWeight="0.49754903" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -705,11 +686,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/orm-src/com/jengine/orm/model/query/BaseQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="246" column="32" selection-start="7348" selection-end="7348" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/liferay/liferay-portal-src-6.1.1-ce-ga2/portal-service/src/com/liferay/portal/model/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="25" column="36" selection-start="1000" selection-end="1000" vertical-scroll-proportion="0.0" />
@@ -750,14 +726,21 @@
         <state line="168" column="32" selection-start="6992" selection-end="6992" vertical-scroll-proportion="0.38732395" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/orm-src/com/jengine/orm/exception/ValidateException.java">
+    <entry file="file://$PROJECT_DIR$/src/com/jengine/orm/db/adapter/liferay/DynamicQueryManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="13" selection-start="850" selection-end="850" vertical-scroll-proportion="0.07692308" />
+        <state line="36" column="13" selection-start="1431" selection-end="1431" vertical-scroll-proportion="0.2920082" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/orm-src/com/jengine/orm/model/field/StringField.java">
+    <entry file="file://$PROJECT_DIR$/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/src/com/jenginetest/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="55" selection-start="1594" selection-end="1594" vertical-scroll-proportion="0.4" />
+        <state line="577" column="63" selection-start="23279" selection-end="23279" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/jengine/orm/db/adapter/liferay/LiferayAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="13" selection-start="1302" selection-end="1302" vertical-scroll-proportion="0.015368853">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/jengine/orm/db/adapter/liferay/LiferayModelClass.java">
@@ -768,29 +751,6 @@
     <entry file="file://$PROJECT_DIR$/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/src/com/jenginetest/model/Account.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="63" column="17" selection-start="2079" selection-end="2079" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jengine/orm/db/adapter/liferay/DynamicQueryManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="13" selection-start="1431" selection-end="1431" vertical-scroll-proportion="0.2920082">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/src/com/jenginetest/Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="577" column="63" selection-start="23279" selection-end="23279" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#22608#22617#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jengine/orm/db/adapter/liferay/LiferayAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="13" selection-start="1302" selection-end="1302" vertical-scroll-proportion="0.092307694">
-          <folding />
-        </state>
       </provider>
     </entry>
   </component>
