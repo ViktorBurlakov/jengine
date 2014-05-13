@@ -1,4 +1,4 @@
-<project name="jengine" default="dist" basedir=".">
+<project name="jengine.orm.plugins" default="dist" basedir=".">
     <description>build file</description>
 
     <target name="dist">

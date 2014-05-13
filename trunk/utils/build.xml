@@ -1,4 +1,4 @@
-<project name="jengine" default="dist" basedir=".">
+<project name="jengine.utils" default="dist" basedir=".">
     <description>build file</description>
 
     <!-- set global properties for this build -->
