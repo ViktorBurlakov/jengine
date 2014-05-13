@@ -22,7 +22,7 @@
 
 <project name="jengine-test-portlet" basedir="." default="deploy">
 	<copy todir="./docroot/WEB-INF/lib">
-	    <fileset dir="../../../../../../.dist"/>
+	    <fileset dir="../../../../../../../../.dist"/>
 	</copy>
 	<!--copy file="../../../../../../lib/antlr2.jar" todir="./docroot/WEB-INF/lib"/>
 	<copy file="../../../../../../lib/antlr3-runtime.jar" todir="./docroot/WEB-INF/lib"/>
