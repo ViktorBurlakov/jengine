@@ -1,4 +1,4 @@
-<project name="jengine" default="dist" basedir=".">
+<project name="jengine.orm.extension.liferay" default="dist" basedir=".">
     <description>build file</description>
 
     <!-- set global properties for this build -->
@@ -41,12 +41,12 @@
      </target>
 
     <target name="src" description="generate the source" >
-	<zip destfile="${dist}/jengine.orm.liferay-src.jar" basedir="${src}" includes="**"/>
+	<zip destfile="${dist}/jengine.orm.extension.liferay-src.jar" basedir="${src}" includes="**"/>
     </target>
 
     <target name="dist" depends="compile, src" description="generate the distribution" >
 	<!-- Put everything in ${build} into the jengine-${DSTAMP}.jar file -->
-	<jar jarfile="${dist}/jengine.orm.liferay.jar" basedir="${build}"/>
+	<jar jarfile="${dist}/jengine.orm.extension.liferay.jar" basedir="${build}"/>
 	<copy todir="${jengine_dist}">
 	    <fileset dir="${dist}"/>
 	</copy>
