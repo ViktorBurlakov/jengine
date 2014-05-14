@@ -1,4 +1,4 @@
-<project name="jengine.orm.extensions" default="dist" basedir=".">
+<project name="jengine.orm.ext" default="dist" basedir=".">
     <description>build file</description>
 
     <target name="dist">

@@ -1,4 +1,4 @@
-<project name="jengine" default="dist" basedir=".">
+<project name="jengine.orm.ext.liferay" default="dist" basedir=".">
     <description>build file</description>
 
     <!-- set global properties for this build -->
@@ -7,17 +7,18 @@
     <property name="dist"  location="./.dist"/>
     <property name="jengine_dist"  location="../../../.dist"/>
     <property name="lib_path"  location="../../../lib"/>
-    
+    <!--property name="portlet_lib_path"  location="./tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/lib"/-->
 
     <path id="project.class.path">
 	<!--pathelement path="${lib_path}/"/-->
 	<!--fileset dir="${lib_path}">
 	    <include name="**/*.jar"/>
 	</fileset-->
-	<!--pathelement location="${lib_path}/antlr2.jar"/>
+	<pathelement location="${lib_path}/tomcat/ext/persistence.jar"/>
+	<pathelement location="${lib_path}/tomcat/ext/portal-service.jar"/>
+	<pathelement location="${lib_path}/antlr2.jar"/>
 	<pathelement location="${lib_path}/antlr3.jar"/>
-	<pathelement location="${jengine_dist}/jengine.utils.jar"/-->
-	<pathelement location="${lib_path}/ehcache-2.8.0.jar"/>
+	<pathelement location="${jengine_dist}/jengine.utils.jar"/>
 	<pathelement location="${jengine_dist}/jengine.orm.jar"/>
     </path>
 
@@ -40,12 +41,12 @@
      </target>
 
     <target name="src" description="generate the source" >
-	<zip destfile="${dist}/jengine.orm.ext.ehcache-src.jar" basedir="${src}" includes="**"/>
+	<zip destfile="${dist}/jengine.orm.ext.liferay-src.jar" basedir="${src}" includes="**"/>
     </target>
 
     <target name="dist" depends="compile, src" description="generate the distribution" >
 	<!-- Put everything in ${build} into the jengine-${DSTAMP}.jar file -->
-	<jar jarfile="${dist}/jengine.orm.ext.ehcache.jar" basedir="${build}"/>
+	<jar jarfile="${dist}/jengine.orm.ext.liferay.jar" basedir="${build}"/>
 	<copy todir="${jengine_dist}">
 	    <fileset dir="${dist}"/>
 	</copy>
