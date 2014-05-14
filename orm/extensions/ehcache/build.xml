@@ -40,12 +40,12 @@
      </target>
 
     <target name="src" description="generate the source" >
-	<zip destfile="${dist}/jengine.orm.plugin.ehcache-src.jar" basedir="${src}" includes="**"/>
+	<zip destfile="${dist}/jengine.orm.ext.ehcache-src.jar" basedir="${src}" includes="**"/>
     </target>
 
     <target name="dist" depends="compile, src" description="generate the distribution" >
 	<!-- Put everything in ${build} into the jengine-${DSTAMP}.jar file -->
-	<jar jarfile="${dist}/jengine.orm.plugin.ehcache.jar" basedir="${build}"/>
+	<jar jarfile="${dist}/jengine.orm.ext.ehcache.jar" basedir="${build}"/>
 	<copy todir="${jengine_dist}">
 	    <fileset dir="${dist}"/>
 	</copy>
