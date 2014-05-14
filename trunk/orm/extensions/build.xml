@@ -2,10 +2,12 @@
     <description>build file</description>
 
     <target name="dist">
+	<ant antfile="ehcache/build.xml" target="dist" inheritAll="false"/>
 	<ant antfile="liferay/build.xml" target="dist" inheritAll="false"/>
     </target>
 
     <target name="clean">
+	<ant antfile="ehcache/build.xml" target="clean" inheritAll="false"/>
 	<ant antfile="liferay/build.xml" target="clean" inheritAll="false"/>
     </target>
     
