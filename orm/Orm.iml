@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/ext/ehcache/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ext/liferay/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/service" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/docroot/WEB-INF/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-portal-src-6.1.1-ce-ga2/util-taglib/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-portal-src-6.1.1-ce-ga2/util-java/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-portal-src-6.1.1-ce-ga2/util-bridges/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-portal-src-6.1.1-ce-ga2/support-tomcat/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-portal-src-6.1.1-ce-ga2/portal-service/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-portal-src-6.1.1-ce-ga2/portal-impl/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/ehcache/.build" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/ehcache/.dist" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/liferay/.build" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/liferay/.dist" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/clients" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/ext" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/hooks" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/layouttpl" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/lib" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/misc" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/portlets/jengine-test-portlet/out" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/themes" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/tools" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/webs" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="Utils" />
+  </component>
+</module>
+
