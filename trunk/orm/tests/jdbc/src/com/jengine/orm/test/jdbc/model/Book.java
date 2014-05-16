@@ -17,7 +17,7 @@
  *  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package model;
+package com.jengine.orm.test.jdbc.model;
 
 import com.jengine.orm.model.ModelClass;
 import com.jengine.orm.db.DBException;

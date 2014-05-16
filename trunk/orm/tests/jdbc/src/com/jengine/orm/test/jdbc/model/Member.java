@@ -17,15 +17,16 @@
  *  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package model;
+package com.jengine.orm.test.jdbc.model;
 
 
-import com.jengine.orm.model.ModelClass;
 import com.jengine.orm.db.DBException;
+import com.jengine.orm.model.ModelClass;
 import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.PrimaryKey;
-import com.jengine.orm.model.field.reference.ReferenceField;
 import com.jengine.orm.model.field.StringField;
+import com.jengine.orm.model.field.reference.ReferenceField;
+import com.jenginetest.model.TestModel;
 
 import static com.jengine.utils.CollectionUtil.map;
 

@@ -17,6 +17,8 @@
  *  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+package com.jengine.orm.test.jdbc;
+
 import com.jengine.orm.DB;
 import com.jengine.orm.DBFactory;
 import com.jengine.orm.db.DBConnection;
@@ -34,7 +36,7 @@ import com.jengine.orm.model.cluster.Cluster;
 import com.jengine.orm.model.multi.field.Calc;
 import com.jengine.orm.model.multi.field.aggregation.Max;
 import com.jengine.utils.CollectionUtil;
-import model.*;
+import com.jengine.orm.test.jdbc.model.*;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.config.CacheConfiguration;
