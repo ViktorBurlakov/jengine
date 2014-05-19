@@ -60,6 +60,8 @@ public class LiferayAdapter extends Adapter {
             query.executeUpdate();
         } catch (Exception e) {
             throw new DBException(e);
+        } finally {
+            closeConnection(dbConnection);
         }
     }
 
@@ -88,6 +90,8 @@ public class LiferayAdapter extends Adapter {
 //            System.out.println();
         } catch (Exception e) {
             throw new DBException(e);
+        } finally {
+            closeConnection(dbConnection);
         }
 
         return items;
