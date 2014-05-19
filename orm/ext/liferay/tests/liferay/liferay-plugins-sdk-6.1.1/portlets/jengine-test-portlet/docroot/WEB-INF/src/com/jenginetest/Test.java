@@ -61,40 +61,25 @@ public class Test {
             Adapter adapter = new LiferayAdapter(connectionManager);
             Provider provider = new MySQLProvider(adapter);
             DB db = DBFactory.register(new DB(provider));
-
-
-
-
         } catch (DBException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
     }
 
-    public static void main(String [] args) throws Exception {
-        run();
-    }
-
     public static void run() throws Exception {
-        DB db = DBFactory.get();
-
         // testing
-        DBConnection connection = db.getConnection();
-        try {
-            test1();
-            test2();
-            test3();
-            test4();
-            test5();
-            test6();
-            test7();
+        test1();
+        test2();
+        test3();
+        test4();
+        test5();
+        test6();
+        test7();
 //            test8();
 //            test9();
-            test10();
-            test11();
-            test12();
-        } finally {
-            db.closeConnection(connection);
-        }
+        test10();
+        test11();
+        test12();
     }
 
     /**
