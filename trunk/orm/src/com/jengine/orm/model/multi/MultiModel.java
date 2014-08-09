@@ -32,9 +32,9 @@ import com.jengine.orm.model.multi.field.CalcMultiField;
 import com.jengine.orm.model.multi.field.MultiModelField;
 import com.jengine.orm.model.multi.parser.ExprLexer;
 import com.jengine.orm.model.multi.parser.ExprParser;
-import com.jengine.utils.expression.ExpressionData;
-import com.jengine.utils.expression.ExpressionNode;
-import com.jengine.utils.expression.ExpressionOperation;
+import com.jengine.utils.commons.expression.ExpressionData;
+import com.jengine.utils.commons.expression.ExpressionNode;
+import com.jengine.utils.commons.expression.ExpressionOperation;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
@@ -43,8 +43,8 @@ import org.antlr.runtime.tree.Tree;
 
 import java.util.*;
 
-import static com.jengine.utils.CollectionUtil.list;
-import static com.jengine.utils.CollectionUtil.toList;
+import static com.jengine.utils.commons.CollectionUtil.list;
+import static com.jengine.utils.commons.CollectionUtil.toList;
 
 public class MultiModel {
     protected LinkedHashMap<String, MultiModelItem> items = new LinkedHashMap<String, MultiModelItem>();

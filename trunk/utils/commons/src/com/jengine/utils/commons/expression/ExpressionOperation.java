@@ -17,7 +17,7 @@
  *  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.utils.expression;
+package com.jengine.utils.commons.expression;
 
 
 import java.util.ArrayList;

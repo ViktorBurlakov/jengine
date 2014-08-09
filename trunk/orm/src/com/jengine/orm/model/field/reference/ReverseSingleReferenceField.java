@@ -23,7 +23,7 @@ import com.jengine.orm.model.Model;
 import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.db.DBException;
 
-import static com.jengine.utils.CollectionUtil.map;
+import static com.jengine.utils.commons.CollectionUtil.map;
 
 public class ReverseSingleReferenceField extends BaseReference {
     public ReverseSingleReferenceField(ReverseSingleReferenceField field) {

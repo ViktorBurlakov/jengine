@@ -13,8 +13,8 @@ import com.jengine.orm.model.field.numeric.DoubleField;
 import com.jengine.orm.model.field.numeric.FloatField;
 import com.jengine.orm.model.field.numeric.IntegerField;
 import com.jengine.orm.model.field.numeric.LongField;
-import com.jengine.utils.ClassUtils;
-import com.jengine.utils.CollectionUtil;
+import com.jengine.utils.commons.ClassUtils;
+import com.jengine.utils.commons.CollectionUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,7 +25,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.*;
 
-import static com.jengine.utils.StringUtil.caps;
+import static com.jengine.utils.commons.StringUtil.caps;
 
 public abstract class LiferayModelClass<T extends Model>  extends ModelClass<T> {
     private static Log log = LogFactoryUtil.getLog(LiferayModelClass.class);

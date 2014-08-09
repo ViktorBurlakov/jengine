@@ -17,21 +17,8 @@
  *  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.utils;
+package com.jengine.utils.commons.expression;
 
 
-import java.util.Calendar;
-import java.util.Date;
-
-public class DateUtil {
-
-
-    public static Date trimMills(Date d) {
-        Calendar cal = Calendar.getInstance();
-        cal.clear();
-        cal.setTime(d);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTime();
-    }
-
+public class ExpressionNode {
 }

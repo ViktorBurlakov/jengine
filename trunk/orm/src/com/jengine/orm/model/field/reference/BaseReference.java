@@ -27,7 +27,7 @@ import com.jengine.orm.model.field.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.jengine.utils.CollectionUtil.map;
+import static com.jengine.utils.commons.CollectionUtil.map;
 
 abstract public class BaseReference extends Field {
     protected String referenceModelName;

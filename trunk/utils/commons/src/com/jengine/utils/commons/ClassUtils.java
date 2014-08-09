@@ -17,7 +17,7 @@
  *  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.utils;
+package com.jengine.utils.commons;
 
 
 import java.lang.reflect.Method;
@@ -27,8 +27,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.jengine.utils.StringUtil.uncaps;
 
 public class ClassUtils {
     public static List<String> GETTERS_MODIFICATIONS = CollectionUtil.list("is", "get");
@@ -42,7 +40,7 @@ public class ClassUtils {
         for (Method method : interfaceClass.getMethods()) {
             for (String modificator: GETTERS_MODIFICATIONS) {
                 if (method.getName().startsWith(modificator)) {
-                    String fieldName = uncaps(method.getName().substring(modificator.length()));
+                    String fieldName = StringUtil.uncaps(method.getName().substring(modificator.length()));
                     Class fieldClass = method.getReturnType();
                     getters.put(fieldName, fieldClass);
                 }
@@ -52,7 +50,7 @@ public class ClassUtils {
         for (Method method : interfaceClass.getMethods()) {
             for (String modificator: SETTERS_MODIFICATIONS) {
                 if (method.getName().startsWith(modificator)) {
-                    String fieldName = uncaps(method.getName().substring(modificator.length()));
+                    String fieldName = StringUtil.uncaps(method.getName().substring(modificator.length()));
                     if (method.getParameterTypes().length > 0) {
                         Class fieldClass = method.getParameterTypes()[0];
                         setters.put(fieldName, fieldClass);

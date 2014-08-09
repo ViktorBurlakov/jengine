@@ -37,7 +37,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
-import static com.jengine.utils.CollectionUtil.map;
+import static com.jengine.utils.commons.CollectionUtil.map;
 
 public class ModelClassBase<T extends Model> {
     protected DB db;

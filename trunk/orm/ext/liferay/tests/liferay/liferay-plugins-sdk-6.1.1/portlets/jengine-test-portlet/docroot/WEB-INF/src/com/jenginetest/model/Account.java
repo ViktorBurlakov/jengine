@@ -17,8 +17,8 @@ import com.liferay.portal.service.persistence.UserUtil;
 import java.io.Serializable;
 import java.util.Set;
 
-import static com.jengine.utils.CollectionUtil.map;
-import static com.jengine.utils.CollectionUtil.set;
+import static com.jengine.utils.commons.CollectionUtil.map;
+import static com.jengine.utils.commons.CollectionUtil.set;
 
 @Meta(table = "User_", cacheEnabled = true)
 public class Account extends Model {

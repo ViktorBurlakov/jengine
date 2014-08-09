@@ -28,8 +28,8 @@ import com.jengine.orm.model.field.reference.SelfField;
 
 import java.util.*;
 
-import static com.jengine.utils.CollectionUtil.concat;
-import static com.jengine.utils.CollectionUtil.toList;
+import static com.jengine.utils.commons.CollectionUtil.concat;
+import static com.jengine.utils.commons.CollectionUtil.toList;
 
 
 public class ModelManager {

@@ -26,7 +26,7 @@ import com.jengine.orm.exception.ValidateException;
 
 import java.util.Map;
 
-import static com.jengine.utils.CollectionUtil.map;
+import static com.jengine.utils.commons.CollectionUtil.map;
 
 public class StringField extends Field {
     private Integer maxLength = null;

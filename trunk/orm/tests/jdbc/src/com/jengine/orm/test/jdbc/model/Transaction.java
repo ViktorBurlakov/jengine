@@ -29,7 +29,7 @@ import com.jengine.orm.model.field.reference.ReferenceField;
 
 import java.util.Date;
 
-import static com.jengine.utils.CollectionUtil.map;
+import static com.jengine.utils.commons.CollectionUtil.map;
 
 
 public class Transaction extends TestModel {

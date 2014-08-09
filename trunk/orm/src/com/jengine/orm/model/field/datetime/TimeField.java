@@ -24,7 +24,7 @@ import java.sql.Types;
 import java.util.Date;
 import java.util.Map;
 
-import static com.jengine.utils.CollectionUtil.map;
+import static com.jengine.utils.commons.CollectionUtil.map;
 
 public class TimeField extends BaseDateField {
     public static String DEFAULT_FORMAT = "HH:mm:ss"; // ISO date time format

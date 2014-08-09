@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.jengine.utils.CollectionUtil.map;
+import static com.jengine.utils.commons.CollectionUtil.map;
 
 public class DateTimeField extends BaseDateField {
     public static String DEFAULT_FORMAT = "yyyy-MM-dd HH:mm:ss";

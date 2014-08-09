@@ -17,21 +17,29 @@
  *  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.utils.expression;
+package com.jengine.utils.commons;
 
 
-public class ExpressionData<Type> extends ExpressionNode {
-    private Type data;
+public class StringUtil {
 
-    public ExpressionData(Type data) {
-        this.data = data;
+    static public String caps(String input) {
+        StringBuffer tmp = new StringBuffer(input);
+        tmp.replace(0, 1, String.valueOf(Character.toUpperCase(tmp.charAt(0))));
+        return tmp.toString();
     }
 
-    public Type getData() {
-        return data;
+    static public String uncaps(String input) {
+        StringBuffer tmp = new StringBuffer(input);
+        tmp.replace(0, 1, String.valueOf(Character.toLowerCase(tmp.charAt(0))));
+        return tmp.toString();
     }
 
-    public void setData(Type data) {
-        this.data = data;
+    static public String toString(String[] input) {
+        StringBuilder sb = new StringBuilder();
+        for (String n : input) {
+            if (sb.length() > 0) sb.append('\n');
+            sb.append("'").append(n).append("'");
+        }
+        return sb.toString();
     }
 }
