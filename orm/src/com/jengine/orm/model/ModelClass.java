@@ -24,14 +24,14 @@ import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.ModelProperty;
 import com.jengine.orm.model.field.PrimaryKey;
 import com.jengine.orm.model.field.reference.SelfField;
-import com.jengine.utils.ClassUtils;
+import com.jengine.utils.commons.ClassUtils;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.jengine.utils.CollectionUtil.map;
+import static com.jengine.utils.commons.CollectionUtil.map;
 
 
 public class ModelClass<T extends Model> extends ModelClassBase<T> {

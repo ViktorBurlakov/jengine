@@ -15,7 +15,7 @@
 	<fileset dir="${lib_path}">
 	    <include name="**/*.jar"/>
 	</fileset>
-	<pathelement location="${jengine_dist}/jengine.utils.jar"/>
+	<pathelement location="${jengine_dist}/jengine.utils.commons.jar"/>
     </path>
 
     <target name="init">

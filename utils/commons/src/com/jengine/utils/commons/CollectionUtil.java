@@ -17,7 +17,7 @@
  *  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.utils;
+package com.jengine.utils.commons;
 
 
 import java.util.*;

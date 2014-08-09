@@ -22,7 +22,7 @@ package com.jengine.orm.model.query;
 
 import com.jengine.orm.db.query.SQLQuery;
 import com.jengine.orm.model.multi.field.MultiModelField;
-import com.jengine.utils.CollectionUtil;
+import com.jengine.utils.commons.CollectionUtil;
 
 public class OrderItem {
     private String orderType;

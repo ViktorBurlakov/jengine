@@ -24,7 +24,7 @@ import com.jengine.orm.model.field.Field;
 
 import java.util.Map;
 
-import static com.jengine.utils.CollectionUtil.map;
+import static com.jengine.utils.commons.CollectionUtil.map;
 
 public class RealField extends Field {
     private Integer precision;

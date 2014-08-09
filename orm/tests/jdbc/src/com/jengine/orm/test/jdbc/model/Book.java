@@ -26,7 +26,7 @@ import com.jengine.orm.model.field.PrimaryKey;
 import com.jengine.orm.model.field.reference.ReferenceField;
 import com.jengine.orm.model.field.StringField;
 
-import static com.jengine.utils.CollectionUtil.map;
+import static com.jengine.utils.commons.CollectionUtil.map;
 
 
 public class Book extends TestModel {

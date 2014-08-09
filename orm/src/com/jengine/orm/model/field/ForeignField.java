@@ -22,7 +22,7 @@ package com.jengine.orm.model.field;
 import com.jengine.orm.model.Model;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.model.field.reference.ReferenceField;
-import com.jengine.utils.CollectionUtil;
+import com.jengine.utils.commons.CollectionUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

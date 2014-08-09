@@ -18,7 +18,8 @@
 	<pathelement location="${lib_path}/tomcat/ext/portal-service.jar"/>
 	<pathelement location="${lib_path}/antlr2.jar"/>
 	<pathelement location="${lib_path}/antlr3.jar"/>
-	<pathelement location="${jengine_dist}/jengine.utils.jar"/>
+	<pathelement location="${jengine_dist}/jengine.utils.commons.jar"/>
+	<pathelement location="${jengine_dist}/jengine.utils.ql.jar"/>
 	<pathelement location="${jengine_dist}/jengine.orm.jar"/>
     </path>
 

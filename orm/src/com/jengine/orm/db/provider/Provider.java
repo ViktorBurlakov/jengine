@@ -27,16 +27,16 @@ import com.jengine.orm.db.cache.CacheManager;
 import com.jengine.orm.db.filter.SQLFilter;
 import com.jengine.orm.db.filter.SQLStringFilter;
 import com.jengine.orm.db.query.SQLQuery;
-import com.jengine.utils.CollectionUtil;
-import com.jengine.utils.expression.ExpressionData;
-import com.jengine.utils.expression.ExpressionNode;
+import com.jengine.utils.commons.CollectionUtil;
+import com.jengine.utils.commons.expression.ExpressionData;
+import com.jengine.utils.commons.expression.ExpressionNode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.jengine.utils.CollectionUtil.*;
+import static com.jengine.utils.commons.CollectionUtil.*;
 
 
 public class Provider {

@@ -32,7 +32,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.jengine.utils.CollectionUtil.toList;
+import static com.jengine.utils.commons.CollectionUtil.toList;
 
 
 public class StringFilter {

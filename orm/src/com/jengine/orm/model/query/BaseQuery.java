@@ -28,12 +28,12 @@ import com.jengine.orm.model.query.filter.Filter;
 import com.jengine.orm.model.query.filter.StringFilter;
 import com.jengine.orm.model.query.target.FieldTarget;
 import com.jengine.orm.model.query.target.Target;
-import com.jengine.utils.CollectionUtil;
+import com.jengine.utils.commons.CollectionUtil;
 
 import java.util.*;
 
-import static com.jengine.utils.CollectionUtil.map;
-import static com.jengine.utils.CollectionUtil.toList;
+import static com.jengine.utils.commons.CollectionUtil.map;
+import static com.jengine.utils.commons.CollectionUtil.toList;
 
 public abstract class BaseQuery {
     protected LinkedHashMap<String, Target> targets = new LinkedHashMap<String, Target>();

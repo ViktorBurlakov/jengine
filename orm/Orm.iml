@@ -36,10 +36,10 @@
       <excludeFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/tools" />
       <excludeFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-plugins-sdk-6.1.1/webs" />
       <excludeFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-portal-6.1.1-ce-ga2" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/liferay/tests/liferay/liferay-portal-src-6.1.1-ce-ga2" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Utils" />
     <orderEntry type="library" name="jengine.lib.antlr2" level="project" />
     <orderEntry type="library" name="jengine.lib.antlr3" level="project" />
     <orderEntry type="library" name="jengine.lib.ehcache" level="project" />
@@ -48,6 +48,8 @@
     <orderEntry type="library" name="jengine.orm.ext.liferay.sdk.lib" level="project" />
     <orderEntry type="library" name="jengine.orm.ext.liferay.tomcat.lib" level="project" />
     <orderEntry type="library" name="jengine.orm.ext.liferay.tomcat.ROOT.lib" level="project" />
+    <orderEntry type="module" module-name="utils.commons" />
+    <orderEntry type="module" module-name="ql" />
   </component>
 </module>
 
