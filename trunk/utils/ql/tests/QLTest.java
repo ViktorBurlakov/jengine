@@ -11,6 +11,13 @@ public class QLTest {
 
     }
 
+    @Test
+    public void test2(){
+        System.out.println("test 2");
+//        AST.parse("?");
+
+    }
+
     public static void visit(Tree tree, int level) {
         printNode(tree, level);
         for (int i=0; i < tree.getChildCount(); i++) {
