@@ -1,0 +1,14 @@
+<project name="jengine.utils" default="dist" basedir=".">
+    <description>build file</description>
+
+    <target name="dist">
+	<ant antfile="commons/build.xml" target="dist" inheritAll="false"/>
+	<ant antfile="ql/build.xml" target="dist" inheritAll="false"/>
+    </target>
+
+    <target name="clean">
+	<ant antfile="commons/build.xml" target="clean" inheritAll="false"/>
+	<ant antfile="ql/build.xml" target="clean" inheritAll="false"/>
+    </target>
+</project>
+

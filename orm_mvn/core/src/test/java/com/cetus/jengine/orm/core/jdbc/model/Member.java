@@ -17,28 +17,28 @@
  *  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.orm.test.jdbc.model;
+package com.cetus.jengine.orm.core.jdbc.model;
 
 
-import com.jengine.orm.model.ModelClass;
-import com.jengine.orm.model.query.ModelQuery;
 import com.jengine.orm.db.DBException;
+import com.jengine.orm.model.ModelClass;
 import com.jengine.orm.model.field.Field;
-import com.jengine.orm.model.field.reference.ManyReferenceField;
 import com.jengine.orm.model.field.PrimaryKey;
 import com.jengine.orm.model.field.StringField;
+import com.jengine.orm.model.field.reference.ReferenceField;
+import com.jenginetest.model.TestModel;
 
-import java.util.List;
+import static com.jengine.utils.commons.CollectionUtil.map;
 
-public class Author extends TestModel {
-    public static Field id  = new PrimaryKey();
+
+public class Member extends TestModel {
+    public static Field id = new PrimaryKey();
     public static Field firstName = new StringField("verbose", "First Name");
     public static Field lastName  = new StringField("verbose", "Last Name");
-    public static Field icon  = new StringField("verbose", "Icon", "default", "no_icon.img");
-    public static ManyReferenceField books = new ManyReferenceField(Book.class);
-    public static ModelClass<Author> cls = new ModelClass<Author>(Author.class);
+    public static Field library   = new ReferenceField(Library.class, map("verbose", "Library", "required", false));
+    public static ModelClass<Member> cls = new ModelClass<Member>(Member.class);
 
-    public Author() throws DBException {
+    public Member() throws DBException {
         super();
     }
 
@@ -46,7 +46,7 @@ public class Author extends TestModel {
         return String.format("%s %s", getFirstName(), getLastName());
     }
 
-    /* Getters and Setters */
+    /* getters and setters block  */
 
     public void setFirstName(String value) throws DBException {
         setValue(firstName, value);
@@ -64,11 +64,20 @@ public class Author extends TestModel {
         return (String) getValue(lastName);
     }
 
-    public ModelQuery getBooks() throws DBException {
-        return (ModelQuery) getValue(books);
+    public void setLibrary(Library value) throws DBException {
+        setValue(library, value);
     }
 
-    public void setBooks(List<Book> values) throws DBException {
-        setValue(books, values);
+    public Library getLibrary() throws DBException {
+        return (Library) getValue(library);
     }
+
+    public Address getAddress() throws DBException {
+        return (Address) getValue("address");
+    }
+
+    public void setAddress(Address value) throws DBException {
+        setValue("address", value);
+    }
+
 }
