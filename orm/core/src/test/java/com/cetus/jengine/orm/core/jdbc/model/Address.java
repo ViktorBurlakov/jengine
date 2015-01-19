@@ -26,7 +26,7 @@ import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.StringField;
 import com.jengine.orm.model.field.reference.SingleReferenceField;
 
-import static com.jengine.utils.commons.CollectionUtil.map;
+import static com.cetus.jengine.utils.commons.CollectionUtil.map;
 
 @Meta(table = "MemberAddress")
 public class Address extends TestModel {

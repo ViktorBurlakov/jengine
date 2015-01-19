@@ -12,4 +12,53 @@
   <artifactId>jengine.utils.ql</artifactId>
   <name>JEngine QL</name>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.antlr</groupId>
+      <artifactId>antlr</artifactId>
+      <version>3.0.1</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+
+   <plugins>
+    <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>antlr3-maven-plugin</artifactId>
+        <version>1.0</version>
+        <executions>
+          <execution>
+            <!--phase>generate-sources</phase-->
+            <goals>
+              <goal>antlr</goal>
+            </goals>
+          </execution>
+        </executions>
+    </plugin>
+
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>build-helper-maven-plugin</artifactId>
+      <version>1.7</version>
+      <executions>
+        <execution>
+          <id>add-antlr-source</id>
+          <phase>generate-sources</phase>
+          <goals>
+            <goal>add-source</goal>
+          </goals>
+        <configuration>
+          <sources>
+            <source>src/main/antlr</source>
+            <source>target/generated-sources/antlr</source>
+          </sources>
+        </configuration>
+       </execution>
+     </executions>
+    </plugin>
+
+   </plugins>
+
+ </build>
 </project>
