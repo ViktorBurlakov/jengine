@@ -35,8 +35,8 @@ import com.jengine.orm.exception.ValidateException;
 import com.jengine.orm.model.cluster.Cluster;
 import com.jengine.orm.model.multi.field.Calc;
 import com.jengine.orm.model.multi.field.aggregation.Max;
-import com.jengine.utils.commons.CollectionUtil;
-import com.jengine.orm.test.jdbc.model.*;
+import com.cetus.jengine.utils.commons.CollectionUtil;
+import com.cetus.jengine.orm.test.jdbc.model.*;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.config.CacheConfiguration;
@@ -49,8 +49,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.jengine.utils.commons.CollectionUtil.list;
-import static com.jengine.utils.commons.CollectionUtil.map;
+import static com.cetus.jengine.utils.commons.CollectionUtil.list;
+import static com.cetus.jengine.utils.commons.CollectionUtil.map;
 
 public class Test {
 

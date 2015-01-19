@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g 2014-08-09 17:11:55
+// $ANTLR 3.0.1 /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g 2015-01-19 23:17:39
 
 package com.jengine.utils.ql;
 
@@ -143,14 +143,14 @@ public class QLLexer extends Lexer {
     public QLLexer(CharStream input) {
         super(input);
     }
-    public String getGrammarFileName() { return "/home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g"; }
+    public String getGrammarFileName() { return "/home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g"; }
 
     // $ANTLR start T127
     public final void mT127() throws RecognitionException {
         try {
             int _type = T127;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:6:6: ( '<<' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:6:8: '<<'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:6:6: ( '<<' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:6:8: '<<'
             {
             match("<<"); 
 
@@ -168,8 +168,8 @@ public class QLLexer extends Lexer {
     public final void mT128() throws RecognitionException {
         try {
             int _type = T128;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:7:6: ( '>>' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:7:8: '>>'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:7:6: ( '>>' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:7:8: '>>'
             {
             match(">>"); 
 
@@ -187,8 +187,8 @@ public class QLLexer extends Lexer {
     public final void mT129() throws RecognitionException {
         try {
             int _type = T129;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:8:6: ( '^' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:8:8: '^'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:8:6: ( '^' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:8:8: '^'
             {
             match('^'); 
 
@@ -205,8 +205,8 @@ public class QLLexer extends Lexer {
     public final void mT130() throws RecognitionException {
         try {
             int _type = T130;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:9:6: ( '&' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:9:8: '&'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:9:6: ( '&' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:9:8: '&'
             {
             match('&'); 
 
@@ -223,8 +223,8 @@ public class QLLexer extends Lexer {
     public final void mT131() throws RecognitionException {
         try {
             int _type = T131;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:10:6: ( '<<>>' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:10:8: '<<>>'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:10:6: ( '<<>>' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:10:8: '<<>>'
             {
             match("<<>>"); 
 
@@ -242,10 +242,10 @@ public class QLLexer extends Lexer {
     public final void mLINE_BREACK() throws RecognitionException {
         try {
             int _type = LINE_BREACK;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:58:15: ( ( ( '\\r' '\\n' ) | '\\n' | '\\r' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:58:17: ( ( '\\r' '\\n' ) | '\\n' | '\\r' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:58:15: ( ( ( '\\r' '\\n' ) | '\\n' | '\\r' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:58:17: ( ( '\\r' '\\n' ) | '\\n' | '\\r' )
             {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:58:17: ( ( '\\r' '\\n' ) | '\\n' | '\\r' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:58:17: ( ( '\\r' '\\n' ) | '\\n' | '\\r' )
             int alt1=3;
             int LA1_0 = input.LA(1);
 
@@ -269,10 +269,10 @@ public class QLLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:58:19: ( '\\r' '\\n' )
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:58:19: ( '\\r' '\\n' )
                     {
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:58:19: ( '\\r' '\\n' )
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:58:20: '\\r' '\\n'
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:58:19: ( '\\r' '\\n' )
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:58:20: '\\r' '\\n'
                     {
                     match('\r'); 
                     match('\n'); 
@@ -283,14 +283,14 @@ public class QLLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:58:33: '\\n'
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:58:33: '\\n'
                     {
                     match('\n'); 
 
                     }
                     break;
                 case 3 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:58:40: '\\r'
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:58:40: '\\r'
                     {
                     match('\r'); 
 
@@ -313,10 +313,10 @@ public class QLLexer extends Lexer {
     public final void mWS() throws RecognitionException {
         try {
             int _type = WS;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:59:15: ( ( ' ' | '\\t' | LINE_BREACK ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:59:17: ( ' ' | '\\t' | LINE_BREACK )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:59:15: ( ( ' ' | '\\t' | LINE_BREACK ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:59:17: ( ' ' | '\\t' | LINE_BREACK )
             {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:59:17: ( ' ' | '\\t' | LINE_BREACK )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:59:17: ( ' ' | '\\t' | LINE_BREACK )
             int alt2=3;
             switch ( input.LA(1) ) {
             case ' ':
@@ -344,21 +344,21 @@ public class QLLexer extends Lexer {
 
             switch (alt2) {
                 case 1 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:59:19: ' '
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:59:19: ' '
                     {
                     match(' '); 
 
                     }
                     break;
                 case 2 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:59:25: '\\t'
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:59:25: '\\t'
                     {
                     match('\t'); 
 
                     }
                     break;
                 case 3 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:59:32: LINE_BREACK
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:59:32: LINE_BREACK
                     {
                     mLINE_BREACK(); 
 
@@ -382,12 +382,12 @@ public class QLLexer extends Lexer {
     public final void mML_COMMENT() throws RecognitionException {
         try {
             int _type = ML_COMMENT;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:60:15: ( '/*' ({...}? '*' | LINE_BREACK | ~ ( '*' | '\\n' | '\\r' ) )* '*/' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:60:17: '/*' ({...}? '*' | LINE_BREACK | ~ ( '*' | '\\n' | '\\r' ) )* '*/'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:60:15: ( '/*' ({...}? '*' | LINE_BREACK | ~ ( '*' | '\\n' | '\\r' ) )* '*/' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:60:17: '/*' ({...}? '*' | LINE_BREACK | ~ ( '*' | '\\n' | '\\r' ) )* '*/'
             {
             match("/*"); 
 
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:60:22: ({...}? '*' | LINE_BREACK | ~ ( '*' | '\\n' | '\\r' ) )*
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:60:22: ({...}? '*' | LINE_BREACK | ~ ( '*' | '\\n' | '\\r' ) )*
             loop3:
             do {
                 int alt3=4;
@@ -421,7 +421,7 @@ public class QLLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:60:24: {...}? '*'
+            	    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:60:24: {...}? '*'
             	    {
             	    if ( !( input.LA(2)!='/' ) ) {
             	        throw new FailedPredicateException(input, "ML_COMMENT", " input.LA(2)!='/' ");
@@ -431,14 +431,14 @@ public class QLLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:60:53: LINE_BREACK
+            	    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:60:53: LINE_BREACK
             	    {
             	    mLINE_BREACK(); 
 
             	    }
             	    break;
             	case 3 :
-            	    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:60:69: ~ ( '*' | '\\n' | '\\r' )
+            	    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:60:69: ~ ( '*' | '\\n' | '\\r' )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<=')')||(input.LA(1)>='+' && input.LA(1)<='\uFFFE') ) {
             	        input.consume();
@@ -476,8 +476,8 @@ public class QLLexer extends Lexer {
     public final void mSEMI() throws RecognitionException {
         try {
             int _type = SEMI;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:61:15: ( ';' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:61:17: ';'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:61:15: ( ';' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:61:17: ';'
             {
             match(';'); 
 
@@ -494,8 +494,8 @@ public class QLLexer extends Lexer {
     public final void mDOT() throws RecognitionException {
         try {
             int _type = DOT;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:62:15: ( '.' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:62:17: '.'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:62:15: ( '.' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:62:17: '.'
             {
             match('.'); 
 
@@ -512,8 +512,8 @@ public class QLLexer extends Lexer {
     public final void mCOMMA() throws RecognitionException {
         try {
             int _type = COMMA;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:63:15: ( ',' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:63:17: ','
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:63:15: ( ',' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:63:17: ','
             {
             match(','); 
 
@@ -530,8 +530,8 @@ public class QLLexer extends Lexer {
     public final void mOPEN_PAREN() throws RecognitionException {
         try {
             int _type = OPEN_PAREN;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:64:15: ( '(' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:64:17: '('
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:64:15: ( '(' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:64:17: '('
             {
             match('('); 
 
@@ -548,8 +548,8 @@ public class QLLexer extends Lexer {
     public final void mCLOSE_PAREN() throws RecognitionException {
         try {
             int _type = CLOSE_PAREN;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:65:15: ( ')' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:65:17: ')'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:65:15: ( ')' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:65:17: ')'
             {
             match(')'); 
 
@@ -566,8 +566,8 @@ public class QLLexer extends Lexer {
     public final void mSTAR() throws RecognitionException {
         try {
             int _type = STAR;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:66:15: ( '*' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:66:17: '*'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:66:15: ( '*' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:66:17: '*'
             {
             match('*'); 
 
@@ -584,8 +584,8 @@ public class QLLexer extends Lexer {
     public final void mAT_SIGN() throws RecognitionException {
         try {
             int _type = AT_SIGN;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:67:15: ( '@' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:67:17: '@'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:67:15: ( '@' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:67:17: '@'
             {
             match('@'); 
 
@@ -601,8 +601,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start A
     public final void mA() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:69:15: ( ( 'a' | 'A' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:69:17: ( 'a' | 'A' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:69:15: ( ( 'a' | 'A' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:69:17: ( 'a' | 'A' )
             {
             if ( input.LA(1)=='A'||input.LA(1)=='a' ) {
                 input.consume();
@@ -626,8 +626,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start B
     public final void mB() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:70:15: ( ( 'b' | 'B' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:70:17: ( 'b' | 'B' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:70:15: ( ( 'b' | 'B' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:70:17: ( 'b' | 'B' )
             {
             if ( input.LA(1)=='B'||input.LA(1)=='b' ) {
                 input.consume();
@@ -651,8 +651,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start C
     public final void mC() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:71:15: ( ( 'c' | 'C' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:71:17: ( 'c' | 'C' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:71:15: ( ( 'c' | 'C' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:71:17: ( 'c' | 'C' )
             {
             if ( input.LA(1)=='C'||input.LA(1)=='c' ) {
                 input.consume();
@@ -676,8 +676,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start D
     public final void mD() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:72:15: ( ( 'd' | 'D' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:72:17: ( 'd' | 'D' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:72:15: ( ( 'd' | 'D' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:72:17: ( 'd' | 'D' )
             {
             if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
                 input.consume();
@@ -701,8 +701,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start E
     public final void mE() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:73:15: ( ( 'e' | 'E' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:73:17: ( 'e' | 'E' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:73:15: ( ( 'e' | 'E' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:73:17: ( 'e' | 'E' )
             {
             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                 input.consume();
@@ -726,8 +726,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start F
     public final void mF() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:74:15: ( ( 'f' | 'F' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:74:17: ( 'f' | 'F' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:74:15: ( ( 'f' | 'F' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:74:17: ( 'f' | 'F' )
             {
             if ( input.LA(1)=='F'||input.LA(1)=='f' ) {
                 input.consume();
@@ -751,8 +751,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start G
     public final void mG() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:75:15: ( ( 'g' | 'G' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:75:17: ( 'g' | 'G' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:75:15: ( ( 'g' | 'G' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:75:17: ( 'g' | 'G' )
             {
             if ( input.LA(1)=='G'||input.LA(1)=='g' ) {
                 input.consume();
@@ -776,8 +776,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start H
     public final void mH() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:76:15: ( ( 'h' | 'H' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:76:17: ( 'h' | 'H' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:76:15: ( ( 'h' | 'H' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:76:17: ( 'h' | 'H' )
             {
             if ( input.LA(1)=='H'||input.LA(1)=='h' ) {
                 input.consume();
@@ -801,8 +801,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start I
     public final void mI() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:77:15: ( ( 'i' | 'I' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:77:17: ( 'i' | 'I' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:77:15: ( ( 'i' | 'I' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:77:17: ( 'i' | 'I' )
             {
             if ( input.LA(1)=='I'||input.LA(1)=='i' ) {
                 input.consume();
@@ -826,8 +826,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start J
     public final void mJ() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:78:15: ( ( 'j' | 'J' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:78:17: ( 'j' | 'J' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:78:15: ( ( 'j' | 'J' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:78:17: ( 'j' | 'J' )
             {
             if ( input.LA(1)=='J'||input.LA(1)=='j' ) {
                 input.consume();
@@ -851,8 +851,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start K
     public final void mK() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:79:15: ( ( 'k' | 'K' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:79:17: ( 'k' | 'K' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:79:15: ( ( 'k' | 'K' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:79:17: ( 'k' | 'K' )
             {
             if ( input.LA(1)=='K'||input.LA(1)=='k' ) {
                 input.consume();
@@ -876,8 +876,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start L
     public final void mL() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:80:15: ( ( 'l' | 'L' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:80:17: ( 'l' | 'L' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:80:15: ( ( 'l' | 'L' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:80:17: ( 'l' | 'L' )
             {
             if ( input.LA(1)=='L'||input.LA(1)=='l' ) {
                 input.consume();
@@ -901,8 +901,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start M
     public final void mM() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:81:15: ( ( 'm' | 'M' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:81:17: ( 'm' | 'M' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:81:15: ( ( 'm' | 'M' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:81:17: ( 'm' | 'M' )
             {
             if ( input.LA(1)=='M'||input.LA(1)=='m' ) {
                 input.consume();
@@ -926,8 +926,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start N
     public final void mN() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:82:15: ( ( 'n' | 'N' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:82:17: ( 'n' | 'N' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:82:15: ( ( 'n' | 'N' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:82:17: ( 'n' | 'N' )
             {
             if ( input.LA(1)=='N'||input.LA(1)=='n' ) {
                 input.consume();
@@ -951,8 +951,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start O
     public final void mO() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:83:15: ( ( 'o' | 'O' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:83:17: ( 'o' | 'O' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:83:15: ( ( 'o' | 'O' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:83:17: ( 'o' | 'O' )
             {
             if ( input.LA(1)=='O'||input.LA(1)=='o' ) {
                 input.consume();
@@ -976,8 +976,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start P
     public final void mP() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:84:15: ( ( 'p' | 'P' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:84:17: ( 'p' | 'P' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:84:15: ( ( 'p' | 'P' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:84:17: ( 'p' | 'P' )
             {
             if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
                 input.consume();
@@ -1001,8 +1001,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start Q
     public final void mQ() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:85:15: ( ( 'q' | 'Q' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:85:17: ( 'q' | 'Q' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:85:15: ( ( 'q' | 'Q' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:85:17: ( 'q' | 'Q' )
             {
             if ( input.LA(1)=='Q'||input.LA(1)=='q' ) {
                 input.consume();
@@ -1026,8 +1026,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start R
     public final void mR() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:86:15: ( ( 'r' | 'R' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:86:17: ( 'r' | 'R' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:86:15: ( ( 'r' | 'R' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:86:17: ( 'r' | 'R' )
             {
             if ( input.LA(1)=='R'||input.LA(1)=='r' ) {
                 input.consume();
@@ -1051,8 +1051,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start S
     public final void mS() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:87:15: ( ( 's' | 'S' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:87:17: ( 's' | 'S' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:87:15: ( ( 's' | 'S' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:87:17: ( 's' | 'S' )
             {
             if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
                 input.consume();
@@ -1076,8 +1076,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start T
     public final void mT() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:88:15: ( ( 't' | 'T' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:88:17: ( 't' | 'T' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:88:15: ( ( 't' | 'T' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:88:17: ( 't' | 'T' )
             {
             if ( input.LA(1)=='T'||input.LA(1)=='t' ) {
                 input.consume();
@@ -1101,8 +1101,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start U
     public final void mU() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:89:15: ( ( 'u' | 'U' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:89:17: ( 'u' | 'U' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:89:15: ( ( 'u' | 'U' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:89:17: ( 'u' | 'U' )
             {
             if ( input.LA(1)=='U'||input.LA(1)=='u' ) {
                 input.consume();
@@ -1126,8 +1126,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start V
     public final void mV() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:90:15: ( ( 'v' | 'V' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:90:17: ( 'v' | 'V' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:90:15: ( ( 'v' | 'V' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:90:17: ( 'v' | 'V' )
             {
             if ( input.LA(1)=='V'||input.LA(1)=='v' ) {
                 input.consume();
@@ -1151,8 +1151,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start W
     public final void mW() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:91:15: ( ( 'w' | 'W' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:91:17: ( 'w' | 'W' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:91:15: ( ( 'w' | 'W' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:91:17: ( 'w' | 'W' )
             {
             if ( input.LA(1)=='W'||input.LA(1)=='w' ) {
                 input.consume();
@@ -1176,8 +1176,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start X
     public final void mX() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:92:15: ( ( 'x' | 'X' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:92:17: ( 'x' | 'X' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:92:15: ( ( 'x' | 'X' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:92:17: ( 'x' | 'X' )
             {
             if ( input.LA(1)=='X'||input.LA(1)=='x' ) {
                 input.consume();
@@ -1201,8 +1201,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start Y
     public final void mY() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:93:15: ( ( 'y' | 'Y' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:93:17: ( 'y' | 'Y' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:93:15: ( ( 'y' | 'Y' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:93:17: ( 'y' | 'Y' )
             {
             if ( input.LA(1)=='Y'||input.LA(1)=='y' ) {
                 input.consume();
@@ -1226,8 +1226,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start Z
     public final void mZ() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:94:15: ( ( 'z' | 'Z' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:94:17: ( 'z' | 'Z' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:94:15: ( ( 'z' | 'Z' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:94:17: ( 'z' | 'Z' )
             {
             if ( input.LA(1)=='Z'||input.LA(1)=='z' ) {
                 input.consume();
@@ -1251,8 +1251,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start CHAR
     public final void mCHAR() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:97:15: ( ( 'a' .. 'z' | 'A' .. 'Z' ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:97:17: ( 'a' .. 'z' | 'A' .. 'Z' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:97:15: ( ( 'a' .. 'z' | 'A' .. 'Z' ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:97:17: ( 'a' .. 'z' | 'A' .. 'Z' )
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -1276,8 +1276,8 @@ public class QLLexer extends Lexer {
     // $ANTLR start DIGIT
     public final void mDIGIT() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:98:15: ( '0' .. '9' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:98:17: '0' .. '9'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:98:15: ( '0' .. '9' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:98:17: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -1293,7 +1293,7 @@ public class QLLexer extends Lexer {
     public final void mSTRING() throws RecognitionException {
         try {
             int _type = STRING;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:99:15: ( '\\'' (~ '\\'' )* '\\'' | '\\\"' (~ '\\\"' )* '\\\"' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:99:15: ( '\\'' (~ '\\'' )* '\\'' | '\\\"' (~ '\\\"' )* '\\\"' )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -1311,10 +1311,10 @@ public class QLLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:99:17: '\\'' (~ '\\'' )* '\\''
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:99:17: '\\'' (~ '\\'' )* '\\''
                     {
                     match('\''); 
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:99:22: (~ '\\'' )*
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:99:22: (~ '\\'' )*
                     loop4:
                     do {
                         int alt4=2;
@@ -1327,7 +1327,7 @@ public class QLLexer extends Lexer {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:99:24: ~ '\\''
+                    	    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:99:24: ~ '\\''
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='\uFFFE') ) {
                     	        input.consume();
@@ -1353,10 +1353,10 @@ public class QLLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:99:40: '\\\"' (~ '\\\"' )* '\\\"'
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:99:40: '\\\"' (~ '\\\"' )* '\\\"'
                     {
                     match('\"'); 
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:99:45: (~ '\\\"' )*
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:99:45: (~ '\\\"' )*
                     loop5:
                     do {
                         int alt5=2;
@@ -1369,7 +1369,7 @@ public class QLLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:99:47: ~ '\\\"'
+                    	    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:99:47: ~ '\\\"'
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='\uFFFE') ) {
                     	        input.consume();
@@ -1406,11 +1406,11 @@ public class QLLexer extends Lexer {
     // $ANTLR start NUM
     public final void mNUM() throws RecognitionException {
         try {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:100:15: ( DIGIT ( DIGIT )* )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:100:18: DIGIT ( DIGIT )*
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:100:15: ( DIGIT ( DIGIT )* )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:100:18: DIGIT ( DIGIT )*
             {
             mDIGIT(); 
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:100:24: ( DIGIT )*
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:100:24: ( DIGIT )*
             loop7:
             do {
                 int alt7=2;
@@ -1423,7 +1423,7 @@ public class QLLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:100:26: DIGIT
+            	    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:100:26: DIGIT
             	    {
             	    mDIGIT(); 
 
@@ -1448,10 +1448,10 @@ public class QLLexer extends Lexer {
     public final void mNUMBER() throws RecognitionException {
         try {
             int _type = NUMBER;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:101:15: ( ( PLUS | MINUS )? ( ( NUM DOT NUM ) | DOT NUM | NUM ) ( 'e' ( PLUS | MINUS )? NUM )? )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:101:17: ( PLUS | MINUS )? ( ( NUM DOT NUM ) | DOT NUM | NUM ) ( 'e' ( PLUS | MINUS )? NUM )?
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:101:15: ( ( PLUS | MINUS )? ( ( NUM DOT NUM ) | DOT NUM | NUM ) ( 'e' ( PLUS | MINUS )? NUM )? )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:101:17: ( PLUS | MINUS )? ( ( NUM DOT NUM ) | DOT NUM | NUM ) ( 'e' ( PLUS | MINUS )? NUM )?
             {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:101:17: ( PLUS | MINUS )?
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:101:17: ( PLUS | MINUS )?
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -1460,7 +1460,7 @@ public class QLLexer extends Lexer {
             }
             switch (alt8) {
                 case 1 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:
                     {
                     if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
                         input.consume();
@@ -1478,15 +1478,15 @@ public class QLLexer extends Lexer {
 
             }
 
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:101:35: ( ( NUM DOT NUM ) | DOT NUM | NUM )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:101:35: ( ( NUM DOT NUM ) | DOT NUM | NUM )
             int alt9=3;
             alt9 = dfa9.predict(input);
             switch (alt9) {
                 case 1 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:101:37: ( NUM DOT NUM )
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:101:37: ( NUM DOT NUM )
                     {
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:101:37: ( NUM DOT NUM )
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:101:38: NUM DOT NUM
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:101:37: ( NUM DOT NUM )
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:101:38: NUM DOT NUM
                     {
                     mNUM(); 
                     mDOT(); 
@@ -1498,7 +1498,7 @@ public class QLLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:101:53: DOT NUM
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:101:53: DOT NUM
                     {
                     mDOT(); 
                     mNUM(); 
@@ -1506,7 +1506,7 @@ public class QLLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:101:63: NUM
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:101:63: NUM
                     {
                     mNUM(); 
 
@@ -1515,7 +1515,7 @@ public class QLLexer extends Lexer {
 
             }
 
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:101:69: ( 'e' ( PLUS | MINUS )? NUM )?
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:101:69: ( 'e' ( PLUS | MINUS )? NUM )?
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -1524,10 +1524,10 @@ public class QLLexer extends Lexer {
             }
             switch (alt11) {
                 case 1 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:101:71: 'e' ( PLUS | MINUS )? NUM
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:101:71: 'e' ( PLUS | MINUS )? NUM
                     {
                     match('e'); 
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:101:75: ( PLUS | MINUS )?
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:101:75: ( PLUS | MINUS )?
                     int alt10=2;
                     int LA10_0 = input.LA(1);
 
@@ -1536,7 +1536,7 @@ public class QLLexer extends Lexer {
                     }
                     switch (alt10) {
                         case 1 :
-                            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:
+                            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:
                             {
                             if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
                                 input.consume();
@@ -1575,7 +1575,7 @@ public class QLLexer extends Lexer {
     public final void mBOOLEAN() throws RecognitionException {
         try {
             int _type = BOOLEAN;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:102:15: ( ( T R U E ) | ( F A L S E ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:102:15: ( ( T R U E ) | ( F A L S E ) )
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -1593,10 +1593,10 @@ public class QLLexer extends Lexer {
             }
             switch (alt12) {
                 case 1 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:102:17: ( T R U E )
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:102:17: ( T R U E )
                     {
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:102:17: ( T R U E )
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:102:18: T R U E
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:102:17: ( T R U E )
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:102:18: T R U E
                     {
                     mT(); 
                     mR(); 
@@ -1609,10 +1609,10 @@ public class QLLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:102:29: ( F A L S E )
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:102:29: ( F A L S E )
                     {
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:102:29: ( F A L S E )
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:102:30: F A L S E
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:102:29: ( F A L S E )
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:102:30: F A L S E
                     {
                     mF(); 
                     mA(); 
@@ -1638,11 +1638,11 @@ public class QLLexer extends Lexer {
     public final void mDATETIME() throws RecognitionException {
         try {
             int _type = DATETIME;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:103:15: ( '#' (~ '#' )* '#' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:103:17: '#' (~ '#' )* '#'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:103:15: ( '#' (~ '#' )* '#' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:103:17: '#' (~ '#' )* '#'
             {
             match('#'); 
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:103:21: (~ '#' )*
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:103:21: (~ '#' )*
             loop13:
             do {
                 int alt13=2;
@@ -1655,7 +1655,7 @@ public class QLLexer extends Lexer {
 
                 switch (alt13) {
             	case 1 :
-            	    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:103:22: ~ '#'
+            	    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:103:22: ~ '#'
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\"')||(input.LA(1)>='$' && input.LA(1)<='\uFFFE') ) {
             	        input.consume();
@@ -1691,8 +1691,8 @@ public class QLLexer extends Lexer {
     public final void mNULL() throws RecognitionException {
         try {
             int _type = NULL;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:104:15: ( N U L L )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:104:17: N U L L
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:104:15: ( N U L L )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:104:17: N U L L
             {
             mN(); 
             mU(); 
@@ -1712,8 +1712,8 @@ public class QLLexer extends Lexer {
     public final void mPLUS() throws RecognitionException {
         try {
             int _type = PLUS;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:108:15: ( '+' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:108:17: '+'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:108:15: ( '+' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:108:17: '+'
             {
             match('+'); 
 
@@ -1730,8 +1730,8 @@ public class QLLexer extends Lexer {
     public final void mMINUS() throws RecognitionException {
         try {
             int _type = MINUS;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:109:15: ( '-' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:109:17: '-'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:109:15: ( '-' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:109:17: '-'
             {
             match('-'); 
 
@@ -1748,8 +1748,8 @@ public class QLLexer extends Lexer {
     public final void mDIVIDE() throws RecognitionException {
         try {
             int _type = DIVIDE;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:110:15: ( '/' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:110:17: '/'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:110:15: ( '/' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:110:17: '/'
             {
             match('/'); 
 
@@ -1766,8 +1766,8 @@ public class QLLexer extends Lexer {
     public final void mVERTBAR() throws RecognitionException {
         try {
             int _type = VERTBAR;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:111:15: ( '|' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:111:17: '|'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:111:15: ( '|' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:111:17: '|'
             {
             match('|'); 
 
@@ -1784,7 +1784,7 @@ public class QLLexer extends Lexer {
     public final void mEQ() throws RecognitionException {
         try {
             int _type = EQ;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:112:15: ( '=' | '==' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:112:15: ( '=' | '==' )
             int alt14=2;
             int LA14_0 = input.LA(1);
 
@@ -1805,14 +1805,14 @@ public class QLLexer extends Lexer {
             }
             switch (alt14) {
                 case 1 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:112:17: '='
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:112:17: '='
                     {
                     match('='); 
 
                     }
                     break;
                 case 2 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:112:23: '=='
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:112:23: '=='
                     {
                     match("=="); 
 
@@ -1832,8 +1832,8 @@ public class QLLexer extends Lexer {
     public final void mQUESTION() throws RecognitionException {
         try {
             int _type = QUESTION;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:113:15: ( '?' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:113:17: '?'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:113:15: ( '?' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:113:17: '?'
             {
             match('?'); 
 
@@ -1850,7 +1850,7 @@ public class QLLexer extends Lexer {
     public final void mNOT_EQ() throws RecognitionException {
         try {
             int _type = NOT_EQ;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:114:15: ( '<>' | '!=' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:114:15: ( '<>' | '!=' )
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -1868,7 +1868,7 @@ public class QLLexer extends Lexer {
             }
             switch (alt15) {
                 case 1 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:114:17: '<>'
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:114:17: '<>'
                     {
                     match("<>"); 
 
@@ -1876,7 +1876,7 @@ public class QLLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:114:24: '!='
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:114:24: '!='
                     {
                     match("!="); 
 
@@ -1896,8 +1896,8 @@ public class QLLexer extends Lexer {
     public final void mGT() throws RecognitionException {
         try {
             int _type = GT;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:115:15: ( '>' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:115:17: '>'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:115:15: ( '>' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:115:17: '>'
             {
             match('>'); 
 
@@ -1914,8 +1914,8 @@ public class QLLexer extends Lexer {
     public final void mLT() throws RecognitionException {
         try {
             int _type = LT;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:116:15: ( '<' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:116:17: '<'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:116:15: ( '<' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:116:17: '<'
             {
             match('<'); 
 
@@ -1932,8 +1932,8 @@ public class QLLexer extends Lexer {
     public final void mLE() throws RecognitionException {
         try {
             int _type = LE;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:117:15: ( '<=' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:117:17: '<='
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:117:15: ( '<=' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:117:17: '<='
             {
             match("<="); 
 
@@ -1951,8 +1951,8 @@ public class QLLexer extends Lexer {
     public final void mGE() throws RecognitionException {
         try {
             int _type = GE;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:118:15: ( '>=' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:118:17: '>='
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:118:15: ( '>=' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:118:17: '>='
             {
             match(">="); 
 
@@ -1970,7 +1970,7 @@ public class QLLexer extends Lexer {
     public final void mNOT() throws RecognitionException {
         try {
             int _type = NOT;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:119:15: ( '!' | ( N O T ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:119:15: ( '!' | ( N O T ) )
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -1988,17 +1988,17 @@ public class QLLexer extends Lexer {
             }
             switch (alt16) {
                 case 1 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:119:17: '!'
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:119:17: '!'
                     {
                     match('!'); 
 
                     }
                     break;
                 case 2 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:119:23: ( N O T )
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:119:23: ( N O T )
                     {
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:119:23: ( N O T )
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:119:24: N O T
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:119:23: ( N O T )
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:119:24: N O T
                     {
                     mN(); 
                     mO(); 
@@ -2022,7 +2022,7 @@ public class QLLexer extends Lexer {
     public final void mOR() throws RecognitionException {
         try {
             int _type = OR;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:120:15: ( ( O R ) | '||' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:120:15: ( ( O R ) | '||' )
             int alt17=2;
             int LA17_0 = input.LA(1);
 
@@ -2040,10 +2040,10 @@ public class QLLexer extends Lexer {
             }
             switch (alt17) {
                 case 1 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:120:17: ( O R )
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:120:17: ( O R )
                     {
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:120:17: ( O R )
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:120:18: O R
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:120:17: ( O R )
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:120:18: O R
                     {
                     mO(); 
                     mR(); 
@@ -2054,7 +2054,7 @@ public class QLLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:120:25: '||'
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:120:25: '||'
                     {
                     match("||"); 
 
@@ -2074,11 +2074,11 @@ public class QLLexer extends Lexer {
     public final void mXOR() throws RecognitionException {
         try {
             int _type = XOR;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:121:15: ( ( X O R ) )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:121:17: ( X O R )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:121:15: ( ( X O R ) )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:121:17: ( X O R )
             {
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:121:17: ( X O R )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:121:18: X O R
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:121:17: ( X O R )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:121:18: X O R
             {
             mX(); 
             mO(); 
@@ -2100,7 +2100,7 @@ public class QLLexer extends Lexer {
     public final void mAND() throws RecognitionException {
         try {
             int _type = AND;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:122:15: ( ( A N D ) | '&&' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:122:15: ( ( A N D ) | '&&' )
             int alt18=2;
             int LA18_0 = input.LA(1);
 
@@ -2118,10 +2118,10 @@ public class QLLexer extends Lexer {
             }
             switch (alt18) {
                 case 1 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:122:17: ( A N D )
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:122:17: ( A N D )
                     {
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:122:17: ( A N D )
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:122:18: A N D
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:122:17: ( A N D )
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:122:18: A N D
                     {
                     mA(); 
                     mN(); 
@@ -2133,7 +2133,7 @@ public class QLLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:122:26: '&&'
+                    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:122:26: '&&'
                     {
                     match("&&"); 
 
@@ -2153,8 +2153,8 @@ public class QLLexer extends Lexer {
     public final void mMOD() throws RecognitionException {
         try {
             int _type = MOD;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:123:15: ( '%' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:123:17: '%'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:123:15: ( '%' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:123:17: '%'
             {
             match('%'); 
 
@@ -2171,8 +2171,8 @@ public class QLLexer extends Lexer {
     public final void mBITWISE_AND() throws RecognitionException {
         try {
             int _type = BITWISE_AND;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:124:15: ( '&&&' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:124:17: '&&&'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:124:15: ( '&&&' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:124:17: '&&&'
             {
             match("&&&"); 
 
@@ -2190,8 +2190,8 @@ public class QLLexer extends Lexer {
     public final void mBITWISE_XOR() throws RecognitionException {
         try {
             int _type = BITWISE_XOR;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:125:15: ( '^^^' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:125:17: '^^^'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:125:15: ( '^^^' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:125:17: '^^^'
             {
             match("^^^"); 
 
@@ -2209,8 +2209,8 @@ public class QLLexer extends Lexer {
     public final void mBITWISE_LEFT() throws RecognitionException {
         try {
             int _type = BITWISE_LEFT;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:126:15: ( '<<<' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:126:17: '<<<'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:126:15: ( '<<<' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:126:17: '<<<'
             {
             match("<<<"); 
 
@@ -2228,8 +2228,8 @@ public class QLLexer extends Lexer {
     public final void mBITWISE_RIGHT() throws RecognitionException {
         try {
             int _type = BITWISE_RIGHT;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:127:15: ( '>>>' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:127:17: '>>>'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:127:15: ( '>>>' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:127:17: '>>>'
             {
             match(">>>"); 
 
@@ -2247,8 +2247,8 @@ public class QLLexer extends Lexer {
     public final void mBIT_INVERSION() throws RecognitionException {
         try {
             int _type = BIT_INVERSION;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:128:15: ( '~' )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:128:17: '~'
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:128:15: ( '~' )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:128:17: '~'
             {
             match('~'); 
 
@@ -2265,8 +2265,8 @@ public class QLLexer extends Lexer {
     public final void mON() throws RecognitionException {
         try {
             int _type = ON;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:131:15: ( O N )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:131:17: O N
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:131:15: ( O N )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:131:17: O N
             {
             mO(); 
             mN(); 
@@ -2284,8 +2284,8 @@ public class QLLexer extends Lexer {
     public final void mIS() throws RecognitionException {
         try {
             int _type = IS;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:132:15: ( I S )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:132:17: I S
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:132:15: ( I S )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:132:17: I S
             {
             mI(); 
             mS(); 
@@ -2303,8 +2303,8 @@ public class QLLexer extends Lexer {
     public final void mIN() throws RecognitionException {
         try {
             int _type = IN;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:133:15: ( I N )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:133:17: I N
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:133:15: ( I N )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:133:17: I N
             {
             mI(); 
             mN(); 
@@ -2322,8 +2322,8 @@ public class QLLexer extends Lexer {
     public final void mLIKE() throws RecognitionException {
         try {
             int _type = LIKE;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:134:15: ( L I K E )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:134:17: L I K E
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:134:15: ( L I K E )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:134:17: L I K E
             {
             mL(); 
             mI(); 
@@ -2343,8 +2343,8 @@ public class QLLexer extends Lexer {
     public final void mESCAPE() throws RecognitionException {
         try {
             int _type = ESCAPE;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:135:15: ( E S C A P E )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:135:17: E S C A P E
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:135:15: ( E S C A P E )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:135:17: E S C A P E
             {
             mE(); 
             mS(); 
@@ -2366,8 +2366,8 @@ public class QLLexer extends Lexer {
     public final void mEMPTY() throws RecognitionException {
         try {
             int _type = EMPTY;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:136:15: ( E M P T Y )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:136:17: E M P T Y
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:136:15: ( E M P T Y )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:136:17: E M P T Y
             {
             mE(); 
             mM(); 
@@ -2388,8 +2388,8 @@ public class QLLexer extends Lexer {
     public final void mBETWEEN() throws RecognitionException {
         try {
             int _type = BETWEEN;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:137:15: ( B E T W E E N )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:137:17: B E T W E E N
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:137:15: ( B E T W E E N )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:137:17: B E T W E E N
             {
             mB(); 
             mE(); 
@@ -2412,8 +2412,8 @@ public class QLLexer extends Lexer {
     public final void mASC() throws RecognitionException {
         try {
             int _type = ASC;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:139:15: ( A S C )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:139:17: A S C
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:139:15: ( A S C )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:139:17: A S C
             {
             mA(); 
             mS(); 
@@ -2432,8 +2432,8 @@ public class QLLexer extends Lexer {
     public final void mDESC() throws RecognitionException {
         try {
             int _type = DESC;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:140:15: ( D E S C )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:140:17: D E S C
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:140:15: ( D E S C )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:140:17: D E S C
             {
             mD(); 
             mE(); 
@@ -2453,8 +2453,8 @@ public class QLLexer extends Lexer {
     public final void mDISTINCT() throws RecognitionException {
         try {
             int _type = DISTINCT;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:141:15: ( D I S T I N C T )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:141:17: D I S T I N C T
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:141:15: ( D I S T I N C T )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:141:17: D I S T I N C T
             {
             mD(); 
             mI(); 
@@ -2478,8 +2478,8 @@ public class QLLexer extends Lexer {
     public final void mSELECT() throws RecognitionException {
         try {
             int _type = SELECT;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:142:15: ( S E L E C T )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:142:17: S E L E C T
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:142:15: ( S E L E C T )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:142:17: S E L E C T
             {
             mS(); 
             mE(); 
@@ -2501,8 +2501,8 @@ public class QLLexer extends Lexer {
     public final void mFROM() throws RecognitionException {
         try {
             int _type = FROM;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:143:15: ( F R O M )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:143:17: F R O M
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:143:15: ( F R O M )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:143:17: F R O M
             {
             mF(); 
             mR(); 
@@ -2522,8 +2522,8 @@ public class QLLexer extends Lexer {
     public final void mWHERE() throws RecognitionException {
         try {
             int _type = WHERE;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:144:15: ( W H E R E )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:144:17: W H E R E
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:144:15: ( W H E R E )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:144:17: W H E R E
             {
             mW(); 
             mH(); 
@@ -2544,8 +2544,8 @@ public class QLLexer extends Lexer {
     public final void mORDER() throws RecognitionException {
         try {
             int _type = ORDER;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:145:15: ( O R D E R )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:145:17: O R D E R
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:145:15: ( O R D E R )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:145:17: O R D E R
             {
             mO(); 
             mR(); 
@@ -2566,8 +2566,8 @@ public class QLLexer extends Lexer {
     public final void mBY() throws RecognitionException {
         try {
             int _type = BY;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:146:15: ( B Y )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:146:17: B Y
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:146:15: ( B Y )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:146:17: B Y
             {
             mB(); 
             mY(); 
@@ -2585,8 +2585,8 @@ public class QLLexer extends Lexer {
     public final void mGROUP() throws RecognitionException {
         try {
             int _type = GROUP;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:147:15: ( G R O U P )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:147:17: G R O U P
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:147:15: ( G R O U P )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:147:17: G R O U P
             {
             mG(); 
             mR(); 
@@ -2607,8 +2607,8 @@ public class QLLexer extends Lexer {
     public final void mHAVING() throws RecognitionException {
         try {
             int _type = HAVING;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:148:15: ( H A V I N G )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:148:17: H A V I N G
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:148:15: ( H A V I N G )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:148:17: H A V I N G
             {
             mH(); 
             mA(); 
@@ -2630,8 +2630,8 @@ public class QLLexer extends Lexer {
     public final void mLIMIT() throws RecognitionException {
         try {
             int _type = LIMIT;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:149:15: ( L I M I T )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:149:17: L I M I T
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:149:15: ( L I M I T )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:149:17: L I M I T
             {
             mL(); 
             mI(); 
@@ -2652,8 +2652,8 @@ public class QLLexer extends Lexer {
     public final void mLEFT() throws RecognitionException {
         try {
             int _type = LEFT;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:150:15: ( L E F T )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:150:17: L E F T
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:150:15: ( L E F T )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:150:17: L E F T
             {
             mL(); 
             mE(); 
@@ -2673,8 +2673,8 @@ public class QLLexer extends Lexer {
     public final void mJOIN() throws RecognitionException {
         try {
             int _type = JOIN;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:151:15: ( J O I N )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:151:17: J O I N
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:151:15: ( J O I N )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:151:17: J O I N
             {
             mJ(); 
             mO(); 
@@ -2694,8 +2694,8 @@ public class QLLexer extends Lexer {
     public final void mOUTER() throws RecognitionException {
         try {
             int _type = OUTER;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:152:15: ( O U T E R )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:152:17: O U T E R
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:152:15: ( O U T E R )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:152:17: O U T E R
             {
             mO(); 
             mU(); 
@@ -2716,8 +2716,8 @@ public class QLLexer extends Lexer {
     public final void mRIGHT() throws RecognitionException {
         try {
             int _type = RIGHT;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:153:15: ( R I G H T )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:153:17: R I G H T
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:153:15: ( R I G H T )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:153:17: R I G H T
             {
             mR(); 
             mI(); 
@@ -2738,8 +2738,8 @@ public class QLLexer extends Lexer {
     public final void mFULL() throws RecognitionException {
         try {
             int _type = FULL;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:154:15: ( F U L L )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:154:17: F U L L
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:154:15: ( F U L L )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:154:17: F U L L
             {
             mF(); 
             mU(); 
@@ -2759,8 +2759,8 @@ public class QLLexer extends Lexer {
     public final void mINNER() throws RecognitionException {
         try {
             int _type = INNER;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:155:15: ( I N N E R )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:155:17: I N N E R
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:155:15: ( I N N E R )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:155:17: I N N E R
             {
             mI(); 
             mN(); 
@@ -2781,8 +2781,8 @@ public class QLLexer extends Lexer {
     public final void mCROSS() throws RecognitionException {
         try {
             int _type = CROSS;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:156:15: ( C R O S S )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:156:17: C R O S S
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:156:15: ( C R O S S )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:156:17: C R O S S
             {
             mC(); 
             mR(); 
@@ -2803,8 +2803,8 @@ public class QLLexer extends Lexer {
     public final void mIDENTIFIER() throws RecognitionException {
         try {
             int _type = IDENTIFIER;
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:157:15: ( ( CHAR | '_' ) ( CHAR | DIGIT | '_' | '$' | '#' )* )
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:157:17: ( CHAR | '_' ) ( CHAR | DIGIT | '_' | '$' | '#' )*
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:157:15: ( ( CHAR | '_' ) ( CHAR | DIGIT | '_' | '$' | '#' )* )
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:157:17: ( CHAR | '_' ) ( CHAR | DIGIT | '_' | '$' | '#' )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -2816,7 +2816,7 @@ public class QLLexer extends Lexer {
                 recover(mse);    throw mse;
             }
 
-            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:157:30: ( CHAR | DIGIT | '_' | '$' | '#' )*
+            // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:157:30: ( CHAR | DIGIT | '_' | '$' | '#' )*
             loop19:
             do {
                 int alt19=2;
@@ -2829,7 +2829,7 @@ public class QLLexer extends Lexer {
 
                 switch (alt19) {
             	case 1 :
-            	    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:
+            	    // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:
             	    {
             	    if ( (input.LA(1)>='#' && input.LA(1)<='$')||(input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
@@ -2861,7 +2861,7 @@ public class QLLexer extends Lexer {
     // $ANTLR end IDENTIFIER
 
     public void mTokens() throws RecognitionException {
-        // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:8: ( T127 | T128 | T129 | T130 | T131 | LINE_BREACK | WS | ML_COMMENT | SEMI | DOT | COMMA | OPEN_PAREN | CLOSE_PAREN | STAR | AT_SIGN | STRING | NUMBER | BOOLEAN | DATETIME | NULL | PLUS | MINUS | DIVIDE | VERTBAR | EQ | QUESTION | NOT_EQ | GT | LT | LE | GE | NOT | OR | XOR | AND | MOD | BITWISE_AND | BITWISE_XOR | BITWISE_LEFT | BITWISE_RIGHT | BIT_INVERSION | ON | IS | IN | LIKE | ESCAPE | EMPTY | BETWEEN | ASC | DESC | DISTINCT | SELECT | FROM | WHERE | ORDER | BY | GROUP | HAVING | LIMIT | LEFT | JOIN | OUTER | RIGHT | FULL | INNER | CROSS | IDENTIFIER )
+        // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:8: ( T127 | T128 | T129 | T130 | T131 | LINE_BREACK | WS | ML_COMMENT | SEMI | DOT | COMMA | OPEN_PAREN | CLOSE_PAREN | STAR | AT_SIGN | STRING | NUMBER | BOOLEAN | DATETIME | NULL | PLUS | MINUS | DIVIDE | VERTBAR | EQ | QUESTION | NOT_EQ | GT | LT | LE | GE | NOT | OR | XOR | AND | MOD | BITWISE_AND | BITWISE_XOR | BITWISE_LEFT | BITWISE_RIGHT | BIT_INVERSION | ON | IS | IN | LIKE | ESCAPE | EMPTY | BETWEEN | ASC | DESC | DISTINCT | SELECT | FROM | WHERE | ORDER | BY | GROUP | HAVING | LIMIT | LEFT | JOIN | OUTER | RIGHT | FULL | INNER | CROSS | IDENTIFIER )
         int alt20=67;
         switch ( input.LA(1) ) {
         case '<':
@@ -4215,469 +4215,469 @@ public class QLLexer extends Lexer {
 
         switch (alt20) {
             case 1 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:10: T127
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:10: T127
                 {
                 mT127(); 
 
                 }
                 break;
             case 2 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:15: T128
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:15: T128
                 {
                 mT128(); 
 
                 }
                 break;
             case 3 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:20: T129
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:20: T129
                 {
                 mT129(); 
 
                 }
                 break;
             case 4 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:25: T130
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:25: T130
                 {
                 mT130(); 
 
                 }
                 break;
             case 5 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:30: T131
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:30: T131
                 {
                 mT131(); 
 
                 }
                 break;
             case 6 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:35: LINE_BREACK
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:35: LINE_BREACK
                 {
                 mLINE_BREACK(); 
 
                 }
                 break;
             case 7 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:47: WS
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:47: WS
                 {
                 mWS(); 
 
                 }
                 break;
             case 8 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:50: ML_COMMENT
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:50: ML_COMMENT
                 {
                 mML_COMMENT(); 
 
                 }
                 break;
             case 9 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:61: SEMI
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:61: SEMI
                 {
                 mSEMI(); 
 
                 }
                 break;
             case 10 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:66: DOT
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:66: DOT
                 {
                 mDOT(); 
 
                 }
                 break;
             case 11 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:70: COMMA
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:70: COMMA
                 {
                 mCOMMA(); 
 
                 }
                 break;
             case 12 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:76: OPEN_PAREN
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:76: OPEN_PAREN
                 {
                 mOPEN_PAREN(); 
 
                 }
                 break;
             case 13 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:87: CLOSE_PAREN
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:87: CLOSE_PAREN
                 {
                 mCLOSE_PAREN(); 
 
                 }
                 break;
             case 14 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:99: STAR
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:99: STAR
                 {
                 mSTAR(); 
 
                 }
                 break;
             case 15 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:104: AT_SIGN
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:104: AT_SIGN
                 {
                 mAT_SIGN(); 
 
                 }
                 break;
             case 16 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:112: STRING
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:112: STRING
                 {
                 mSTRING(); 
 
                 }
                 break;
             case 17 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:119: NUMBER
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:119: NUMBER
                 {
                 mNUMBER(); 
 
                 }
                 break;
             case 18 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:126: BOOLEAN
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:126: BOOLEAN
                 {
                 mBOOLEAN(); 
 
                 }
                 break;
             case 19 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:134: DATETIME
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:134: DATETIME
                 {
                 mDATETIME(); 
 
                 }
                 break;
             case 20 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:143: NULL
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:143: NULL
                 {
                 mNULL(); 
 
                 }
                 break;
             case 21 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:148: PLUS
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:148: PLUS
                 {
                 mPLUS(); 
 
                 }
                 break;
             case 22 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:153: MINUS
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:153: MINUS
                 {
                 mMINUS(); 
 
                 }
                 break;
             case 23 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:159: DIVIDE
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:159: DIVIDE
                 {
                 mDIVIDE(); 
 
                 }
                 break;
             case 24 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:166: VERTBAR
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:166: VERTBAR
                 {
                 mVERTBAR(); 
 
                 }
                 break;
             case 25 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:174: EQ
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:174: EQ
                 {
                 mEQ(); 
 
                 }
                 break;
             case 26 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:177: QUESTION
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:177: QUESTION
                 {
                 mQUESTION(); 
 
                 }
                 break;
             case 27 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:186: NOT_EQ
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:186: NOT_EQ
                 {
                 mNOT_EQ(); 
 
                 }
                 break;
             case 28 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:193: GT
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:193: GT
                 {
                 mGT(); 
 
                 }
                 break;
             case 29 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:196: LT
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:196: LT
                 {
                 mLT(); 
 
                 }
                 break;
             case 30 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:199: LE
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:199: LE
                 {
                 mLE(); 
 
                 }
                 break;
             case 31 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:202: GE
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:202: GE
                 {
                 mGE(); 
 
                 }
                 break;
             case 32 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:205: NOT
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:205: NOT
                 {
                 mNOT(); 
 
                 }
                 break;
             case 33 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:209: OR
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:209: OR
                 {
                 mOR(); 
 
                 }
                 break;
             case 34 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:212: XOR
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:212: XOR
                 {
                 mXOR(); 
 
                 }
                 break;
             case 35 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:216: AND
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:216: AND
                 {
                 mAND(); 
 
                 }
                 break;
             case 36 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:220: MOD
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:220: MOD
                 {
                 mMOD(); 
 
                 }
                 break;
             case 37 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:224: BITWISE_AND
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:224: BITWISE_AND
                 {
                 mBITWISE_AND(); 
 
                 }
                 break;
             case 38 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:236: BITWISE_XOR
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:236: BITWISE_XOR
                 {
                 mBITWISE_XOR(); 
 
                 }
                 break;
             case 39 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:248: BITWISE_LEFT
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:248: BITWISE_LEFT
                 {
                 mBITWISE_LEFT(); 
 
                 }
                 break;
             case 40 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:261: BITWISE_RIGHT
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:261: BITWISE_RIGHT
                 {
                 mBITWISE_RIGHT(); 
 
                 }
                 break;
             case 41 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:275: BIT_INVERSION
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:275: BIT_INVERSION
                 {
                 mBIT_INVERSION(); 
 
                 }
                 break;
             case 42 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:289: ON
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:289: ON
                 {
                 mON(); 
 
                 }
                 break;
             case 43 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:292: IS
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:292: IS
                 {
                 mIS(); 
 
                 }
                 break;
             case 44 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:295: IN
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:295: IN
                 {
                 mIN(); 
 
                 }
                 break;
             case 45 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:298: LIKE
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:298: LIKE
                 {
                 mLIKE(); 
 
                 }
                 break;
             case 46 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:303: ESCAPE
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:303: ESCAPE
                 {
                 mESCAPE(); 
 
                 }
                 break;
             case 47 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:310: EMPTY
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:310: EMPTY
                 {
                 mEMPTY(); 
 
                 }
                 break;
             case 48 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:316: BETWEEN
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:316: BETWEEN
                 {
                 mBETWEEN(); 
 
                 }
                 break;
             case 49 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:324: ASC
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:324: ASC
                 {
                 mASC(); 
 
                 }
                 break;
             case 50 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:328: DESC
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:328: DESC
                 {
                 mDESC(); 
 
                 }
                 break;
             case 51 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:333: DISTINCT
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:333: DISTINCT
                 {
                 mDISTINCT(); 
 
                 }
                 break;
             case 52 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:342: SELECT
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:342: SELECT
                 {
                 mSELECT(); 
 
                 }
                 break;
             case 53 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:349: FROM
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:349: FROM
                 {
                 mFROM(); 
 
                 }
                 break;
             case 54 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:354: WHERE
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:354: WHERE
                 {
                 mWHERE(); 
 
                 }
                 break;
             case 55 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:360: ORDER
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:360: ORDER
                 {
                 mORDER(); 
 
                 }
                 break;
             case 56 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:366: BY
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:366: BY
                 {
                 mBY(); 
 
                 }
                 break;
             case 57 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:369: GROUP
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:369: GROUP
                 {
                 mGROUP(); 
 
                 }
                 break;
             case 58 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:375: HAVING
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:375: HAVING
                 {
                 mHAVING(); 
 
                 }
                 break;
             case 59 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:382: LIMIT
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:382: LIMIT
                 {
                 mLIMIT(); 
 
                 }
                 break;
             case 60 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:388: LEFT
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:388: LEFT
                 {
                 mLEFT(); 
 
                 }
                 break;
             case 61 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:393: JOIN
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:393: JOIN
                 {
                 mJOIN(); 
 
                 }
                 break;
             case 62 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:398: OUTER
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:398: OUTER
                 {
                 mOUTER(); 
 
                 }
                 break;
             case 63 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:404: RIGHT
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:404: RIGHT
                 {
                 mRIGHT(); 
 
                 }
                 break;
             case 64 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:410: FULL
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:410: FULL
                 {
                 mFULL(); 
 
                 }
                 break;
             case 65 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:415: INNER
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:415: INNER
                 {
                 mINNER(); 
 
                 }
                 break;
             case 66 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:421: CROSS
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:421: CROSS
                 {
                 mCROSS(); 
 
                 }
                 break;
             case 67 :
-                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/com/jengine/utils/ql/QL.g:1:427: IDENTIFIER
+                // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:1:427: IDENTIFIER
                 {
                 mIDENTIFIER(); 
 

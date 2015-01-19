@@ -28,7 +28,7 @@ import com.jengine.orm.model.field.StringField;
 import com.jengine.orm.model.field.reference.ReferenceField;
 import com.jenginetest.model.TestModel;
 
-import static com.jengine.utils.commons.CollectionUtil.map;
+import static com.cetus.jengine.utils.commons.CollectionUtil.map;
 
 
 public class Member extends TestModel {

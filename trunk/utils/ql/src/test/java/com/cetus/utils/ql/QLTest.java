@@ -3,9 +3,6 @@ package com.cetus.utils.ql;
 import com.jengine.utils.ql.AST;
 import org.antlr.runtime.tree.Tree;
 import org.junit.Test;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 public class QLTest {
 
