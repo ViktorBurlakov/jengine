@@ -17,7 +17,7 @@
  *  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.orm.test.jdbc;
+package com.cetus.jengine.orm.core.jdbc;
 
 import com.jengine.orm.DB;
 import com.jengine.orm.DBFactory;

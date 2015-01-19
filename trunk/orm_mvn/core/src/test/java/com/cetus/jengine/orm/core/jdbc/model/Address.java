@@ -17,7 +17,7 @@
  *  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.orm.test.jdbc.model;
+package com.cetus.jengine.orm.core.jdbc.model;
 
 import com.jengine.orm.model.Meta;
 import com.jengine.orm.model.ModelClass;
