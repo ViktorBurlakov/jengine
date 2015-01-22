@@ -17,7 +17,7 @@
  *  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.utils.commons;
+package com.cetus.jengine.utils.commons;
 
 
 import java.math.BigDecimal;

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <artifactId>jengine.orm</artifactId>
+    <groupId>com.cetus</groupId>
+    <version>1.0</version>
+  </parent>
+
+  <artifactId>jengine.orm.test</artifactId>
+  <name>JEngine ORM Test</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.cetus</groupId>
+      <artifactId>jengine.orm.core</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>com.cetus</groupId>
+      <artifactId>jengine.orm.ext.ehcache</artifactId>
+      <version>1.0</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+ 
+   <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+       <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-jar</id>
+            <phase>none</phase>
+          </execution>
+        </executions>
+    </plugin>
+   </plugins>
+
+  </build>
+
+</project>
