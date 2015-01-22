@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g 2015-01-19 23:17:38
+// $ANTLR 3.0.1 /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g 2015-01-22 23:58:48
 
 package com.jengine.utils.ql;
 
@@ -382,7 +382,7 @@ public class QLParser extends Parser {
 
 
             // AST REWRITE
-            // elements: order_by_clause, where_clause, select_clause, having_clause, group_by_clause, limit_clause, from_clause
+            // elements: order_by_clause, select_clause, group_by_clause, having_clause, from_clause, where_clause, limit_clause
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -520,7 +520,7 @@ public class QLParser extends Parser {
             stream_targets.add(targets10.getTree());
 
             // AST REWRITE
-            // elements: d, targets
+            // elements: targets, d
             // token labels: d
             // rule labels: retval
             // token list labels: 
@@ -1600,7 +1600,7 @@ public class QLParser extends Parser {
 
 
             // AST REWRITE
-            // elements: IDENTIFIER, DOT, IDENTIFIER
+            // elements: IDENTIFIER, IDENTIFIER, DOT
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1618,13 +1618,13 @@ public class QLParser extends Parser {
 
                 adaptor.addChild(root_1, stream_IDENTIFIER.next());
                 // /home/vmb/app/IdeaProjects/jengine/utils/ql/src/main/antlr/QL.g:227:58: ( DOT IDENTIFIER )*
-                while ( stream_DOT.hasNext()||stream_IDENTIFIER.hasNext() ) {
+                while ( stream_IDENTIFIER.hasNext()||stream_DOT.hasNext() ) {
                     adaptor.addChild(root_1, stream_DOT.next());
                     adaptor.addChild(root_1, stream_IDENTIFIER.next());
 
                 }
-                stream_DOT.reset();
                 stream_IDENTIFIER.reset();
+                stream_DOT.reset();
 
                 adaptor.addChild(root_0, root_1);
                 }
@@ -5427,7 +5427,7 @@ public class QLParser extends Parser {
 
 
             // AST REWRITE
-            // elements: IDENTIFIER, DOT, IDENTIFIER
+            // elements: DOT, IDENTIFIER, IDENTIFIER
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -5530,7 +5530,7 @@ public class QLParser extends Parser {
 
 
             // AST REWRITE
-            // elements: functionParameterList, IDENTIFIER
+            // elements: IDENTIFIER, functionParameterList
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -6385,7 +6385,7 @@ public class QLParser extends Parser {
 
 
             // AST REWRITE
-            // elements: a, b
+            // elements: b, a
             // token labels: b, a
             // rule labels: retval
             // token list labels: 

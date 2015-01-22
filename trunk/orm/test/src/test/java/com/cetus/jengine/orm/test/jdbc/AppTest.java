@@ -57,7 +57,7 @@ import static com.cetus.jengine.utils.commons.CollectionUtil.map;
 public class AppTest {
 
     @Test
-    public static void test(String [] args) throws Exception {
+    public void test() throws Exception {
         ConnectionManager connectionManager = new DBCPConnectionPool(newDBCPDataSource());
 //        ConnectionManager connectionManager = new SingleConnectionManager("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/bookdb?", "root", "");
         Adapter adapter = new JDBCAdapter(connectionManager);
@@ -85,7 +85,7 @@ public class AppTest {
         }
     }
 
-    public static DataSource newDBCPDataSource() {
+    public DataSource newDBCPDataSource() {
         // jdbc connection pool manager
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("com.mysql.jdbc.Driver");
@@ -98,7 +98,7 @@ public class AppTest {
         return ds;
     }
 
-    public static net.sf.ehcache.CacheManager newEhcacheManager() {
+    public net.sf.ehcache.CacheManager newEhcacheManager() {
         //Create a singleton CacheManager using defaults
         CacheManager manager = CacheManager.create();
         //Create a Cache specifying its configuration.
@@ -120,7 +120,7 @@ public class AppTest {
      * All data Removing
      * @throws DBException
      */
-    public static void clearData() throws DBException {
+    public void clearData() throws DBException {
         Author.cls.remove();
         Library.cls.remove();
         Book.cls.remove();
@@ -135,7 +135,7 @@ public class AppTest {
      * New objects Adding
      * @throws DBException
      */
-    public static void loadData() throws Exception {
+    public void loadData() throws Exception {
         /* Authors */
         Author jule = new Author();
         jule.setId(1l);
@@ -254,7 +254,7 @@ public class AppTest {
     /**
      * Clearing data test
      */
-    public static void test1() throws Exception {
+    public void test1() throws Exception {
         System.out.println("** Test1: Clearing data test");
 
         clearData();
@@ -269,7 +269,7 @@ public class AppTest {
     /**
      *  Object creation test
      */
-    public static void test2() throws Exception {
+    public void test2() throws Exception {
         System.out.println("** Test2: Object creation test");
 
         clearData();
@@ -303,7 +303,7 @@ public class AppTest {
     /**
      * Selection test
      */
-    public static void test3() throws Exception {
+    public void test3() throws Exception {
         System.out.println("** Test3: Object selection test");
 
         clearData();
@@ -338,7 +338,7 @@ public class AppTest {
     /**
      * Sub query test
      */
-    public static void test4() throws Exception {
+    public void test4() throws Exception {
         System.out.println("** Test4: Sub SQLQuery test");
 
         clearData();
@@ -351,7 +351,7 @@ public class AppTest {
     /**
      * Inserting and Updating test
      */
-    public static void test5() throws Exception {
+    public void test5() throws Exception {
         System.out.println("** Test 5: Inserting and Updating test");
 
         clearData();
@@ -372,7 +372,7 @@ public class AppTest {
     /**
      * Aggregation testing
      */
-    public static void test6() throws Exception {
+    public void test6() throws Exception {
         System.out.println("** Test 6:  Aggregation testing");
 
         clearData();
@@ -391,7 +391,7 @@ public class AppTest {
     /**
      * Model multi testing
      */
-    public static void test7() throws Exception {
+    public void test7() throws Exception {
         System.out.println("** Test 7: Model relation testing");
 
         clearData();
@@ -413,7 +413,7 @@ public class AppTest {
     /**
      * ThreadLocal Connection testing
      */
-    public static void test8() throws Exception {
+    public void test8() throws Exception {
         System.out.println("** Test 8: ThreadLocal Connection testing");
 
         clearData();
@@ -458,7 +458,7 @@ public class AppTest {
     /**
      * Transaction testing
      */
-    public static void test9() throws Exception {
+    public void test9() throws Exception {
         System.out.println("** Test 9: Transaction testing");
 
         DBConnection connection = DBFactory.get().getConnection();
@@ -511,7 +511,7 @@ public class AppTest {
     /**
      * Cache testing
      */
-    public static void test10() throws Exception {
+    public void test10() throws Exception {
         System.out.println("** Test 10: Cache testing");
 
         clearData();
@@ -526,7 +526,7 @@ public class AppTest {
     /**
      * Cluster testing
      */
-    public static void test11() throws Exception {
+    public void test11() throws Exception {
         System.out.println("** Test 11: Cluster testing");
 
         clearData();
@@ -570,7 +570,7 @@ public class AppTest {
     }
 
 
-    private static void check(boolean value) throws Exception {
+    private void check(boolean value) throws Exception {
         if (!value) {
             throw new Exception("Checking failed!!!");
         }
