@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="com.cetus.jengine.orm.ext.liferay.testportlet.model.impl.SAuthorModelImpl">
+		<attributes>
+			<id name="authorId" />
+			<basic name="firstName" />
+			<basic name="lastName" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.cetus.jengine.orm.ext.liferay.testportlet.model.impl.SBookModelImpl">
+		<attributes>
+			<id name="bookId" />
+			<basic name="libraryId" />
+			<basic name="title" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.cetus.jengine.orm.ext.liferay.testportlet.model.impl.SLibraryModelImpl">
+		<attributes>
+			<id name="libraryId" />
+			<basic name="name" />
+			<basic name="address" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.cetus.jengine.orm.ext.liferay.testportlet.model.impl.SMemberModelImpl">
+		<attributes>
+			<id name="memberId" />
+			<basic name="libraryId" />
+			<basic name="firstName" />
+			<basic name="lastName" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.cetus.jengine.orm.ext.liferay.testportlet.model.impl.STransactionModelImpl">
+		<attributes>
+			<id name="transactionId" />
+			<basic name="bookId" />
+			<basic name="memberId" />
+			<basic name="tdate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="com.cetus.jengine.orm.ext.liferay.testportlet.model.impl.SAuthorImpl" name="SAuthor">
+		<table name="SB_SAuthor" />
+		<attributes />
+	</entity>
+	<entity class="com.cetus.jengine.orm.ext.liferay.testportlet.model.impl.SBookImpl" name="SBook">
+		<table name="SB_SBook" />
+		<attributes />
+	</entity>
+	<entity class="com.cetus.jengine.orm.ext.liferay.testportlet.model.impl.SLibraryImpl" name="SLibrary">
+		<table name="SB_SLibrary" />
+		<attributes />
+	</entity>
+	<entity class="com.cetus.jengine.orm.ext.liferay.testportlet.model.impl.SMemberImpl" name="SMember">
+		<table name="SB_SMember" />
+		<attributes />
+	</entity>
+	<entity class="com.cetus.jengine.orm.ext.liferay.testportlet.model.impl.STransactionImpl" name="STransaction">
+		<table name="SB_STransaction" />
+		<attributes />
+	</entity>
+</entity-mappings>
