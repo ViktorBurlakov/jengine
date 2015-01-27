@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="com.cetus.jengine.orm.ext.liferay.testportlet.model.SAuthor" />
+	<import class="com.cetus.jengine.orm.ext.liferay.testportlet.model.SBook" />
+	<import class="com.cetus.jengine.orm.ext.liferay.testportlet.model.SLibrary" />
+	<import class="com.cetus.jengine.orm.ext.liferay.testportlet.model.SMember" />
+	<import class="com.cetus.jengine.orm.ext.liferay.testportlet.model.STransaction" />
+	<import class="com.cetus.jengine.orm.ext.liferay.testportlet.model.Test" />
+	<class name="com.cetus.jengine.orm.ext.liferay.testportlet.model.impl.SAuthorImpl" table="SB_SAuthor">
+		<cache usage="read-write" />
+		<id name="authorId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="firstName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.cetus.jengine.orm.ext.liferay.testportlet.model.impl.SBookImpl" table="SB_SBook">
+		<cache usage="read-write" />
+		<id name="bookId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="libraryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.cetus.jengine.orm.ext.liferay.testportlet.model.impl.SLibraryImpl" table="SB_SLibrary">
+		<cache usage="read-write" />
+		<id name="libraryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="address" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.cetus.jengine.orm.ext.liferay.testportlet.model.impl.SMemberImpl" table="SB_SMember">
+		<cache usage="read-write" />
+		<id name="memberId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="libraryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="firstName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.cetus.jengine.orm.ext.liferay.testportlet.model.impl.STransactionImpl" table="SB_STransaction">
+		<cache usage="read-write" />
+		<id name="transactionId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="bookId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="memberId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="tdate" type="org.hibernate.type.TimestampType" />
+	</class>
+</hibernate-mapping>

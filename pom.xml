@@ -24,6 +24,6 @@
 
   <modules>
     <module>utils</module>
-    <!--module>orm</module-->
+    <module>orm</module>
   </modules>
 </project>

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.cetus.jengine.orm.ext.liferay.testportlet.model.SAuthor">
+		<field name="authorId" type="long" />
+		<field name="firstName" type="String" />
+		<field name="lastName" type="String" />
+	</model>
+	<model name="com.cetus.jengine.orm.ext.liferay.testportlet.model.SBook">
+		<field name="bookId" type="long" />
+		<field name="libraryId" type="long" />
+		<field name="title" type="String" />
+	</model>
+	<model name="com.cetus.jengine.orm.ext.liferay.testportlet.model.SLibrary">
+		<field name="libraryId" type="long" />
+		<field name="name" type="String" />
+		<field name="address" type="String" />
+	</model>
+	<model name="com.cetus.jengine.orm.ext.liferay.testportlet.model.SMember">
+		<field name="memberId" type="long" />
+		<field name="libraryId" type="long" />
+		<field name="firstName" type="String" />
+		<field name="lastName" type="String" />
+	</model>
+	<model name="com.cetus.jengine.orm.ext.liferay.testportlet.model.STransaction">
+		<field name="transactionId" type="long" />
+		<field name="bookId" type="long" />
+		<field name="memberId" type="long" />
+		<field name="tdate" type="Date" />
+	</model>
+</model-hints>

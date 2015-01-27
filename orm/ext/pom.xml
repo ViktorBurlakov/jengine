@@ -14,6 +14,6 @@
 
   <modules>
     <module>ehcache</module>
-    <!--module>liferay</module-->
+    <module>liferay</module>
   </modules>
 </project>
