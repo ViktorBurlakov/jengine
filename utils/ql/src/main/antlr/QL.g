@@ -45,11 +45,11 @@ tokens {
 }
 
 @header {
-package com.jengine.utils.ql;
+package com.cetus.jengine.utils.ql;
 }
 
 @lexer::header {
-package com.jengine.utils.ql;
+package com.cetus.jengine.utils.ql;
 }
 
 

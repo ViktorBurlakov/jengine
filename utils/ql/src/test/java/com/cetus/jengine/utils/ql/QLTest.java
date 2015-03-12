@@ -1,6 +1,6 @@
-package com.cetus.utils.ql;
+package com.cetus.jengine.utils.ql;
 
-import com.jengine.utils.ql.AST;
+import com.cetus.jengine.utils.ql.AST;
 import org.antlr.runtime.tree.Tree;
 import org.junit.Test;
 
