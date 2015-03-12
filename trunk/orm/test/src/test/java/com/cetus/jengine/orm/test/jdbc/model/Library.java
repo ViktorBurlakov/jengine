@@ -20,11 +20,11 @@
 package com.cetus.jengine.orm.test.jdbc.model;
 
 
-import com.jengine.orm.model.ModelClass;
-import com.jengine.orm.model.query.ModelQuery;
-import com.jengine.orm.db.DBException;
-import com.jengine.orm.model.field.Field;
-import com.jengine.orm.model.field.StringField;
+import com.cetus.jengine.orm.core.model.ModelClass;
+import com.cetus.jengine.orm.core.model.query.ModelQuery;
+import com.cetus.jengine.orm.core.db.DBException;
+import com.cetus.jengine.orm.core.model.field.Field;
+import com.cetus.jengine.orm.core.model.field.StringField;
 
 import java.util.List;
 

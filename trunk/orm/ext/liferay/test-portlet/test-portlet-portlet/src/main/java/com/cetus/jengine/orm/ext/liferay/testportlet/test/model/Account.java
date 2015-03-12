@@ -1,14 +1,14 @@
 package com.cetus.jengine.orm.ext.liferay.testportlet.test.model;
 
 
-import com.jengine.orm.db.DBException;
-import com.jengine.orm.db.adapter.liferay.LiferayModelClass;
-import com.jengine.orm.exception.ValidateException;
-import com.jengine.orm.model.Meta;
-import com.jengine.orm.model.Model;
-import com.jengine.orm.model.field.Field;
-import com.jengine.orm.model.field.PrimaryKey;
-import com.jengine.orm.model.field.StringField;
+import com.cetus.jengine.orm.core.db.DBException;
+import com.cetus.jengine.orm.ext.liferay.LiferayModelClass;
+import com.cetus.jengine.orm.core.exception.ValidateException;
+import com.cetus.jengine.orm.core.model.Meta;
+import com.cetus.jengine.orm.core.model.Model;
+import com.cetus.jengine.orm.core.model.field.Field;
+import com.cetus.jengine.orm.core.model.field.PrimaryKey;
+import com.cetus.jengine.orm.core.model.field.StringField;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.persistence.UserPersistence;
