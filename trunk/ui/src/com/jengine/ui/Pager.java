@@ -26,7 +26,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import java.util.Map;
 
-import static com.jengine.utils.CollectionUtil.map;
+import static com.cetus.jengine.utils.CollectionUtil.map;
 
 
 public class Pager extends Widget {

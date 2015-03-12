@@ -22,13 +22,13 @@ package com.jengine.orm.db.query;
 
 import com.jengine.orm.db.filter.SQLFilter;
 import com.jengine.orm.db.filter.SQLStringFilter;
-import com.jengine.utils.commons.expression.ExpressionData;
-import com.jengine.utils.commons.expression.ExpressionNode;
-import com.jengine.utils.commons.expression.ExpressionOperation;
+import com.cetus.jengine.utils.commons.expression.ExpressionData;
+import com.cetus.jengine.utils.commons.expression.ExpressionNode;
+import com.cetus.jengine.utils.commons.expression.ExpressionOperation;
 
 import java.util.*;
 
-import static com.jengine.utils.commons.CollectionUtil.toList;
+import static com.cetus.jengine.utils.commons.CollectionUtil.toList;
 
 public class SQLQuery {
     private Table table;

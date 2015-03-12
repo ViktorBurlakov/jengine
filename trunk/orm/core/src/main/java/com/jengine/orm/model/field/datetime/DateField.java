@@ -23,7 +23,7 @@ package com.jengine.orm.model.field.datetime;
 import java.util.Date;
 import java.util.Map;
 
-import static com.jengine.utils.commons.CollectionUtil.map;
+import static com.cetus.jengine.utils.commons.CollectionUtil.map;
 
 
 public class DateField extends BaseDateField {

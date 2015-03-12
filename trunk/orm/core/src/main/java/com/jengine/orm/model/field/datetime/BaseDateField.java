@@ -22,7 +22,7 @@ package com.jengine.orm.model.field.datetime;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.model.Model;
 import com.jengine.orm.model.field.Field;
-import com.jengine.utils.commons.DateUtil;
+import com.cetus.jengine.utils.commons.DateUtil;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;

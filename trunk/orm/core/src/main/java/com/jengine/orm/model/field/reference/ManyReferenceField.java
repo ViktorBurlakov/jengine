@@ -29,11 +29,11 @@ import com.jengine.orm.model.Model;
 import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.field.PrimaryKey;
-import com.jengine.utils.commons.Variant;
+import com.cetus.jengine.utils.commons.Variant;
 
 import java.util.*;
 
-import static com.jengine.utils.commons.CollectionUtil.map;
+import static com.cetus.jengine.utils.commons.CollectionUtil.map;
 
 public class ManyReferenceField extends BaseReference {
     private String keyFieldName;

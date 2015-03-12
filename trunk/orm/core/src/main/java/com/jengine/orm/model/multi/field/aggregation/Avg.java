@@ -25,8 +25,8 @@ import com.jengine.orm.model.multi.field.CalcMultiField;
 
 import java.sql.Types;
 
-import static com.jengine.utils.commons.CollectionUtil.list;
-import static com.jengine.utils.commons.CollectionUtil.map;
+import static com.cetus.jengine.utils.commons.CollectionUtil.list;
+import static com.cetus.jengine.utils.commons.CollectionUtil.map;
 
 public class Avg extends CalcMultiField {
 

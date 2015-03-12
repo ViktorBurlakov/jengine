@@ -23,7 +23,7 @@ package com.jengine.orm.model.field;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.jengine.utils.commons.CollectionUtil.map;
+import static com.cetus.jengine.utils.commons.CollectionUtil.map;
 
 public class BooleanField extends Field {
 

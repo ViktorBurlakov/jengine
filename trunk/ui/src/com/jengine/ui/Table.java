@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.jengine.utils.CollectionUtil.map;
+import static com.cetus.jengine.utils.CollectionUtil.map;
 
 
 public class Table extends GridWidget {

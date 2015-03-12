@@ -22,7 +22,7 @@ package com.jengine.orm.model.field.numeric;
 
 import java.util.Map;
 
-import static com.jengine.utils.commons.CollectionUtil.map;
+import static com.cetus.jengine.utils.commons.CollectionUtil.map;
 
 public class FloatField extends RealField {
     public FloatField() {

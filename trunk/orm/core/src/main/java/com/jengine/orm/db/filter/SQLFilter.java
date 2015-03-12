@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.jengine.utils.commons.CollectionUtil.list;
+import static com.cetus.jengine.utils.commons.CollectionUtil.list;
 
 public class SQLFilter {
     public static Map<String, Operation> OPERATIONS = new HashMap<String, Operation>();

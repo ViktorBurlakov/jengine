@@ -26,7 +26,7 @@ import com.jengine.orm.db.DBException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.jengine.utils.commons.CollectionUtil.map;
+import static com.cetus.jengine.utils.commons.CollectionUtil.map;
 
 public class PrimaryKey extends Field {
 

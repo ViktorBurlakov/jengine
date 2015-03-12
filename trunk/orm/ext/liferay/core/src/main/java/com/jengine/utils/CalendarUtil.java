@@ -17,7 +17,7 @@
  * along with JEngine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.jengine.utils;
+package com.cetus.jengine.utils;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;

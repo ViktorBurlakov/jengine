@@ -59,7 +59,7 @@ public class SqlTranslator implements ASTVisitor {
         InputStream in = new ByteArrayInputStream(input.getBytes("UTF-8"));
         SqlLexer lexer = new SqlLexer(new DataInputStream(in));
         SqlParser parser = new SqlParser(lexer);
-        parser.setASTNodeClass("com.jengine.orm.db.query.parser.SQLCommonAST");
+        parser.setASTNodeClass("com.cetus.jengine.orm.db.query.parser.SQLCommonAST");
         return parser;
     }
 

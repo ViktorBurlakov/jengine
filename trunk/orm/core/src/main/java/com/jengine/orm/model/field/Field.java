@@ -25,7 +25,7 @@ import com.jengine.orm.exception.ValidateException;
 import com.jengine.orm.model.Model;
 import com.jengine.orm.model.ModelManager;
 import com.jengine.orm.model.query.filter.Filter;
-import com.jengine.utils.commons.Variant;
+import com.cetus.jengine.utils.commons.Variant;
 
 import java.sql.Time;
 import java.sql.Types;
@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static com.jengine.utils.commons.CollectionUtil.map;
+import static com.cetus.jengine.utils.commons.CollectionUtil.map;
 
 
 public class Field {
