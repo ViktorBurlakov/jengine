@@ -20,12 +20,12 @@
 package com.cetus.jengine.orm.ext.liferay.testportlet.test.model;
 
 
-import com.jengine.orm.db.DBException;
-import com.jengine.orm.model.ModelClass;
-import com.jengine.orm.model.field.Field;
-import com.jengine.orm.model.field.PrimaryKey;
-import com.jengine.orm.model.field.StringField;
-import com.jengine.orm.model.field.reference.ReferenceField;
+import com.cetus.jengine.orm.core.db.DBException;
+import com.cetus.jengine.orm.core.model.ModelClass;
+import com.cetus.jengine.orm.core.model.field.Field;
+import com.cetus.jengine.orm.core.model.field.PrimaryKey;
+import com.cetus.jengine.orm.core.model.field.StringField;
+import com.cetus.jengine.orm.core.model.field.reference.ReferenceField;
 
 import static com.cetus.jengine.utils.commons.CollectionUtil.map;
 

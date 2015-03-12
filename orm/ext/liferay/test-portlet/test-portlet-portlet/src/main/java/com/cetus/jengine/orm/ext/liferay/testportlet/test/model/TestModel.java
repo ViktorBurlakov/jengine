@@ -21,10 +21,10 @@ package com.cetus.jengine.orm.ext.liferay.testportlet.test.model;
 
 
 
-import com.jengine.orm.db.DBException;
-import com.jengine.orm.model.Model;
-import com.jengine.orm.model.field.Field;
-import com.jengine.orm.model.field.StringField;
+import com.cetus.jengine.orm.core.db.DBException;
+import com.cetus.jengine.orm.core.model.Model;
+import com.cetus.jengine.orm.core.model.field.Field;
+import com.cetus.jengine.orm.core.model.field.StringField;
 
 public class TestModel extends Model {
     public static Field enable = new StringField("default", "y");

@@ -19,22 +19,22 @@
 
 package com.cetus.jengine.orm.ext.liferay.testportlet.test;
 
-import com.jengine.orm.DB;
-import com.jengine.orm.DBFactory;
-import com.jengine.orm.db.DBConnection;
-import com.jengine.orm.db.DBException;
-import com.jengine.orm.db.DBSavePoint;
-import com.jengine.orm.db.adapter.Adapter;
-import com.jengine.orm.db.adapter.ConnectionManager;
-import com.jengine.orm.db.adapter.liferay.LiferayAdapter;
-import com.jengine.orm.db.adapter.liferay.LiferayConnectionManager;
-import com.jengine.orm.db.provider.Provider;
-import com.jengine.orm.db.provider.mysql.MySQLProvider;
-import com.jengine.orm.exception.ValidateException;
-import com.jengine.orm.model.cluster.Cluster;
-import com.jengine.orm.model.multi.field.Calc;
-import com.jengine.orm.model.multi.field.aggregation.Max;
-import com.jengine.orm.model.query.ModelQuery;
+import com.cetus.jengine.orm.core.DB;
+import com.cetus.jengine.orm.core.DBFactory;
+import com.cetus.jengine.orm.core.db.DBConnection;
+import com.cetus.jengine.orm.core.db.DBException;
+import com.cetus.jengine.orm.core.db.DBSavePoint;
+import com.cetus.jengine.orm.core.db.adapter.Adapter;
+import com.cetus.jengine.orm.core.db.adapter.ConnectionManager;
+import com.cetus.jengine.orm.ext.liferay.LiferayAdapter;
+import com.cetus.jengine.orm.ext.liferay.LiferayConnectionManager;
+import com.cetus.jengine.orm.core.db.provider.Provider;
+import com.cetus.jengine.orm.core.db.provider.mysql.MySQLProvider;
+import com.cetus.jengine.orm.core.exception.ValidateException;
+import com.cetus.jengine.orm.core.model.cluster.Cluster;
+import com.cetus.jengine.orm.core.model.multi.field.Calc;
+import com.cetus.jengine.orm.core.model.multi.field.aggregation.Max;
+import com.cetus.jengine.orm.core.model.query.ModelQuery;
 import com.cetus.jengine.utils.commons.CollectionUtil;
 import com.cetus.jengine.orm.ext.liferay.testportlet.test.model.*;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -84,7 +84,7 @@ public class Test {
 
     /**
      * All data Removing
-     * @throws com.jengine.orm.db.DBException
+     * @throws com.cetus.jengine.orm.core.db.DBException
      */
     public static void clearData() throws DBException {
         Author.cls.remove();
@@ -100,7 +100,7 @@ public class Test {
 
     /**
      * New objects Adding
-     * @throws com.jengine.orm.db.DBException
+     * @throws com.cetus.jengine.orm.core.db.DBException
      */
     public static void loadData() throws Exception {
         /* Authors */

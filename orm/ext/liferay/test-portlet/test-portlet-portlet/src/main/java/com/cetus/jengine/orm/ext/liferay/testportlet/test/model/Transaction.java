@@ -20,12 +20,12 @@
 package com.cetus.jengine.orm.ext.liferay.testportlet.test.model;
 
 
-import com.jengine.orm.db.DBException;
-import com.jengine.orm.model.ModelClass;
-import com.jengine.orm.model.field.Field;
-import com.jengine.orm.model.field.FunctionField;
-import com.jengine.orm.model.field.datetime.DateField;
-import com.jengine.orm.model.field.reference.ReferenceField;
+import com.cetus.jengine.orm.core.db.DBException;
+import com.cetus.jengine.orm.core.model.ModelClass;
+import com.cetus.jengine.orm.core.model.field.Field;
+import com.cetus.jengine.orm.core.model.field.FunctionField;
+import com.cetus.jengine.orm.core.model.field.datetime.DateField;
+import com.cetus.jengine.orm.core.model.field.reference.ReferenceField;
 
 import java.util.Date;
 
