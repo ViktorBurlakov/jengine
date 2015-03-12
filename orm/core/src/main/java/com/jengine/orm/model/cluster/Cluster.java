@@ -35,7 +35,7 @@ import org.antlr.runtime.RecognitionException;
 
 import java.util.*;
 
-import static com.jengine.utils.commons.CollectionUtil.toList;
+import static com.cetus.jengine.utils.commons.CollectionUtil.toList;
 
 public class Cluster extends MultiModel {
     protected LinkedHashMap<String, MultiModelField> selectedFields = new LinkedHashMap<String, MultiModelField>();

@@ -30,7 +30,7 @@ import com.jengine.orm.model.multi.field.MultiModelField;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import static com.jengine.utils.commons.CollectionUtil.toList;
+import static com.cetus.jengine.utils.commons.CollectionUtil.toList;
 
 public class MultiModelItem {
     private MultiModel multiModel;

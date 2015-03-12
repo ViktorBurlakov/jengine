@@ -23,13 +23,13 @@ package com.jengine.orm.model.field.reference;
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.model.Model;
 import com.jengine.orm.model.field.Field;
-import com.jengine.utils.commons.Variant;
+import com.cetus.jengine.utils.commons.Variant;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.jengine.utils.commons.CollectionUtil.map;
-import static com.jengine.utils.commons.StringUtil.caps;
+import static com.cetus.jengine.utils.commons.CollectionUtil.map;
+import static com.cetus.jengine.utils.commons.StringUtil.caps;
 
 public class ReferenceField extends BaseReference {
     protected String referenceModelKeyName;

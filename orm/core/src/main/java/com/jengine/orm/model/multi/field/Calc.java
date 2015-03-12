@@ -23,8 +23,8 @@ package com.jengine.orm.model.multi.field;
 import java.util.List;
 import java.util.Map;
 
-import static com.jengine.utils.commons.CollectionUtil.map;
-import static com.jengine.utils.commons.CollectionUtil.toList;
+import static com.cetus.jengine.utils.commons.CollectionUtil.map;
+import static com.cetus.jengine.utils.commons.CollectionUtil.toList;
 
 public class Calc extends CalcMultiField {
 

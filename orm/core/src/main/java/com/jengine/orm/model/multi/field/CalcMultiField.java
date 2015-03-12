@@ -22,7 +22,7 @@ package com.jengine.orm.model.multi.field;
 
 import com.jengine.orm.db.DBException;
 import com.jengine.orm.model.multi.MultiModel;
-import com.jengine.utils.commons.Variant;
+import com.cetus.jengine.utils.commons.Variant;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

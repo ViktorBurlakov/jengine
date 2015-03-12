@@ -23,7 +23,7 @@ import com.jengine.orm.model.Model;
 import com.jengine.orm.model.ModelClassBase;
 import com.jengine.orm.db.DBException;
 
-import static com.jengine.utils.commons.CollectionUtil.map;
+import static com.cetus.jengine.utils.commons.CollectionUtil.map;
 
 public class MultiReferenceField extends BaseReference {
 

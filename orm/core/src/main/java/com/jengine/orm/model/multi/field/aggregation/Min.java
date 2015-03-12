@@ -24,8 +24,8 @@ import com.jengine.orm.model.field.Field;
 import com.jengine.orm.model.multi.MultiModel;
 import com.jengine.orm.model.multi.field.CalcMultiField;
 
-import static com.jengine.utils.commons.CollectionUtil.list;
-import static com.jengine.utils.commons.CollectionUtil.map;
+import static com.cetus.jengine.utils.commons.CollectionUtil.list;
+import static com.cetus.jengine.utils.commons.CollectionUtil.map;
 
 public class Min extends CalcMultiField {
 
