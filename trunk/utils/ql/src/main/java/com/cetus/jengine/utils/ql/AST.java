@@ -1,4 +1,4 @@
-package com.jengine.utils.ql;
+package com.cetus.jengine.utils.ql;
 
 
 import org.antlr.runtime.ANTLRStringStream;
@@ -8,8 +8,8 @@ import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.Tree;
 import org.antlr.runtime.*;
 
-import com.jengine.utils.ql.QLParser;
-import com.jengine.utils.ql.QLLexer;
+import com.cetus.jengine.utils.ql.QLParser;
+import com.cetus.jengine.utils.ql.QLLexer;
 
 
 public class AST {

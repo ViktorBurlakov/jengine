@@ -1,6 +1,6 @@
 lexer grammar QL;
 @header {
-package com.jengine.utils.ql;
+package com.cetus.jengine.utils.ql;
 }
 
 T127 : '<<' ;
